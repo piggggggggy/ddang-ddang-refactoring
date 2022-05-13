@@ -15,5 +15,4 @@ export default function ProfilePreview(props) {
 
 const Preview = styled.img`
     ${(props) => (props.inlineStyles ? `${props.inlineStyles}` : "")};
-    border-radius: 50px;
 `;
