@@ -6,26 +6,34 @@ import {
     loginCheckAxios,
     getProfileDetailsAxios,
 } from "./store/thunk-actions/userActions";
-import "./App.css";
 import Container from "./elements/Container";
 import AppRouter from "./shared/Router";
+
+import { Spinner } from "./elements/index";
 
 function App() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const token = getCookie("token");
+    const [isLoading, setIsLoading] = React.useState(true);
+
     React.useEffect(() => {
-        console.log(token);
+        const token = getCookie("token");
         if (token) {
             dispatch(
-                getProfileDetailsAxios(token, (url) => {
+                loginCheckAxios(token, (url) => {
                     navigate(url);
                 })
             );
         } else {
             navigate("/signin");
         }
-    }, [dispatch, navigate, token]);
+        setIsLoading(false);
+    }, []);
+
+    if (isLoading) {
+        return <Spinner>Loading...</Spinner>;
+    }
+
     return (
         <Container>
             <AppRouter />

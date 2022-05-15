@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Button(props) {
-    const { inlineStyles, children, onClick, type } = props;
-    const styles = { inlineStyles };
+    const { mystyles, children, onClick, type } = props;
+    const styles = { mystyles };
 
     return (
         <>
@@ -15,10 +15,10 @@ export default function Button(props) {
 }
 
 Button.defaultProps = {
-    inlineStyles: false,
+    mystyles: false,
     onClick: () => {},
 };
 
 const Btn = styled.button`
-    ${(props) => (props.inlineStyles ? `${props.inlineStyles}` : "")};
+    ${(props) => (props.mystyles ? `${props.mystyles}` : "")};
 `;

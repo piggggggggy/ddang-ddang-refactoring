@@ -4,12 +4,12 @@ import { Grid, Text } from "../../../../elements/index";
 export default function DuplicateCheck(props) {
     return (
         <>
-            <Grid justifyContent="space-between" inlineStyles="width: 300px">
-                <Text inlineStyles="font-size:12px">{props.children}</Text>
+            <Grid justifyContent="space-between" mystyles="width: 250px; ">
+                <Text mystyles="font-size:12px">{props.children}</Text>
                 {props.duplicate && (
                     <Text
                         pointer
-                        inlineStyles="font-size:12px; font-weight: bolder; color: blue"
+                        mystyles="font-size:12px; font-weight: bolder; color: blue"
                         onClick={props.onClick}
                     >
                         중복확인
