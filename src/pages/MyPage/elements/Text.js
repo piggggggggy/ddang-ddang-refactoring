@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Text(props) {
-    const { children, inlineStyles, pointer, onClick } = props;
-    const styles = { inlineStyles, pointer };
+    const { children, mystyles, pointer, onClick } = props;
+    const styles = { mystyles, pointer };
     return (
         <P {...styles} onClick={onClick}>
             {children}
@@ -12,12 +12,12 @@ export default function Text(props) {
 }
 
 Text.defaultProps = {
-    inlineStyles: false,
+    mystyles: false,
     pointer: false,
     onClick: () => {},
 };
 
 const P = styled.p`
-    ${(props) => (props.inlineStyles ? `${props.inlineStyles}` : "")};
+    ${(props) => (props.mystyles ? `${props.mystyles}` : "")};
     ${(props) => (props.pointer ? "cursor:pointer" : "")};
 `;

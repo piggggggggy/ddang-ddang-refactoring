@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Input(props) {
-    const { inlineStyles, placeholder, onChange, defaultValue, type, id, ref } =
+    const { mystyles, placeholder, onChange, defaultValue, type, id, ref } =
         props;
-    const styles = { inlineStyles };
+    const styles = { mystyles };
 
     return (
         <InputField>
@@ -22,7 +22,7 @@ export default function Input(props) {
 }
 
 Input.defaultProps = {
-    inlineStyles: false,
+    mystyles: false,
     eyeIconRender: false,
     placeholder: "",
     onChange: () => {},
@@ -34,5 +34,5 @@ const InputField = styled.div`
 `;
 
 const I = styled.input`
-    ${(props) => (props.inlineStyles ? `${props.inlineStyles}` : "")};
+    ${(props) => (props.mystyles ? `${props.mystyles}` : "")};
 `;

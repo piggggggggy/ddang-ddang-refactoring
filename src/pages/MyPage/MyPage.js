@@ -56,8 +56,8 @@ export default function MyPage() {
 
     async function fetchData() {
         try {
-            const response = await axios.get("/players/mypage", {
-                headers: { Authorization: `Bearer ${token}` },
+            const response = await axios.get("/api/players/mypage", {
+                headers: { Authorization: `${token}` },
             });
             console.log(response);
             console.log(response.data?.profile?.profileImg);

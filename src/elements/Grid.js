@@ -9,7 +9,7 @@ export default function Grid(props) {
         alignItems,
         direction,
         key,
-        inlineStyles,
+        mystyles,
         onClick,
     } = props;
 
@@ -18,7 +18,7 @@ export default function Grid(props) {
         justifyContent,
         alignItems,
         direction,
-        inlineStyles,
+        mystyles,
     };
 
     return (
@@ -33,7 +33,7 @@ Grid.defaultProps = {
     justifyContent: "center",
     alignItems: "center",
     direction: "",
-    inlineStyles: false,
+    mystyles: false,
     onClick: () => {},
     key: "",
 };
@@ -45,5 +45,5 @@ const Wrapper = styled.div`
         props.justifyContent ? `justify-content: ${props.justifyContent}` : ""};
     ${(props) => (props.alignItems ? `align-items: ${props.alignItems}` : "")};
     ${(props) => (props.direction ? `flex-direction: ${props.direction}` : "")};
-    ${(props) => (props.inlineStyles ? `${props.inlineStyles}` : "")};
+    ${(props) => (props.mystyles ? `${props.mystyles}` : "")};
 `;

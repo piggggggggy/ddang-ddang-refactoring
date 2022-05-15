@@ -346,17 +346,14 @@ export default function Signup() {
         <>
             {page === 1 && (
                 <>
-                    <Grid inlineStyles="min-height: 30vh; ">
+                    <Grid mystyles="min-height: 30vh; ">
                         <h1>회원가입</h1>
                     </Grid>
-                    <Grid direction="column" inlineStyles="min-height: 40vh; ">
-                        <Grid
-                            direction="column"
-                            inlineStyles="min-height:10vh; "
-                        >
+                    <Grid direction="column" mystyles="min-height: 40vh; ">
+                        <Grid direction="column" mystyles="min-height:10vh; ">
                             <Input
                                 placeholder="이메일"
-                                inlineStyles="height: 30px; width: 300px; border-radius: 25px; padding-left: 10px;"
+                                mystyles="height: 30px; width: 300px; border-radius: 25px; padding-left: 10px;"
                                 value={emailValue}
                                 onChange={changeEmail}
                             ></Input>
@@ -364,13 +361,10 @@ export default function Signup() {
                                 {emailCheckMessage}
                             </DuplicateCheck>
                         </Grid>
-                        <Grid
-                            direction="column"
-                            inlineStyles="min-height:10vh; "
-                        >
+                        <Grid direction="column" mystyles="min-height:10vh; ">
                             <Input
                                 placeholder="닉네임"
-                                inlineStyles="height: 30px; width: 300px; border-radius: 25px; padding-left: 10px;"
+                                mystyles="height: 30px; width: 300px; border-radius: 25px; padding-left: 10px;"
                                 value={nicknameValue}
                                 onChange={changeNickname}
                             ></Input>
@@ -381,15 +375,12 @@ export default function Signup() {
                                 {nicknameCheckMessage}
                             </DuplicateCheck>
                         </Grid>
-                        <Grid
-                            direction="column"
-                            inlineStyles="min-height:10vh;"
-                        >
+                        <Grid direction="column" mystyles="min-height:10vh;">
                             <Input
                                 placeholder="비밀번호"
                                 type="password"
                                 value={passwordValue}
-                                inlineStyles="height: 30px; width: 300px; border-radius: 25px; padding-left: 10px;"
+                                mystyles="height: 30px; width: 300px; border-radius: 25px; padding-left: 10px;"
                                 onChange={changePassword}
                             ></Input>
                             <DuplicateCheck>
@@ -398,13 +389,13 @@ export default function Signup() {
                         </Grid>
                         <Grid
                             direction="column"
-                            inlineStyles="min-height:10vh; border: 2px solid red"
+                            mystyles="min-height:10vh; border: 2px solid red"
                         >
                             <Input
                                 type="password"
                                 value={passwordConfirmValue}
                                 placeholder="비밀번호 확인"
-                                inlineStyles="height: 30px; width: 300px; border-radius: 25px; padding-left: 10px;"
+                                mystyles="height: 30px; width: 300px; border-radius: 25px; padding-left: 10px;"
                                 onChange={changePasswordConfirm}
                             ></Input>
                             <DuplicateCheck>
@@ -435,7 +426,7 @@ export default function Signup() {
                     <Grid>
                         <h1>MBTI</h1>
                     </Grid>
-                    <Grid direction="column" inlineStyles="min-height: 50vh">
+                    <Grid direction="column" mystyles="min-height: 50vh">
                         <Text>mbti 유형을 선택해주세요</Text>
                         <select onChange={handleChange} name="" id="">
                             <option value="enfp">선택하기</option>
@@ -446,9 +437,9 @@ export default function Signup() {
                             <option value="enfp">enfp</option>
                             <option value="enfp">enfp</option>
                         </select>
-                        <Grid inlineStyles="min-height: 20vh">
+                        <Grid mystyles="min-height: 20vh">
                             <Button
-                                inlineStyles="width: 200px"
+                                mystyles="width: 200px"
                                 onClick={nextSignup}
                             >
                                 다음으로
@@ -464,13 +455,13 @@ export default function Signup() {
                         <ProfilePreview
                             src={profileImage}
                             alt=""
-                            inlineStyles="width: 200px; height: 200px"
+                            mystyles="width: 200px; height: 200px"
                         />
                         <Input type="file" onChange={handleFileInput} />
-                        <Grid inlineStyles="min-height: 50vh">
+                        <Grid mystyles="min-height: 50vh">
                             <Button
                                 onClick={finishSignup}
-                                inlineStyles="width: 200px; height: 30px; border-radius: 20px"
+                                mystyles="width: 200px; height: 30px; border-radius: 20px"
                             >
                                 프로필 설정
                             </Button>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Input(props) {
     const {
-        inlineStyles,
+        mystyles,
         placeholder,
         onChange,
         defaultValue,
@@ -13,7 +13,7 @@ export default function Input(props) {
         ref,
         whileFocus,
     } = props;
-    const styles = { inlineStyles };
+    const styles = { mystyles };
 
     return (
         <InputField>
@@ -32,7 +32,7 @@ export default function Input(props) {
 }
 
 Input.defaultProps = {
-    inlineStyles: false,
+    mystyles: false,
     eyeIconRender: false,
     placeholder: "",
     onChange: () => {},
@@ -44,7 +44,7 @@ const InputField = styled.div`
 `;
 
 const I = styled(motion.input)`
-    ${(props) => (props.inlineStyles ? `${props.inlineStyles}` : "")};
+    ${(props) => (props.mystyles ? `${props.mystyles}` : "")};
     &:focus {
         outline: none;
     }

@@ -5,20 +5,19 @@ import axios from "axios";
 export const loginCheckAxios = (token, navigate) => {
     return async function (dispatch) {
         try {
-            const response = await axios.get("/players/auth", {
+            console.log(token);
+            const response = await axios.get("/api/players/auth", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             console.log(response);
             const user = {
                 email: response.data.row.email,
                 nickname: response.data.row.nickname,
+                playerId: response.data.row.playerId,
             };
-            dispatch(userActions.loginCheck({ user, isValid: true }));
+            dispatch(userActions.loginCheck({ user, token }));
         } catch (err) {
-            dispatch(userActions.loginCheck({ user: null, isValid: false }));
-            window.alert("로그인이 만료되었습니다");
             navigate("/signin");
-            console.log(err);
         }
     };
 };
@@ -30,15 +29,12 @@ export const signinAxios = (email, password, navigate) => {
             email,
             password,
         };
-        console.log(user);
         try {
-            const response = await axios.post("/players/signin", user);
+            const response = await axios.post("/api/players/signin", user);
+            console.log(response);
             user = { email, nickname: response.data.row.nickname };
-            console.log(user);
-
             const tokenFullString = response.headers.authorization;
             const tokenArr = tokenFullString.split(" ");
-            console.log(tokenArr[1]);
             dispatch(userActions.signin({ user, token: tokenArr[1] }));
             navigate("/");
         } catch (error) {
@@ -48,7 +44,7 @@ export const signinAxios = (email, password, navigate) => {
 };
 
 // 이메일 중복 확인
-export const checkEmail = (email) => {
+export const checkEmailAxios = (email) => {
     console.log(email);
     let data = { email: email };
     return async function (dispatch) {

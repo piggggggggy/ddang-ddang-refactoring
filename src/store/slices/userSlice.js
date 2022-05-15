@@ -4,11 +4,6 @@ import { setCookie, deleteCookie } from "../../shared/Cookie";
 
 const initialState = {
     user: null,
-    isLogin: false,
-    isSignup: false,
-    isAvailable: false, // for id check (during the signup phase)
-    isEmailCheck: false,
-    isNicknameCheck: false,
 };
 
 const userSlice = createSlice({
@@ -16,36 +11,19 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         signup(state, action) {
-            console.log(action.payload.user);
             state.user = action.payload.user;
-            state.isLogin = true;
-            state.isSignup = true;
         },
         signin(state, action) {
             setCookie("token", action.payload.token);
-            state.user = action.payload.user;
-            state.isLogin = true;
+            state.user = { ...state.user, ...action.payload.user };
         },
-        signinKakao(state, action) {
-            console.log(action.payload);
+        loginCheck(state, action) {
+            setCookie("token", action.payload.token);
+            state.user = { ...state.user, ...action.payload.user };
         },
         signout(state) {
             deleteCookie("token");
             state.user = null;
-            state.isLogin = false;
-        },
-        emailCheck(state, action) {
-            state.isEmailCheck = true;
-        },
-        nicknameCheck(state, action) {
-            state.isNicknameCheck = true;
-        },
-        loginCheck(state, action) {
-            if (!action.payload.isValid) {
-                deleteCookie("token");
-            }
-            state.user = { ...state.user, ...action.payload.user };
-            state.isLogin = action.payload.isValid;
         },
         getProfileDetails(state, action) {
             state.user = { ...state.user, ...action.payload.user };
