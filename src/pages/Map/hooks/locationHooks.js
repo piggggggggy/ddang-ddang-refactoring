@@ -58,13 +58,7 @@ const useWatchLocation = () => {
       )
     }
 
-    watchId.current = navigator.geolocation.watchPosition(
-      (position) => {
-        console.log("check", position)
-      }
-    )
-    
-    return cancelWatchPosition;
+    // return cancelWatchPosition;
   }, [isDrag, record]);
 
 

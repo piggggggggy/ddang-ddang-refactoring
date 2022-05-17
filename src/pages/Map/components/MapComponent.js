@@ -52,9 +52,10 @@ export default function MapComponent({ questList, questType }) {
       mystyles={"position: relative; z-index: 100; height: 100vh; width: 100%; margin: auto"}
     >
       <Map
-          center={currentMapPosition}
+          center={isDrag ? currentMapPosition : position}
           isPanto={true}
           onDragEnd={(map) => {
+            cancelWatchPosition();
             setIsDrag(true)
             setCurrentMapPosition({
               lat: map.getCenter().getLat(),
@@ -106,17 +107,6 @@ export default function MapComponent({ questList, questType }) {
             
           })}
       </Map>
-      <Grid
-        flex
-        justifyContent={"center"}
-        alignItems={"center"}
-        mystyles={
-          "width: 200px;height: 50px;border-radius: 15px; border: 1px solid #000"
-        }
-        onClick={moveToCenter}
-      >
-        <p>내 위치</p>
-      </Grid>
     </Grid>
   )
 }
