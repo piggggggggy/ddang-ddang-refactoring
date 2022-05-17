@@ -20,3 +20,22 @@ export const getFeedsAxios = (token, region) => {
             });
     };
 };
+
+// 댓글 작성
+export const commentAxios = (token, feedId, comment) => {
+    return async function (dispatch) {
+        await axios
+            .get(`/api/feeds/${feedId}/comments`, {
+                headers: { Authorization: `Bearer ${token}` },
+                data: {
+                    comment,
+                },
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+};

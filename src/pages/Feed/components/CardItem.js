@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { useDispatch } from "react-redux";
 import { Grid } from "../elements/index";
 import { Text } from "../elements/index";
 import Content from "./CardContent";
@@ -12,12 +12,17 @@ import MessageIcon from "@mui/icons-material/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
+import { commentAxios } from "../../../store/thunk-actions/feedActions";
+import { getCookie } from "../../../shared/Cookie";
+
 export default function Item(props) {
     const { item, onClick, page, id } = props;
     console.log(item?.comments);
     const list = item?.comments;
     console.log(list);
     console.log(id);
+    const dispatch = useDispatch();
+    const token = getCookie("token");
 
     // show feedDetail
     const [detailOpen, setDetailOpen] = React.useState(false);
@@ -50,6 +55,10 @@ export default function Item(props) {
     const [comment, setComment] = React.useState("");
     const changeCommentHandler = (e) => {
         setComment(e.target.value);
+    };
+
+    const addCommentHandler = () => {
+        dispatch(commentAxios(token, id, comment));
     };
 
     const [isOpen, setIsOpen] = React.useState(false);
@@ -132,6 +141,7 @@ export default function Item(props) {
                                     id="comment"
                                 />
                                 <Button
+                                    onClick={addCommentHandler}
                                     style={{ height: "30px" }}
                                     variant="contained"
                                 >
@@ -154,36 +164,75 @@ export default function Item(props) {
                         <Grid justifyContent="space-between">
                             <ProfilePicture layout />
                             <ListHeader layout>
-                                <Text mystyles="margin:0; font-weight:bolder; color: rgba(163,212, 251, 1) ">
-                                    {item?.quest?.title}
-                                </Text>
-                                <Text mystyles="margin:0; font-size: 15px; font-weight: bolder">
-                                    리뷰가 별로 없는데 쉬운것 같기도 하고...
+                                <Text mystyles="margin:0; font-weight:bolder; color: rgba(163,212, 251, 1); ">
+                                    {item?.content}
                                 </Text>
                             </ListHeader>
                             <motion.div layout>
-                                <ArticleIcon
-                                    color="primary"
-                                    sx={{ height: "20px" }}
-                                    onClick={toggleOpen}
-                                />
+                                <IconButton
+                                    onClick={detailHandler}
+                                    aria-label="like"
+                                >
+                                    <ArticleIcon
+                                        color="primary"
+                                        sx={{ height: "20px" }}
+                                    />
+                                </IconButton>
                             </motion.div>
                         </Grid>
+                        <AnimatePresence>
+                            {detailOpen && (
+                                <Grid>
+                                    <h1>Feed Details...</h1>
+                                </Grid>
+                            )}
+                        </AnimatePresence>
                         <HeaderBottom>
                             <IconWrapper layout>
-                                <FavoriteIcon sx={{ fontSize: "15px" }} />
-                                <span style={{ fontSize: "12px" }}>30</span>
+                                <IconButton
+                                    onClick={likeHandler}
+                                    color={
+                                        likedByMe === true ? "error" : "primary"
+                                    }
+                                    aria-label="like"
+                                >
+                                    <FavoriteIcon sx={{ fontSize: "15px" }} />
+                                </IconButton>
+                                <span style={{ fontSize: "12px" }}>
+                                    {counter}
+                                </span>
                             </IconWrapper>
                             <IconWrapper layout>
-                                <MessageIcon
-                                    sx={{ fontSize: "15px" }}
+                                <IconButton
                                     onClick={toggleOpen}
-                                />
-                                <span style={{ fontSize: "12px" }}>26</span>
+                                    color={"primary"}
+                                    aria-label="like"
+                                >
+                                    <MessageIcon sx={{ fontSize: "15px" }} />
+                                </IconButton>
+                                <span style={{ fontSize: "12px" }}>
+                                    {item?.commentCnt}
+                                </span>
                             </IconWrapper>
                         </HeaderBottom>
                         <AnimatePresence>
                             {isOpen && <Content list={list} />}
+                            <motion.div>
+                                <TextField
+                                    onChange={changeCommentHandler}
+                                    value={comment}
+                                    fullWidth
+                                    label="댓글"
+                                    id="comment"
+                                />
+                                <Button
+                                    onClick={addCommentHandler}
+                                    style={{ height: "30px" }}
+                                    variant="contained"
+                                >
+                                    <b>작성</b>
+                                </Button>
+                            </motion.div>
                         </AnimatePresence>
                     </List>
                 </div>
@@ -200,35 +249,75 @@ export default function Item(props) {
                         <Grid justifyContent="space-between">
                             <ProfilePicture layout />
                             <ListHeader layout>
-                                <Text mystyles="margin:0; font-weight:bolder; color: rgba(163,212, 251, 1) ">
-                                    {item?.quest?.title}
-                                </Text>
-                                <Text mystyles="margin:0; font-size: 15px; font-weight: bolder">
-                                    리뷰가 별로 없는데 쉬운것 같기도 하고...
+                                <Text mystyles="margin:0; font-weight:bolder; color: rgba(163,212, 251, 1); ">
+                                    {item?.content}
                                 </Text>
                             </ListHeader>
                             <motion.div layout>
-                                <ArticleIcon
-                                    color="primary"
-                                    sx={{ height: "20px" }}
-                                />
+                                <IconButton
+                                    onClick={detailHandler}
+                                    aria-label="like"
+                                >
+                                    <ArticleIcon
+                                        color="primary"
+                                        sx={{ height: "20px" }}
+                                    />
+                                </IconButton>
                             </motion.div>
                         </Grid>
+                        <AnimatePresence>
+                            {detailOpen && (
+                                <Grid>
+                                    <h1>Feed Details...</h1>
+                                </Grid>
+                            )}
+                        </AnimatePresence>
                         <HeaderBottom>
                             <IconWrapper layout>
-                                <FavoriteIcon sx={{ fontSize: "15px" }} />
-                                <span style={{ fontSize: "12px" }}>30</span>
+                                <IconButton
+                                    onClick={likeHandler}
+                                    color={
+                                        likedByMe === true ? "error" : "primary"
+                                    }
+                                    aria-label="like"
+                                >
+                                    <FavoriteIcon sx={{ fontSize: "15px" }} />
+                                </IconButton>
+                                <span style={{ fontSize: "12px" }}>
+                                    {counter}
+                                </span>
                             </IconWrapper>
                             <IconWrapper layout>
-                                <MessageIcon
-                                    sx={{ fontSize: "15px" }}
+                                <IconButton
                                     onClick={toggleOpen}
-                                />
-                                <span style={{ fontSize: "12px" }}>26</span>
+                                    color={"primary"}
+                                    aria-label="like"
+                                >
+                                    <MessageIcon sx={{ fontSize: "15px" }} />
+                                </IconButton>
+                                <span style={{ fontSize: "12px" }}>
+                                    {item?.commentCnt}
+                                </span>
                             </IconWrapper>
                         </HeaderBottom>
                         <AnimatePresence>
                             {isOpen && <Content list={list} />}
+                            <motion.div>
+                                <TextField
+                                    onChange={changeCommentHandler}
+                                    value={comment}
+                                    fullWidth
+                                    label="댓글"
+                                    id="comment"
+                                />
+                                <Button
+                                    onClick={addCommentHandler}
+                                    style={{ height: "30px" }}
+                                    variant="contained"
+                                >
+                                    <b>작성</b>
+                                </Button>
+                            </motion.div>
                         </AnimatePresence>
                     </List>
                 </div>
