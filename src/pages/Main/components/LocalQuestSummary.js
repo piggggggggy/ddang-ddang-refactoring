@@ -2,13 +2,17 @@ import { Grid } from "../../../elements/index";
 import styled from "styled-components";
 import QuestItemForCarousel from "../elements/QuestItemForCarousel";
 import QuestListContainer from "./QuestListContainer";
+import { useNavigate } from "react-router-dom";
 
-export default function LocalQuestSummary({ questList, location }) {
-  
+export default function LocalQuestSummary({ questList, location, isQuestPage }) {
+  const navigate = useNavigate();
+  const moveToQusetPage = () => {
+    navigate("/quest")
+  }
 
   return (
     <Grid
-      mystyles={'padding-bottom: 200px;'}
+      mystyles={isQuestPage ? 'padding: 65px 0 100px;' : 'padding-bottom: 200px;'}
     >
       <Title>
         지금 <span>보광동</span> 퀘스트
@@ -19,7 +23,7 @@ export default function LocalQuestSummary({ questList, location }) {
       >
         <Carousel>
           {questList.map((item, index) => {
-            if (index > 9) return;
+            if (!isQuestPage && index > 9) return;
             return (
               <QuestItemForCarousel
                 key={item.id}
@@ -28,15 +32,21 @@ export default function LocalQuestSummary({ questList, location }) {
               />
             )
           })}
-          <MoreButton>
-            <p>더 보기</p>
-          </MoreButton>
+          {!isQuestPage && (
+            <MoreButton
+              onClick={moveToQusetPage}
+            >
+              <p>더 보기</p>
+            </MoreButton>
+          )}
         </Carousel>
       </Grid>
 
       <Grid mystyles={'padding: 34px 30px 39px'}>
         <QuestListContainer
           questList={questList}
+          isQuestPage={isQuestPage}
+          moveToQusetPage={moveToQusetPage}
         />
       </Grid>
 

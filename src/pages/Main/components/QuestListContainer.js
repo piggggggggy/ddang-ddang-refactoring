@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import QuestItemForList from "../elements/QuestItemForList";
 
-export default function QuestListContainer({ questList }) {
+export default function QuestListContainer({ questList, isQuestPage, moveToQusetPage }) {
   const [tabIndex, setTabIndex] = useState(0);
   let count = 0;
   const tabList = [
@@ -62,7 +62,7 @@ export default function QuestListContainer({ questList }) {
       <Grid>
         {tabIndex === 0 ? (
           questList.map((item, index) => {
-            if (index > 3) return;
+            if (!isQuestPage && index > 3) return;
             return (
               <QuestItemForList
                 key={item.id}
@@ -73,7 +73,7 @@ export default function QuestListContainer({ questList }) {
         ) : (
           questList.map((item, index) => {
             if (item.type === tabList[tabIndex].type && count < 4) {
-              count += 1;
+              if (!isQuestPage) count += 1;
               return (
                 <QuestItemForList
                   key={item.id}
@@ -87,7 +87,7 @@ export default function QuestListContainer({ questList }) {
 
       </Grid>
 
-      <QuestListButton><p>전체 퀘스트 보러가기</p></QuestListButton>
+      {!isQuestPage && (<QuestListButton onClick={moveToQusetPage}><p>전체 퀘스트 보러가기</p></QuestListButton>)}
 
     </Grid>
   )

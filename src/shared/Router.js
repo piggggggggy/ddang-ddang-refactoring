@@ -10,12 +10,14 @@ import Feed from "../pages/MyPage/components/CardList";
 import Chat from "../pages/Chat/Chat";
 import Main from "../pages/Main/Main";
 import MapPage from "../pages/Map/MapPage";
+import QuestPage from "../pages/Quest/QuestPage";
 
 export default function AppRouter() {
     return (
         <Routes>
             <Route path="/" exact element={<Main/>} />
             <Route path="/map" exact element={<MapPage/>} />
+            <Route path="/quest" exact element={<QuestPage/>} />
 
             {/* <Route path="/" element={<MyPageFinal />} /> */}
             <Route path="/signin" element={<Signin />} />
