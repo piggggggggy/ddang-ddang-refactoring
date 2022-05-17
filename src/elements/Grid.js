@@ -29,11 +29,11 @@ export default function Grid(props) {
 }
 
 Grid.defaultProps = {
-    flex: true,
-    justifyContent: "center",
-    alignItems: "center",
-    direction: "",
-    mystyles: false,
+    flex: false,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // direction: "",
+    mystyles: '',
     onClick: () => {},
     key: "",
 };

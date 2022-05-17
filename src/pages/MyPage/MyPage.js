@@ -148,7 +148,7 @@ export default function MyPage() {
                     <ProfilePreview
                         src={profileImage}
                         alt=""
-                        inlineStyles="width: 200px; height: 200px"
+                        mystyles="width: 200px; height: 200px"
                     />
                     <Input type="file" onChange={handleFileInput} />
                 </Grid>
