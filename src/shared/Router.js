@@ -6,15 +6,23 @@ import MyPageFinal from "../pages/MyPage/MyPageFinal";
 import Feed from "../pages/Feed/Feed";
 
 import Chat from "../pages/Chat/Chat";
+import Main from "../pages/Main/Main";
+import MapPage from "../pages/Map/MapPage";
+import QuestPage from "../pages/Quest/QuestPage";
 
 export default function AppRouter() {
     return (
         <Routes>
-            <Route path="/" element={<MyPageFinal />} />
+            <Route path="/" exact element={<Main/>} />
+            <Route path="/map" exact element={<MapPage/>} />
+            <Route path="/quest" exact element={<QuestPage/>} />
+
+            {/* <Route path="/" element={<MyPageFinal />} /> */}
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<SignupFinal />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/chat" element={<Chat />} />
+
         </Routes>
     );
 }

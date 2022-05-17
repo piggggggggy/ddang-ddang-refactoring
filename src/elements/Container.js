@@ -11,7 +11,8 @@ const Wrapper = styled.div`
     min-height: 100vh;
     margin: auto;
     box-sizing: border-box;
-    background: #fff;
-    border: 4px solid black;
-    border-radius: 25px;
+    background: #FDFDFD;
+    /* border: 4px solid black; */
+    overflow: hidden;
+    /* border-radius: 25px; */
 `;
