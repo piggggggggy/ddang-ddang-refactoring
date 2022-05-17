@@ -17,7 +17,6 @@ export default function Main() {
     location,
   } = useMainData();
 
-
   return (
     <Container>
 

@@ -18,6 +18,8 @@ export default function Navigation() {
         return 3;
       case 'myPage':
         return 4;
+      default:
+        return 0;
     }
   })();
 

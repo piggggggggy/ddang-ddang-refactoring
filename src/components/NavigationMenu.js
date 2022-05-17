@@ -18,7 +18,6 @@ export default function NavigationMenu({ index, isSelected }) {
   };
 
   const moveToPage = (index) => {
-    console.log('hi');
     switch (index) {
       case 0:
         navigate('/');

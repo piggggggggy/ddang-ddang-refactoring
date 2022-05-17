@@ -1,22 +1,48 @@
 import React from "react";
 import lo from "lodash";
 import { motion } from "framer-motion";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
-import { Grid } from "../../../elements/index";
+import { Grid, Text } from "../../../elements/index";
 import { Button, Input } from "../../Sign/elements/index";
 import DuplicateCheck from "../Signup/components/DuplicateCheck";
+import ProfilePreview from "../../Sign/Signup/components/ProfilePreview";
+import Mbti from "../Signup/components/MbtiSlider";
 
 import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 
-import mbti from "../../../assets/images/png/mbti";
+// aws s3 bucket
+import AWS from "aws-sdk";
+const S3_BUCKET = "image-uploading-pol";
+const REGION = "ap-northeast-2";
 
-import ProfilePreview from "../../Sign/Signup/components/ProfilePreview";
+AWS.config.update({
+    accessKeyId: "AKIARWI6Z2AKSPUWWMXF",
+    secretAccessKey: "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",
+});
+
+const myBucket = new AWS.S3({
+    params: { Bucket: S3_BUCKET },
+    region: REGION,
+});
+
+const API_ENDPOINT =
+    "https://txtyz08kc4.execute-api.ap-northeast-2.amazonaws.com/default/getPresignedImageURL";
 
 export default function SignupFinal() {
+    // 최종 회원 가입 값
+    const [finalSignupValue, setFinalSignupValue] = React.useState({
+        email: "string",
+        nickname: "string",
+        password: "string",
+        mbti: "string",
+        profileImg: "string",
+    });
+    console.log(finalSignupValue);
+
     // 이메일
     const [email, setEmail] = React.useState("");
     const emailDebounce = lo.debounce((k) => setEmail(k), 500);
@@ -206,17 +232,12 @@ export default function SignupFinal() {
             passwordAfterRegex === password &&
             passwordConfirmAfterRegex === passwordConfirm
         ) {
-            console.log(emailafterCheck, email);
-            console.log(nicknameafterCheck, nickname);
-            console.log("success!");
             setFirstPageComplete(true);
             // setPage(2);
         } else {
-            console.log("fail");
             setFirstPageComplete(false);
         }
     };
-    console.log(firstPageComplete);
     const signup = () => {
         if (
             emailAxiosCheck &&
@@ -230,12 +251,88 @@ export default function SignupFinal() {
         ) {
             console.log("success!");
             setPage(2);
+            let firstSignupData = {
+                email: email,
+                nickname: nickname,
+                password: password,
+            };
+            setFinalSignupValue({ ...firstSignupData });
         }
     };
 
-    // image
-    const [width, setWidth] = React.useState(0);
-    const carousel = React.useRef();
+    // mbti image
+
+    const selectMbti = (e) => {
+        let mbtiValue = e.target.innerHTML.split(" ");
+        let mbtiSignupValue = { mbti: mbtiValue[0] };
+        setFinalSignupValue({ ...finalSignupValue, ...mbtiSignupValue });
+        setPage(3);
+    };
+
+    // profile image
+    const [profileImage, setProfileImage] = React.useState("");
+    const [myKey, setMyKey] = React.useState("");
+
+    const handleImgChange = async (e) => {
+        const f = e.target.files[0];
+        // preview 보여주기
+        var reader = new FileReader();
+        reader.onload = function () {
+            console.log(reader.result);
+            setProfileImage(reader.result);
+        };
+        reader.onerror = function (error) {
+            console.log("Error: ", error);
+        };
+        reader.readAsDataURL(f);
+        console.log(f);
+        const response = await axios({
+            method: "GET",
+            url: API_ENDPOINT,
+        });
+        console.log(response.data.Key);
+        setMyKey(response.data.Key);
+
+        const result = await fetch(response.data.uploadURL, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "image/jpeg",
+            },
+            body: f,
+        });
+        console.log(result.url);
+    };
+
+    const getUrl = () => {
+        console.log(typeof myKey);
+        console.log(myKey);
+        const url = myBucket.getSignedUrl("getObject", {
+            Bucket: S3_BUCKET,
+            Key: myKey,
+        });
+        console.log(url);
+        let finalImage = { profileImg: url };
+        setFinalSignupValue({ ...finalSignupValue, ...finalImage });
+        console.log(finalSignupValue);
+        // final submit
+        finalsignup();
+    };
+    const navigate = useNavigate();
+    const finalsignup = async () => {
+        console.log(finalSignupValue);
+        await axios
+            .post("/api/players/signup", {
+                finalSignupValue,
+            })
+            .then((res) => {
+                console.log(res);
+                navigate("/signin");
+            })
+            .catch((err) => {
+                console.log(err);
+                navigate("/signin");
+            });
+    };
 
     React.useEffect(() => {
         checkEmailByRegex(email);
@@ -247,16 +344,12 @@ export default function SignupFinal() {
             nickname: nickname,
             password: password,
         });
-        setWidth(
-            carousel?.current?.scrollWidth - carousel?.current?.offsetWidth
-        );
         checkfirstpageComplete();
     }, [
         email,
         nickname,
         password,
         passwordConfirm,
-        width,
         emailAxiosCheck,
         nicknameAxiosCheck,
         emailafterCheck,
@@ -484,32 +577,48 @@ export default function SignupFinal() {
                             당신의 MBTI는 무엇인가요?
                         </motion.h2>
                     </Grid>
-                    <Grid mystyles="min-height: 30vh; border: 2px solid red;">
-                        <Carousel
-                            ref={carousel}
-                            whileTap={{ cursor: "grabbing" }}
-                        >
-                            <InnerCarousel
-                                drag="x"
-                                dragConstraints={{ right: 0, left: -width }}
+                    <Mbti onClick={selectMbti} />
+                </>
+            )}
+            {page === 3 && (
+                <>
+                    <Grid direction="column">
+                        <Grid>
+                            <motion.h1
+                                initial={{ y: -250, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
                             >
-                                {mbti.map((image) => {
-                                    return (
-                                        <Item key={image}>
-                                            <Img
-                                                src={image}
-                                                alt=""
-                                                onClick={() => {
-                                                    console.log("hello");
-                                                }}
-                                            />
-                                        </Item>
-                                    );
-                                })}
-                            </InnerCarousel>
-                        </Carousel>
+                                프로필 사진을
+                            </motion.h1>
+                        </Grid>
+                        <Grid>
+                            <motion.h1
+                                initial={{ y: -250, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                            >
+                                선택해주세요!
+                            </motion.h1>
+                        </Grid>
+                        <ProfilePreview
+                            src={profileImage}
+                            mystyles="width: 300px; height: 300px; border-radius: 300px; border: 3px solid grey"
+                        ></ProfilePreview>
+                        <Grid
+                            direction="row"
+                            justifyContent="center"
+                            alignItes="center"
+                        >
+                            <Input type="file" onChange={handleImgChange} />
+                        </Grid>
+                        <Grid mystyles="height: 30vh">
+                            <Button
+                                mystyles="height: 50px; width: 200px; border-radius: 25px; border: none; font-size: 20px; font-weight: bold; background-color: #FBA3A0"
+                                onClick={getUrl}
+                            >
+                                회원가입 완료
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid></Grid>
                 </>
             )}
         </>

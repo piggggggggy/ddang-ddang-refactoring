@@ -27,6 +27,8 @@ export default function Signin() {
     const siginin = () => {
         if (email !== "" && password !== "") {
             dispatch(signinAxios(email, password, (url) => navigate(url)));
+        } else if (email === "" && password === "") {
+            alert("이메일 || 비밀번호를 입력해주세요");
         }
     };
 
@@ -44,8 +46,8 @@ export default function Signin() {
                     땅땅 로고
                 </motion.h1>
             </Grid>
-            <Grid direction="column" mystyles="min-height: 45vh;">
-                <Grid direction="column" mystyles="min-height: 25vh;">
+            <Grid flex direction="column" mystyles="min-height: 45vh;">
+                <Grid flex direction="column" mystyles="min-height: 25vh;">
                     <Input
                         mystyles="height: 40px; width: 250px; border-radius: 10px; border: none; box-shadow: 2px 5px 16px 0px #0B325E"
                         placeholder="이메일을 입력해주세요"
@@ -60,7 +62,7 @@ export default function Signin() {
                         whileFocus={{ scale: 1.2 }}
                     />
                 </Grid>
-                <Grid direction="column" mystyles="min-height: 20vh">
+                <Grid flex direction="column" mystyles="min-height: 20vh">
                     <Button
                         mystyles="height: 50px; width: 200px; border-radius: 25px; border: none; font-size: 20px; font-weight: bold; background-color: #FBA3A0"
                         onClick={siginin}
@@ -81,7 +83,6 @@ export default function Signin() {
             <Grid direction="column" mystyles="min-height: 25vh;">
                 <SocialSignin></SocialSignin>
             </Grid>
-            <motion.input type="text" whileFocus={{ scale: 1.2 }} />
         </>
     );
 }
