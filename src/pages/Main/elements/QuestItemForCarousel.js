@@ -1,11 +1,19 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
+import { questFragment } from "../../../modules/fragment";
+import { getUpdatedDistance } from "../../../modules/location";
 
-export default function QuestItemForCarousel() {
-
+export default function QuestItemForCarousel(Props) {
+  const fragment = questFragment(Props.type);
+  const distance = getUpdatedDistance({
+    lat: Props.location.lat,
+    lng: Props.location.lng,
+    _lat: Number(Props.lat),
+    _lng: Number(Props.lng),
+  });
   return (
     <Grid mystyles={'width: 128px; min-width: 128px; height: 106px; margin: 0px 8px;'}>
-      <Card style={{background: '#61B7FA'}}>
+      <Card style={{background: fragment.color}}>
         <IconWrapper>
           <img alt={"icon"}/>
         </IconWrapper>
@@ -13,9 +21,9 @@ export default function QuestItemForCarousel() {
           땅에 대한<br/>
           이야기 만땅
         </Title>
-        <Description>어떠한 리뷰든 남겨주세요!</Description>
-        <CardFooter style={{background: '#A3D4FB'}}>
-          <p>내 위치로부터 30m</p>
+        <Description>{Props.description}</Description>
+        <CardFooter style={{background: fragment.subColor}}>
+          <p>내 위치로부터 {Math.round(distance * 1000)}m</p>
         </CardFooter>
       </Card>
     </Grid>
@@ -58,9 +66,13 @@ const Title = styled.p`
 `;
 
 const Description = styled.p`
+  width: 100%;
   font-size: 8px;
   line-height: 1.1;
   color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const CardFooter = styled.div`

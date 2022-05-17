@@ -1,7 +1,10 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
+import { questFragment } from "../../../modules/fragment";
 
-export default function QuestItemForList() {
+export default function QuestItemForList(Props) {
+
+  const fragment = questFragment(Props.type);
 
   return (
     <Card>
@@ -17,8 +20,8 @@ export default function QuestItemForList() {
         <Grid
           mystyles={'width: calc(100% - 83px);'}
         >
-          <Title style={{color: '#EB6042'}}>땅깨비를 이겨라</Title>
-          <Description>땅깨비와 짜릿한 한판승 어때요?</Description>
+          <Title style={{color: fragment.color}}>{Props.title}</Title>
+          <Description>{Props.description}</Description>
         </Grid>
 
         <Grid 
@@ -27,7 +30,7 @@ export default function QuestItemForList() {
           alignItems={"center"}
           mystyles={'width: 60px;'}
         >
-          <Point style={{color: '#EB6042'}}>3,000P</Point>
+          <Point style={{color: fragment.color}}>{Props.reward},000P</Point>
           <Description>난이도</Description>
         </Grid>
       </Grid>
@@ -64,9 +67,13 @@ const Title = styled.p`
 `;
 
 const Description = styled.p`
+  width: 90%;
   font-size: 10px;
   line-height: 1.15;
   color: #909090;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const Point = styled.p`

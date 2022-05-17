@@ -4,23 +4,7 @@ import { MapMarker } from "react-kakao-maps-sdk";
 import { getQuestList } from '../../../apis/mainApi';
 import KakaoMapDefault from '../../../components/KakaoMapDefault';
 
-export default function MainMapContainer({ type }) {
-  const [questList, setQuestList] = useState([
-    {
-      questId: 0,
-      lat: 0,
-      lng: 0,
-    }
-  ]);
-
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition( async (res) => {
-      const data = await getQuestList(res.coords.latitude, res.coords.longitude);
-      console.log(data);
-      
-    });
-  }, [])
+export default function MainMapContainer({ type, questList }) {
 
   const minmapFragment = (() => {
     switch (type) {
@@ -55,12 +39,27 @@ export default function MainMapContainer({ type }) {
   return (
     <MapWrapper>
       <KakaoMapDefault>
-        {/* {questList.map(item => (
-          <MapMarker 
-            key={item.questId} 
-            position={{lat: item.lat, lng: item.lng}}
-          />
-        ))} */}
+        {type === "all" ? (
+          questList.map(item => {
+            return (
+              <MapMarker 
+                key={item.questId} 
+                position={{lat: item.lat, lng: item.lng}}
+              />
+            )
+          })
+        ) : (
+          questList.map(item => {
+            if (type === item.type) {
+              return (
+                <MapMarker 
+                  key={item.questId} 
+                  position={{lat: item.lat, lng: item.lng}}
+                />
+              )
+            }
+          })
+        ) }
       </KakaoMapDefault>
       <MapFooter style={{background: minmapFragment.color}}>
         <p>{minmapFragment.text}</p>

@@ -24,6 +24,8 @@ export default function KakaoMapDefault({ children, fullSize}) {
       <Map
           center={currentMapPosition}
           draggable={false}
+          level={6}
+          zoomable={false}
           style={{ width: "100%", height: fullSize ? "100vh" : "100%" }}
       >
         {children}

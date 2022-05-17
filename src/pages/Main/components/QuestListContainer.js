@@ -3,24 +3,29 @@ import styled from "styled-components";
 import { useState } from "react";
 import QuestItemForList from "../elements/QuestItemForList";
 
-export default function QuestListContainer() {
+export default function QuestListContainer({ questList }) {
   const [tabIndex, setTabIndex] = useState(0);
+  let count = 0;
   const tabList = [
     {
       name: "전체",
       color: '#999fAB',
+      type: "all",
     },
     {
       name: "몬스터",
       color: '#EB6042',
+      type: "mob",
     },
     {
       name: "타임어택",
       color: '#61B7FA',
+      type: "time",
     },
     {
       name: "땅문서",
       color: '#EDEA50',
+      type: "feed",
     },
   ]
 
@@ -55,10 +60,31 @@ export default function QuestListContainer() {
       </Grid>
 
       <Grid>
-        <QuestItemForList/>
-        <QuestItemForList/>
-        <QuestItemForList/>
-        <QuestItemForList/>
+        {tabIndex === 0 ? (
+          questList.map((item, index) => {
+            if (index > 3) return;
+            return (
+              <QuestItemForList
+                key={item.id}
+                {...item}
+              />
+            )
+          })
+        ) : (
+          questList.map((item, index) => {
+            if (item.type === tabList[tabIndex].type && count < 4) {
+              count += 1;
+              return (
+                <QuestItemForList
+                  key={item.id}
+                  {...item}
+                />
+              )
+            }
+          })
+        ) }
+
+
       </Grid>
 
       <QuestListButton><p>전체 퀘스트 보러가기</p></QuestListButton>

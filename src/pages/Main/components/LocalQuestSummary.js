@@ -3,7 +3,7 @@ import styled from "styled-components";
 import QuestItemForCarousel from "../elements/QuestItemForCarousel";
 import QuestListContainer from "./QuestListContainer";
 
-export default function LocalQuestSummary() {
+export default function LocalQuestSummary({ questList, location }) {
   
 
   return (
@@ -18,16 +18,26 @@ export default function LocalQuestSummary() {
         mystyles={'width: 100%; max-width: 100%;'}
       >
         <Carousel>
-          <QuestItemForCarousel/>
-          <QuestItemForCarousel/>
-          <QuestItemForCarousel/>
-          <QuestItemForCarousel/>
-          <QuestItemForCarousel/>
+          {questList.map((item, index) => {
+            if (index > 9) return;
+            return (
+              <QuestItemForCarousel
+                key={item.id}
+                {...item}
+                location={location}
+              />
+            )
+          })}
+          <MoreButton>
+            <p>더 보기</p>
+          </MoreButton>
         </Carousel>
       </Grid>
 
       <Grid mystyles={'padding: 34px 30px 39px'}>
-        <QuestListContainer/>
+        <QuestListContainer
+          questList={questList}
+        />
       </Grid>
 
     </Grid>
@@ -53,5 +63,19 @@ const Carousel = styled.div`
   padding: 20px 0 0;
   &::-webkit-scrollbar {
     display: none;
+  }
+`;
+
+const MoreButton = styled.div`
+  width: 100px; 
+  min-width: 100px; 
+  height: 106px; 
+  margin: 0px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & p {
+    font-size: 20px;
+    font-weight: 700;
   }
 `;

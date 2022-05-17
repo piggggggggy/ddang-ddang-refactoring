@@ -3,8 +3,8 @@ function getUpdatedDistance({ lat, lng, _lat, _lng }) {
       return 0;
   } else {
       let radlat1 = (Math.PI * lat) / 180;
-      let radlat2 = (Math.PI * lat) / 180;
-      let theta = lng - lng;
+      let radlat2 = (Math.PI * _lat) / 180;
+      let theta = lng - _lng;
       let radtheta = (Math.PI * theta) / 180;
       let dist =
           Math.sin(radlat1) * Math.sin(radlat2) +

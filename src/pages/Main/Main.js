@@ -6,9 +6,17 @@ import LocalQuestSummary from "./components/LocalQuestSummary";
 import MainMapContainer from "./components/MainMapContainer";
 import Navigation from "../../components/Navigation";
 import { useState } from "react";
+import { useMainData } from "./hooks/MainHooks";
 
 export default function Main() {
-  const [questType, setQuestType] = useState('all');
+  const {
+    questList,
+    loading,
+    questType,
+    setQuestType,
+    location,
+  } = useMainData();
+
 
   return (
     <Container>
@@ -25,6 +33,7 @@ export default function Main() {
         
         <MainMapContainer
           type={questType}
+          questList={questList}
         />
 
         <QuestButtonContainer
@@ -32,7 +41,10 @@ export default function Main() {
         />
       </Grid>
 
-      <LocalQuestSummary/>
+      <LocalQuestSummary
+        questList={questList}
+        location={location}
+      />
 
 
       <Navigation/>
