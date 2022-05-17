@@ -12,7 +12,10 @@ export default function QuestListConatiner({title, list}) {
     >
       <Label>{title}<span>{list.length}</span></Label>
       {list.map(item => (
-        <QuestItem isCompleted={item === 0}/>
+        <QuestItem 
+          key={item.id} 
+          {...item}
+        />
       ))}
     </Grid>
   )

@@ -3,8 +3,8 @@ import { getUpdatedDistance } from "../../../modules/location";
 
 const geolocationOptions = {
   enableHighAccuracy: true,
-  maximumAge: 10000,
-  timeout: 5000,
+  maximumAge: 0,
+  // timeout: 5000,
 }
 
 const useWatchLocation = () => {
@@ -27,7 +27,7 @@ const useWatchLocation = () => {
     }
   }
 
-  // useEffect(() => {
+  useEffect(() => {
     if (!isDrag) {
       if (!navigator.geolocation) {
         window.alert('gps 에러');
@@ -54,18 +54,19 @@ const useWatchLocation = () => {
           }
         },
         (err)=>{},
-        // {...geolocationOptions},
+        {...geolocationOptions},
       )
     }
 
-    // watchId.current = navigator.geolocation.watchPosition(
-    //   (position) => {
-    //     console.log("check", position)
-    //   }
-    // )
+    watchId.current = navigator.geolocation.watchPosition(
+      (position) => {
+        console.log("check", position)
+      }
+    )
     
-    // return cancelWatchPosition;
-  // }, [isDrag, record]);
+    return cancelWatchPosition;
+  }, [isDrag, record]);
+
 
   return {
     currentMapPosition,

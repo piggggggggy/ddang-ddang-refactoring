@@ -22,7 +22,7 @@ const useMainData = () => {
       console.log(res);
       setQuestList(data.rows)
       setTimeout(() => {
-        setLoading(FlashOnOutlined)
+        setLoading(false)
       }, 200)
     });
   }, [])

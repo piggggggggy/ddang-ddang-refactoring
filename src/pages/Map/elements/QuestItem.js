@@ -1,14 +1,21 @@
 import styled from "styled-components";
 import { Grid } from "../../../elements";
+import { questFragment } from "../../../modules/fragment";
 
-export default function QuestItem({ isCompleted }) {
+export default function QuestItem(Props) {
+  const fragment = questFragment(Props.type);
 
   return (
     <Card>
       
-      <Tip/>
+      <Tip style={{background: fragment.subColor}}/>
+      
+      <Grid>
+        <Title style={{color: fragment.color}}>{Props.title}</Title>
+        <Description>{Props.description}</Description>
+      </Grid>
 
-      {isCompleted && (
+      {Props.completed && (
         <Grid
           flex
           justifyContent={"center"}
@@ -27,6 +34,7 @@ export default function QuestItem({ isCompleted }) {
 const Card = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: relative;
   width: 232px;
   height: 53px;
@@ -62,4 +70,22 @@ const CompletedText = styled.div`
     line-height: 1.15;
     color: #5DEB85;
   }
+`;
+
+const Title = styled.p`
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.15;
+  padding-bottom: 10px;
+`;
+
+const Description = styled.p`
+  width: 70%;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #BABABA;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

@@ -3,21 +3,39 @@ import styled from "styled-components";
 import KakaoMapDefault from "../../components/KakaoMapDefault";
 import MapSideTab from "./components/MapSideTab";
 import { Container, Grid } from "../../elements";
+import MapComponent from "./components/MapComponent";
+import { useMainData } from "../Main/hooks/MainHooks";
+import LandingModal from "./components/LandingModal";
 
 export default function MapPage() {
   const [tabOpen, setTabOpen] = useState(false);
   const closeTab = () => {
     setTabOpen(false);
   }
+
+  const {
+    questList,
+    loading,
+    questType,
+    setQuestType,
+    location,
+  } = useMainData();
+
   return (
     <Container>
-      <KakaoMapDefault fullSize>
+      <LandingModal
+        loading={loading}
+      />
 
-      </KakaoMapDefault>
+      <MapComponent
+        questList={questList}
+        questType={questType}
+      />
 
       <MapSideTab 
         open={tabOpen}
         setClose={closeTab}
+        questList={questList}
       />
 
       <UserInfo onClick={()=>setTabOpen(true)}>
@@ -33,21 +51,29 @@ export default function MapPage() {
           flex
           justifyContent={"space-between"}
         >
-          <BottomCategoryButton>
+          <BottomCategoryButton
+            onClick={() => setQuestType("mob")}
+          >
             <img/>
-            <p></p>
+            <p>몬스터대전</p>
           </BottomCategoryButton>
-          <BottomCategoryButton>
+          <BottomCategoryButton
+            onClick={() => setQuestType("time")}        
+          >
             <img/>
-            <p></p>
+            <p>타임어택</p>
           </BottomCategoryButton>
-          <BottomCategoryButton>
+          <BottomCategoryButton
+            onClick={() => setQuestType("feed")}
+          >
             <img/>
-            <p></p>
+            <p>땅문서작성</p>
           </BottomCategoryButton>
-          <BottomCategoryButton>
+          <BottomCategoryButton
+            onClick={() => setQuestType("all")}
+          >
             <img/>
-            <p></p>
+            <p>전체리스트</p>
           </BottomCategoryButton>
         </Grid>
 
@@ -101,12 +127,21 @@ const UserInfo = styled.div`
 `;
 
 const BottomCategoryButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 22%;
   height: calc(22vw - 10px);
   max-height: 80px;
   background: #fff;
   box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
   border-radius: 10px;
+  & p {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
 `;
 
 const BottomFooterButton = styled.div`
