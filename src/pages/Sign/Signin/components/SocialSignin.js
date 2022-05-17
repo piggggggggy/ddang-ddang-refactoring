@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { KAKAO_OAUTH_URL } from "../../../../shared/OAuth";
 import kakaoIcon from "../../../../assets/images/png/kakao_icon.png";
 
-const SocialSignin = () => {
+const SocialSignin = (props) => {
+    // onClick={() => window.location.replace(KAKAO_OAUTH_URL)}
     return (
-        <KakaoBtn onClick={() => window.location.replace(KAKAO_OAUTH_URL)}>
+        <KakaoBtn onClick={() => alert("준비중인 서비스입니다")}>
             <img alt="kakao login" src={kakaoIcon} />
             <span>카카오로 시작하기</span>
         </KakaoBtn>

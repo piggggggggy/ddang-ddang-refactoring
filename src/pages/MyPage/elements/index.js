@@ -1,4 +1,5 @@
 import Text from "./Text";
 import Button from "./Button";
+import Grid from "./Grid";
 
-export { Text, Button };
+export { Text, Button, Grid };

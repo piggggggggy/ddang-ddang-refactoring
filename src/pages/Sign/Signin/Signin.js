@@ -27,6 +27,8 @@ export default function Signin() {
     const siginin = () => {
         if (email !== "" && password !== "") {
             dispatch(signinAxios(email, password, (url) => navigate(url)));
+        } else if (email === "" && password === "") {
+            alert("이메일 || 비밀번호를 입력해주세요");
         }
     };
 
@@ -81,7 +83,6 @@ export default function Signin() {
             <Grid direction="column" mystyles="min-height: 25vh;">
                 <SocialSignin></SocialSignin>
             </Grid>
-            <motion.input type="text" whileFocus={{ scale: 1.2 }} />
         </>
     );
 }
