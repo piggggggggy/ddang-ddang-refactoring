@@ -16,23 +16,24 @@ function App() {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = React.useState(true);
 
-    React.useEffect(() => {
-        const token = getCookie("token");
-        if (token) {
-            dispatch(
-                loginCheckAxios(token, (url) => {
-                    navigate(url);
-                })
-            );
-        } else {
-            navigate("/signin");
-        }
-        setIsLoading(false);
-    }, []);
+    // React.useEffect(() => {
+    //     const token = getCookie("token");
+    //     console.log(token);
+    //     if (token) {
+    //         dispatch(
+    //             loginCheckAxios(token, (url) => {
+    //                 navigate(url);
+    //             })
+    //         );
+    //     } else {
+    //         navigate("/signin");
+    //     }
+    //     setIsLoading(false);
+    // }, []);
 
-    if (isLoading) {
-        return <Spinner>Loading...</Spinner>;
-    }
+    // if (isLoading) {
+    //     return <Spinner>Loading...</Spinner>;
+    // }
 
     return (
         <Container>
