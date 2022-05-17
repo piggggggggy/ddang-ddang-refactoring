@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MapMarker } from "react-kakao-maps-sdk";
-import { getQuestList } from '../../../apis/mainApi';
 import KakaoMapDefault from '../../../components/KakaoMapDefault';
+import { useNavigate } from 'react-router-dom';
 
 export default function MainMapContainer({ type, questList }) {
+  const navigate = useNavigate();
 
   const minmapFragment = (() => {
     switch (type) {
@@ -61,7 +61,10 @@ export default function MainMapContainer({ type, questList }) {
           })
         ) }
       </KakaoMapDefault>
-      <MapFooter style={{background: minmapFragment.color}}>
+      <MapFooter 
+        style={{background: minmapFragment.color}}
+        onClick={() => navigate("/map")}
+      >
         <p>{minmapFragment.text}</p>
       </MapFooter>
     </MapWrapper>
