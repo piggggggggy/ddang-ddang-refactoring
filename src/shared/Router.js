@@ -13,16 +13,15 @@ import QuestPage from "../pages/Quest/QuestPage";
 export default function AppRouter() {
     return (
         <Routes>
-            <Route path="/" exact element={<Main/>} />
-            <Route path="/map" exact element={<MapPage/>} />
-            <Route path="/quest" exact element={<QuestPage/>} />
+            <Route path="/" exact element={<Main />} />
+            <Route path="/map" exact element={<MapPage />} />
+            <Route path="/quest" exact element={<QuestPage />} />
 
-            {/* <Route path="/" element={<MyPageFinal />} /> */}
+            <Route path="/mypage" element={<MyPageFinal />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<SignupFinal />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/chat" element={<Chat />} />
-
         </Routes>
     );
 }
