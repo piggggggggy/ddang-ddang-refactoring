@@ -8,18 +8,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 
 export default function QuestActivateLayer({ open, setClose, list }) {
-
-  const dd = [
-    {
-      type: 'mob',
-    },
-    {
-      type: 'time',
-    },
-    // {
-    //   type: 'feed'
-    // }
-  ]
   return (
     <>
       {open && (<Dimmed onClick={setClose}/>)}
@@ -32,7 +20,7 @@ export default function QuestActivateLayer({ open, setClose, list }) {
             arrows={false}
             centerPadding={"20px"}
           >
-          {dd.map((item, index) => (
+          {list.map((item, index) => (
                 <SelectedQuestCard {...item} onClick={setClose}/>
             ))}
           </Slider>
