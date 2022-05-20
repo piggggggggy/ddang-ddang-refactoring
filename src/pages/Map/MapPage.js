@@ -6,11 +6,16 @@ import { Container, Grid } from "../../elements";
 import MapComponent from "./components/MapComponent";
 import { useMainData } from "../Main/hooks/MainHooks";
 import LandingModal from "./components/LandingModal";
+import QuestActivateLayer from "./components/QuestActivateLayer";
 
 export default function MapPage() {
   const [tabOpen, setTabOpen] = useState(false);
+  const [questActive, setQuestActive] = useState(false);
   const closeTab = () => {
     setTabOpen(false);
+  }
+  const closeQuestActive = () => {
+    setQuestActive(false);
   }
 
   const {
@@ -23,9 +28,9 @@ export default function MapPage() {
 
   return (
     <Container>
-      <LandingModal
+      {/* <LandingModal
         loading={loading}
-      />
+      /> */}
 
       <MapComponent
         questList={questList}
@@ -42,11 +47,7 @@ export default function MapPage() {
         <p><span>Lv.77</span>강윤지</p>
       </UserInfo>
 
-      <Grid
-        mystyles={
-          'position: absolute; bottom: 0; padding: 0 20px 50px; z-index: 500;'
-        }
-      >
+      <ButtonWrapper style={questActive ? {display: "none"} : {display: "block"}}>
         <Grid 
           flex
           justifyContent={"space-between"}
@@ -93,11 +94,20 @@ export default function MapPage() {
               <LevelProgressBar style={{width: '70%'}}/>
             </Grid>
           </BottomFooterButton>
-          <BottomFooterButton style={{background: '#EBEBEB'}}>
+          <BottomFooterButton 
+            style={{background: '#EBEBEB'}}
+            onClick={()=>setQuestActive(true)}
+          >
             <p>땅땅 시작</p>
           </BottomFooterButton>
         </Grid>
-      </Grid>
+      </ButtonWrapper>
+
+      <QuestActivateLayer
+        open={questActive}
+        setClose={closeQuestActive}
+        list={[]}
+      />
     </Container>
   )
 }
@@ -177,4 +187,12 @@ const LevelProgressBar = styled.div`
   width: 100px;
   height: 8px;
   background: #5DEB85;
+`;
+
+const ButtonWrapper = styled.div`
+  position: absolute; 
+  bottom: 0; 
+  padding: 0 20px 50px; 
+  z-index: 500;
+  width: 100%;
 `;

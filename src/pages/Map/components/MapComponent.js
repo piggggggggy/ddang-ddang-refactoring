@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Circle, Map, MapMarker } from "react-kakao-maps-sdk";
 import { Grid } from "../../../elements";
+import QuestMarker from "../elements/QuestMarker";
 import { useWatchLocation } from "../hooks/locationHooks";
 
 export default function MapComponent({ questList, questType }) {
@@ -85,12 +86,10 @@ export default function MapComponent({ questList, questType }) {
           {questList.map((item, index) => {
             if (questType === "all") {
               return (
-                <MapMarker
+                <QuestMarker
                   key={item.id}
-                  position={{lat: item.lat, lng: item.lng}}
-                >
-                  {/* <p>{item.type}</p> */}
-                </MapMarker>
+                  {...item}
+                />
               )  
             } else {
               if (questType === item.type) {
