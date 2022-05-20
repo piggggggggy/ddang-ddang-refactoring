@@ -15,7 +15,7 @@ export default function AppRouter() {
         <Routes>
             <Route path="/" exact element={<Main/>} />
             <Route path="/map" exact element={<MapPage/>} />
-            <Route path="/quest" exact element={<QuestPage/>} />
+            <Route path="/quest" exact element={<MapPage/>} />
 
             {/* <Route path="/" element={<MyPageFinal />} /> */}
             <Route path="/signin" element={<Signin />} />
