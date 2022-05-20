@@ -4,7 +4,7 @@ import { getUpdatedDistance } from "../../../modules/location";
 const geolocationOptions = {
   enableHighAccuracy: true,
   maximumAge: 0,
-  // timeout: 5000,
+  timeout: 1000,
 }
 
 const useWatchLocation = () => {
@@ -43,7 +43,7 @@ const useWatchLocation = () => {
           }
           if (record !== null) {
             const distance = getUpdatedDistance({ lat: record.lat, lng: record.lng, _lat: newRecord.lat, _lng: newRecord.lng})
-            if (distance < 0.03) update = false;
+            if (distance < 0.02) update = false;
           }
           if (update) {
             // console.log(update, '와치 업데이트 성공!!!!', "이전 :", record, "뉴 :", newRecord);
