@@ -6,10 +6,7 @@ export const getFeedsAxios = (token, region) => {
     return async function (dispatch) {
         await axios
             .get("/api/feeds", {
-                headers: { Authorization: `Bearer ${token}` },
-                data: {
-                    region,
-                },
+                region,
             })
             .then((res) => {
                 console.log(res);

@@ -18,7 +18,6 @@ function App() {
 
     // React.useEffect(() => {
     //     const token = getCookie("token");
-    //     console.log(token);
     //     if (token) {
     //         dispatch(
     //             loginCheckAxios(token, (url) => {

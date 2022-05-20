@@ -1,14 +1,19 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Signin from "../pages/Sign/Signin/Signin";
+import SigninFinal from "../pages/Sign/Signin/SigninFinal";
 import SignupFinal from "../pages/Sign/Signup/SignupFinal";
-import MyPageFinal from "../pages/MyPage/MyPageFinal";
-import Feed from "../pages/Feed/Feed";
-
-import Chat from "../pages/Chat/Chat";
+import MyPageFinal from "../pages/MyPage/MyPage";
+import FeedFinal from "../pages/Feed/FeedFinal";
+import KakaoLogin from "../pages/Sign/KakaoLogin";
+import Ranking from "../pages/Ranking/Ranking";
 import Main from "../pages/Main/Main";
 import MapPage from "../pages/Map/MapPage";
 import QuestPage from "../pages/Quest/QuestPage";
+
+import Chat from "../pages/Chat/Chat";
+import LandingPage from "../pages/Chat/LandingPage";
+
+import API_TEST from "../APITEST";
 
 export default function AppRouter() {
     return (
@@ -16,12 +21,24 @@ export default function AppRouter() {
             <Route path="/" exact element={<Main />} />
             <Route path="/map" exact element={<MapPage />} />
             <Route path="/quest" exact element={<QuestPage />} />
-
+            <Route
+                path="/api/players/kakaoauth"
+                exact
+                element={<KakaoLogin />}
+            />
             <Route path="/mypage" element={<MyPageFinal />} />
-            <Route path="/signin" element={<Signin />} />
+            <Route path="/ranking" element={<Ranking />} />
+            <Route path="/signin" element={<SigninFinal />} />
             <Route path="/signup" element={<SignupFinal />} />
-            <Route path="/feed" element={<Feed />} />
-            <Route path="/chat" element={<Chat />} />
+            <Route path="/feed" element={<FeedFinal />} />
+            <Route
+                path="/chat/:userId/:nickname/:roomName"
+                element={<Chat />}
+            />
+
+            <Route exact path="/landing" element={<LandingPage />} />
+
+            <Route exact path="/apitest" element={<API_TEST />} />
         </Routes>
     );
 }

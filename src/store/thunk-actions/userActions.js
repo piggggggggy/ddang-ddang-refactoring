@@ -6,9 +6,12 @@ export const loginCheckAxios = (token, navigate) => {
     return async function (dispatch) {
         try {
             console.log(token);
-            const response = await axios.get("/api/players/auth", {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const response = await axios.get(
+                "http://diasm.mooo.com:3000/api/players/auth",
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
             console.log(response);
             const user = {
                 email: response.data.row.email,
@@ -30,15 +33,19 @@ export const signinAxios = (email, password, navigate) => {
             password,
         };
         try {
-            const response = await axios.post("/api/players/signin", user);
+            const response = await axios.post(
+                "http://15.164.213.175:3000/api/players/signin",
+                user
+            );
             console.log(response);
             user = { email, nickname: response.data.row.nickname };
-            const tokenFullString = response.headers.authorization;
+            const tokenFullString = response.headers.accesstoken;
             const tokenArr = tokenFullString.split(" ");
+            console.log(tokenArr);
             dispatch(userActions.signin({ user, token: tokenArr[1] }));
             navigate("/");
         } catch (error) {
-            console.log("회원가입 실패:", error.response);
+            console.log(error);
         }
     };
 };
