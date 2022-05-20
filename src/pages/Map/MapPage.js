@@ -1,53 +1,133 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import KakaoMapDefault from "../../components/KakaoMapDefault";
 import MapSideTab from "./components/MapSideTab";
 import { Container, Grid } from "../../elements";
 import MapComponent from "./components/MapComponent";
-import { useMainData } from "../Main/hooks/MainHooks";
 import LandingModal from "./components/LandingModal";
 import QuestActivateLayer from "./components/QuestActivateLayer";
+import { useWatchLocation } from "./hooks/locationHooks";
+import { getQuestList } from "../../apis/mainApi";
 
 export default function MapPage() {
   const [tabOpen, setTabOpen] = useState(false);
   const [questActive, setQuestActive] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [questList, setQuestList] = useState([]);
+  const [questType, setQuestType] = useState('all');
+  const [color, setColor] = useState('#EBEBEB')
+  const { 
+    currentMapPosition,
+    setCurrentMapPosition,
+    position, 
+    setPosition, 
+    cancelWatchPosition, 
+    isDrag, 
+    setIsDrag,
+    inCircleList,
+  } = useWatchLocation(questList, questType);
+
+  const setDdangDdang = () => {
+    if (inCircleList.length === 0) return;
+    setQuestActive(true)
+  }
   const closeTab = () => {
     setTabOpen(false);
   }
   const closeQuestActive = () => {
     setQuestActive(false);
   }
+  const selectQuestInSideTab = ({lat, lng}) => {
+    setTabOpen(false);
+    setIsDrag(true);
+    setCurrentMapPosition({
+      lat: lat,
+      lng: lng,
+    })
+  }
 
-  const {
-    questList,
-    loading,
-    questType,
-    setQuestType,
-    location,
-  } = useMainData();
+  const moveToCenter = () => {
+    setIsDrag(false);
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log('center move', position);
+      setPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      })
+    })    
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    navigator.geolocation.getCurrentPosition( async (res) => {
+      setCurrentMapPosition({
+        lat: res.coords.latitude,
+        lng: res.coords.longitude,
+      })
+      const data = await getQuestList(res.coords.latitude, res.coords.longitude);
+      console.log(res);
+      if (data.rows.length > 0) {
+        setQuestList(data.rows)
+      }
+      setTimeout(() => {
+        setLoading(false)
+      }, 200)
+    });
+  }, [])
+
+
+  useEffect(() => {
+
+    if (questType === "mob") { 
+      setColor('#FA5A54');
+    } else if (questType === "time") {
+      setColor('#EDEA50');
+    } else if (questType === "feed") {
+      setColor('#61B7FA');
+    } else {
+      setColor('#EBEBEB');
+    }
+
+    if (inCircleList.length > 0) {
+      setColor('#5DEB85');
+    } 
+  }, [inCircleList, questType])
 
   return (
     <Container>
-      {/* <LandingModal
+      <LandingModal
         loading={loading}
-      /> */}
+      />
 
       <MapComponent
         questList={questList}
         questType={questType}
+        currentMapPosition={currentMapPosition}
+        setCurrentMapPosition={setCurrentMapPosition}
+        position={position}
+        setPosition={setPosition}
+        cancelWatchPosition={cancelWatchPosition}
+        isDrag={isDrag}
+        setIsDrag={setIsDrag}
+        // inCircleList={inCircleList}
       />
 
       <MapSideTab 
         open={tabOpen}
         setClose={closeTab}
         questList={questList}
+        selectQuest={selectQuestInSideTab}
       />
 
-      <UserInfo onClick={()=>setTabOpen(true)}>
+      <UserInfo 
+        style={questActive ? {display: "none"} : {display: "flex"}}
+        onClick={()=>setTabOpen(true)}
+      >
         <p><span>Lv.77</span>강윤지</p>
       </UserInfo>
 
       <ButtonWrapper style={questActive ? {display: "none"} : {display: "block"}}>
+        <CenterButton onClick={moveToCenter}/>
+
         <Grid 
           flex
           justifyContent={"space-between"}
@@ -95,8 +175,8 @@ export default function MapPage() {
             </Grid>
           </BottomFooterButton>
           <BottomFooterButton 
-            style={{background: '#EBEBEB'}}
-            onClick={()=>setQuestActive(true)}
+            style={{background: color}}
+            onClick={setDdangDdang}
           >
             <p>땅땅 시작</p>
           </BottomFooterButton>
@@ -106,7 +186,7 @@ export default function MapPage() {
       <QuestActivateLayer
         open={questActive}
         setClose={closeQuestActive}
-        list={[]}
+        list={inCircleList}
       />
     </Container>
   )
@@ -195,4 +275,14 @@ const ButtonWrapper = styled.div`
   padding: 0 20px 50px; 
   z-index: 500;
   width: 100%;
+`;
+
+const CenterButton = styled.div`
+  position: absolute;
+  right: 30px;
+  top: -50px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #000;
 `;

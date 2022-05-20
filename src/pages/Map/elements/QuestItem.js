@@ -6,7 +6,7 @@ export default function QuestItem(Props) {
   const fragment = questFragment(Props.type);
 
   return (
-    <Card>
+    <Card onClick={Props.onClick}>
       
       <Tip style={{background: fragment.subColor}}/>
       

@@ -2,10 +2,16 @@ import { useState } from "react";
 import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import { Grid } from "../../../elements";
+import { getUpdatedDistance } from "../../../modules/location";
 
 export default function QuestMarker(Props) {
   const [open, setOpen] = useState(false);
-
+  const distance = getUpdatedDistance({
+    lat: Props.currentPosition.lat,
+    lng: Props.currentPosition.lng,
+    _lat: Number(Props.lat),
+    _lng: Number(Props.lng),
+  })
   return (
     <>
       
@@ -27,7 +33,9 @@ export default function QuestMarker(Props) {
         zIndex={301}
         position={{lat: Props.lat, lng: Props.lng}}
         onClick={() => setOpen(true)}
-      />
+      >
+        {distance <= 0.03 && (<p>click</p>)}
+      </MapMarker>
     </>
   )
 }

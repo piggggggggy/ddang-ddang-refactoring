@@ -4,7 +4,7 @@ import { Grid } from "../../../elements";
 import SideTabButtons from "../elements/SideTabButtons";
 import QuestListConatiner from "./QuestListContainer";
 
-export default function MapSideTab({ open, setClose, questList }) {
+export default function MapSideTab({ open, setClose, questList, selectQuest }) {
   const navigate = useNavigate();
 
   return (
@@ -38,24 +38,24 @@ export default function MapSideTab({ open, setClose, questList }) {
           <QuestListConatiner
             title={"완료한 퀘스트"}
             list={[
-              {
-                id: "!24",
-                title: "테스트",
-                description: '테스틍ㅇㅇㅇㅇㅇㅇㅇㅇ',
-                completed: true,
-              },
-              {
-                id: "!24",
-                title: "테스트",
-                description: '테스틍ㅇㅇㅇㅇㅇㅇㅇㅇ',
-                completed: true,
-              },
-              {
-                id: "!24",
-                title: "테스트",
-                description: '테스틍ㅇㅇㅇㅇㅇㅇㅇㅇ',
-                completed: true,
-              }
+              // {
+              //   id: "!24",
+              //   title: "테스트",
+              //   description: '테스틍ㅇㅇㅇㅇㅇㅇㅇㅇ',
+              //   completed: true,
+              // },
+              // {
+              //   id: "!24",
+              //   title: "테스트",
+              //   description: '테스틍ㅇㅇㅇㅇㅇㅇㅇㅇ',
+              //   completed: true,
+              // },
+              // {
+              //   id: "!24",
+              //   title: "테스트",
+              //   description: '테스틍ㅇㅇㅇㅇㅇㅇㅇㅇ',
+              //   completed: true,
+              // }
               
             ]}
           />
@@ -63,6 +63,7 @@ export default function MapSideTab({ open, setClose, questList }) {
           <QuestListConatiner
             title={"진행 중인 퀘스트"}
             list={questList.filter(item => item.completed === false)}
+            selectQuest={selectQuest}
           />
         </Grid>
         
