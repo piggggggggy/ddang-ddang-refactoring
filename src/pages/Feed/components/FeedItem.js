@@ -9,6 +9,8 @@ import SendIcon from "@mui/icons-material/Send";
 
 export default function FeedItem(props) {
     const { item, onClick, page, id } = props;
+    console.log(props.page);
+    console.log(page);
     // 좋아요
     const [counter, setCounter] = React.useState(item?.likeCnt);
 
@@ -26,6 +28,8 @@ export default function FeedItem(props) {
         }
     };
 
+    console.log(item);
+
     // 피드 디테일
     const [detailOpen, setDetailOpen] = React.useState(false);
     const detailHandler = () => {
@@ -35,11 +39,11 @@ export default function FeedItem(props) {
     // 디테일 이미지
     const imagesArr = [];
     imagesArr.push(item?.image1_url, item?.image2_url, item?.image3_url);
-    console.log(imagesArr);
+    // console.log(imagesArr);
 
     // 댓글
     const commentArr = item?.comments;
-    console.log(commentArr);
+    // console.log(commentArr);
 
     const [commentIsOpen, setCommentIsOpen] = React.useState(false);
 
@@ -59,8 +63,7 @@ export default function FeedItem(props) {
                         Title
                     </Text>
                     <Text mystyles="font-weight: 400; font-size: 12px; letter-spacing: -0.05em;">
-                        Description Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit.
+                        {item.content}
                     </Text>
                 </Grid>
                 <Grid flex alignItems="center" justifyContent="center">
@@ -169,8 +172,10 @@ export default function FeedItem(props) {
 }
 
 const Feed = styled(motion.li)`
+    ${(props) => (props.page === 0 ? "border-left: 30px solid #a3d4fb;" : "")};
+    ${(props) => (props.page === 1 ? "border-left: 30px solid #a3d4fb;" : "")};
+    ${(props) => (props.page === 2 ? "border-left: 30px solid #a3d4fb;" : "")};
     min-height: 106px;
-    border-left: 30px solid #a3d4fb;
     margin-top: 18px;
     border-radius: 10px;
     box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.05);

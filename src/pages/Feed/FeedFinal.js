@@ -14,7 +14,7 @@ import FeedItem from "./components/FeedItem";
 
 export default function Feed() {
     React.useEffect(() => {
-        getFeed();
+        feedsLatest();
     }, []);
 
     const data = {
@@ -25,46 +25,52 @@ export default function Feed() {
         lng: 127.4147562,
     };
 
-    const getFeed = async () => {
+    const [userLocation, setUserLocation] = React.useState({
+        lat: 36.3298522,
+        lng: 127.4147562,
+    });
+
+    const [tabIndex, setTabIndex] = React.useState(0);
+    console.log(tabIndex);
+
+    const [items, setItems] = React.useState([]);
+    console.log(items);
+
+    const feedsLatest = async () => {
         await axios
-            .post(`http://diasm.mooo.com:3000/api/feeds?type=popularity`, {
-                body: { currentRegion: data },
-            })
+            .post(`http://15.164.213.175:3000/api/feeds?type=latest`, data)
             .then((res) => {
                 console.log(res);
+                setItems([...res.data.rows]);
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
-    const [userLocation, setUserLocation] = React.useState({
-        lat: 36.3298522,
-        lng: 127.4147562,
-    });
-    console.log(userLocation);
+    const feedsPopularity = async () => {
+        await axios
+            .post(`http://15.164.213.175:3000/api/feeds?type=popularity`, data)
+            .then((res) => {
+                console.log(res);
+                setItems([...res.data.rows]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
-    console.log(items);
-
-    const [tabIndex, setTabIndex] = React.useState(0);
-
-    const tabList = [
-        {
-            name: "최신순",
-            color: "#EB6042",
-            type: "mob",
-        },
-        {
-            name: "인기순",
-            color: "#61B7FA",
-            type: "time",
-        },
-        {
-            name: "거리순",
-            color: "#EDEA50",
-            type: "feed",
-        },
-    ];
+    const feedsDistance = async () => {
+        await axios
+            .post(`http://15.164.213.175:3000/api/feeds?type=distance`, data)
+            .then((res) => {
+                console.log(res);
+                setItems([...res.data.rows]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     const [feedLocation, setFeedLocation] = React.useState([
         "33.5563",
@@ -74,7 +80,21 @@ export default function Feed() {
 
     // 카테고리
     const [category, setCategory] = React.useState("1");
-    console.log(category);
+
+    // 함수 호출
+
+    const getLatest = () => {
+        setTabIndex(0);
+        feedsLatest();
+    };
+    const getPopularity = () => {
+        setTabIndex(1);
+        feedsPopularity();
+    };
+    const getDistance = () => {
+        setTabIndex(2);
+        feedsDistance();
+    };
 
     return (
         <Container>
@@ -101,25 +121,63 @@ export default function Feed() {
                     justifyContent="center"
                     mystyles="margin-top: 47px"
                 >
-                    {tabList.map((item, index) => (
-                        <Tabcard
-                            initial={{ y: -250, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                            key={item.name}
-                            onClick={() => setTabIndex(index)}
-                            style={
-                                tabIndex === index
-                                    ? {
-                                          background: item.color,
-                                          color: "white",
-                                      }
-                                    : {}
-                            }
-                        >
-                            {item.name}
-                        </Tabcard>
-                    ))}
+                    <Tabcard
+                        initial={{ y: -250, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        onClick={getLatest}
+                        style={
+                            tabIndex === 0
+                                ? {
+                                      background: "#F3AC9C",
+                                      color: "white",
+                                  }
+                                : {
+                                      background: "white",
+                                      color: "#EB6042",
+                                  }
+                        }
+                    >
+                        최신순
+                    </Tabcard>
+                    <Tabcard
+                        initial={{ y: -250, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        onClick={getPopularity}
+                        style={
+                            tabIndex === 1
+                                ? {
+                                      background: "#A3D4FB",
+                                      color: "white",
+                                  }
+                                : {
+                                      background: "white",
+                                      color: "#EB6042",
+                                  }
+                        }
+                    >
+                        인기순
+                    </Tabcard>
+                    <Tabcard
+                        initial={{ y: -250, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        onClick={getDistance}
+                        style={
+                            tabIndex === 2
+                                ? {
+                                      background: "#EDEA50",
+                                      color: "white",
+                                  }
+                                : {
+                                      background: "white",
+                                      color: "#EB6042",
+                                  }
+                        }
+                    >
+                        거리순
+                    </Tabcard>
                 </Grid>
                 <Grid
                     mystyles="overflow: hidden; margin-top:23px; border-radius: 20px;"
@@ -152,34 +210,105 @@ export default function Feed() {
                         ></MapMarker>
                     </Map>
                 </Grid>
-                <Grid
-                    flex
-                    direction="column"
-                    initial={{ x: -250, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 1 }}
-                    mystyles="margin-bottom: 200px;"
-                >
-                    <AnimateSharedLayout>
-                        <UnorderedList layout initial={{ borderRadius: 25 }}>
-                            {items.map((feed, idx) => (
-                                <FeedItem
-                                    page={category}
-                                    onClick={() => {
-                                        setFeedLocation([
-                                            items[idx]?.quest?.lat,
-                                            items[idx]?.quest?.lng,
-                                            items[idx]?.id,
-                                        ]);
-                                    }}
-                                    key={idx}
-                                    item={feed}
-                                    id={feed[idx]?.id}
-                                />
-                            ))}
-                        </UnorderedList>
-                    </AnimateSharedLayout>
-                </Grid>
+                {tabIndex === 0 && (
+                    <Grid
+                        flex
+                        direction="column"
+                        initial={{ x: -250, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        mystyles="margin-bottom: 200px;"
+                    >
+                        <AnimateSharedLayout>
+                            <UnorderedList
+                                layout
+                                initial={{ borderRadius: 25 }}
+                            >
+                                {items.map((feed, idx) => (
+                                    <FeedItem
+                                        page={tabIndex}
+                                        onClick={() => {
+                                            setFeedLocation([
+                                                items[idx]?.quest?.lat,
+                                                items[idx]?.quest?.lng,
+                                                items[idx]?.id,
+                                            ]);
+                                        }}
+                                        key={idx}
+                                        item={feed}
+                                        id={feed[idx]?.id}
+                                    />
+                                ))}
+                            </UnorderedList>
+                        </AnimateSharedLayout>
+                    </Grid>
+                )}
+                {tabIndex === 1 && (
+                    <Grid
+                        flex
+                        direction="column"
+                        initial={{ x: -250, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        mystyles="margin-bottom: 200px;"
+                    >
+                        <AnimateSharedLayout>
+                            <UnorderedList
+                                layout
+                                initial={{ borderRadius: 25 }}
+                            >
+                                {items.map((feed, idx) => (
+                                    <FeedItem
+                                        page={tabIndex}
+                                        onClick={() => {
+                                            setFeedLocation([
+                                                items[idx]?.quest?.lat,
+                                                items[idx]?.quest?.lng,
+                                                items[idx]?.id,
+                                            ]);
+                                        }}
+                                        key={idx}
+                                        item={feed}
+                                        id={feed[idx]?.id}
+                                    />
+                                ))}
+                            </UnorderedList>
+                        </AnimateSharedLayout>
+                    </Grid>
+                )}
+                {tabIndex === 2 && (
+                    <Grid
+                        flex
+                        direction="column"
+                        initial={{ x: -250, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        mystyles="margin-bottom: 200px;"
+                    >
+                        <AnimateSharedLayout>
+                            <UnorderedList
+                                layout
+                                initial={{ borderRadius: 25 }}
+                            >
+                                {items.map((feed, idx) => (
+                                    <FeedItem
+                                        page={tabIndex}
+                                        onClick={() => {
+                                            setFeedLocation([
+                                                items[idx]?.quest?.lat,
+                                                items[idx]?.quest?.lng,
+                                                items[idx]?.id,
+                                            ]);
+                                        }}
+                                        key={idx}
+                                        item={feed}
+                                        id={feed[idx]?.id}
+                                    />
+                                ))}
+                            </UnorderedList>
+                        </AnimateSharedLayout>
+                    </Grid>
+                )}
             </Grid>
             <Navigation />
         </Container>
@@ -216,170 +345,3 @@ const Tabcard = styled(motion.div)`
 const UnorderedList = styled(motion.ul)`
     list-style-type: none;
 `;
-
-export const items = [
-    {
-        id: 1,
-        image1_url: "111",
-        image2_url: "222",
-        image3_url: "333",
-        content: "new oneeee",
-        createdAt: "2022-05-12T01:00:57.861Z",
-        updatedAt: "2022-05-13T05:53:41.100Z",
-        deletedAt: null,
-        quest: {
-            id: 2,
-            lat: "36.320485",
-            lng: "127.399521",
-            type: "",
-            title: "test title2",
-            description: "test description2",
-            difficulty: 3,
-            reward: 2,
-            timeUntil: null,
-        },
-        player: {
-            id: 1,
-            email: "test@test.com",
-            nickname: "kiwooseok",
-            mbti: "intp",
-            profileImg: "s3-upload",
-            level: 1,
-            exp: 0,
-        },
-        comments: [
-            {
-                id: 4,
-                comment: "lets gooooo",
-                createdAt: "2022-05-12T03:50:10.513Z",
-                updatedAt: "2022-05-12T03:50:10.513Z",
-                deletedAt: null,
-            },
-        ],
-        likes: [
-            {
-                id: 2,
-            },
-        ],
-        region: {
-            id: 1,
-            date: "2022-05-13 10:01:40",
-            regionSi: "대전시",
-            regionGu: "중구",
-            regionDong: "목동",
-        },
-        likeCnt: 1,
-        liked: true,
-        commentCnt: 1,
-    },
-    {
-        id: 2,
-        image1_url: "iii",
-        image2_url: "kkk",
-        image3_url: "aaa",
-        content: "second content",
-        createdAt: "2022-05-12T01:22:15.000Z",
-        updatedAt: "2022-05-13T05:53:41.100Z",
-        deletedAt: null,
-        quest: {
-            id: 3,
-            lat: "37.237824",
-            lng: "127.023137",
-            type: "",
-            title: "test title3",
-            description: "test description3",
-            difficulty: 2,
-            reward: 1,
-            timeUntil: null,
-        },
-        player: {
-            id: 1,
-            email: "test@test.com",
-            nickname: "kiwooseok",
-            mbti: "intp",
-            profileImg: "s3-upload",
-            level: 1,
-            exp: 0,
-        },
-        comments: [
-            {
-                id: 3,
-                comment: "lets go",
-                createdAt: "2022-05-12T03:49:44.644Z",
-                updatedAt: "2022-05-12T03:49:44.644Z",
-                deletedAt: null,
-            },
-            {
-                id: 2,
-                comment: "asdf",
-                createdAt: "2022-05-12T02:04:26.000Z",
-                updatedAt: "2022-05-12T02:43:23.226Z",
-                deletedAt: null,
-            },
-            {
-                id: 1,
-                comment: "tdddest comment",
-                createdAt: "2022-05-12T01:47:45.408Z",
-                updatedAt: "2022-05-12T02:03:51.000Z",
-                deletedAt: null,
-            },
-        ],
-        likes: [
-            {
-                id: 3,
-            },
-        ],
-        region: {
-            id: 1,
-            date: "2022-05-13 10:01:40",
-            regionSi: "서울시",
-            regionGu: "강남구",
-            regionDong: "삼성동",
-        },
-        likeCnt: 1,
-        liked: true,
-        commentCnt: 3,
-    },
-    {
-        id: 3,
-        image1_url: "000",
-        image2_url: "yyy",
-        image3_url: "rrr",
-        content: "testtest333",
-        createdAt: "2022-05-12T06:19:43.000Z",
-        updatedAt: "2022-05-13T05:53:41.100Z",
-        deletedAt: null,
-        quest: {
-            id: 1,
-            lat: "37.508498",
-            lng: "127.454534",
-            type: "",
-            title: "test title",
-            description: "test description",
-            difficulty: 3,
-            reward: 2,
-            timeUntil: null,
-        },
-        player: {
-            id: 2,
-            email: "test2@test.com",
-            nickname: "wsssss",
-            mbti: "esfp",
-            profileImg: "ssssssss",
-            level: 1,
-            exp: 0,
-        },
-        comments: [],
-        likes: [],
-        region: {
-            id: 1,
-            date: "2022-05-13 10:01:40",
-            regionSi: "경기도",
-            regionGu: "수원",
-            regionDong: "군사시설",
-        },
-        likeCnt: 0,
-        liked: false,
-        commentCnt: 0,
-    },
-];

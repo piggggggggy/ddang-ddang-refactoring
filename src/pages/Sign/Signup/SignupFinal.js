@@ -41,7 +41,6 @@ export default function SignupFinal() {
         mbti: "string",
         profileImg: "string",
     });
-    console.log(finalSignupValue);
 
     // 이메일
     const [email, setEmail] = React.useState("");
@@ -76,7 +75,9 @@ export default function SignupFinal() {
     const checkEmail = () => {
         if (emailIsValid) {
             axios
-                .post("/api/players/dupEmail", { email: email })
+                .post("http://15.164.213.175:3000/api/players/dupEmail", {
+                    email: email,
+                })
                 .then((res) => {
                     console.log(res);
                     if (!res.data.row) {
@@ -125,7 +126,9 @@ export default function SignupFinal() {
     const checkNickname = () => {
         if (nicknameIsValid) {
             axios
-                .post("/api/players/dupNickname", { nickname: nickname })
+                .post("http://15.164.213.175:3000/api/players/dupNickname", {
+                    nickname: nickname,
+                })
                 .then((res) => {
                     console.log(res);
                     if (!res.data.row) {
@@ -218,7 +221,7 @@ export default function SignupFinal() {
     // 1차 로그인 완료
 
     const [userData, setUserData] = React.useState({});
-    const [page, setPage] = React.useState(3);
+    const [page, setPage] = React.useState(1);
     const [firstPageComplete, setFirstPageComplete] = React.useState(false);
 
     const checkfirstpageComplete = () => {
@@ -318,20 +321,21 @@ export default function SignupFinal() {
         finalsignup();
     };
     const navigate = useNavigate();
+    console.log(finalSignupValue);
 
     const finalsignup = async () => {
         console.log(finalSignupValue);
         await axios
-            .post("/api/players/signup", {
-                finalSignupValue,
-            })
+            .post(
+                "http://15.164.213.175:3000/api/players/signup",
+                finalSignupValue
+            )
             .then((res) => {
                 console.log(res);
                 navigate("/signin");
             })
             .catch((err) => {
                 console.log(err);
-                navigate("/signin");
             });
     };
 

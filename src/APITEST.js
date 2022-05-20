@@ -47,14 +47,14 @@ export default function APITest() {
 
     // o
     const signup = async () => {
-        axios
+        await axios
             .post("http://15.164.213.175:3000/api/players/signup", {
-                email: "paulasfd@gmail.com",
-                nickname: "asfdsadf",
+                email: "adfff@gmail.com",
+                nickname: "Paul1996!",
                 password: "Paul1996!",
-                mbti: "enfp",
+                mbti: "ENFP",
                 profileImg:
-                    "https://image-uploading-pol.s3.ap-northeast-2.amazonaws.com/9739066.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARWI6Z2AKSPUWWMXF%2F20220520%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20220520T132224Z&X-Amz-Expires=900&X-Amz-Signature=6f41260ead146664243a27fb24dc8510cdc9d1c7d1a56a3b48e2cc59091dafd7&X-Amz-SignedHeaders=host",
+                    "https://image-uploading-pol.s3.ap-northeast-2.amazonaws.com/5867344.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARWI6Z2AKSPUWWMXF%2F20220520%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20220520T143639Z&X-Amz-Expires=900&X-Amz-Signature=fdd50c1bb9edf692ec5d7a477c0284faec46295768c5634a546f4c591bbbcb8f&X-Amz-SignedHeaders=host",
             })
             .then((res) => {
                 console.log(res);
@@ -108,23 +108,28 @@ export default function APITest() {
     };
 
     const edit = async () => {
-        axios
-            .patch(
-                "http://15.164.213.175:3000/api/players/edit",
-                {
-                    headers: {
-                        Authorization:
-                            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicGF1bEBnbWFpbC5jb20iLCJuaWNrbmFtZSI6ImNoYW5nZWQgbmlja25hbWUiLCJpYXQiOjE2NTMwNTQ5NTAsImV4cCI6MTY1MzA2MjE1MH0.VsvasoBW-ADp4hFDvGdoFj8gR1N1mAQK6oGRr7a4JyY",
-                    },
-                },
-                { nickname: "posdfdsfl", profileImg: "string" }
-            )
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        let headersList = {
+            Accept: "/",
+            // "User-Agent": "Thunder Client (https://www.thunderclient.com/)",
+            Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicGF1bEBnbWFpbC5jb20iLCJuaWNrbmFtZSI6ImNoYW5nZWQgbmlja25hbWUiLCJpYXQiOjE2NTMwNjE2NjEsImV4cCI6MTY1MzA2ODg2MX0.GP9wZtaUsEhbgbNTLTMTJ9RMFUT2tMORAPP1Bj5GGC8",
+            "Content-Type": "application/json",
+        };
+
+        let bodyContent = {
+            profileImg: "wefwefwef",
+            nickname: "helloworwefwefwefld",
+        };
+
+        let reqOptions = {
+            url: "http://15.164.213.175:3000/api/players/edit",
+            method: "PATCH",
+            headers: headersList,
+            body: bodyContent,
+        };
+        axios.request(reqOptions).then(function (response) {
+            console.log(response.data);
+        });
     };
 
     const data = {
@@ -177,9 +182,83 @@ export default function APITest() {
                 console.log(err);
             });
     };
+
+    const feedId = 1;
     const createComment = async () => {
         axios
-            .post("http://15.164.213.175:3000/feeds/:1/comments")
+            .post(`http://15.164.213.175:3000/feeds/${feedId}/comments`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const likeFeed = async () => {
+        axios
+            .post(`http://15.164.213.175:3000/feeds/${feedId}/like`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const commentId = 1;
+    const editComment = async () => {
+        axios
+            .post(
+                `http://15.164.213.175:3000/feeds/comments/${feedId}/comments/${commentId}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const editFeed = async () => {
+        axios
+            .post(`http://15.164.213.175:3000/feeds/${feedId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    const deleteFeed = async () => {
+        axios
+            .post(`http://15.164.213.175:3000/feeds/${feedId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    const deleteComment = async () => {
+        axios
+            .post(
+                `http://15.164.213.175:3000/feeds/${feedId}/comments/${commentId}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
             .then((res) => {
                 console.log(res);
             })
@@ -189,7 +268,7 @@ export default function APITest() {
     };
 
     React.useEffect(() => {
-        ranks();
+        edit();
     }, []);
 
     return <>API Test</>;

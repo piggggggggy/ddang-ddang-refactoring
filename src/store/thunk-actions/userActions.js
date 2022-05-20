@@ -97,7 +97,10 @@ export const signupAxios = (
         };
 
         try {
-            const response = await axios.post("/players/signup", user);
+            const response = await axios.post(
+                "http://15.164.213.175:3000/api/players/signup",
+                user
+            );
 
             user = { email, nickname, password, mbti, profileImg };
             console.log(response);
