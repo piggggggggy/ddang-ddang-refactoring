@@ -85,10 +85,14 @@ export default function FeedItem(props) {
     console.log(feedId);
     const likeFeed = async () => {
         console.log(token);
-        await axios
-            .put(`http://15.164.213.175:3000/api/feeds/${feedId}/like`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+        axios
+            .put(
+                `http://15.164.213.175:3000/api/feeds/${feedId}/like`,
+                {},
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
             .then((res) => {
                 console.log(res);
             })
