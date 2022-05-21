@@ -21,7 +21,7 @@ export default function AppRouter() {
             <Route path="/" exact element={<Main/>} />
             <Route path="/map" exact element={<MapPage/>} />
             <Route path="/quest" exact element={<MapPage/>} />
-            <Route path="/map/:type/:questId" exact element={<GamePage/>} />
+            <Route path="/quest/:type/:questId" exact element={<GamePage/>} />
 
             <Route path="/mypage" element={<MyPageFinal />} />
             <Route path="/signin" element={<SigninFinal />} />
