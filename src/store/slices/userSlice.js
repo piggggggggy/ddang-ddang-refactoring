@@ -18,6 +18,7 @@ const userSlice = createSlice({
             state.user = { ...state.user, ...action.payload.user };
         },
         loginCheck(state, action) {
+            console.log(action.payload);
             setCookie("token", action.payload.token);
             state.user = { ...state.user, ...action.payload.user };
         },

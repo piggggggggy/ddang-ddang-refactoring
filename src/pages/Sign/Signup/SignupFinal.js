@@ -41,7 +41,6 @@ export default function SignupFinal() {
         mbti: "string",
         profileImg: "string",
     });
-    console.log(finalSignupValue);
 
     // 이메일
     const [email, setEmail] = React.useState("");
@@ -76,7 +75,9 @@ export default function SignupFinal() {
     const checkEmail = () => {
         if (emailIsValid) {
             axios
-                .post("/api/players/dupEmail", { email: email })
+                .post("http://15.164.213.175:3000/api/players/dupEmail", {
+                    email: email,
+                })
                 .then((res) => {
                     console.log(res);
                     if (!res.data.row) {
@@ -125,7 +126,9 @@ export default function SignupFinal() {
     const checkNickname = () => {
         if (nicknameIsValid) {
             axios
-                .post("/api/players/dupNickname", { nickname: nickname })
+                .post("http://15.164.213.175:3000/api/players/dupNickname", {
+                    nickname: nickname,
+                })
                 .then((res) => {
                     console.log(res);
                     if (!res.data.row) {
@@ -218,7 +221,7 @@ export default function SignupFinal() {
     // 1차 로그인 완료
 
     const [userData, setUserData] = React.useState({});
-    const [page, setPage] = React.useState(1);
+    const [page, setPage] = React.useState(3);
     const [firstPageComplete, setFirstPageComplete] = React.useState(false);
 
     const checkfirstpageComplete = () => {
@@ -318,19 +321,21 @@ export default function SignupFinal() {
         finalsignup();
     };
     const navigate = useNavigate();
+    console.log(finalSignupValue);
+
     const finalsignup = async () => {
         console.log(finalSignupValue);
         await axios
-            .post("/api/players/signup", {
-                finalSignupValue,
-            })
+            .post(
+                "http://15.164.213.175:3000/api/players/signup",
+                finalSignupValue
+            )
             .then((res) => {
                 console.log(res);
                 navigate("/signin");
             })
             .catch((err) => {
                 console.log(err);
-                navigate("/signin");
             });
     };
 
@@ -364,7 +369,15 @@ export default function SignupFinal() {
         <>
             {page === 1 && (
                 <>
-                    <Grid mystyles="min-height: 30vh">
+                    <Grid>
+                        <Text>Go Back</Text>
+                    </Grid>
+                    <Grid
+                        flex
+                        justifyContent="center"
+                        alignItems="center"
+                        mystyles="min-height: 20vh"
+                    >
                         <motion.h1
                             initial={{ y: -250, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
@@ -372,7 +385,11 @@ export default function SignupFinal() {
                             회원가입
                         </motion.h1>
                     </Grid>
-                    <Grid direction="column">
+                    <Grid
+                        flex
+                        direction="column"
+                        mystyles=" padding-left: 50px"
+                    >
                         <Grid mystyles="position: relative">
                             <Input
                                 mystyles="height: 40px; width: 250px; border-radius: 10px; border: none; box-shadow: 2px 5px 16px 0px #0B325E"
@@ -405,12 +422,16 @@ export default function SignupFinal() {
                         <DuplicateCheck
                             duplicate
                             onClick={checkEmail}
-                            mystyles="border: 2px solid red;"
+                            mystyles=""
                         >
                             {emailCheckMessage}
                         </DuplicateCheck>
                     </Grid>
-                    <Grid direction="column">
+                    <Grid
+                        flex
+                        direction="column"
+                        mystyles=" padding-left: 50px"
+                    >
                         <Grid mystyles="position: relative">
                             <Input
                                 mystyles="height: 40px; width: 250px; border-radius: 10px; border: none; box-shadow: 2px 5px 16px 0px #0B325E"
@@ -444,12 +465,16 @@ export default function SignupFinal() {
                         <DuplicateCheck
                             duplicate
                             onClick={checkNickname}
-                            mystyles="border: 2px solid red;"
+                            mystyles=""
                         >
                             {nicknameCheckMessage}
                         </DuplicateCheck>
                     </Grid>
-                    <Grid direction="column">
+                    <Grid
+                        flex
+                        direction="column"
+                        mystyles=" padding-left: 50px"
+                    >
                         <Grid mystyles="position: relative">
                             <Input
                                 mystyles="height: 40px; width: 250px; border-radius: 10px; border: none; box-shadow: 2px 5px 16px 0px #0B325E"
@@ -481,11 +506,15 @@ export default function SignupFinal() {
                                     ></DangerousIcon>
                                 )}
                         </Grid>
-                        <DuplicateCheck mystyles="border: 2px solid red;">
+                        <DuplicateCheck mystyles="">
                             {passwordCheckMessage}
                         </DuplicateCheck>
                     </Grid>
-                    <Grid direction="column">
+                    <Grid
+                        flex
+                        direction="column"
+                        mystyles=" padding-left: 50px;margin-top: 12px;"
+                    >
                         <Grid mystyles="position: relative">
                             <Input
                                 mystyles="height: 40px; width: 250px; border-radius: 10px; border: none; box-shadow: 2px 5px 16px 0px #0B325E"
@@ -519,13 +548,17 @@ export default function SignupFinal() {
                                     ></DangerousIcon>
                                 )}
                         </Grid>
-                        <DuplicateCheck mystyles="border: 2px solid red;">
+                        <DuplicateCheck mystyles="">
                             {passwordConfirmCheckMessage}
                         </DuplicateCheck>
                     </Grid>
                     {firstPageComplete ? (
                         <>
-                            <Grid>
+                            <Grid
+                                flex
+                                direction="column"
+                                mystyles=" padding-left: 80px"
+                            >
                                 <Button
                                     mystyles="height: 50px; width: 200px; border-radius: 25px; margin-top: 20px; border: none; font-size: 20px; font-weight: bold; background-color: #D6E9FE"
                                     onClick={signup}
@@ -546,7 +579,11 @@ export default function SignupFinal() {
                     ) : (
                         <>
                             {" "}
-                            <Grid>
+                            <Grid
+                                flex
+                                direction="column"
+                                mystyles=" padding-left: 80px"
+                            >
                                 <Button
                                     mystyles="height: 50px; width: 200px; border-radius: 25px; margin-top: 20px; border: none; font-size: 20px; font-weight: bold; background-color: #D6E9FE"
                                     onClick={signup}
@@ -646,6 +683,6 @@ const Img = styled(motion.img)`
     -o-user-drag: none;
     user-drag: none;
     height: 200px;
-    border: 2px solid red;
+
     border-radius: 50px;
 `;

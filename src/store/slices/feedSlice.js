@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     feeds: [],
+    comments: [],
 };
 
 const feedSlice = createSlice({
@@ -9,7 +10,10 @@ const feedSlice = createSlice({
     initialState,
     reducers: {
         getFeed(state, action) {
-            state.feeds = [...state.feeds, ...action.payload.feeds];
+            state.feeds = action.payload.feeds;
+        },
+        writeComment(state, action) {
+            console.log(action);
         },
     },
 });

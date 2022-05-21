@@ -2,15 +2,39 @@ import { feedActions } from "../slices/feedSlice";
 import axios from "axios";
 
 // 피드 전체 조회
-export const getFeedsAxios = (token, region) => {
+export const feedsLatestAxios = (region) => {
     return async function (dispatch) {
         await axios
-            .get("/api/feeds", {
-                headers: { Authorization: `Bearer ${token}` },
-                data: {
-                    region,
-                },
+            .post("http://15.164.213.175:3000/api/feeds?type=latest", region)
+            .then((res) => {
+                console.log(res);
+                dispatch(feedActions.getFeed({ feeds: res.data.rows }));
             })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+};
+export const feedsPopularityAxios = (region) => {
+    return async function (dispatch) {
+        await axios
+            .post(
+                "http://15.164.213.175:3000/api/feeds?type=popularity",
+                region
+            )
+            .then((res) => {
+                console.log(res);
+                dispatch(feedActions.getFeed({ feeds: res.data.rows }));
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+};
+export const feedsDistanceAxios = (region) => {
+    return async function (dispatch) {
+        await axios
+            .post("http://15.164.213.175:3000/api/feeds?type=distance", region)
             .then((res) => {
                 console.log(res);
                 dispatch(feedActions.getFeed({ feeds: res.data.rows }));
@@ -21,16 +45,18 @@ export const getFeedsAxios = (token, region) => {
     };
 };
 
-// 댓글 작성
-export const commentAxios = (token, feedId, comment) => {
+export const writeCommentsAxios = (comment, token, feedId) => {
     return async function (dispatch) {
         await axios
-            .get(`/api/feeds/${feedId}/comments`, {
-                headers: { Authorization: `Bearer ${token}` },
-                data: {
-                    comment,
+            .post(
+                `http://15.164.213.175:3000/api/feeds/${feedId}/comments`,
+                {
+                    comment: comment,
                 },
-            })
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
             .then((res) => {
                 console.log(res);
             })

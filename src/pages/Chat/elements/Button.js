@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 export default function Button(props) {
     const {
-        key,
         mystyles,
         children,
         onClick,
@@ -19,9 +18,7 @@ export default function Button(props) {
         <>
             <Btn
                 {...styles}
-                key={key}
                 onClick={onClick}
-                type={type}
                 whileHover={whileHover}
                 animate={animate}
                 transition={transition}

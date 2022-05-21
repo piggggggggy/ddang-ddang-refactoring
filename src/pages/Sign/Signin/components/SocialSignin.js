@@ -5,10 +5,12 @@ import kakaoIcon from "../../../../assets/images/png/kakao_icon.png";
 const SocialSignin = (props) => {
     // onClick={() => window.location.replace(KAKAO_OAUTH_URL)}
     return (
-        <KakaoBtn onClick={() => alert("준비중인 서비스입니다")}>
-            <img alt="kakao login" src={kakaoIcon} />
-            <span>카카오로 시작하기</span>
-        </KakaoBtn>
+        <a href="/api/players/kakaoauth">
+            <KakaoBtn>
+                <KakaoImg alt="kakao login" src={kakaoIcon} />
+                <KakaoText>카카오로 시작하기</KakaoText>
+            </KakaoBtn>
+        </a>
     );
 };
 
@@ -16,22 +18,34 @@ const KakaoBtn = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px;
-    max-width: 560px;
-    height: 60px;
-    border-radius: 12px;
+    height: 35px;
+    width: 308px;
+    border-radius: 4px;
     background-color: #fee500;
+    padding-top: 19px;
+    padding-bottom: 19px;
     &:hover {
         cursor: pointer;
     }
     img {
         margin-right: 10px;
-        width: 30px;
-        height: 30px;
     }
     span {
         color: #000000;
     }
+`;
+
+const KakaoText = styled.span`
+    color: #191600;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+`;
+
+const KakaoImg = styled.img`
+    width: 24px;
+    height: 24px;
+    margin-top: 3px;
 `;
 
 export default SocialSignin;

@@ -6,16 +6,21 @@ export const loginCheckAxios = (token, navigate) => {
     return async function (dispatch) {
         try {
             console.log(token);
-            const response = await axios.get("/api/players/auth", {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const response = await axios.get(
+                "http://15.164.213.175:3000/api/players/auth",
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
             console.log(response);
             const user = {
-                email: response.data.row.email,
-                nickname: response.data.row.nickname,
-                playerId: response.data.row.playerId,
+                email: response.data.user.email,
+                nickname: response.data.user.nickname,
+                playerId: response.data.user.playerId,
             };
+            console.log(user);
             dispatch(userActions.loginCheck({ user, token }));
+            navigate("/");
         } catch (err) {
             navigate("/signin");
         }
@@ -30,15 +35,19 @@ export const signinAxios = (email, password, navigate) => {
             password,
         };
         try {
-            const response = await axios.post("/api/players/signin", user);
+            const response = await axios.post(
+                "http://15.164.213.175:3000/api/players/signin",
+                user
+            );
             console.log(response);
             user = { email, nickname: response.data.row.nickname };
-            const tokenFullString = response.headers.authorization;
+            const tokenFullString = response.headers.accesstoken;
             const tokenArr = tokenFullString.split(" ");
+            console.log(tokenArr);
             dispatch(userActions.signin({ user, token: tokenArr[1] }));
             navigate("/");
         } catch (error) {
-            console.log("회원가입 실패:", error.response);
+            console.log(error);
         }
     };
 };
@@ -87,10 +96,16 @@ export const signupAxios = (
             password,
             mbti,
             profileImg,
+            provider: "local",
+            providerId: null,
+            currentHashedRefreshToken: null,
         };
 
         try {
-            const response = await axios.post("/players/signup", user);
+            const response = await axios.post(
+                "http://15.164.213.175:3000/api/players/signup",
+                { body: user }
+            );
 
             user = { email, nickname, password, mbti, profileImg };
             console.log(response);

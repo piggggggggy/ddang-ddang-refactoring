@@ -1,6 +1,6 @@
 import Button from "./Button";
 import Grid from "./Grid";
-import Text from "./Text";
 import Input from "./Input";
+import Text from "./Text";
 
 export { Text, Button, Grid, Input };
