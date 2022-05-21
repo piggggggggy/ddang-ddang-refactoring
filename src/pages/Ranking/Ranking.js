@@ -554,7 +554,7 @@ export const Mockup = {
                 points: "1000",
             },
             {
-                nickname: "박재철",
+                nickname: "김재혁",
                 profileImg: "이미지 url",
                 ratio: "30%",
                 points: "1000",
