@@ -7,8 +7,8 @@ export default function NavigationMenu({ index, isSelected }) {
   const menuList = [
     { title: '홈' },
     { title: '랭킹' },
-    { title: '퀘스트' },
-    { title: '동네' },
+    { title: '피드' },
+    { title: '채팅' },
     { title: 'MY' },
   ];
   const currentMenu = menuList[index];
@@ -26,10 +26,10 @@ export default function NavigationMenu({ index, isSelected }) {
         navigate('/ranking');
         return;
       case 2:
-        navigate('/quest');
+        navigate('/feed');
         return;
       case 3:
-        navigate('/');
+        navigate('/chat');
         return;
       case 4:
         navigate('/myPage');

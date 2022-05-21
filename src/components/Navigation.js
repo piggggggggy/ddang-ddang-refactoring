@@ -12,9 +12,9 @@ export default function Navigation() {
         return 0;
       case 'ranking':
         return 1;
-      case 'quest':
+      case 'feed':
         return 2;
-      case '':
+      case 'chat':
         return 3;
       case 'myPage':
         return 4;

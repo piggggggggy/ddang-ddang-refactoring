@@ -8,8 +8,10 @@ import QuestActivateLayer from "./components/QuestActivateLayer";
 import { QuestModal, MemoizedQuestModal } from "../Game/components/QuestModal";
 import { useWatchLocation } from "./hooks/locationHooks";
 import { getQuestList } from "../../apis/mainApi";
+import { useNavigate } from "react-router-dom";
 
 export default function MapPage() {
+  const navigate = useNavigate();
   const [tabOpen, setTabOpen] = useState(false);
   const [questActive, setQuestActive] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,7 +22,11 @@ export default function MapPage() {
     open: false,
     type: '',
   });
-  
+  const [region, setRegion] = useState({
+    regionDong: "땅땅동",
+    regionGu: "땅땅구",
+    regionSi: "땅땅",
+  })
   const { 
     currentMapPosition,
     setCurrentMapPosition,
@@ -86,6 +92,7 @@ export default function MapPage() {
       if (data.rows.length > 0) {
         setQuestList(data.rows)
       }
+      setRegion(data.currentRegion);
       setTimeout(() => {
         setLoading(false)
       }, 200)
@@ -114,6 +121,8 @@ export default function MapPage() {
     <Container>
       <LandingModal
         loading={loading}
+        region={region}
+        questLength={questList.length}
       />
 
       <MapComponent
@@ -181,8 +190,11 @@ export default function MapPage() {
           justifyContent={"space-between"}
           mystyles={'padding-top: 8px;'}
         >
-          <BottomFooterButton>
-            <p>Lv.77</p>
+          <BottomFooterButton
+            onClick={()=>navigate(-1)}
+          >
+            <p>뒤로 가기</p>
+            {/* <p>Lv.77</p>
             <span>다음 레벨까지 12,000P</span>
             <Grid
               mystyles={
@@ -190,7 +202,7 @@ export default function MapPage() {
               }
             >
               <LevelProgressBar style={{width: '70%'}}/>
-            </Grid>
+            </Grid> */}
           </BottomFooterButton>
           <BottomFooterButton 
             style={{background: color}}

@@ -24,7 +24,7 @@ export default function QuestActivateLayer({ open, setClose, list }) {
             centerPadding={"20px"}
           >
           {list.map((item, index) => (
-                <SelectedQuestCard {...item} onClick={setClose} selectQuest={() => navigate(`/map/${item.type}/${item.id}`)}/>
+                <SelectedQuestCard {...item} onClick={setClose} selectQuest={() => navigate(`/quest/${item.type}/${item.id}`)}/>
             ))}
           </Slider>
           
