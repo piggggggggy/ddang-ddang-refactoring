@@ -7,18 +7,20 @@ export const loginCheckAxios = (token, navigate) => {
         try {
             console.log(token);
             const response = await axios.get(
-                "http://diasm.mooo.com:3000/api/players/auth",
+                "http://15.164.213.175:3000/api/players/auth",
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
             console.log(response);
             const user = {
-                email: response.data.row.email,
-                nickname: response.data.row.nickname,
-                playerId: response.data.row.playerId,
+                email: response.data.user.email,
+                nickname: response.data.user.nickname,
+                playerId: response.data.user.playerId,
             };
+            console.log(user);
             dispatch(userActions.loginCheck({ user, token }));
+            navigate("/");
         } catch (err) {
             navigate("/signin");
         }

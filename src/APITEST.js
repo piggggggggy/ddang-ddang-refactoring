@@ -73,7 +73,7 @@ export default function APITest() {
     };
 
     const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicGF1bEBnbWFpbC5jb20iLCJuaWNrbmFtZSI6ImNoYW5nZWQgbmlja25hbWUiLCJpYXQiOjE2NTMwNjQxMTEsImV4cCI6MTY1MzA3MTMxMX0.PBJ2N-8ozqgeZdCb9NIWlb6qoyWt1UuHWZN2SREAcPo";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicGF1bEBnbWFpbC5jb20iLCJuaWNrbmFtZSI6ImNoYW5nZWQgbmlja25hbWUiLCJpYXQiOjE2NTMwOTg0NTQsImV4cCI6MTY1MzEwNTY1NH0.5MrGAuRUYEi_sC_F_fOXyL6ySkiwWKKRDyb66bphxCM";
 
     const signout = async () => {
         axios
@@ -271,7 +271,7 @@ export default function APITest() {
     };
 
     React.useEffect(() => {
-        mypage();
+        auth();
     }, []);
 
     return <>API Test</>;

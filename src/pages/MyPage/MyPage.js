@@ -7,6 +7,7 @@ import { Container } from "../../elements/index";
 import Navigation from "../../components/Navigation";
 import { Grid, Button, Text } from "../MyPage/elements/index";
 import ProfilePreview from "../MyPage/components/ProfilePreview";
+import ProfileEdit from "../MyPage/components/ProfileEdit";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import {
     Map,
@@ -79,6 +80,7 @@ export default function MyPageFinal() {
                         <Text mystyles="font-weight: 400; font-size: 14px; color: white;">
                             개포동 {allData?.profile?.[0]?.mbti}
                         </Text>
+                        <ProfileEdit></ProfileEdit>
                     </Grid>
                     <Grid
                         flex
@@ -86,7 +88,10 @@ export default function MyPageFinal() {
                         justifyContent="space-between"
                         mystyles="width: 101px"
                     >
-                        <ProfilePreview mystyles="width: 101px; height: 101px; border-radius: 101px; background-color: white;"></ProfilePreview>
+                        <ProfilePreview
+                            src={allData?.profile?.[0].profileImg}
+                            mystyles="width: 101px; height: 101px; border-radius: 101px; background-color: white;"
+                        ></ProfilePreview>
                     </Grid>
                 </Grid>
 

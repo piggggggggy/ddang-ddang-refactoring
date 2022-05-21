@@ -51,11 +51,11 @@ export default function FeedItem(props) {
     imagesArr.push(item?.image1_url, item?.image2_url, item?.image3_url);
 
     // 댓글
-    // const [commentArr, setCommentArr] = React.useState([...item?.comments]);
-    const commentArr = item?.comments;
+    const [commentArr, setCommentArr] = React.useState([...item?.comments]);
+    // const commentArr = item?.comments;
     console.log(commentArr);
 
-    const [commentIsOpen, setCommentIsOpen] = React.useState(false);
+    const [commentIsOpen, setCommentIsOpen] = React.useState(true);
 
     const commentHandler = () => {
         setCommentIsOpen(!commentIsOpen);
@@ -71,16 +71,39 @@ export default function FeedItem(props) {
 
     const writeComment = () => {
         createComment(comment);
+        setComment("");
     };
 
-    const createComment = () => {
-        dispatch(writeCommentsAxios(comment, token, feedId));
-        // console.log(comment);
-        // const commentData = { comment: comment };
-        // commentArr.push("hello");
-        // // setCommentArr([...commentArr, ...commentData]);
-        // console.log(commentArr);
+    // const createComment = () => {
+    //     dispatch(writeCommentsAxios(comment, token, feedId));
+
+    // };
+
+    const createComment = async (comment) => {
+        await axios
+            .post(
+                `http://15.164.213.175:3000/api/feeds/${feedId}/comments`,
+                {
+                    comment: comment,
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
+            .then((res) => {
+                console.log(res);
+
+                setCommentArr([...commentArr, res.data.comment]);
+                console.log(commentArr);
+
+                // commentArr.push({ comment: comment });
+                // window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
+
     console.log(commentArr);
     console.log(feedId);
     const likeFeed = async () => {
@@ -111,11 +134,23 @@ export default function FeedItem(props) {
             )
             .then((res) => {
                 console.log(res);
+                setCommentArr(
+                    commentArr.filter((value) => {
+                        return value.id != commentId;
+                    })
+                );
+                console.log(commentArr);
+                commentArr.pop();
             })
             .catch((err) => {
                 console.log(err);
             });
     };
+    console.log(commentArr);
+
+    React.useEffect(() => {
+        console.log(commentArr);
+    }, [commentArr]);
 
     return (
         <Feed {...props} onClick={onClick}>
@@ -193,7 +228,7 @@ export default function FeedItem(props) {
                         <MessageIcon sx={{ height: "14px" }} />
                     </IconButton>
                     <Text mystyles="display:inline; font-size: 12px; margin-left: -10px; color: #A3D4FB; font-weight: 600;">
-                        {item?.commentCnt}
+                        {commentArr.length}
                     </Text>
                 </Grid>
             </Grid>
@@ -209,18 +244,18 @@ export default function FeedItem(props) {
                                 mystyles="box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.05);padding: 10px;"
                             >
                                 <Text mystyles="font-size: 12px;">
-                                    {comment.comment}
+                                    {comment?.comment}
                                 </Text>
                                 <Text mystyles="font-size: 12px;">
-                                    {comment.updatedAt !== ""
-                                        ? comment.updatedAt.substring(0, 10)
-                                        : comment.createdAt.substring(0, 10)}
+                                    {comment?.updatedAt !== ""
+                                        ? comment?.updatedAt.substring(0, 10)
+                                        : comment?.createdAt.substring(0, 10)}
                                 </Text>
-                                {playerEmail === comment.player.email && (
+                                {playerEmail === comment?.player?.email && (
                                     <Button
                                         mystyles="background: #F3AC9C; border-radius: 25px; border: none; box-shadow: 1px 1px 1px 1px #0B325E"
                                         onClick={() => {
-                                            deleteComment(comment.id);
+                                            deleteComment(comment?.id);
                                         }}
                                     >
                                         x
