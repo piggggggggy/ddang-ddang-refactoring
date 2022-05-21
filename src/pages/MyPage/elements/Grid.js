@@ -42,10 +42,10 @@ export default function Grid(props) {
 }
 
 Grid.defaultProps = {
-    flex: true,
-    justifyContent: "center",
-    alignItems: "center",
-    direction: "",
+    flex: false,
+    justifyContent: false,
+    alignItems: false,
+    direction: false,
     mystyles: false,
     onClick: () => {},
     key: "",

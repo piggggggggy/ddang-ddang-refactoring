@@ -3,9 +3,15 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export default function ProgressBar(props) {
-    const { mystyles } = props;
+    const { mystyles, animate, transition } = props;
     const styles = { mystyles };
-    return <Progress {...styles}></Progress>;
+    return (
+        <Progress
+            {...styles}
+            animate={animate}
+            transition={transition}
+        ></Progress>
+    );
 }
 
 const Progress = styled(motion.div)`

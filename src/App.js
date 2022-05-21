@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "./shared/Cookie";
 import {
@@ -16,24 +16,21 @@ function App() {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = React.useState(true);
 
-    // React.useEffect(() => {
-    //     const token = getCookie("token");
-    //     console.log(token);
-    //     if (token) {
-    //         dispatch(
-    //             loginCheckAxios(token, (url) => {
-    //                 navigate(url);
-    //             })
-    //         );
-    //     } else {
-    //         navigate("/signin");
-    //     }
-    //     setIsLoading(false);
-    // }, []);
+    React.useEffect(() => {
+        const token = getCookie("token");
 
-    // if (isLoading) {
-    //     return <Spinner>Loading...</Spinner>;
-    // }
+        dispatch(
+            loginCheckAxios(token, (url) => {
+                navigate(url);
+            })
+        );
+
+        setIsLoading(false);
+    }, []);
+
+    if (isLoading) {
+        return <Spinner>Loading...</Spinner>;
+    }
 
     return (
         <Container>
