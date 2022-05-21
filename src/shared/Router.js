@@ -8,7 +8,7 @@ import KakaoLogin from "../pages/Sign/KakaoLogin";
 import Ranking from "../pages/Ranking/Ranking";
 import Main from "../pages/Main/Main";
 import MapPage from "../pages/Map/MapPage";
-import QuestPage from "../pages/Quest/QuestPage";
+import GamePage from "../pages/Game/GamePage";
 
 import Chat from "../pages/Chat/Chat";
 import LandingPage from "../pages/Chat/LandingPage";
@@ -18,9 +18,10 @@ import API_TEST from "../APITEST";
 export default function AppRouter() {
     return (
         <Routes>
-            <Route path="/" exact element={<Main />} />
-            <Route path="/map" exact element={<MapPage />} />
-            <Route path="/quest" exact element={<MapPage />} />
+            <Route path="/" exact element={<Main/>} />
+            <Route path="/map" exact element={<MapPage/>} />
+            <Route path="/quest" exact element={<MapPage/>} />
+            <Route path="/map/:type/:questId" exact element={<GamePage/>} />
 
             <Route path="/mypage" element={<MyPageFinal />} />
             <Route path="/signin" element={<SigninFinal />} />
