@@ -17,7 +17,7 @@ export default function NavigationMenu({ index, isSelected }) {
     window.scrollTo(0, 0);
   };
 
-  const moveToPage = (index) => {
+  const moveToPage = () => {
     switch (index) {
       case 0:
         navigate('/');

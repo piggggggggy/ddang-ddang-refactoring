@@ -1,49 +1,25 @@
 import { useEffect, useState } from "react";
 import { Circle, Map, MapMarker } from "react-kakao-maps-sdk";
 import { Grid } from "../../../elements";
+import QuestMarker from "../elements/QuestMarker";
 import { useWatchLocation } from "../hooks/locationHooks";
 
-export default function MapComponent({ questList, questType }) {
-  const { 
-    currentMapPosition,
-    setCurrentMapPosition,
-    position, 
-    setPosition, 
-    cancelWatchPosition, 
-    isDrag, 
-    setIsDrag  
-  } = useWatchLocation();
-
-
-  const moveToCenter = () => {
-    setIsDrag(false);
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log('center move', position);
-      setCurrentMapPosition({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      })
-    })    
-  }
-
-  useEffect(() => {
-    console.log('componentDidMount!')
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position)
-        setCurrentMapPosition({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        })
-      })
-    }
-  }, [])
+export default function MapComponent({ 
+  questList, 
+  questType ,
+  currentMapPosition,
+  setCurrentMapPosition,
+  position, 
+  setPosition, 
+  cancelWatchPosition, 
+  isDrag, 
+  setIsDrag,
+}) {
 
   // useEffect(() => {
   //   if (!isDrag) return;
   //   cancelWatchPosition();
   // }, [isDrag, cancelWatchPosition])
-
 
   // to do list
   // - isDrag = true 즉 드래그모드일 때, 마커를 간단한 마커로 바꾸어보여주면 좋겠다.
@@ -76,7 +52,7 @@ export default function MapComponent({ questList, questType }) {
           </MapMarker>
           <Circle
               center={position}
-              radius={50}
+              radius={30}
               strokeWeight={0} // 선의 두께입니다
               fillColor={"#5DEB85"} // 채우기 색깔입니다
               fillOpacity={0.3} // 채우기 불투명도 입니다
@@ -85,22 +61,20 @@ export default function MapComponent({ questList, questType }) {
           {questList.map((item, index) => {
             if (questType === "all") {
               return (
-                <MapMarker
+                <QuestMarker
                   key={item.id}
-                  position={{lat: item.lat, lng: item.lng}}
-                >
-                  {/* <p>{item.type}</p> */}
-                </MapMarker>
+                  {...item}
+                  currentPosition={position}
+                />
               )  
             } else {
               if (questType === item.type) {
                 return (
-                  <MapMarker
+                  <QuestMarker
                     key={item.id}
-                    position={{lat: item.lat, lng: item.lng}}
-                  >
-                    {/* <p>{item.type}</p> */}
-                  </MapMarker>
+                    {...item}
+                    currentPosition={position}
+                  />
                 )  
               }
             }

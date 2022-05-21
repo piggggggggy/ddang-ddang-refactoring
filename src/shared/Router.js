@@ -20,17 +20,13 @@ export default function AppRouter() {
         <Routes>
             <Route path="/" exact element={<Main />} />
             <Route path="/map" exact element={<MapPage />} />
-            <Route path="/quest" exact element={<QuestPage />} />
-            <Route
-                path="/api/players/kakaoauth"
-                exact
-                element={<KakaoLogin />}
-            />
+            <Route path="/quest" exact element={<MapPage />} />
+
             <Route path="/mypage" element={<MyPageFinal />} />
-            <Route path="/ranking" element={<Ranking />} />
             <Route path="/signin" element={<SigninFinal />} />
             <Route path="/signup" element={<SignupFinal />} />
             <Route path="/feed" element={<FeedFinal />} />
+            <Route path="/ranking" element={<Ranking />} />
             <Route
                 path="/chat/:userId/:nickname/:roomName"
                 element={<Chat />}

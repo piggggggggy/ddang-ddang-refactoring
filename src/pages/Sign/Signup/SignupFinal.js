@@ -221,7 +221,7 @@ export default function SignupFinal() {
     // 1차 로그인 완료
 
     const [userData, setUserData] = React.useState({});
-    const [page, setPage] = React.useState(1);
+    const [page, setPage] = React.useState(3);
     const [firstPageComplete, setFirstPageComplete] = React.useState(false);
 
     const checkfirstpageComplete = () => {

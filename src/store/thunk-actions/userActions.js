@@ -94,12 +94,15 @@ export const signupAxios = (
             password,
             mbti,
             profileImg,
+            provider: "local",
+            providerId: null,
+            currentHashedRefreshToken: null,
         };
 
         try {
             const response = await axios.post(
                 "http://15.164.213.175:3000/api/players/signup",
-                user
+                { body: user }
             );
 
             user = { email, nickname, password, mbti, profileImg };

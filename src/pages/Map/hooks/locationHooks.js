@@ -4,10 +4,11 @@ import { getUpdatedDistance } from "../../../modules/location";
 const geolocationOptions = {
   enableHighAccuracy: true,
   maximumAge: 0,
-  // timeout: 5000,
+  timeout: 1000,
 }
 
-const useWatchLocation = () => {
+const useWatchLocation = (questList, type) => {
+  const [inCircleList, setInCircleList] = useState([]);
   const [currentMapPosition, setCurrentMapPosition] = useState({
     lat: 0,
     lng: 0
@@ -35,7 +36,22 @@ const useWatchLocation = () => {
       console.log('와치 작동');
       watchId.current = navigator.geolocation.watchPosition(
         (_position)=> {
-          // console.log(_position.coords)
+          console.log('와치 인', _position, type)
+          let filteredList = questList.filter(item => {
+            let distance = getUpdatedDistance({
+              lat: _position.coords.latitude,
+              lng: _position.coords.longitude,
+              _lat: Number(item.lat),
+              _lng: Number(item.lng),
+            })
+            if (type === "all") {
+              return distance < 0.03;
+            } else {
+              return distance < 0.03 && item.type === type;
+            }
+          });
+          setInCircleList(filteredList);
+          
           let update = true;
           const newRecord = {
             lat: _position.coords.latitude,
@@ -43,7 +59,7 @@ const useWatchLocation = () => {
           }
           if (record !== null) {
             const distance = getUpdatedDistance({ lat: record.lat, lng: record.lng, _lat: newRecord.lat, _lng: newRecord.lng})
-            if (distance < 0.03) update = false;
+            if (distance < 0.02) update = false;
           }
           if (update) {
             // console.log(update, '와치 업데이트 성공!!!!', "이전 :", record, "뉴 :", newRecord);
@@ -58,8 +74,8 @@ const useWatchLocation = () => {
       )
     }
 
-    // return cancelWatchPosition;
-  }, [isDrag, record]);
+    return cancelWatchPosition;
+  }, [isDrag, record, questList]);
 
 
   return {
@@ -70,6 +86,7 @@ const useWatchLocation = () => {
     cancelWatchPosition,
     isDrag,
     setIsDrag,
+    inCircleList,
   }
 }
 

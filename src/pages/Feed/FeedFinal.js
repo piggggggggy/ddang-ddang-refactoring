@@ -12,10 +12,20 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import FeedItem from "./components/FeedItem";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../shared/Cookie";
+
+import {
+    feedsLatestAxios,
+    feedsPopularityAxios,
+    feedsDistanceAxios,
+} from "../../store/thunk-actions/feedActions";
+
 export default function Feed() {
-    React.useEffect(() => {
-        feedsLatest();
-    }, []);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const token = getCookie("token");
 
     const data = {
         regionSi: "서울시",
@@ -25,52 +35,31 @@ export default function Feed() {
         lng: 127.4147562,
     };
 
-    const [userLocation, setUserLocation] = React.useState({
-        lat: 36.3298522,
-        lng: 127.4147562,
-    });
-
-    const [tabIndex, setTabIndex] = React.useState(0);
-    console.log(tabIndex);
-
     const [items, setItems] = React.useState([]);
     console.log(items);
 
-    const feedsLatest = async () => {
-        await axios
-            .post(`http://15.164.213.175:3000/api/feeds?type=latest`, data)
-            .then((res) => {
-                console.log(res);
-                setItems([...res.data.rows]);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+    const feeds = useSelector((state) => state?.feed.feeds);
+    console.log(feeds);
+
+    const feedsLatest = () => {
+        dispatch(feedsLatestAxios(data));
     };
 
-    const feedsPopularity = async () => {
-        await axios
-            .post(`http://15.164.213.175:3000/api/feeds?type=popularity`, data)
-            .then((res) => {
-                console.log(res);
-                setItems([...res.data.rows]);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+    const feedsPopularity = () => {
+        dispatch(feedsPopularityAxios(data));
     };
 
-    const feedsDistance = async () => {
-        await axios
-            .post(`http://15.164.213.175:3000/api/feeds?type=distance`, data)
-            .then((res) => {
-                console.log(res);
-                setItems([...res.data.rows]);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+    const feedsDistance = () => {
+        dispatch(feedsDistanceAxios(data));
     };
+
+    React.useEffect(() => {
+        // feedsLatest();
+        feedsLatest(data);
+    }, []);
+
+    const [tabIndex, setTabIndex] = React.useState(0);
+    console.log(tabIndex);
 
     const [feedLocation, setFeedLocation] = React.useState([
         "33.5563",
@@ -224,14 +213,14 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {items.map((feed, idx) => (
+                                {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
                                             setFeedLocation([
-                                                items[idx]?.quest?.lat,
-                                                items[idx]?.quest?.lng,
-                                                items[idx]?.id,
+                                                feeds?.[idx]?.quest?.lat,
+                                                feeds?.[idx]?.quest?.lng,
+                                                feeds?.[idx]?.id,
                                             ]);
                                         }}
                                         key={idx}
@@ -257,14 +246,14 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {items.map((feed, idx) => (
+                                {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
                                             setFeedLocation([
-                                                items[idx]?.quest?.lat,
-                                                items[idx]?.quest?.lng,
-                                                items[idx]?.id,
+                                                feeds?.[idx]?.quest?.lat,
+                                                feeds?.[idx]?.quest?.lng,
+                                                feeds?.[idx]?.id,
                                             ]);
                                         }}
                                         key={idx}
@@ -290,14 +279,14 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {items.map((feed, idx) => (
+                                {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
                                             setFeedLocation([
-                                                items[idx]?.quest?.lat,
-                                                items[idx]?.quest?.lng,
-                                                items[idx]?.id,
+                                                feeds?.[idx]?.quest?.lat,
+                                                feeds?.[idx]?.quest?.lng,
+                                                feeds?.[idx]?.id,
                                             ]);
                                         }}
                                         key={idx}
@@ -345,3 +334,39 @@ const Tabcard = styled(motion.div)`
 const UnorderedList = styled(motion.ul)`
     list-style-type: none;
 `;
+
+// const feedsLatest = async () => {
+//     await axios
+//         .post(`http://15.164.213.175:3000/api/feeds?type=latest`, data)
+//         .then((res) => {
+//             console.log(res);
+//             setItems([...res.data.rows]);
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// };
+
+// const feedsPopularity = async () => {
+//     await axios
+//         .post(`http://15.164.213.175:3000/api/feeds?type=popularity`, data)
+//         .then((res) => {
+//             console.log(res);
+//             setItems([...res.data.rows]);
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// };
+
+// const feedsDistance = async () => {
+//     await axios
+//         .post(`http://15.164.213.175:3000/api/feeds?type=distance`, data)
+//         .then((res) => {
+//             console.log(res);
+//             setItems([...res.data.rows]);
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// };

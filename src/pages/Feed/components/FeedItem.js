@@ -1,5 +1,9 @@
 import React from "react";
+import axios from "axios";
+import { getCookie } from "../../../shared/Cookie";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { Grid, Text, Input, Button } from "../elements/index";
 import { IconButton } from "@mui/material";
@@ -7,10 +11,19 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import MessageIcon from "@mui/icons-material/Message";
 import SendIcon from "@mui/icons-material/Send";
 
+import { writeCommentsAxios } from "../../../store/thunk-actions/feedActions";
+
 export default function FeedItem(props) {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const token = getCookie("token");
+    console.log(token);
+
+    const playerEmail = "paul@gmail.com";
+
     const { item, onClick, page, id } = props;
-    console.log(props.page);
-    console.log(page);
+    const feedId = item.id;
+
     // 좋아요
     const [counter, setCounter] = React.useState(item?.likeCnt);
 
@@ -19,16 +32,13 @@ export default function FeedItem(props) {
     const likeHandler = () => {
         if (likedByMe === true) {
             setLikedByMe(false);
-            console.log("hello");
             setCounter(counter - 1);
         } else {
             setLikedByMe(true);
-            console.log("hello");
             setCounter(counter + 1);
+            likeFeed();
         }
     };
-
-    console.log(item);
 
     // 피드 디테일
     const [detailOpen, setDetailOpen] = React.useState(false);
@@ -39,11 +49,11 @@ export default function FeedItem(props) {
     // 디테일 이미지
     const imagesArr = [];
     imagesArr.push(item?.image1_url, item?.image2_url, item?.image3_url);
-    // console.log(imagesArr);
 
     // 댓글
+    // const [commentArr, setCommentArr] = React.useState([...item?.comments]);
     const commentArr = item?.comments;
-    // console.log(commentArr);
+    console.log(commentArr);
 
     const [commentIsOpen, setCommentIsOpen] = React.useState(false);
 
@@ -51,8 +61,60 @@ export default function FeedItem(props) {
         setCommentIsOpen(!commentIsOpen);
     };
 
+    // 댓글 작성
+
+    const [comment, setComment] = React.useState("");
+
+    const commentChange = (e) => {
+        setComment(e.target.value);
+    };
+
+    const writeComment = () => {
+        createComment(comment);
+    };
+
+    const createComment = () => {
+        dispatch(writeCommentsAxios(comment, token, feedId));
+        // console.log(comment);
+        // const commentData = { comment: comment };
+        // commentArr.push("hello");
+        // // setCommentArr([...commentArr, ...commentData]);
+        // console.log(commentArr);
+    };
+    console.log(commentArr);
+    console.log(feedId);
+    const likeFeed = async () => {
+        console.log(token);
+        await axios
+            .put(`http://15.164.213.175:3000/api/feeds/${feedId}/like`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const deleteComment = async (commentId) => {
+        axios
+            .delete(
+                `http://15.164.213.175:3000/api/feeds/${feedId}/comments/${commentId}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     return (
-        <Feed onClick={onClick}>
+        <Feed {...props} onClick={onClick}>
             <Grid
                 flex
                 direction="row"
@@ -136,6 +198,7 @@ export default function FeedItem(props) {
                     <>
                         {commentArr.map((comment, idx) => (
                             <Grid
+                                key={idx}
                                 flex
                                 justifyContent="space-between"
                                 alignItems="center"
@@ -146,9 +209,19 @@ export default function FeedItem(props) {
                                 </Text>
                                 <Text mystyles="font-size: 12px;">
                                     {comment.updatedAt !== ""
-                                        ? comment.updatedAt
-                                        : comment.createdAt}
+                                        ? comment.updatedAt.substring(0, 10)
+                                        : comment.createdAt.substring(0, 10)}
                                 </Text>
+                                {playerEmail === comment.player.email && (
+                                    <Button
+                                        mystyles="background: #F3AC9C; border-radius: 25px; border: none; box-shadow: 1px 1px 1px 1px #0B325E"
+                                        onClick={() => {
+                                            deleteComment(comment.id);
+                                        }}
+                                    >
+                                        x
+                                    </Button>
+                                )}
                             </Grid>
                         ))}
                         <Grid
@@ -159,8 +232,9 @@ export default function FeedItem(props) {
                             <Input
                                 mystyles="width: 220px; height: 30px; box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05); border:none; border-radius:20px;"
                                 placeholder="댓글을 써주세요"
+                                onChange={commentChange}
                             />
-                            <IconButton>
+                            <IconButton onClick={writeComment}>
                                 <SendIcon />
                             </IconButton>
                         </Grid>
@@ -172,12 +246,33 @@ export default function FeedItem(props) {
 }
 
 const Feed = styled(motion.li)`
-    ${(props) => (props.page === 0 ? "border-left: 30px solid #a3d4fb;" : "")};
-    ${(props) => (props.page === 1 ? "border-left: 30px solid #a3d4fb;" : "")};
-    ${(props) => (props.page === 2 ? "border-left: 30px solid #a3d4fb;" : "")};
+    ${(props) => (props.page === 0 ? "border-left: 30px solid #F3AC9C" : "")};
+    ${(props) => (props.page === 1 ? "border-left: 30px solid #A3D4FB" : "")};
+    ${(props) => (props.page === 2 ? "border-left: 30px solid #EDEA50" : "")};
     min-height: 106px;
     margin-top: 18px;
     border-radius: 10px;
     box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.05);
     margin-left: -40px;
 `;
+
+// const createComment = async (comment) => {
+//     await axios
+//         .post(
+//             `http://15.164.213.175:3000/api/feeds/${feedId}/comments`,
+//             {
+//                 comment: comment,
+//             },
+//             {
+//                 headers: { Authorization: `Bearer ${token}` },
+//             }
+//         )
+//         .then((res) => {
+//             console.log(res);
+//             commentArr.push(comment);
+//             window.location.reload();
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// };

@@ -20,7 +20,9 @@ const useMainData = () => {
       })
       const data = await getQuestList(res.coords.latitude, res.coords.longitude);
       console.log(res);
-      setQuestList(data.rows)
+      if (data.rows.length > 0) {
+        setQuestList(data.rows)
+      }
       setTimeout(() => {
         setLoading(false)
       }, 200)

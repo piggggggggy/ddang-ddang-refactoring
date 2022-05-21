@@ -47,15 +47,23 @@ export default function APITest() {
 
     // o
     const signup = async () => {
+        let headersList = {
+            Accept: "/",
+            "Content-Type": "application/json",
+        };
         await axios
-            .post("http://15.164.213.175:3000/api/players/signup", {
-                email: "adfff@gmail.com",
-                nickname: "Paul1996!",
-                password: "Paul1996!",
-                mbti: "ENFP",
-                profileImg:
-                    "https://image-uploading-pol.s3.ap-northeast-2.amazonaws.com/5867344.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARWI6Z2AKSPUWWMXF%2F20220520%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20220520T143639Z&X-Amz-Expires=900&X-Amz-Signature=fdd50c1bb9edf692ec5d7a477c0284faec46295768c5634a546f4c591bbbcb8f&X-Amz-SignedHeaders=host",
-            })
+            .post(
+                "http://15.164.213.175:3000/api/players/signup",
+                {
+                    email: "adffsdfsdff@gmail.com",
+                    nickname: "Pausdfsdfl1996!",
+                    password: "Paul1996!",
+                    mbti: "ENFP",
+                    profileImg:
+                        "https://image-uploading-pol.s3.ap-northeast-2.amazonaws.com/5867344.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARWI6Z2AKSPUWWMXF%2F20220520%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20220520T143639Z&X-Amz-Expires=900&X-Amz-Signature=fdd50c1bb9edf692ec5d7a477c0284faec46295768c5634a546f4c591bbbcb8f&X-Amz-SignedHeaders=host",
+                },
+                headersList
+            )
             .then((res) => {
                 console.log(res);
             })
@@ -65,7 +73,7 @@ export default function APITest() {
     };
 
     const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicGF1bEBnbWFpbC5jb20iLCJuaWNrbmFtZSI6ImNoYW5nZWQgbmlja25hbWUiLCJpYXQiOjE2NTMwNTQ5NTAsImV4cCI6MTY1MzA2MjE1MH0.VsvasoBW-ADp4hFDvGdoFj8gR1N1mAQK6oGRr7a4JyY";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicGF1bEBnbWFpbC5jb20iLCJuaWNrbmFtZSI6ImNoYW5nZWQgbmlja25hbWUiLCJpYXQiOjE2NTMwNjQxMTEsImV4cCI6MTY1MzA3MTMxMX0.PBJ2N-8ozqgeZdCb9NIWlb6qoyWt1UuHWZN2SREAcPo";
 
     const signout = async () => {
         axios
@@ -96,9 +104,13 @@ export default function APITest() {
     // update 중
     const mypage = async () => {
         axios
-            .post("http://15.164.213.175:3000/api/players/mypage", {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+            .get(
+                "http://15.164.213.175:3000/api/players/mypage",
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                },
+                data
+            )
             .then((res) => {
                 console.log(res);
             })
@@ -108,28 +120,19 @@ export default function APITest() {
     };
 
     const edit = async () => {
-        let headersList = {
-            Accept: "/",
-            // "User-Agent": "Thunder Client (https://www.thunderclient.com/)",
-            Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicGF1bEBnbWFpbC5jb20iLCJuaWNrbmFtZSI6ImNoYW5nZWQgbmlja25hbWUiLCJpYXQiOjE2NTMwNjE2NjEsImV4cCI6MTY1MzA2ODg2MX0.GP9wZtaUsEhbgbNTLTMTJ9RMFUT2tMORAPP1Bj5GGC8",
-            "Content-Type": "application/json",
-        };
-
-        let bodyContent = {
-            profileImg: "wefwefwef",
-            nickname: "helloworwefwefwefld",
-        };
-
-        let reqOptions = {
-            url: "http://15.164.213.175:3000/api/players/edit",
-            method: "PATCH",
-            headers: headersList,
-            body: bodyContent,
-        };
-        axios.request(reqOptions).then(function (response) {
-            console.log(response.data);
-        });
+        await axios
+            .patch(
+                "http://15.164.213.175:3000/api/players/edit",
+                {
+                    body: { nickname: "asfd", profileImg: "Asdf" },
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
+            .then((res) => {
+                console.log(res);
+            });
     };
 
     const data = {
@@ -268,7 +271,7 @@ export default function APITest() {
     };
 
     React.useEffect(() => {
-        edit();
+        mypage();
     }, []);
 
     return <>API Test</>;
