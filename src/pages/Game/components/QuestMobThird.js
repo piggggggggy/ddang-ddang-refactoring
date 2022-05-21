@@ -27,10 +27,10 @@ export default function QuestMobThird({ setProgress, progress, RSPIndex, randomI
   useEffect(() => {
     setTimeout(() => {
       setReady(false);
-    }, 5000 )
+    }, 4000 )
     setTimeout(() => {
       setProgress(3);
-    }, 10000 )
+    }, 9000 )
 
     if (randomIndex === RSPIndex) {
       setResult("Draw")
@@ -117,7 +117,7 @@ const Text1 = styled.div`
   font-weight: 700;
   color: #273938;
   opacity: 0;
-  animation: ${FadeIn} 2s 500ms forwards ease;
+  animation: ${FadeIn} 1500ms 300ms forwards ease;
 `;
 
 const Text2 = styled.div`
@@ -128,7 +128,7 @@ const Text2 = styled.div`
   font-weight: 700;
   color: #273938;
   opacity: 0;
-  animation: ${FadeIn} 2s 1500ms forwards ease;
+  animation: ${FadeIn} 1500ms 1300ms forwards ease;
 `;
 
 const Text3 = styled.div`
@@ -139,7 +139,7 @@ const Text3 = styled.div`
   font-weight: 700;
   color: #273938;
   opacity: 0;
-  animation: ${FadeIn} 2s 2500ms forwards ease;
+  animation: ${FadeIn} 1500ms 2300ms forwards ease;
 `;
 
 const LeftSideFakeBar = styled.div`
@@ -199,7 +199,7 @@ const MobRAPItem = styled.div`
   left: -400px;
   z-index: 900;
   width: calc(100% - 60px);
-  animation: ${SlideLeft} 1s 500ms forwards ease;
+  animation: ${SlideLeft} 1s 300ms forwards ease;
 `;
 const MyRAPItem = styled.div`
   position: absolute;
@@ -207,7 +207,7 @@ const MyRAPItem = styled.div`
   right: -400px;
   z-index: 900;
   width: calc(100% - 60px);
-  animation: ${SlideRight} 1s 1500ms forwards ease;
+  animation: ${SlideRight} 1s 1300ms forwards ease;
 `;
 const ResultText = styled.div`
   position: absolute;
@@ -215,7 +215,7 @@ const ResultText = styled.div`
   left: calc(50% - 60px);
   width: 120px;
   opacity: 0;
-  animation: ${Result} 1500ms 3000ms forwards ease;
+  animation: ${Result} 1200ms 2800ms forwards ease;
   & p {
     width: 100%;
     font-size: 40px;

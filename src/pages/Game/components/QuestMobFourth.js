@@ -8,7 +8,7 @@ import QuestPaperBottomButton from "../elements/QuestPaperBottomButton";
 import RockScissorsPaperItem from "../elements/RockScissorsPaperItem";
 import CompleteModal from "./CompleteModal";
 
-export default function QuestMobFourth({ setProgress, progress, result, questId }) {
+export default function QuestMobFourth({ setProgress, progress, setRSPIndex, result, questId }) {
   const navigate = useNavigate();
   const fragment = questFragment("mob")
   const [popupOpen, setPopupOpen] = useState(false);
@@ -17,7 +17,9 @@ export default function QuestMobFourth({ setProgress, progress, result, questId 
     if (result === "Win") {
       setPopupOpen(true);
     } else {
-      navigate(-1);
+      // navigate(-1);
+      setRSPIndex(null)
+      setProgress(1)
     }
   }
 
