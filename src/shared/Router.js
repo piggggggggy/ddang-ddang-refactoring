@@ -8,7 +8,7 @@ import Feed from "../pages/Feed/Feed";
 import Chat from "../pages/Chat/Chat";
 import Main from "../pages/Main/Main";
 import MapPage from "../pages/Map/MapPage";
-import QuestPage from "../pages/Quest/QuestPage";
+import GamePage from "../pages/Game/GamePage";
 
 export default function AppRouter() {
     return (
@@ -16,6 +16,7 @@ export default function AppRouter() {
             <Route path="/" exact element={<Main/>} />
             <Route path="/map" exact element={<MapPage/>} />
             <Route path="/quest" exact element={<MapPage/>} />
+            <Route path="/map/:type/:questId" exact element={<GamePage/>} />
 
             {/* <Route path="/" element={<MyPageFinal />} /> */}
             <Route path="/signin" element={<Signin />} />

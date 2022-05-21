@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import CloseIcon from "../../../assets/images/icon/CloseIcon";
 import { Grid } from "../../../elements";
 
 export default function SelectedQuestCard(Props) {
@@ -42,7 +43,9 @@ export default function SelectedQuestCard(Props) {
 
   return (
     <Card>
-      <closeButton onClick={Props.setClose}/>
+      <CloseButton onClick={Props.onClick}>
+        <CloseIcon/>
+      </CloseButton>
 
       <Title>
         {fragment.title}
@@ -58,7 +61,7 @@ export default function SelectedQuestCard(Props) {
       <SubInfo>
         {fragment.description}
       </SubInfo>
-      <CardButton>
+      <CardButton onClick={Props.selectQuest}>
         <p>{fragment.buttonText}</p>
       </CardButton>
 
@@ -68,6 +71,7 @@ export default function SelectedQuestCard(Props) {
 }
 
 const Card = styled.div`
+  position: relative;
   width: 95%;
   max-width: 360px;
   height: 360px;
@@ -113,6 +117,8 @@ const CardButton = styled.div`
   }
 `;
 
-const closeButton = styled.div`
-
+const CloseButton = styled.div`
+  position: absolute;
+  top: 24px;
+  right: 24px;
 `;
