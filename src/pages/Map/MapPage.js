@@ -112,9 +112,9 @@ export default function MapPage() {
 
   return (
     <Container>
-      {/* <LandingModal
+      <LandingModal
         loading={loading}
-      /> */}
+      />
 
       <MapComponent
         questList={questList}

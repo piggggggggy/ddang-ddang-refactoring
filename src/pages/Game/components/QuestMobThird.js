@@ -3,14 +3,12 @@ import styled from "styled-components";
 import { Grid } from "../../../elements";
 import { questFragment } from "../../../modules/fragment";
 import { keyframes } from "styled-components";
+import RockScissorsPaperItem from "../elements/RockScissorsPaperItem";
 
-export default function QuestMobThird({ setProgress, progress, RSPIndex }) {
+export default function QuestMobThird({ setProgress, progress, RSPIndex, randomIndex, result, setResult }) {
   const [ready, setReady] = useState(true);
-  const getRandomInt = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
-  }
+
+  console.log(randomIndex, RSPIndex)
   const list = [
     {
       text: "가위",
@@ -30,6 +28,22 @@ export default function QuestMobThird({ setProgress, progress, RSPIndex }) {
     setTimeout(() => {
       setReady(false);
     }, 5000 )
+    setTimeout(() => {
+      setProgress(3);
+    }, 10000 )
+
+    if (randomIndex === RSPIndex) {
+      setResult("Draw")
+    } else if (randomIndex === 0) {
+      if (RSPIndex === 1) setResult("Win")
+      else if (RSPIndex === 2) setResult("Lose");
+    } else if (randomIndex === 1) {
+      if (RSPIndex === 0) setResult("Lose");
+      else if (RSPIndex === 2) setResult("Win");
+    } else if (randomIndex === 2) {
+      if (RSPIndex === 0) setResult("Win");
+      else if (RSPIndex === 1) setResult("Lose");
+    }
   }, [])
 
   return (
@@ -46,9 +60,28 @@ export default function QuestMobThird({ setProgress, progress, RSPIndex }) {
           <Text3>보</Text3>
         </TextWrapper>
       ) : (
-        <></>
+        <>
+          <MobRAPItem>
+            <RockScissorsPaperItem
+              text={list[randomIndex].text}
+              reverse
+            />
+          </MobRAPItem>
+          <MyRAPItem>
+            <RockScissorsPaperItem
+              text={list[RSPIndex].text}
+              isSelected
+            />
+          </MyRAPItem>
+          <ResultText>
+            <p>{result}</p>
+            <div/>
+          </ResultText>
+        </>
       )}
 
+      <LeftSideFakeBar/>
+      <RightSideFakeBar/>
     </Grid>
   )
 }
@@ -109,9 +142,92 @@ const Text3 = styled.div`
   animation: ${FadeIn} 2s 2500ms forwards ease;
 `;
 
+const LeftSideFakeBar = styled.div`
+  position: absolute;
+  top: 0;
+  left: -50px;
+  z-index: 1001;
+  width: 50px;
+  height: 100%;
+  background: #EB6042;
+`;
+const RightSideFakeBar = styled.div`
+  position: absolute;
+  top: 0;
+  right: -50px;
+  z-index: 1001;
+  width: 50px;
+  height: 100%;
+  background: #EB6042;
+`;
+const SlideLeft = keyframes`
+  0% {
+    left: -400px;
+  }
+  20% {
+    left: -400px;
+  }
+  100% {
+    left: -10px;
+  }
+`; 
+const SlideRight = keyframes`
+  0% {
+    right: -400px;
+  }
+  20% {
+    right: -400px;
+  }
+  100% {
+    right: -10px;
+  }
+`; 
+const Result = keyframes`
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+`; 
 const MobRAPItem = styled.div`
-
+  position: absolute;
+  top: 10%;
+  left: -400px;
+  z-index: 900;
+  width: calc(100% - 60px);
+  animation: ${SlideLeft} 1s 500ms forwards ease;
 `;
 const MyRAPItem = styled.div`
-
+  position: absolute;
+  top: calc(10% + 140px);
+  right: -400px;
+  z-index: 900;
+  width: calc(100% - 60px);
+  animation: ${SlideRight} 1s 1500ms forwards ease;
+`;
+const ResultText = styled.div`
+  position: absolute;
+  top: calc(10% + 300px);
+  left: calc(50% - 60px);
+  width: 120px;
+  opacity: 0;
+  animation: ${Result} 1500ms 3000ms forwards ease;
+  & p {
+    width: 100%;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: center;
+    color: #EB6042;
+  }
+  & div {
+    width: 90%;
+    height: 4px;
+    background: #EB6042;
+    margin: auto;
+  }
 `;

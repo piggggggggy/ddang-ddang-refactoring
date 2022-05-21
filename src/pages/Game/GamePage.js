@@ -8,14 +8,21 @@ import QuestMobThird from "./components/QuestMobThird";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container } from "../../elements";
 import { questFragment } from "../../modules/fragment";
+import QuestMobFourth from "./components/QuestMobFourth";
 
 export default function GamePage() {
   const navigate = useNavigate();
   const { type, questId } = useParams();
   const [progress, setProgress] = useState(0);
   const [RSPIndex, setRSPIndex] = useState(null);
-  const fragment = questFragment(type)
+  const [result, setResult] = useState('');
 
+  const fragment = questFragment(type)
+  const randomIndex = ((min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+  })(0, 3);
   const Wrapper = styled.div`
     width: 100%;
     height: 100vh;
@@ -34,21 +41,38 @@ export default function GamePage() {
         </CloseButton>
         <Title>{fragment.text}</Title>
         <Paper>
-          {/* <QuestMobFirst
-            progress={progress}
-            setProgress={setProgress}
-          /> */}
-          {/* <QuestMobSecond
-            progress={progress}
-            setProgress={setProgress}
-            RSPIndex={RSPIndex}
-            setRSPIndex={setRSPIndex}
-          /> */}
-          <QuestMobThird
-            progress={progress}
-            setProgress={setProgress}
-            RSPIndex={RSPIndex}
-          />
+          {progress === 0 && (
+            <QuestMobFirst
+              progress={progress}
+              setProgress={setProgress}
+            />
+          )}
+          {progress === 1 && (
+            <QuestMobSecond
+              progress={progress}
+              setProgress={setProgress}
+              RSPIndex={RSPIndex}
+              setRSPIndex={setRSPIndex}
+            />
+          )}
+          {progress === 2 && (
+            <QuestMobThird
+              progress={progress}
+              setProgress={setProgress}
+              RSPIndex={RSPIndex}
+              randomIndex={randomIndex}
+              result={result}
+              setResult={setResult}
+            />
+          )}
+          {progress === 3 && (
+            <QuestMobFourth
+              progress={progress}
+              setProgress={setProgress}
+              result={result}
+              questId={questId}
+            />
+          )}
 
 
         </Paper>
