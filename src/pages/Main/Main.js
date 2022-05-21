@@ -15,6 +15,7 @@ export default function Main() {
     questType,
     setQuestType,
     location,
+    region,
   } = useMainData();
 
   return (
@@ -27,7 +28,7 @@ export default function Main() {
           'position: relative; z-index: 100; padding: 0 30px;'
         }
       >
-        <Address>서울특별시 용산구 보광동</Address>
+        <Address>{region.regionSi}시 {region.regionGu} {region.regionDong}</Address>
         <UserInfoContainer/>  
         
         <MainMapContainer

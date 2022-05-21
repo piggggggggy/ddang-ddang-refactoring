@@ -27,7 +27,9 @@ export default function QuestMobFourth({ setProgress, progress, result, questId 
       type: "mob", 
       questId: questId,
     });
-    console.log(data);
+    if (data.ok) {
+      navigate(-1);
+    }
   }
 
   const resultHandler = (() => {

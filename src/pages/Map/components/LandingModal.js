@@ -3,16 +3,16 @@ import styled from "styled-components"
 import { keyframes } from "styled-components";
 import { Grid } from "../../../elements";
 
-export default function LandingModal({ loading }) {
+export default function LandingModal({ loading, region, questLength=0 }) {
   const [landingOpen, setLandingOpen] = useState(true);
 
   return (
     <FixedWrapper style={!landingOpen ? {transform: 'translateX(-100%)'} : {}}>
-      <Title><span>보광동 </span>땅먹기</Title>
-      <Address><p>서울특별시 용산구 보광동</p></Address>
+      <Title><span>{region.regionDong} </span>땅먹기</Title>
+      <Address><p>{region.regionSi}시 {region.regionGu} {region.regionDong}</p></Address>
 
       <Info>
-        서울특별시 <span>용산구 소속 16개동</span>에서<br/>재미있는 미션이 윤지님을 기다려요
+        {region.regionSi}시 <span>{region.regionGu} {region.regionDong}</span>에서<br/>재미있는 미션이 윤지님을 기다려요
       </Info>
 
       <Grid
@@ -26,7 +26,7 @@ export default function LandingModal({ loading }) {
         <Circle/>
       </Grid>
 
-      <SubInfo>현재 <span>256명</span>이 땅을 먹고 있어요</SubInfo>
+      <SubInfo>현재 <span>{questLength}개</span>의 땅을 먹을 수 있어요</SubInfo>
 
       <BottomButton 
         style={{background: loading ? "#909090" : "#5EEF87"}}
