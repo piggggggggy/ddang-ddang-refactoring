@@ -5,6 +5,7 @@ import { Container, Grid } from "../../elements";
 import MapComponent from "./components/MapComponent";
 import LandingModal from "./components/LandingModal";
 import QuestActivateLayer from "./components/QuestActivateLayer";
+import { QuestModal, MemoizedQuestModal } from "../Game/components/QuestModal";
 import { useWatchLocation } from "./hooks/locationHooks";
 import { getQuestList } from "../../apis/mainApi";
 
@@ -15,6 +16,11 @@ export default function MapPage() {
   const [questList, setQuestList] = useState([]);
   const [questType, setQuestType] = useState('all');
   const [color, setColor] = useState('#EBEBEB')
+  const [questModalState, setQuestModalState] = useState({
+    open: false,
+    type: '',
+  });
+  
   const { 
     currentMapPosition,
     setCurrentMapPosition,
@@ -26,6 +32,18 @@ export default function MapPage() {
     inCircleList,
   } = useWatchLocation(questList, questType);
 
+  const openQuestModal = (type) => {
+    closeQuestActive();
+    setQuestModalState({
+      open: true,
+      type: type,
+    })
+  }
+  const closeQuestModal = () => {
+    setQuestModalState({
+      ...questModalState, open: false,
+    })
+  }
   const setDdangDdang = () => {
     if (inCircleList.length === 0) return;
     setQuestActive(true)

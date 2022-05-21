@@ -5,9 +5,12 @@ import SelectedQuestCard from "../elements/SelectedQuestCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useNavigate } from "react-router-dom";
 
 
 export default function QuestActivateLayer({ open, setClose, list }) {
+  const navigate = useNavigate();
+
   return (
     <>
       {open && (<Dimmed onClick={setClose}/>)}
@@ -21,7 +24,7 @@ export default function QuestActivateLayer({ open, setClose, list }) {
             centerPadding={"20px"}
           >
           {list.map((item, index) => (
-                <SelectedQuestCard {...item} onClick={setClose}/>
+                <SelectedQuestCard {...item} onClick={setClose} selectQuest={() => navigate(`/map/${item.type}/${item.id}`)}/>
             ))}
           </Slider>
           
