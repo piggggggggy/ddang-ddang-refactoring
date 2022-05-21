@@ -63,7 +63,7 @@ export default function MainMapContainer({ type, questList }) {
       </KakaoMapDefault>
       <MapFooter 
         style={{background: minmapFragment.color}}
-        onClick={() => navigate("/map")}
+        onClick={() => navigate("/quest")}
       >
         <p>{minmapFragment.text}</p>
       </MapFooter>
