@@ -1,20 +1,16 @@
 import styled from "styled-components";
 
 export default function CompleteModal({ open, setComfirm }) {
-
   return (
     <>
-      {open && (<Dimmed/>)}
-      <Paper style={open ? {transform: 'translateY(-300%)'} : {}}>
+      {open && <Dimmed />}
+      <Paper style={open ? { bottom: "calc(50vh - 140px)" } : {}}>
         <Title>승리를 축하합니다</Title>
         <Reward>
           <p>3,000 P</p>
         </Reward>
 
-        <BottomButton
-          onClick={setComfirm}
-          style={{marginBottom: 10}}
-        >
+        <BottomButton onClick={setComfirm} style={{ marginBottom: 10 }}>
           <p>포인트 받기</p>
         </BottomButton>
         <BottomButton>
@@ -22,7 +18,7 @@ export default function CompleteModal({ open, setComfirm }) {
         </BottomButton>
       </Paper>
     </>
-  )
+  );
 }
 
 const Dimmed = styled.div`
@@ -43,7 +39,6 @@ const Paper = styled.div`
   background: #fff;
   box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
   border-radius: 4px;
-  /* top: calc(30% - 145px); */
   bottom: -100%;
   left: calc(50% - 140px);
   z-index: 2001;
@@ -56,7 +51,7 @@ const Title = styled.p`
   font-weight: 700;
   line-height: 1.15;
   text-align: center;
-  color: #EB6042;
+  color: #eb6042;
   width: 100%;
 `;
 
@@ -67,7 +62,7 @@ const Reward = styled.div`
   justify-content: center;
   align-items: center;
   margin: 14px auto 24px;
-  background: #EB6042;
+  background: #eb6042;
   & p {
     font-size: 20px;
     font-weight: 700;
@@ -82,7 +77,7 @@ const BottomButton = styled.div`
   align-items: center;
   width: 100%;
   height: 40px;
-  background: #F3AC9C;
+  background: #f3ac9c;
   box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
   border-radius: 4px;
   & p {

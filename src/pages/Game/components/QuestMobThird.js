@@ -5,37 +5,44 @@ import { questFragment } from "../../../modules/fragment";
 import { keyframes } from "styled-components";
 import RockScissorsPaperItem from "../elements/RockScissorsPaperItem";
 
-export default function QuestMobThird({ setProgress, progress, RSPIndex, randomIndex, result, setResult }) {
+export default function QuestMobThird({
+  setProgress,
+  progress,
+  RSPIndex,
+  randomIndex,
+  result,
+  setResult,
+}) {
   const [ready, setReady] = useState(true);
 
-  console.log(randomIndex, RSPIndex)
+  console.log(randomIndex, RSPIndex);
   const list = [
     {
       text: "가위",
-      img:'',
+      img: "",
     },
     {
       text: "바위",
-      img:'',
+      img: "",
     },
     {
       text: "보",
-      img:'',
-    }
-  ]
+      img: "",
+    },
+  ];
 
   useEffect(() => {
     setTimeout(() => {
       setReady(false);
-    }, 4000 )
+    }, 2500);
     setTimeout(() => {
       setProgress(3);
-    }, 9000 )
+    }, 6000);
 
     if (randomIndex === RSPIndex) {
-      setResult("Draw")
+      setResult("Draw");
     } else if (randomIndex === 0) {
-      if (RSPIndex === 1) setResult("Win")
+      if (RSPIndex === 1) setResult("Win");
       else if (RSPIndex === 2) setResult("Lose");
     } else if (randomIndex === 1) {
       if (RSPIndex === 0) setResult("Lose");
@@ -44,7 +51,7 @@ export default function QuestMobThird({ setProgress, progress, RSPIndex, randomI
       if (RSPIndex === 0) setResult("Win");
       else if (RSPIndex === 1) setResult("Lose");
     }
-  }, [])
+  }, []);
 
   return (
     <Grid
@@ -62,28 +69,22 @@ export default function QuestMobThird({ setProgress, progress, RSPIndex, randomI
       ) : (
         <>
           <MobRAPItem>
-            <RockScissorsPaperItem
-              text={list[randomIndex].text}
-              reverse
-            />
+            <RockScissorsPaperItem text={list[randomIndex].text} reverse />
           </MobRAPItem>
           <MyRAPItem>
-            <RockScissorsPaperItem
-              text={list[RSPIndex].text}
-              isSelected
-            />
+            <RockScissorsPaperItem text={list[RSPIndex].text} isSelected />
           </MyRAPItem>
           <ResultText>
             <p>{result}</p>
-            <div/>
+            <div />
           </ResultText>
         </>
       )}
 
-      <LeftSideFakeBar/>
-      <RightSideFakeBar/>
+      <LeftSideFakeBar />
+      <RightSideFakeBar />
     </Grid>
-  )
+  );
 }
 const FadeIn = keyframes`
   0% {
@@ -95,7 +96,7 @@ const FadeIn = keyframes`
   100% {
     opacity: 1;
   }
-`; 
+`;
 const FadeOut = keyframes`
   0% {
     opacity: 1;
@@ -103,11 +104,10 @@ const FadeOut = keyframes`
   100% {
     opacity: 0;
   }
-`; 
+`;
 
 const TextWrapper = styled.div`
   animation: ${FadeOut} 500ms 4000ms forwards ease;
-
 `;
 const Text1 = styled.div`
   width: 100%;
@@ -117,7 +117,7 @@ const Text1 = styled.div`
   font-weight: 700;
   color: #273938;
   opacity: 0;
-  animation: ${FadeIn} 1500ms 300ms forwards ease;
+  animation: ${FadeIn} 1000ms 300ms forwards ease;
 `;
 
 const Text2 = styled.div`
@@ -128,7 +128,7 @@ const Text2 = styled.div`
   font-weight: 700;
   color: #273938;
   opacity: 0;
-  animation: ${FadeIn} 1500ms 1300ms forwards ease;
+  animation: ${FadeIn} 1000ms 800ms forwards ease;
 `;
 
 const Text3 = styled.div`
@@ -139,7 +139,7 @@ const Text3 = styled.div`
   font-weight: 700;
   color: #273938;
   opacity: 0;
-  animation: ${FadeIn} 1500ms 2300ms forwards ease;
+  animation: ${FadeIn} 1000ms 1300ms forwards ease;
 `;
 
 const LeftSideFakeBar = styled.div`
@@ -149,7 +149,7 @@ const LeftSideFakeBar = styled.div`
   z-index: 1001;
   width: 50px;
   height: 100%;
-  background: #EB6042;
+  background: #eb6042;
 `;
 const RightSideFakeBar = styled.div`
   position: absolute;
@@ -158,7 +158,7 @@ const RightSideFakeBar = styled.div`
   z-index: 1001;
   width: 50px;
   height: 100%;
-  background: #EB6042;
+  background: #eb6042;
 `;
 const SlideLeft = keyframes`
   0% {
@@ -170,7 +170,7 @@ const SlideLeft = keyframes`
   100% {
     left: -10px;
   }
-`; 
+`;
 const SlideRight = keyframes`
   0% {
     right: -400px;
@@ -181,7 +181,7 @@ const SlideRight = keyframes`
   100% {
     right: -10px;
   }
-`; 
+`;
 const Result = keyframes`
   0% {
     opacity: 0;
@@ -192,7 +192,7 @@ const Result = keyframes`
   100% {
     opacity: 1;
   }
-`; 
+`;
 const MobRAPItem = styled.div`
   position: absolute;
   top: 10%;
@@ -207,7 +207,7 @@ const MyRAPItem = styled.div`
   right: -400px;
   z-index: 900;
   width: calc(100% - 60px);
-  animation: ${SlideRight} 1s 1300ms forwards ease;
+  animation: ${SlideRight} 1s 300ms forwards ease;
 `;
 const ResultText = styled.div`
   position: absolute;
@@ -215,19 +215,19 @@ const ResultText = styled.div`
   left: calc(50% - 60px);
   width: 120px;
   opacity: 0;
-  animation: ${Result} 1200ms 2800ms forwards ease;
+  animation: ${Result} 1200ms 1800ms forwards ease;
   & p {
     width: 100%;
     font-size: 40px;
     font-weight: 700;
     line-height: 1.15;
     text-align: center;
-    color: #EB6042;
+    color: #eb6042;
   }
   & div {
     width: 90%;
     height: 4px;
-    background: #EB6042;
+    background: #eb6042;
     margin: auto;
   }
 `;

@@ -3,6 +3,8 @@ import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import { Grid } from "../../../elements";
 import { getUpdatedDistance } from "../../../modules/location";
+import ClickBalloon from "../../../assets/images/png/active-balloon.png";
+import { questFragment } from "../../../modules/fragment";
 
 export default function QuestMarker(Props) {
   const [open, setOpen] = useState(false);
@@ -11,33 +13,44 @@ export default function QuestMarker(Props) {
     lng: Props.currentPosition.lng,
     _lat: Number(Props.lat),
     _lng: Number(Props.lng),
-  })
+  });
   return (
     <>
-      
-      {open && (<Dimmed onClick={() => setOpen(false)}/>)}
+      {open && <Dimmed onClick={() => setOpen(false)} />}
       {open && (
         <DeatilWrapper>
-          <Grid
-            mystyles={
-              'width: 120px;'
-            }
-          >
+          <Grid mystyles={"width: 120px;"}>
             <Title>{Props.title}</Title>
             <Description>{Props.description}</Description>
           </Grid>
           <Reward>{Props.reward},000P</Reward>
         </DeatilWrapper>
       )}
-      <MapMarker
-        zIndex={301}
-        position={{lat: Props.lat, lng: Props.lng}}
-        onClick={() => setOpen(true)}
-      >
-        {distance <= 0.03 && (<p>click</p>)}
-      </MapMarker>
+      <MarkerWrapper>
+        <MapMarker
+          zIndex={301}
+          position={{ lat: Props.lat, lng: Props.lng }}
+          image={{
+            src: questFragment(Props.type).icon,
+            size: {
+              width: 14,
+              height: 14,
+            },
+          }}
+          onClick={() => setOpen(true)}
+        >
+          {distance <= 0.03 && (
+            <CustomOverlayMap position={{ lat: Props.lat, lng: Props.lng }}>
+              <ClickBubble>
+                <img src={ClickBalloon} alt={"click"} />
+                <p>Click!</p>
+              </ClickBubble>
+            </CustomOverlayMap>
+          )}
+        </MapMarker>
+      </MarkerWrapper>
     </>
-  )
+  );
 }
 
 const Dimmed = styled.div`
@@ -48,7 +61,13 @@ const Dimmed = styled.div`
   width: 100vw;
   max-width: 428px;
   height: 100vh;
-  background: rgba(132, 132, 132, 0.3);
+  background: rgba(39, 57, 56, 0.5);
+`;
+const MarkerWrapper = styled.div`
+  & div {
+    background: none !important;
+    border: none !important;
+  }
 `;
 
 const DeatilWrapper = styled.div`
@@ -59,7 +78,7 @@ const DeatilWrapper = styled.div`
   width: 200px;
   height: 60px;
   border-radius: 10px;
-  border: 2px solid #5DEB85;
+  border: 2px solid #5deb85;
   box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
   background: #fff;
   display: flex;
@@ -84,7 +103,7 @@ const Description = styled.p`
   font-size: 8px;
   line-height: 1.15;
   margin-bottom: 4px;
-  color: #BABABA;
+  color: #bababa;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -94,4 +113,26 @@ const Reward = styled.span`
   font-size: 12px;
   font-weight: 700;
   line-height: 1.15;
+`;
+
+const ClickBubble = styled.div`
+  position: absolute;
+  width: 50px;
+  height: 29px;
+  top: -40px;
+  left: -35px;
+  z-index: 302;
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  & p {
+    position: absolute;
+    z-index: 303;
+    top: 5px;
+    left: 10px;
+    font-size: 4px;
+    color: #fff;
+  }
 `;

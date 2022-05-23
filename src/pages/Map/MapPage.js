@@ -16,24 +16,24 @@ export default function MapPage() {
   const [questActive, setQuestActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [questList, setQuestList] = useState([]);
-  const [questType, setQuestType] = useState('all');
-  const [color, setColor] = useState('#EBEBEB')
+  const [questType, setQuestType] = useState("all");
+  const [color, setColor] = useState("#EBEBEB");
   const [questModalState, setQuestModalState] = useState({
     open: false,
-    type: '',
+    type: "",
   });
   const [region, setRegion] = useState({
     regionDong: "땅땅동",
     regionGu: "땅땅구",
     regionSi: "땅땅",
-  })
-  const { 
+  });
+  const {
     currentMapPosition,
     setCurrentMapPosition,
-    position, 
-    setPosition, 
-    cancelWatchPosition, 
-    isDrag, 
+    position,
+    setPosition,
+    cancelWatchPosition,
+    isDrag,
     setIsDrag,
     inCircleList,
   } = useWatchLocation(questList, questType);
@@ -43,79 +43,96 @@ export default function MapPage() {
     setQuestModalState({
       open: true,
       type: type,
-    })
-  }
+    });
+  };
   const closeQuestModal = () => {
     setQuestModalState({
-      ...questModalState, open: false,
-    })
-  }
+      ...questModalState,
+      open: false,
+    });
+  };
   const setDdangDdang = () => {
-    if (inCircleList.length === 0) return;
-    setQuestActive(true)
-  }
+    // if (inCircleList.length === 0) return;
+    setQuestActive(true);
+  };
   const closeTab = () => {
     setTabOpen(false);
-  }
+  };
   const closeQuestActive = () => {
     setQuestActive(false);
-  }
-  const selectQuestInSideTab = ({lat, lng}) => {
+  };
+  const selectQuestInSideTab = ({ lat, lng }) => {
     setTabOpen(false);
     setIsDrag(true);
     setCurrentMapPosition({
       lat: lat,
       lng: lng,
-    })
-  }
+    });
+  };
 
   const moveToCenter = () => {
     setIsDrag(false);
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log('center move', position);
+      console.log("center move", position);
       setPosition({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
-      })
-    })    
-  }
+      });
+    });
+  };
 
   useEffect(() => {
     setLoading(true);
-    navigator.geolocation.getCurrentPosition( async (res) => {
+    navigator.geolocation.getCurrentPosition(async (res) => {
       setCurrentMapPosition({
         lat: res.coords.latitude,
         lng: res.coords.longitude,
-      })
-      const data = await getQuestList(res.coords.latitude, res.coords.longitude);
+      });
+      const data = await getQuestList(
+        res.coords.latitude,
+        res.coords.longitude
+      );
       console.log(res);
       if (data.rows.length > 0) {
-        setQuestList(data.rows)
+        setQuestList(data.rows);
       }
       setRegion(data.currentRegion);
       setTimeout(() => {
-        setLoading(false)
-      }, 200)
+        setLoading(false);
+      }, 200);
     });
-  }, [])
+  }, []);
 
+  const list = [
+    {
+      id: 11,
+      type: "mob",
+    },
+    {
+      id: 11,
+      type: "feed",
+    },
+    {
+      id: 11,
+      type: "time",
+    },
+  ];
 
   useEffect(() => {
-
-    if (questType === "mob") { 
-      setColor('#FA5A54');
+    if (questType === "mob") {
+      setColor("#FA5A54");
     } else if (questType === "time") {
-      setColor('#EDEA50');
+      setColor("#61B7FA");
     } else if (questType === "feed") {
-      setColor('#61B7FA');
+      setColor("#EDEA50");
     } else {
-      setColor('#EBEBEB');
+      setColor("#EBEBEB");
     }
 
     if (inCircleList.length > 0) {
-      setColor('#5DEB85');
-    } 
-  }, [inCircleList, questType])
+      setColor("#5DEB85");
+    }
+  }, [inCircleList, questType]);
 
   return (
     <Container>
@@ -138,61 +155,52 @@ export default function MapPage() {
         // inCircleList={inCircleList}
       />
 
-      <MapSideTab 
+      <MapSideTab
         open={tabOpen}
         setClose={closeTab}
         questList={questList}
         selectQuest={selectQuestInSideTab}
       />
 
-      <UserInfo 
-        style={questActive ? {display: "none"} : {display: "flex"}}
-        onClick={()=>setTabOpen(true)}
+      <UserInfo
+        style={questActive ? { display: "none" } : { display: "flex" }}
+        onClick={() => setTabOpen(true)}
       >
-        <p><span>Lv.77</span>강윤지</p>
+        <p>
+          <span>Lv.77</span>강윤지
+        </p>
       </UserInfo>
 
-      <ButtonWrapper style={questActive ? {display: "none"} : {display: "block"}}>
-        <CenterButton onClick={moveToCenter}/>
+      <ButtonWrapper
+        style={questActive ? { display: "none" } : { display: "block" }}
+      >
+        <CenterButton onClick={moveToCenter} />
 
-        <Grid 
-          flex
-          justifyContent={"space-between"}
-        >
-          <BottomCategoryButton
-            onClick={() => setQuestType("mob")}
-          >
-            <img/>
+        <Grid flex justifyContent={"space-between"}>
+          <BottomCategoryButton onClick={() => setQuestType("mob")}>
+            <img />
             <p>몬스터대전</p>
           </BottomCategoryButton>
-          <BottomCategoryButton
-            onClick={() => setQuestType("time")}        
-          >
-            <img/>
+          <BottomCategoryButton onClick={() => setQuestType("time")}>
+            <img />
             <p>타임어택</p>
           </BottomCategoryButton>
-          <BottomCategoryButton
-            onClick={() => setQuestType("feed")}
-          >
-            <img/>
+          <BottomCategoryButton onClick={() => setQuestType("feed")}>
+            <img />
             <p>땅문서작성</p>
           </BottomCategoryButton>
-          <BottomCategoryButton
-            onClick={() => setQuestType("all")}
-          >
-            <img/>
+          <BottomCategoryButton onClick={() => setQuestType("all")}>
+            <img />
             <p>전체리스트</p>
           </BottomCategoryButton>
         </Grid>
 
-        <Grid 
+        <Grid
           flex
           justifyContent={"space-between"}
-          mystyles={'padding-top: 8px;'}
+          mystyles={"padding-top: 8px;"}
         >
-          <BottomFooterButton
-            onClick={()=>navigate(-1)}
-          >
+          <BottomFooterButton onClick={() => navigate(-1)}>
             <p>뒤로 가기</p>
             {/* <p>Lv.77</p>
             <span>다음 레벨까지 12,000P</span>
@@ -204,8 +212,8 @@ export default function MapPage() {
               <LevelProgressBar style={{width: '70%'}}/>
             </Grid> */}
           </BottomFooterButton>
-          <BottomFooterButton 
-            style={{background: color}}
+          <BottomFooterButton
+            style={{ background: color }}
             onClick={setDdangDdang}
           >
             <p>땅땅 시작</p>
@@ -216,10 +224,11 @@ export default function MapPage() {
       <QuestActivateLayer
         open={questActive}
         setClose={closeQuestActive}
-        list={inCircleList}
+        // list={inCircleList}
+        list={list}
       />
     </Container>
-  )
+  );
 }
 
 const UserInfo = styled.div`
@@ -283,7 +292,7 @@ const BottomFooterButton = styled.div`
   & span {
     font-size: 8px;
     line-height: 1.15;
-    color: #05240E;
+    color: #05240e;
     opacity: 0.5;
     padding-bottom: 8px;
   }
@@ -296,13 +305,13 @@ const LevelProgressBar = styled.div`
   z-index: 100;
   width: 100px;
   height: 8px;
-  background: #5DEB85;
+  background: #5deb85;
 `;
 
 const ButtonWrapper = styled.div`
-  position: absolute; 
-  bottom: 0; 
-  padding: 0 20px 50px; 
+  position: absolute;
+  bottom: 0;
+  padding: 0 20px 50px;
   z-index: 500;
   width: 100%;
 `;

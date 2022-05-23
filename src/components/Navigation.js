@@ -3,20 +3,20 @@ import { Grid } from "../elements";
 import NavigationMenu from "./NavigationMenu";
 
 export default function Navigation() {
-  const path = window.location.pathname.split('/')[1];
+  const path = window.location.pathname.split("/")[1];
 
   const iterator = Array.from({ length: 5 }, () => 0);
   const selectedIndex = (() => {
     switch (path) {
-      case '' :
+      case "":
         return 0;
-      case 'ranking':
+      case "ranking":
         return 1;
-      case 'feed':
+      case "feed":
         return 2;
-      case 'chat':
+      case "chat":
         return 3;
-      case 'myPage':
+      case "myPage":
         return 4;
       default:
         return 0;
@@ -25,14 +25,18 @@ export default function Navigation() {
 
   return (
     <NavigationWrapper>
-      <NavigationCircle/>
+      <NavigationCircle />
       <Grid
         mystyles={
-          'position: relative; z-index: 1001; background: #fff; width: 100%; height: 100%; display: flex;'
+          "position: relative; z-index: 1001; background: #fff; width: 100%; height: 100%; display: flex;"
         }
       >
         {iterator.map((_, index) => (
-          <NavigationMenu key={index} index={index} isSelected={index === selectedIndex}/>
+          <NavigationMenu
+            key={index}
+            index={index}
+            isSelected={index === selectedIndex}
+          />
         ))}
       </Grid>
     </NavigationWrapper>
@@ -54,7 +58,7 @@ const NavigationWrapper = styled.div`
 const NavigationCircle = styled.div`
   position: absolute;
   left: calc(50% - 66px);
-  bottom: 26px;
+  bottom: 20px;
   width: 132px;
   height: 132px;
   border-radius: 50%;
