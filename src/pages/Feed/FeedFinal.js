@@ -337,7 +337,7 @@ const UnorderedList = styled(motion.ul)`
 
 // const feedsLatest = async () => {
 //     await axios
-//         .post(`http://15.164.213.175:3000/api/feeds?type=latest`, data)
+//         .post(`/api/feeds?type=latest`, data)
 //         .then((res) => {
 //             console.log(res);
 //             setItems([...res.data.rows]);
@@ -349,7 +349,7 @@ const UnorderedList = styled(motion.ul)`
 
 // const feedsPopularity = async () => {
 //     await axios
-//         .post(`http://15.164.213.175:3000/api/feeds?type=popularity`, data)
+//         .post(`/api/feeds?type=popularity`, data)
 //         .then((res) => {
 //             console.log(res);
 //             setItems([...res.data.rows]);
@@ -361,7 +361,7 @@ const UnorderedList = styled(motion.ul)`
 
 // const feedsDistance = async () => {
 //     await axios
-//         .post(`http://15.164.213.175:3000/api/feeds?type=distance`, data)
+//         .post(`/api/feeds?type=distance`, data)
 //         .then((res) => {
 //             console.log(res);
 //             setItems([...res.data.rows]);

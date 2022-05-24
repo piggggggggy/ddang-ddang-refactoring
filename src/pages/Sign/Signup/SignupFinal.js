@@ -75,7 +75,7 @@ export default function SignupFinal() {
     const checkEmail = () => {
         if (emailIsValid) {
             axios
-                .post("http://15.164.213.175:3000/api/players/dupEmail", {
+                .post("/api/players/dupEmail", {
                     email: email,
                 })
                 .then((res) => {
@@ -126,7 +126,7 @@ export default function SignupFinal() {
     const checkNickname = () => {
         if (nicknameIsValid) {
             axios
-                .post("http://15.164.213.175:3000/api/players/dupNickname", {
+                .post("/api/players/dupNickname", {
                     nickname: nickname,
                 })
                 .then((res) => {
@@ -327,7 +327,7 @@ export default function SignupFinal() {
         console.log(finalSignupValue);
         await axios
             .post(
-                "http://15.164.213.175:3000/api/players/signup",
+                "/api/players/signup",
                 finalSignupValue
             )
             .then((res) => {

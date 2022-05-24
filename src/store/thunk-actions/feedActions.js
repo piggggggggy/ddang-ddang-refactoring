@@ -5,7 +5,7 @@ import axios from "axios";
 export const feedsLatestAxios = (region) => {
     return async function (dispatch) {
         await axios
-            .post("http://15.164.213.175:3000/api/feeds?type=latest", region)
+            .post("/api/feeds?type=latest", region)
             .then((res) => {
                 console.log(res);
                 dispatch(feedActions.getFeed({ feeds: res.data.rows }));
@@ -19,7 +19,7 @@ export const feedsPopularityAxios = (region) => {
     return async function (dispatch) {
         await axios
             .post(
-                "http://15.164.213.175:3000/api/feeds?type=popularity",
+                "/api/feeds?type=popularity",
                 region
             )
             .then((res) => {
@@ -34,7 +34,7 @@ export const feedsPopularityAxios = (region) => {
 export const feedsDistanceAxios = (region) => {
     return async function (dispatch) {
         await axios
-            .post("http://15.164.213.175:3000/api/feeds?type=distance", region)
+            .post("/api/feeds?type=distance", region)
             .then((res) => {
                 console.log(res);
                 dispatch(feedActions.getFeed({ feeds: res.data.rows }));
@@ -49,7 +49,7 @@ export const writeCommentsAxios = (comment, token, feedId) => {
     return async function (dispatch) {
         await axios
             .post(
-                `http://15.164.213.175:3000/api/feeds/${feedId}/comments`,
+                `/api/feeds/${feedId}/comments`,
                 {
                     comment: comment,
                 },

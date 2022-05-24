@@ -82,7 +82,7 @@ export default function FeedItem(props) {
     const createComment = async (comment) => {
         await axios
             .post(
-                `http://15.164.213.175:3000/api/feeds/${feedId}/comments`,
+                `/api/feeds/${feedId}/comments`,
                 {
                     comment: comment,
                 },
@@ -110,7 +110,7 @@ export default function FeedItem(props) {
         console.log(token);
         axios
             .put(
-                `http://15.164.213.175:3000/api/feeds/${feedId}/like`,
+                `/api/feeds/${feedId}/like`,
                 {},
                 {
                     headers: { Authorization: `Bearer ${token}` },
@@ -127,7 +127,7 @@ export default function FeedItem(props) {
     const deleteComment = async (commentId) => {
         axios
             .delete(
-                `http://15.164.213.175:3000/api/feeds/${feedId}/comments/${commentId}`,
+                `/api/feeds/${feedId}/comments/${commentId}`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
@@ -298,7 +298,7 @@ const Feed = styled(motion.li)`
 // const createComment = async (comment) => {
 //     await axios
 //         .post(
-//             `http://15.164.213.175:3000/api/feeds/${feedId}/comments`,
+//             `/api/feeds/${feedId}/comments`,
 //             {
 //                 comment: comment,
 //             },
