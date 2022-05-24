@@ -1,12 +1,6 @@
 import api from "../modules/api"
 import TokenService from "../modules/token.service"
 
-let headersList = {
-  Accept: "/",
-  "content-type": "application/json;charset=UTF-8",
-  "Access-Control-Allow-Origin": "*",
-}
-
 const register = async (email, password, nickname, mbti, profileImg) => {
   return await api.post("/api/players/signup", {
     email,
