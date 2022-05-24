@@ -3,7 +3,7 @@ import { getWithExpiry } from "../modules/localStorageControl"
 import TokenService from "./token.service"
 
 const instance = axios.create({
-  // baseURL: "/",
+  baseURL: "https://thaitour.shop",
   headers: {
     Accept: "/",
     "content-type": "application/json;charset=UTF-8",
