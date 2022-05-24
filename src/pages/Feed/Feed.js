@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import axios from "axios";
 import { motion, AnimateSharedLayout } from "framer-motion";
 import { Text, Button, Grid } from "../Feed/elements/index";
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
