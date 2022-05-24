@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import  api  from '../../../modules/api'
 import { getCookie } from "../../../shared/Cookie";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -80,7 +81,7 @@ export default function FeedItem(props) {
     // };
 
     const createComment = async (comment) => {
-        await axios
+        await api
             .post(
                 `/api/feeds/${feedId}/comments`,
                 {
@@ -296,7 +297,7 @@ const Feed = styled(motion.li)`
 `;
 
 // const createComment = async (comment) => {
-//     await axios
+//     await api
 //         .post(
 //             `/api/feeds/${feedId}/comments`,
 //             {
