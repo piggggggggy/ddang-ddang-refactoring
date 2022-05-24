@@ -13,24 +13,10 @@ import Mbti from "../Signup/components/MbtiSlider";
 
 import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
 import DangerousIcon from "@mui/icons-material/Dangerous";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import IconButton from "@mui/material/IconButton";
 
-// aws s3 bucket
-import AWS from "aws-sdk";
-const S3_BUCKET = "image-uploading-pol";
-const REGION = "ap-northeast-2";
-
-AWS.config.update({
-    accessKeyId: "AKIARWI6Z2AKSPUWWMXF",
-    secretAccessKey: "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",
-});
-
-const myBucket = new AWS.S3({
-    params: { Bucket: S3_BUCKET },
-    region: REGION,
-});
-
-const API_ENDPOINT =
-    "https://txtyz08kc4.execute-api.ap-northeast-2.amazonaws.com/default/getPresignedImageURL";
+import AuthService from "../../../apis/auth.service";
 
 export default function SignupFinal() {
     // 최종 회원 가입 값
@@ -74,10 +60,7 @@ export default function SignupFinal() {
 
     const checkEmail = () => {
         if (emailIsValid) {
-            axios
-                .post("/api/players/dupEmail", {
-                    email: email,
-                })
+            AuthService.checkEmail(email)
                 .then((res) => {
                     console.log(res);
                     if (!res.data.row) {
@@ -89,7 +72,12 @@ export default function SignupFinal() {
                         setEmailAfterCheck(email);
                         setEmailAxiosCheck(false);
                     }
+                })
+                .catch((err) => {
+                    console.log(err);
                 });
+        } else {
+            alert("이메일 형식을 확인해 주세요!");
         }
     };
 
@@ -125,10 +113,7 @@ export default function SignupFinal() {
 
     const checkNickname = () => {
         if (nicknameIsValid) {
-            axios
-                .post("/api/players/dupNickname", {
-                    nickname: nickname,
-                })
+            AuthService.checkNickname(nickname)
                 .then((res) => {
                     console.log(res);
                     if (!res.data.row) {
@@ -138,7 +123,12 @@ export default function SignupFinal() {
                         setNicknameAfterCheck(nickname);
                         setNicknameAxiosCheck(false);
                     }
+                })
+                .catch((err) => {
+                    console.log(err);
                 });
+        } else {
+            alert("닉네임 형식을 확인해 주세요!");
         }
     };
 
@@ -221,7 +211,7 @@ export default function SignupFinal() {
     // 1차 로그인 완료
 
     const [userData, setUserData] = React.useState({});
-    const [page, setPage] = React.useState(3);
+    const [page, setPage] = React.useState(1);
     const [firstPageComplete, setFirstPageComplete] = React.useState(false);
 
     const checkfirstpageComplete = () => {
@@ -272,71 +262,10 @@ export default function SignupFinal() {
         setPage(3);
     };
 
-    // profile image
-    const [profileImage, setProfileImage] = React.useState("");
-    const [myKey, setMyKey] = React.useState("");
-
-    const handleImgChange = async (e) => {
-        const f = e.target.files[0];
-        // preview 보여주기
-        var reader = new FileReader();
-        reader.onload = function () {
-            console.log(reader.result);
-            setProfileImage(reader.result);
-        };
-        reader.onerror = function (error) {
-            console.log("Error: ", error);
-        };
-        reader.readAsDataURL(f);
-        console.log(f);
-        const response = await axios({
-            method: "GET",
-            url: API_ENDPOINT,
-        });
-        console.log(response.data.Key);
-        setMyKey(response.data.Key);
-
-        const result = await fetch(response.data.uploadURL, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "image/jpeg",
-            },
-            body: f,
-        });
-        console.log(result.url);
-    };
-
-    const getUrl = () => {
-        console.log(typeof myKey);
-        console.log(myKey);
-        const url = myBucket.getSignedUrl("getObject", {
-            Bucket: S3_BUCKET,
-            Key: myKey,
-        });
-        console.log(url);
-        let finalImage = { profileImg: url };
-        setFinalSignupValue({ ...finalSignupValue, ...finalImage });
-        console.log(finalSignupValue);
-        // final submit
-        finalsignup();
-    };
+    // header
     const navigate = useNavigate();
-    console.log(finalSignupValue);
-
-    const finalsignup = async () => {
-        console.log(finalSignupValue);
-        await axios
-            .post(
-                "/api/players/signup",
-                finalSignupValue
-            )
-            .then((res) => {
-                console.log(res);
-                navigate("/signin");
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+    const goBack = () => {
+        navigate("/signin");
     };
 
     React.useEffect(() => {
@@ -367,86 +296,103 @@ export default function SignupFinal() {
 
     return (
         <>
+            <Grid mystyles="position: relative; margin-top: 41px;">
+                <Grid mystyles="position: absolute; right: 10; margin-top: -10px;">
+                    <IconButton onClick={goBack}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </Grid>
+                <Grid
+                    flex
+                    alignItems="center"
+                    justifyContent="center"
+                    mystyles="margin: auto; width: 173px;"
+                >
+                    <Text mystyles="font-weight: 700; font-size: 16px;">
+                        회원가입
+                    </Text>
+                </Grid>
+            </Grid>
             {page === 1 && (
-                <>
-                    <Grid>
-                        <Text>Go Back</Text>
-                    </Grid>
+                <Grid mystyles="margin-top: 72px;">
                     <Grid
                         flex
-                        justifyContent="center"
                         alignItems="center"
-                        mystyles="min-height: 20vh"
+                        justifyContent="center"
+                        mystyles="padding: 0 50px;"
                     >
-                        <motion.h1
-                            initial={{ y: -250, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                        >
-                            회원가입
-                        </motion.h1>
-                    </Grid>
-                    <Grid
-                        flex
-                        direction="column"
-                        mystyles=" padding-left: 50px"
-                    >
-                        <Grid mystyles="position: relative">
-                            <Input
-                                mystyles="height: 40px; width: 250px; border-radius: 10px; border: none; box-shadow: 2px 5px 16px 0px #0B325E"
-                                whileFocus={{ scale: 1.1 }}
-                                defaultValue={emailValue}
-                                onChange={emailChange}
-                                placeholder="이메일을 입력하세요"
-                            />
-                            {emailAxiosCheck && emailafterCheck === email && (
-                                <CheckBoxSharpIcon
-                                    style={{
-                                        color: "green",
-                                        position: "absolute",
-                                        right: "30",
-                                    }}
-                                ></CheckBoxSharpIcon>
-                            )}
-                            {emailIsValid &&
-                                !emailAxiosCheck &&
-                                emailafterCheck === email && (
-                                    <DangerousIcon
-                                        style={{
-                                            color: "red",
-                                            position: "absolute",
-                                            right: "30",
-                                        }}
-                                    ></DangerousIcon>
-                                )}
+                        <Input
+                            mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
+                            defaultValue={emailValue}
+                            onChange={emailChange}
+                            placeholder="이메일"
+                        />
+
+                        <Grid>
+                            <Button
+                                onClick={checkEmail}
+                                mystyles="width: 70px; height: 32px; margin-left: -5px; background: #05240E; color: white; border: none;"
+                            >
+                                중복확인
+                            </Button>
                         </Grid>
-                        <DuplicateCheck
-                            duplicate
-                            onClick={checkEmail}
-                            mystyles=""
-                        >
-                            {emailCheckMessage}
-                        </DuplicateCheck>
                     </Grid>
-                    <Grid
-                        flex
-                        direction="column"
-                        mystyles=" padding-left: 50px"
-                    >
-                        <Grid mystyles="position: relative">
+                    <Grid flex mystyles="margin: 0 50px;">
+                        <Grid mystyles="width: 240px;">
+                            <Text mystyles="font-size: 12px;">
+                                {emailCheckMessage}
+                            </Text>
+                        </Grid>
+                        {emailAxiosCheck && emailafterCheck === email && (
+                            <CheckBoxSharpIcon
+                                style={{
+                                    color: "green",
+                                }}
+                            ></CheckBoxSharpIcon>
+                        )}
+                        {emailIsValid &&
+                            !emailAxiosCheck &&
+                            emailafterCheck === email && (
+                                <DangerousIcon
+                                    style={{
+                                        color: "red",
+                                    }}
+                                ></DangerousIcon>
+                            )}
+                    </Grid>
+                    <Grid mystyles="margin-top: 5px;">
+                        <Grid
+                            flex
+                            alignItems="center"
+                            justifyContent="center"
+                            mystyles="padding: 0 50px;"
+                        >
                             <Input
-                                mystyles="height: 40px; width: 250px; border-radius: 10px; border: none; box-shadow: 2px 5px 16px 0px #0B325E"
-                                whileFocus={{ scale: 1.1 }}
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
                                 defaultValue={nicknameValue}
                                 onChange={nicknameChange}
                                 placeholder="닉네임을 입력하세요"
                             />
+                            <Grid>
+                                <Button
+                                    onClick={checkNickname}
+                                    mystyles="width: 70px; height: 32px; margin-left: -5px; background: #05240E; color: white; border: none;"
+                                >
+                                    중복확인
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        <Grid flex mystyles="margin: 0 50px;">
+                            <Grid mystyles="width: 240px;">
+                                <Text mystyles="font-size: 12px;">
+                                    {nicknameCheckMessage}
+                                </Text>
+                            </Grid>
                             {nicknameAxiosCheck &&
                                 nicknameafterCheck === nickname && (
                                     <CheckBoxSharpIcon
                                         style={{
                                             color: "green",
-                                            position: "absolute",
-                                            right: "30",
                                         }}
                                     ></CheckBoxSharpIcon>
                                 )}
@@ -456,19 +402,10 @@ export default function SignupFinal() {
                                     <DangerousIcon
                                         style={{
                                             color: "red",
-                                            position: "absolute",
-                                            right: "30",
                                         }}
                                     ></DangerousIcon>
                                 )}
                         </Grid>
-                        <DuplicateCheck
-                            duplicate
-                            onClick={checkNickname}
-                            mystyles=""
-                        >
-                            {nicknameCheckMessage}
-                        </DuplicateCheck>
                     </Grid>
                     <Grid
                         flex
@@ -477,8 +414,7 @@ export default function SignupFinal() {
                     >
                         <Grid mystyles="position: relative">
                             <Input
-                                mystyles="height: 40px; width: 250px; border-radius: 10px; border: none; box-shadow: 2px 5px 16px 0px #0B325E"
-                                whileFocus={{ scale: 1.1 }}
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
                                 defaultValue={passwordValue}
                                 onChange={passwordChange}
                                 placeholder="비밀번호를 입력하세요"
@@ -517,8 +453,7 @@ export default function SignupFinal() {
                     >
                         <Grid mystyles="position: relative">
                             <Input
-                                mystyles="height: 40px; width: 250px; border-radius: 10px; border: none; box-shadow: 2px 5px 16px 0px #0B325E"
-                                whileFocus={{ scale: 1.1 }}
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
                                 defaultValue={passwordConfirmValue}
                                 onChange={passwordConfirmChange}
                                 placeholder="비밀번호 확인해주세요"
@@ -552,6 +487,7 @@ export default function SignupFinal() {
                             {passwordConfirmCheckMessage}
                         </DuplicateCheck>
                     </Grid>
+                    <Grid></Grid>
                     {firstPageComplete ? (
                         <>
                             <Grid
@@ -562,15 +498,6 @@ export default function SignupFinal() {
                                 <Button
                                     mystyles="height: 50px; width: 200px; border-radius: 25px; margin-top: 20px; border: none; font-size: 20px; font-weight: bold; background-color: #D6E9FE"
                                     onClick={signup}
-                                    transition={{
-                                        ease: "linear",
-                                        duration: 0.2,
-                                        repeat: Infinity,
-                                    }}
-                                    animate={{
-                                        scale: 1.1,
-                                        color: "#FFFFFF",
-                                    }}
                                 >
                                     회원가입
                                 </Button>
@@ -587,22 +514,13 @@ export default function SignupFinal() {
                                 <Button
                                     mystyles="height: 50px; width: 200px; border-radius: 25px; margin-top: 20px; border: none; font-size: 20px; font-weight: bold; background-color: #D6E9FE"
                                     onClick={signup}
-                                    whileHover={{
-                                        scale: 1.1,
-                                        color: "#FFFFFF",
-                                        textShadow:
-                                            "0px 0px 8px rbg(255,255,255)",
-                                        boxShadow:
-                                            "0px 0px 8px rgb(255,255,255)",
-                                        transition: { yoyo: 10 },
-                                    }}
                                 >
                                     회원가입
                                 </Button>
                             </Grid>
                         </>
                     )}
-                </>
+                </Grid>
             )}
             {page === 2 && (
                 <>
@@ -615,47 +533,6 @@ export default function SignupFinal() {
                         </motion.h2>
                     </Grid>
                     <Mbti onClick={selectMbti} />
-                </>
-            )}
-            {page === 3 && (
-                <>
-                    <Grid direction="column">
-                        <Grid>
-                            <motion.h1
-                                initial={{ y: -250, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                            >
-                                프로필 사진을
-                            </motion.h1>
-                        </Grid>
-                        <Grid>
-                            <motion.h1
-                                initial={{ y: -250, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                            >
-                                선택해주세요!
-                            </motion.h1>
-                        </Grid>
-                        <ProfilePreview
-                            src={profileImage}
-                            mystyles="width: 300px; height: 300px; border-radius: 300px; border: 3px solid grey"
-                        ></ProfilePreview>
-                        <Grid
-                            direction="row"
-                            justifyContent="center"
-                            alignItes="center"
-                        >
-                            <Input type="file" onChange={handleImgChange} />
-                        </Grid>
-                        <Grid mystyles="height: 30vh">
-                            <Button
-                                mystyles="height: 50px; width: 200px; border-radius: 25px; border: none; font-size: 20px; font-weight: bold; background-color: #FBA3A0"
-                                onClick={getUrl}
-                            >
-                                회원가입 완료
-                            </Button>
-                        </Grid>
-                    </Grid>
                 </>
             )}
         </>
