@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import api from "../../../modules/api";
 import { getCookie } from "../../../shared/Cookie";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -80,16 +81,10 @@ export default function FeedItem(props) {
     // };
 
     const createComment = async (comment) => {
-        await axios
-            .post(
-                `http://15.164.213.175:3000/api/feeds/${feedId}/comments`,
-                {
-                    comment: comment,
-                },
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
+        await api
+            .post(`/api/feeds/${feedId}/comments`, {
+                comment: comment,
+            })
             .then((res) => {
                 console.log(res);
 
@@ -110,7 +105,7 @@ export default function FeedItem(props) {
         console.log(token);
         axios
             .put(
-                `http://15.164.213.175:3000/api/feeds/${feedId}/like`,
+                `/api/feeds/${feedId}/like`,
                 {},
                 {
                     headers: { Authorization: `Bearer ${token}` },
@@ -126,12 +121,9 @@ export default function FeedItem(props) {
 
     const deleteComment = async (commentId) => {
         axios
-            .delete(
-                `http://15.164.213.175:3000/api/feeds/${feedId}/comments/${commentId}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
+            .delete(`/api/feeds/${feedId}/comments/${commentId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
             .then((res) => {
                 console.log(res);
                 setCommentArr(
@@ -296,9 +288,9 @@ const Feed = styled(motion.li)`
 `;
 
 // const createComment = async (comment) => {
-//     await axios
+//     await api
 //         .post(
-//             `http://15.164.213.175:3000/api/feeds/${feedId}/comments`,
+//             `/api/feeds/${feedId}/comments`,
 //             {
 //                 comment: comment,
 //             },

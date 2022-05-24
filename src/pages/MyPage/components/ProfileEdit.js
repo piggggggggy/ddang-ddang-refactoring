@@ -120,7 +120,7 @@ export default function BasicModal() {
     const finalsignup = async () => {
         await axios
             .patch(
-                "http://15.164.213.175:3000/api/players/edit",
+                "/api/players/edit",
                 {
                     body: finalData,
                 },
