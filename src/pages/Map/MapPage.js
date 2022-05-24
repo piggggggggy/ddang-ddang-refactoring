@@ -7,7 +7,7 @@ import LandingModal from "./components/LandingModal";
 import QuestActivateLayer from "./components/QuestActivateLayer";
 import { QuestModal, MemoizedQuestModal } from "../Game/components/QuestModal";
 import { useWatchLocation } from "./hooks/locationHooks";
-import { getQuestList } from "../../apis/mainApi";
+import { getQuestList } from "../../services/main.service";
 import { useNavigate } from "react-router-dom";
 
 export default function MapPage() {

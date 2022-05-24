@@ -6,16 +6,8 @@ import store from "./store/configStore";
 import App from "./App";
 import "./index.css";
 import axios from "axios";
-import { BASE_URL } from "./shared/Link";
 
-import { getCookie } from "./shared/Cookie";
-
-// axios.interceptors.request.use((config) => {
-//     const token = getCookie("token");
-//     config.headers.Authorization = `Bearer ${token}`;
-//     return config;
-// });
-axios.defaults.baseURL = BASE_URL;
+axios.defaults.baseURL = process.env.BASE_URL;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

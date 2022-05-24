@@ -1,21 +1,27 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { postQuest } from "../../../apis/questApi";
-import { Grid } from "../../../elements";
-import { questFragment } from "../../../modules/fragment";
-import QuestPaperBottomButton from "../elements/QuestPaperBottomButton";
-import RockScissorsPaperItem from "../elements/RockScissorsPaperItem";
-import CompleteModal from "./CompleteModal";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import styled from "styled-components"
+import { postQuest } from "../../../services/quest.service"
+import { Grid } from "../../../elements"
+import { questFragment } from "../../../modules/fragment"
+import QuestPaperBottomButton from "../elements/QuestPaperBottomButton"
+import RockScissorsPaperItem from "../elements/RockScissorsPaperItem"
+import CompleteModal from "./CompleteModal"
 
-export default function QuestMobFourth({ setProgress, progress, setRSPIndex, result, questId }) {
-  const navigate = useNavigate();
+export default function QuestMobFourth({
+  setProgress,
+  progress,
+  setRSPIndex,
+  result,
+  questId,
+}) {
+  const navigate = useNavigate()
   const fragment = questFragment("mob")
-  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false)
 
   const setConfirm = () => {
     if (result === "Win") {
-      setPopupOpen(true);
+      setPopupOpen(true)
     } else {
       // navigate(-1);
       setRSPIndex(null)
@@ -25,12 +31,12 @@ export default function QuestMobFourth({ setProgress, progress, setRSPIndex, res
 
   const completeQuest = async () => {
     const data = await postQuest({
-      request: {}, 
-      type: "mob", 
+      request: {},
+      type: "mob",
       questId: questId,
-    });
+    })
     if (data.ok) {
-      navigate(-1);
+      navigate(-1)
     }
   }
 
@@ -62,19 +68,18 @@ export default function QuestMobFourth({ setProgress, progress, setRSPIndex, res
           buttonText: "내일 다시 도전하세요!",
         }
     }
-  })();
+  })()
 
   return (
     <Grid
-      mystyles={"position: relative; height: 100%; width: 100%; padding: 40px 30px 0"}
+      mystyles={
+        "position: relative; height: 100%; width: 100%; padding: 40px 30px 0"
+      }
     >
       <Title>{resultHandler.title}</Title>
       <Baloon>{resultHandler.text}</Baloon>
 
-      <CompleteModal
-        open={popupOpen}
-        setComfirm={completeQuest}
-      />
+      <CompleteModal open={popupOpen} setComfirm={completeQuest} />
       <QuestPaperBottomButton
         text={resultHandler.buttonText}
         color={fragment.subColor}
@@ -90,15 +95,15 @@ const Title = styled.div`
   line-height: 1.15;
   text-align: center;
   font-weight: 700;
-  color: #EB6042;
+  color: #eb6042;
   text-align: center;
   padding: 100px 0 40px;
-`;
+`
 
 const Baloon = styled.div`
   width: 60%;
   height: 40px;
-  background: #EBEBEB;
+  background: #ebebeb;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -110,4 +115,4 @@ const Baloon = styled.div`
     color: #273938;
     text-align: center;
   }
-`;
+`

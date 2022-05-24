@@ -1,6 +1,6 @@
 import { userActions } from "../slices/userSlice"
 import axios from "axios"
-import AuthService from "../../apis/auth.service"
+import AuthService from "../../services/auth.service"
 import { getWithExpiry } from "../../modules/localStorageControl"
 import { setCookie } from "../../shared/Cookie"
 

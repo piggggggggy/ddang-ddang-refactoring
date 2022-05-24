@@ -1,11 +1,6 @@
 import api from "./api"
 import { getWithExpiry } from "../modules/localStorageControl"
 
-// const headers = {
-//   headers: {
-//     Authorization: getWithExpiry("accessToken"),
-//   },
-// }
 
 const getMypage = () => {
   return api.get("/api/players/mypage")
@@ -13,7 +8,7 @@ const getMypage = () => {
 
 const playerEdit = async (nickname, profileImg) => {
   try {
-    await axios.patch("/api/players/edit", {
+    await api.patch("/api/players/edit", {
       nickname,
       profileImg,
     })

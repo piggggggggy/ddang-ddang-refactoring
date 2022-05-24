@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getWithExpiry } from "../modules/localStorageControl";
-import TokenService from "./token.service";
-import { useNavigate } from "react-router-dom";
+import TokenService from "../services/token.service";
 
 const instance = axios.create({
     baseURL: "https://thaitour.shop",
@@ -42,7 +41,7 @@ instance.interceptors.response.use(
                         return alert("로그인 해주세요");
                     }
                     const rs = await instance.get(
-                        "/api/players/auth/getToken",
+                        "/api/players/auth",
                         {
                             headers: {
                                 refreshToken:

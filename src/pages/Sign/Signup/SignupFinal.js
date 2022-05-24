@@ -2,7 +2,6 @@ import React from "react";
 import lo from "lodash";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import styled from "styled-components";
 
 import { Grid, Text } from "../../../elements/index";
@@ -16,7 +15,7 @@ import DangerousIcon from "@mui/icons-material/Dangerous";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import IconButton from "@mui/material/IconButton";
 
-import AuthService from "../../../apis/auth.service";
+import AuthService from "../../../services/auth.service";
 
 export default function SignupFinal() {
     // 최종 회원 가입 값

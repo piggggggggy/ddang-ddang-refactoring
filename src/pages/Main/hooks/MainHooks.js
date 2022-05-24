@@ -1,6 +1,7 @@
 import { FlashOnOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { getQuestList } from "../../../apis/mainApi";
+import { getQuestList } from "../../../services/main.service";
+
 
 const useMainData = () => {
   const [loading, setLoading] = useState(false);
