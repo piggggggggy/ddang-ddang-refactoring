@@ -1,5 +1,5 @@
 import { feedActions } from "../slices/feedSlice"
-import { api } from "../../modules/api"
+import api from "../../modules/api"
 
 // 피드 전체 조회
 export const feedsLatestAxios = (region) => {
@@ -45,12 +45,9 @@ export const feedsDistanceAxios = (region) => {
 export const writeCommentsAxios = (comment, token, feedId) => {
   return async function (dispatch) {
     await api
-      .post(
-        `/api/feeds/${feedId}/comments`,
-        {
-          comment: comment,
-        },
-      )
+      .post(`/api/feeds/${feedId}/comments`, {
+        comment: comment,
+      })
       .then((res) => {
         console.log(res)
       })

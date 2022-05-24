@@ -2,6 +2,7 @@ import { userActions } from "../slices/userSlice"
 import axios from "axios"
 import AuthService from "../../apis/auth.service"
 import { getWithExpiry } from "../../modules/localStorageControl"
+import { setCookie } from "../../shared/Cookie"
 
 // 토큰 확인
 export const loginCheckAxios = (token, navigate) => {
@@ -43,6 +44,7 @@ export const signinAxios = (email, password, navigate) => {
       user = { email, nickname: response.data.row.nickname }
 
       console.log(getWithExpiry("accessToken"))
+      setCookie("token", getWithExpiry("accessToken"))
 
       const tokenFullString = response.headers.accesstoken
       const tokenArr = tokenFullString.split(" ")
