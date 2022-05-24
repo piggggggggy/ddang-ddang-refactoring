@@ -1,74 +1,87 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import { MapMarker } from "react-kakao-maps-sdk";
-import KakaoMapDefault from '../../../components/KakaoMapDefault';
-import { useNavigate } from 'react-router-dom';
+import KakaoMapDefault from "../../../components/KakaoMapDefault";
+import { useNavigate } from "react-router-dom";
+import { questFragment } from "../../../modules/fragment";
 
 export default function MainMapContainer({ type, questList }) {
   const navigate = useNavigate();
 
   const minmapFragment = (() => {
     switch (type) {
-      case "all": 
+      case "all":
         return {
           text: "내 땅 점령하기",
           color: "#266137",
-        }
+        };
       case "mob":
         return {
           text: "몬스터 대전하러 가기",
           color: "#EB6042",
-        }
+        };
       case "time":
         return {
           text: "타임어택하러 가기",
           color: "#61B7FA",
-        }
+        };
       case "feed":
         return {
           text: "내 땅 점령하기",
           color: "#266137",
-        }
+        };
       default:
         return {
           text: "내 땅 점령하기",
           color: "#266137",
-        }
+        };
     }
-  })()
+  })();
 
   return (
     <MapWrapper>
       <KakaoMapDefault>
-        {type === "all" ? (
-          questList.map(item => {
-            return (
-              <MapMarker 
-                key={item.questId} 
-                position={{lat: item.lat, lng: item.lng}}
-              />
-            )
-          })
-        ) : (
-          questList.map(item => {
-            if (type === item.type) {
+        {type === "all"
+          ? questList.map((item) => {
               return (
-                <MapMarker 
-                  key={item.questId} 
-                  position={{lat: item.lat, lng: item.lng}}
+                <MapMarker
+                  key={item.questId}
+                  position={{ lat: item.lat, lng: item.lng }}
+                  image={{
+                    src: questFragment(item.type).icon,
+                    size: {
+                      width: 14,
+                      height: 14,
+                    },
+                  }}
                 />
-              )
-            }
-          })
-        ) }
+              );
+            })
+          : questList.map((item) => {
+              if (type === item.type) {
+                return (
+                  <MapMarker
+                    key={item.questId}
+                    position={{ lat: item.lat, lng: item.lng }}
+                    image={{
+                      src: questFragment(item.type).icon,
+                      size: {
+                        width: 14,
+                        height: 14,
+                      },
+                    }}
+                  />
+                );
+              }
+            })}
       </KakaoMapDefault>
-      <MapFooter 
-        style={{background: minmapFragment.color}}
+      <MapFooter
+        style={{ background: questFragment(type).color }}
         onClick={() => navigate("/quest")}
       >
         <p>{minmapFragment.text}</p>
       </MapFooter>
     </MapWrapper>
-  )
+  );
 }
 
 const MapWrapper = styled.div`
@@ -80,7 +93,7 @@ const MapWrapper = styled.div`
   margin-bottom: 35px;
   background: #fff;
   box-shadow: 1px 1px 1px 2px rgba(137, 142, 139, 0.05);
-`
+`;
 
 const MapFooter = styled.div`
   position: absolute;

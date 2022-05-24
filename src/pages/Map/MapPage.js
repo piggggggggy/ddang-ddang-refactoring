@@ -103,20 +103,20 @@ export default function MapPage() {
     });
   }, []);
 
-  const list = [
-    {
-      id: 11,
-      type: "mob",
-    },
-    {
-      id: 11,
-      type: "feed",
-    },
-    {
-      id: 11,
-      type: "time",
-    },
-  ];
+  // const list = [
+  //   {
+  //     id: 11,
+  //     type: "mob",
+  //   },
+  //   {
+  //     id: 11,
+  //     type: "feed",
+  //   },
+  //   {
+  //     id: 11,
+  //     type: "time",
+  //   },
+  // ];
 
   useEffect(() => {
     if (questType === "mob") {
@@ -152,7 +152,6 @@ export default function MapPage() {
         cancelWatchPosition={cancelWatchPosition}
         isDrag={isDrag}
         setIsDrag={setIsDrag}
-        // inCircleList={inCircleList}
       />
 
       <MapSideTab
@@ -224,8 +223,8 @@ export default function MapPage() {
       <QuestActivateLayer
         open={questActive}
         setClose={closeQuestActive}
-        // list={inCircleList}
-        list={list}
+        list={inCircleList}
+        // list={list}
       />
     </Container>
   );
