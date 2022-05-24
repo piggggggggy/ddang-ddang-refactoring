@@ -69,6 +69,8 @@ export default function GamePage() {
             <QuestMobFourth
               progress={progress}
               setProgress={setProgress}
+              setRSPIndex={setRSPIndex}
+
               result={result}
               questId={questId}
             />

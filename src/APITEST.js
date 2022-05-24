@@ -5,7 +5,7 @@ export default function APITest() {
     // o
     const signin = async () => {
         axios
-            .post("http://15.164.213.175:3000/api/players/signin", {
+            .post("/api/players/signin", {
                 email: "paul@gmail.com",
                 password: "Paul1996!",
             })
@@ -20,7 +20,7 @@ export default function APITest() {
     // o
     const dupEmail = async () => {
         axios
-            .post("http://15.164.213.175:3000/api/players/dupEmail", {
+            .post("/api/players/dupEmail", {
                 email: "paul@gmail.com",
             })
             .then((res) => {
@@ -34,7 +34,7 @@ export default function APITest() {
     // o
     const dupNickname = async () => {
         axios
-            .post("http://15.164.213.175:3000/api/players/dupNickname", {
+            .post("/api/players/dupNickname", {
                 nickname: "asdfas",
             })
             .then((res) => {
@@ -53,7 +53,7 @@ export default function APITest() {
         };
         await axios
             .post(
-                "http://15.164.213.175:3000/api/players/signup",
+                "/api/players/signup",
                 {
                     email: "adffsdfsdff@gmail.com",
                     nickname: "Pausdfsdfl1996!",
@@ -77,7 +77,7 @@ export default function APITest() {
 
     const signout = async () => {
         axios
-            .post("http://15.164.213.175:3000/api/players/signout", {
+            .post("/api/players/signout", {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((res) => {
@@ -90,7 +90,7 @@ export default function APITest() {
 
     const auth = async () => {
         axios
-            .post("http://15.164.213.175:3000/api/players/auth", {
+            .post("/api/players/auth", {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((res) => {
@@ -105,7 +105,7 @@ export default function APITest() {
     const mypage = async () => {
         axios
             .get(
-                "http://15.164.213.175:3000/api/players/mypage",
+                "/api/players/mypage",
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 },
@@ -122,7 +122,7 @@ export default function APITest() {
     const edit = async () => {
         await axios
             .patch(
-                "http://15.164.213.175:3000/api/players/edit",
+                "/api/players/edit",
                 {
                     body: { nickname: "asfd", profileImg: "Asdf" },
                 },
@@ -146,7 +146,7 @@ export default function APITest() {
     // 랭킹 조회 o
     const ranks = async () => {
         axios
-            .post("http://15.164.213.175:3000/api/ranks", data)
+            .post("/api/ranks", data)
             .then((res) => {
                 console.log(res);
             })
@@ -157,7 +157,7 @@ export default function APITest() {
 
     const feedsPolpularity = async () => {
         axios
-            .post(`http://15.164.213.175:3000/api/feeds?type=popularity`, data)
+            .post(`/api/feeds?type=popularity`, data)
             .then((res) => {
                 console.log(res);
             })
@@ -167,7 +167,7 @@ export default function APITest() {
     };
     const feedsLatest = async () => {
         axios
-            .post(`http://15.164.213.175:3000/api/feeds?type=latest`, data)
+            .post(`/api/feeds?type=latest`, data)
             .then((res) => {
                 console.log(res);
             })
@@ -177,7 +177,7 @@ export default function APITest() {
     };
     const feedsDistance = async () => {
         axios
-            .post(`http://15.164.213.175:3000/api/feeds?type=distance`, data)
+            .post(`/api/feeds?type=distance`, data)
             .then((res) => {
                 console.log(res);
             })
@@ -189,7 +189,7 @@ export default function APITest() {
     const feedId = 1;
     const createComment = async () => {
         axios
-            .post(`http://15.164.213.175:3000/feeds/${feedId}/comments`, {
+            .post(`/feeds/${feedId}/comments`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((res) => {
@@ -202,7 +202,7 @@ export default function APITest() {
 
     const likeFeed = async () => {
         axios
-            .post(`http://15.164.213.175:3000/feeds/${feedId}/like`, {
+            .post(`/feeds/${feedId}/like`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((res) => {
@@ -217,7 +217,7 @@ export default function APITest() {
     const editComment = async () => {
         axios
             .post(
-                `http://15.164.213.175:3000/feeds/comments/${feedId}/comments/${commentId}`,
+                `/feeds/comments/${feedId}/comments/${commentId}`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
@@ -232,7 +232,7 @@ export default function APITest() {
 
     const editFeed = async () => {
         axios
-            .post(`http://15.164.213.175:3000/feeds/${feedId}`, {
+            .post(`/feeds/${feedId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((res) => {
@@ -244,7 +244,7 @@ export default function APITest() {
     };
     const deleteFeed = async () => {
         axios
-            .post(`http://15.164.213.175:3000/feeds/${feedId}`, {
+            .post(`/feeds/${feedId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((res) => {
@@ -257,7 +257,7 @@ export default function APITest() {
     const deleteComment = async () => {
         axios
             .post(
-                `http://15.164.213.175:3000/feeds/${feedId}/comments/${commentId}`,
+                `/feeds/${feedId}/comments/${commentId}`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }

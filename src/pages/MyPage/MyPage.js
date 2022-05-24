@@ -44,7 +44,7 @@ export default function MyPageFinal() {
     const mypage = async () => {
         axios
             .get(
-                "http://15.164.213.175:3000/api/players/mypage",
+                "/api/players/mypage",
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 },
