@@ -30,7 +30,7 @@ const login = async (email, password) => {
     TokenService.setAccessToken(accessToken)
     TokenService.setRefreshToken(refreshToken)
   }
-  return response.data
+  return response
 }
 const logout = () => {
   TokenService.removeUser()
