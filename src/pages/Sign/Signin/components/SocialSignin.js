@@ -5,7 +5,7 @@ import kakaoIcon from "../../../../assets/images/png/kakao_icon.png";
 const SocialSignin = (props) => {
     // onClick={() => window.location.replace(KAKAO_OAUTH_URL)}
     return (
-        <a href="/api/players/kakaoauth">
+        <a href="/api/players/kakaoauth" style={{ textDecoration: "none" }}>
             <KakaoBtn>
                 <KakaoImg alt="kakao login" src={kakaoIcon} />
                 <KakaoText>카카오로 시작하기</KakaoText>
