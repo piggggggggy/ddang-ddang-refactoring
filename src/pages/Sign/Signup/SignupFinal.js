@@ -9,12 +9,15 @@ import { Grid, Text } from "../../../elements/index";
 import { Button, Input } from "../../Sign/elements/index";
 import DuplicateCheck from "../Signup/components/DuplicateCheck";
 import ProfilePreview from "../../Sign/Signup/components/ProfilePreview";
-import Mbti from "../Signup/components/MbtiSlider";
+import Mbti from "../Signup/components/Mbti";
 
 import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import IconButton from "@mui/material/IconButton";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import DoneIcon from "@mui/icons-material/Done";
 
 import AuthService from "../../../apis/auth.service";
 
@@ -208,10 +211,37 @@ export default function SignupFinal() {
         }
     };
 
+    // 동의서
+    const [firstModal, setFirstModal] = React.useState(false);
+    const [firstAgree, setFirstAgree] = React.useState(false);
+
+    const [secondModal, setSecondModal] = React.useState(false);
+    const [secondAgree, setSecondAgree] = React.useState(false);
+
+    const [thirdModal, setThirdModal] = React.useState(false);
+    const [thirdAgree, setThirdAgree] = React.useState(false);
+
+    const openFirstModal = () => {
+        setFirstModal(true);
+        console.log(firstModal);
+    };
+    const closeFirstModal = () => {
+        setFirstModal(false);
+    };
+
+    const agreeFirst = () => {
+        setFirstAgree(true);
+        setFirstModal(false);
+    };
+
+    const cancelAgreeFirst = () => {
+        setFirstAgree(false);
+    };
+
     // 1차 로그인 완료
 
     const [userData, setUserData] = React.useState({});
-    const [page, setPage] = React.useState(1);
+    const [page, setPage] = React.useState(2);
     const [firstPageComplete, setFirstPageComplete] = React.useState(false);
 
     const checkfirstpageComplete = () => {
@@ -265,7 +295,11 @@ export default function SignupFinal() {
     // header
     const navigate = useNavigate();
     const goBack = () => {
-        navigate("/signin");
+        if (page === 1) {
+            navigate("/signin");
+        } else if (page === 2) {
+            setPage(1);
+        }
     };
 
     React.useEffect(() => {
@@ -295,7 +329,7 @@ export default function SignupFinal() {
     ]);
 
     return (
-        <>
+        <Grid mystyles="position: relative;">
             <Grid mystyles="position: relative; margin-top: 41px;">
                 <Grid mystyles="position: absolute; right: 10; margin-top: -10px;">
                     <IconButton onClick={goBack}>
@@ -338,7 +372,7 @@ export default function SignupFinal() {
                         </Grid>
                     </Grid>
                     <Grid flex mystyles="margin: 0 50px;">
-                        <Grid mystyles="width: 240px;">
+                        <Grid mystyles="width: 240px; height: 12px;">
                             <Text mystyles="font-size: 12px;">
                                 {emailCheckMessage}
                             </Text>
@@ -383,7 +417,7 @@ export default function SignupFinal() {
                             </Grid>
                         </Grid>
                         <Grid flex mystyles="margin: 0 50px;">
-                            <Grid mystyles="width: 240px;">
+                            <Grid mystyles="width: 240px; height: 12px">
                                 <Text mystyles="font-size: 12px;">
                                     {nicknameCheckMessage}
                                 </Text>
@@ -412,7 +446,7 @@ export default function SignupFinal() {
                         direction="column"
                         mystyles=" padding-left: 50px"
                     >
-                        <Grid mystyles="position: relative">
+                        <Grid>
                             <Input
                                 mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
                                 defaultValue={passwordValue}
@@ -420,13 +454,20 @@ export default function SignupFinal() {
                                 placeholder="비밀번호를 입력하세요"
                                 type="password"
                             />
+                        </Grid>
+                        <Grid
+                            flex
+                            justifyContent="space-between"
+                            mystyles="width: 240px; height: 18px"
+                        >
+                            <Text mystyles="font-size: 12px;">
+                                {passwordCheckMessage}
+                            </Text>
                             {passwordIsValid &&
                                 passwordAfterRegex === password && (
                                     <CheckBoxSharpIcon
                                         style={{
                                             color: "green",
-                                            position: "absolute",
-                                            right: "30",
                                         }}
                                     ></CheckBoxSharpIcon>
                                 )}
@@ -436,22 +477,17 @@ export default function SignupFinal() {
                                     <DangerousIcon
                                         style={{
                                             color: "red",
-                                            position: "absolute",
-                                            right: "30",
                                         }}
                                     ></DangerousIcon>
                                 )}
                         </Grid>
-                        <DuplicateCheck mystyles="">
-                            {passwordCheckMessage}
-                        </DuplicateCheck>
                     </Grid>
                     <Grid
                         flex
                         direction="column"
-                        mystyles=" padding-left: 50px;margin-top: 12px;"
+                        mystyles="padding-left: 50px;margin-top: 12px;"
                     >
-                        <Grid mystyles="position: relative">
+                        <Grid>
                             <Input
                                 mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
                                 defaultValue={passwordConfirmValue}
@@ -459,47 +495,156 @@ export default function SignupFinal() {
                                 placeholder="비밀번호 확인해주세요"
                                 type="password"
                             />
-                            {passwordConfirmIsValid &&
-                                passwordConfirmAfterRegex ===
-                                    passwordConfirm && (
-                                    <CheckBoxSharpIcon
-                                        style={{
-                                            color: "green",
-                                            position: "absolute",
-                                            right: "30",
-                                        }}
-                                    ></CheckBoxSharpIcon>
-                                )}
-                            {passwordConfirm !== "" &&
-                                !passwordConfirmIsValid &&
-                                passwordConfirmAfterRegex !==
-                                    passwordConfirm && (
-                                    <DangerousIcon
-                                        style={{
-                                            color: "red",
-                                            position: "absolute",
-                                            right: "30",
-                                        }}
-                                    ></DangerousIcon>
-                                )}
+                            <Grid
+                                flex
+                                justifyContent="space-between"
+                                mystyles="width: 240px; height: 12px"
+                            >
+                                <Text mystyles="font-size: 12px;">
+                                    {passwordConfirmCheckMessage}
+                                </Text>
+                                {passwordConfirmIsValid &&
+                                    passwordConfirmAfterRegex ===
+                                        passwordConfirm && (
+                                        <CheckBoxSharpIcon
+                                            style={{
+                                                color: "green",
+                                            }}
+                                        ></CheckBoxSharpIcon>
+                                    )}
+                                {passwordConfirm !== "" &&
+                                    !passwordConfirmIsValid &&
+                                    passwordConfirmAfterRegex !==
+                                        passwordConfirm && (
+                                        <DangerousIcon
+                                            style={{
+                                                color: "red",
+                                            }}
+                                        ></DangerousIcon>
+                                    )}
+                            </Grid>
                         </Grid>
-                        <DuplicateCheck mystyles="">
-                            {passwordConfirmCheckMessage}
-                        </DuplicateCheck>
                     </Grid>
-                    <Grid></Grid>
+                    <Grid
+                        flex
+                        alignItems="center"
+                        justifyContent="center"
+                        direction="column"
+                        mystyles="border: 2px solid red; padding-left: 50px; margin-top: 40px;"
+                    >
+                        <Grid flex>
+                            {firstAgree && (
+                                <>
+                                    <Grid
+                                        onClick={cancelAgreeFirst}
+                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
+                                    >
+                                        <Grid mystyles="position: absolute; margin-top: -4px; ">
+                                            <DoneIcon
+                                                sx={{
+                                                    color: "white",
+                                                    fontSize: "14px",
+                                                    fontWeight: "700",
+                                                }}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </>
+                            )}
+                            {!firstAgree && (
+                                <>
+                                    <Grid
+                                        onClick={openFirstModal}
+                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E;"
+                                    ></Grid>
+                                </>
+                            )}
+                            <Text
+                                pointer
+                                onClick={openFirstModal}
+                                mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E;"
+                            >
+                                이용약관 동의
+                            </Text>
+                        </Grid>
+                        <Grid flex mystyles="margin-top: 16px;">
+                            <Grid mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E"></Grid>
+                            <Text
+                                pointer
+                                mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E;"
+                            >
+                                개인정보 취급방침 동의
+                            </Text>
+                        </Grid>
+                        <Grid flex mystyles="margin-top: 16px;">
+                            <Grid mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E"></Grid>
+                            <Text
+                                pointer
+                                mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E;"
+                            >
+                                위치정보 수집 동의
+                            </Text>
+                        </Grid>
+                    </Grid>
+                    <Modal open={firstModal} onClose={closeFirstModal}>
+                        <Grid mystyles="width: 300px; height: 300px; margin: auto; background: white; overflow: scroll; position: absolute; top: 50%; left:50%; transform: translate(-50%, -50%)">
+                            <Text>
+                                Hellosdf sdf dsfds fds fdsf dsf dsf dsf dsfds
+                                fds fds fds fdsHellosdf sdf dsfds fds fdsf dsf
+                                dsf dsf dsfds fds fds fds fds Hellosdf sdf dsfds
+                                fds fdsf dsf dsf dsf dsfds fds fds fds fds
+                                Hellosdf sdf dsfds fds fdsf dsf dsf dsf dsfds
+                                fds fds fds fds Hellosdf sdf dsfds fds fdsf dsf
+                                dsf dsf dsfds fds fds fds fds Hellosdf sdf dsfds
+                                fds fdsf dsf dsf dsf dsfds fds fds fds fds
+                                Hellosdf sdf dsfds fds fdsf dsf dsf dsf dsfds
+                                fds fds fds fdsHellosdf sdf dsfds fds fdsf dsf
+                                dsf dsf dsfds fds fds fds fds Hellosdf sdf dsfds
+                                fds fdsf dsf dsf dsf dsfds fds fds fds fds
+                                Hellosdf sdf dsfds fds fdsf dsf dsf dsf dsfds
+                                fds fds fds fds Hellosdf sdf dsfds fds fdsf dsf
+                                dsf dsf dsfds fds fds fds fds Hellosdf sdf dsfds
+                                fds fdsf dsf dsf dsf dsfds fds fds fds fds
+                            </Text>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="margin: 30px 0px;"
+                            >
+                                <Button
+                                    onClick={agreeFirst}
+                                    mystyles="width: 200px;"
+                                >
+                                    동의하기
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Modal>
+                    <Grid
+                        flex
+                        alignItems="center"
+                        justifyContent="center"
+                        mystyles="margin-top: 180px;"
+                    >
+                        <Grid mystyles="width: 8px; height: 8px; border-radius: 8px; border: 0.5px solid #05240E; background: #05240E"></Grid>
+                        <Grid mystyles="margin-left: 16px; width: 8px; height: 8px; border-radius: 8px; border: 0.5px solid #05240E;"></Grid>
+                    </Grid>
                     {firstPageComplete ? (
                         <>
                             <Grid
                                 flex
-                                direction="column"
-                                mystyles=" padding-left: 80px"
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="margin-top: 20px;"
                             >
                                 <Button
-                                    mystyles="height: 50px; width: 200px; border-radius: 25px; margin-top: 20px; border: none; font-size: 20px; font-weight: bold; background-color: #D6E9FE"
+                                    mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px;"
                                     onClick={signup}
+                                    animate={{ background: "#5CEB84" }}
+                                    transition={{ delay: 0.2 }}
                                 >
-                                    회원가입
+                                    다음
                                 </Button>
                             </Grid>
                         </>
@@ -508,14 +653,15 @@ export default function SignupFinal() {
                             {" "}
                             <Grid
                                 flex
-                                direction="column"
-                                mystyles=" padding-left: 80px"
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="margin-top: 20px;"
                             >
                                 <Button
-                                    mystyles="height: 50px; width: 200px; border-radius: 25px; margin-top: 20px; border: none; font-size: 20px; font-weight: bold; background-color: #D6E9FE"
+                                    mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px;"
                                     onClick={signup}
                                 >
-                                    회원가입
+                                    다음
                                 </Button>
                             </Grid>
                         </>
@@ -524,42 +670,9 @@ export default function SignupFinal() {
             )}
             {page === 2 && (
                 <>
-                    <Grid mystyles="min-height: 30vh">
-                        <motion.h2
-                            initial={{ y: -250, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                        >
-                            당신의 MBTI는 무엇인가요?
-                        </motion.h2>
-                    </Grid>
                     <Mbti onClick={selectMbti} />
                 </>
             )}
-        </>
+        </Grid>
     );
 }
-
-const Carousel = styled(motion.div)`
-    cursor: grab;
-    overflow: hidden;
-`;
-const InnerCarousel = styled(motion.div)`
-    display: flex;
-`;
-const Item = styled(motion.div)`
-    min-height: 20vh;
-    min-width: 33%;
-    padding: 40px;
-    cursor: grab;
-`;
-
-const Img = styled(motion.img)`
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
-    height: 200px;
-
-    border-radius: 50px;
-`;
