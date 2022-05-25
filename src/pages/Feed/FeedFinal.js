@@ -33,10 +33,8 @@ export default function Feed() {
     };
 
     const [items, setItems] = React.useState([]);
-    console.log(items);
 
     const feeds = useSelector((state) => state?.feed.feeds);
-    console.log(feeds);
 
     const feedsLatest = () => {
         dispatch(feedsLatestAxios(data));
@@ -56,7 +54,6 @@ export default function Feed() {
     }, []);
 
     const [tabIndex, setTabIndex] = React.useState(0);
-    console.log(tabIndex);
 
     const [feedLocation, setFeedLocation] = React.useState([
         "33.5563",
