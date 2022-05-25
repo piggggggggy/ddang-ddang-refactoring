@@ -6,15 +6,14 @@ import { Text, Button, Grid } from "../Feed/elements/index";
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 import CardItem from "../Feed/components/CardItem";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { getCookie } from "../../shared/Cookie";
-
+import TokenService from "../../services/token.service";
 import { getFeedsAxios } from "../../store/thunk-actions/feedActions";
 
 export default function Feed() {
-    const token = getCookie("token");
+    const token = TokenService.getLocalAccessToken;
+
     const dispatch = useDispatch();
     const playerId = useSelector((state) => state?.user?.user?.playerId);
-    console.log(playerId);
 
     // 시 구 동 정보 body로 request 보내기
     React.useEffect(() => {
@@ -27,11 +26,7 @@ export default function Feed() {
     }, [dispatch, token]);
 
     const feeds = useSelector((state) => state?.feed?.feeds);
-    console.log(feeds);
-    console.log(feeds[0]?.quest?.lat);
-    console.log(feeds[1]?.quest?.lng);
 
-    console.log(items);
 
     // 지도 경도 표시
 
@@ -41,13 +36,9 @@ export default function Feed() {
         "현재 내 위치",
     ]);
 
-    console.log(feedLocation);
-    console.log(parseFloat(feedLocation[0]).toFixed(4));
-    console.log(parseFloat(feedLocation[1]).toFixed(4));
 
     // 카테고리
     const [category, setCategory] = React.useState("1");
-    console.log(category);
 
     return (
         <>
