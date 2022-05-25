@@ -8,11 +8,7 @@ export default function QuestItemForList(Props) {
 
     return (
         <Card>
-            <Grid
-                flex
-                // justifyContent={"space-between"}
-                alignItems={"center"}
-            >
+            <Grid flex alignItems={"center"}>
                 <Icon>
                     <img src={fragment.img} alt={"icon"} />
                 </Icon>

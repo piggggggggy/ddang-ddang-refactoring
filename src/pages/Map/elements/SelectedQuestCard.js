@@ -65,6 +65,14 @@ export default function SelectedQuestCard(Props) {
         }
     })();
 
+    const moveToGame = () => {
+        // if (Props.isInCircle) {
+        Props.selectQuest();
+        // } else {
+        // return;
+        // }
+    };
+
     return (
         <Card>
             <CloseButton onClick={Props.onClick}>
@@ -75,7 +83,10 @@ export default function SelectedQuestCard(Props) {
             <SubInfo>{fragment.subTitle}</SubInfo>
             <Grid mystyles={"height: 113px;"}></Grid>
             <SubInfo>{fragment.description}</SubInfo>
-            <CardButton onClick={Props.selectQuest}>
+            <CardButton
+                style={Props.isInCircle ? {} : { background: "#CDCDCD" }}
+                onClick={moveToGame}
+            >
                 <p>{fragment.buttonText}</p>
             </CardButton>
         </Card>

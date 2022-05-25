@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 import { Grid } from "../../../elements";
+import { localNameHandlerForSi } from "../../../modules/help";
 
 export default function LandingModal({ loading, region, questLength = 0 }) {
     const [landingOpen, setLandingOpen] = useState(true);
@@ -15,12 +16,13 @@ export default function LandingModal({ loading, region, questLength = 0 }) {
             </Title>
             <Address>
                 <p>
-                    {region.regionSi}시 {region.regionGu} {region.regionDong}
+                    {localNameHandlerForSi(region.regionSi)} {region.regionGu}{" "}
+                    {region.regionDong}
                 </p>
             </Address>
 
             <Info>
-                {region.regionSi}시{" "}
+                {localNameHandlerForSi(region.regionSi)}{" "}
                 <span>
                     {region.regionGu} {region.regionDong}
                 </span>

@@ -7,25 +7,24 @@ import ClickBalloon from "../../../assets/images/png/active-balloon.png";
 import { questFragment } from "../../../modules/fragment";
 
 export default function QuestMarker(Props) {
-    const [open, setOpen] = useState(false);
     const distance = getUpdatedDistance({
         lat: Props.currentPosition.lat,
         lng: Props.currentPosition.lng,
         _lat: Number(Props.lat),
         _lng: Number(Props.lng),
     });
+
+    const activateDetail = () => {
+        Props.setDetail({
+            type: Props.type,
+            id: Props.id,
+            lat: Props.lat,
+            lng: Props.lng,
+        });
+        Props.openDetail();
+    };
     return (
         <>
-            {open && <Dimmed onClick={() => setOpen(false)} />}
-            {open && (
-                <DeatilWrapper>
-                    <Grid mystyles={"width: 120px;"}>
-                        <Title>{Props.title}</Title>
-                        <Description>{Props.description}</Description>
-                    </Grid>
-                    <Reward>{Props.reward},000P</Reward>
-                </DeatilWrapper>
-            )}
             <MarkerWrapper>
                 <MapMarker
                     zIndex={301}
@@ -37,7 +36,7 @@ export default function QuestMarker(Props) {
                             height: 14,
                         },
                     }}
-                    onClick={() => setOpen(true)}
+                    onClick={activateDetail}
                 >
                     {distance <= 0.03 && (
                         <CustomOverlayMap

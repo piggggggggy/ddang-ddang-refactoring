@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { Grid } from "../elements";
 import NavigationMenu from "./NavigationMenu";
+import LogoMedium from "../assets/images/png/logo-medium.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Navigation() {
+    const navigate = useNavigate();
     const path = window.location.pathname.split("/")[1];
 
     const iterator = Array.from({ length: 5 }, () => 0);
@@ -25,7 +28,9 @@ export default function Navigation() {
 
     return (
         <NavigationWrapper>
-            <NavigationCircle />
+            <NavigationCircle onClick={() => navigate("/quest")}>
+                <img src={LogoMedium} alt={"logo medium"} />
+            </NavigationCircle>
             <Grid
                 mystyles={
                     "position: relative; z-index: 1001; background: #fff; width: 100%; height: 100%; display: flex;"
@@ -56,23 +61,20 @@ const NavigationWrapper = styled.div`
 `;
 
 const NavigationCircle = styled.div`
-<<<<<<< HEAD
-  position: absolute;
-  left: calc(50% - 66px);
-  bottom: 20px;
-  width: 132px;
-  height: 132px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.1);
-=======
     position: absolute;
-    left: calc(50% - 66px);
-    bottom: 26px;
-    width: 132px;
-    height: 132px;
+    left: calc(50% - 48px);
+    bottom: 42px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     background: #fff;
     box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.1);
->>>>>>> a92414bfd285e06e06096b56a4e0101d793526c6
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & img {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+    }
 `;

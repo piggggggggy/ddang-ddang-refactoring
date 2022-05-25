@@ -7,6 +7,7 @@ import MainMapContainer from "./components/MainMapContainer";
 import Navigation from "../../components/Navigation";
 import { useState } from "react";
 import { useMainData } from "./hooks/MainHooks";
+import { localNameHandlerForSi } from "../../modules/help";
 
 export default function Main() {
     const { questList, loading, questType, setQuestType, location, region } =
@@ -20,7 +21,8 @@ export default function Main() {
                 mystyles={"position: relative; z-index: 100; padding: 0 30px;"}
             >
                 <Address>
-                    {region.regionSi}시 {region.regionGu} {region.regionDong}
+                    {localNameHandlerForSi(region.regionSi)} {region.regionGu}{" "}
+                    {region.regionDong}
                 </Address>
                 <UserInfoContainer />
 

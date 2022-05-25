@@ -32,6 +32,13 @@ export default function GamePage() {
         justify-content: center;
         align-items: center;
     `;
+    const Dot = styled.div`
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        margin: 0 8px;
+        background: ${fragment.subColor};
+    `;
 
     return (
         <Container>
@@ -74,6 +81,21 @@ export default function GamePage() {
                             questId={questId}
                         />
                     )}
+
+                    <DotContainer>
+                        {Array.from(
+                            { length: type === "mob" ? 4 : 2 },
+                            () => 0
+                        ).map((item, index) => (
+                            <Dot
+                                style={
+                                    progress === index
+                                        ? { background: "#fff" }
+                                        : {}
+                                }
+                            />
+                        ))}
+                    </DotContainer>
                 </Paper>
             </Wrapper>
         </Container>
@@ -82,8 +104,8 @@ export default function GamePage() {
 
 const CloseButton = styled.div`
     position: absolute;
-    top: 40px;
-    left: 40px;
+    top: 30px;
+    left: 30px;
 `;
 const Title = styled.p`
     font-size: 28px;
@@ -100,4 +122,12 @@ const Paper = styled.div`
     border-radius: 4px;
     background: #fff;
     box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
+`;
+
+const DotContainer = styled.div`
+    position: absolute;
+    bottom: -5%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 `;

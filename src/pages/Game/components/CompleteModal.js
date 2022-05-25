@@ -10,10 +10,13 @@ export default function CompleteModal({ open, setComfirm }) {
                     <p>3,000 P</p>
                 </Reward>
 
-                <BottomButton onClick={setComfirm} style={{ marginBottom: 10 }}>
+                <BottomButton
+                    onClick={() => setComfirm("point")}
+                    style={{ marginBottom: 10 }}
+                >
                     <p>포인트 받기</p>
                 </BottomButton>
-                <BottomButton>
+                <BottomButton onClick={() => setComfirm("quest")}>
                     <p>다른 퀘스트 하러가기</p>
                 </BottomButton>
             </Paper>
