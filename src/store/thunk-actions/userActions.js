@@ -15,7 +15,6 @@ export const loginCheckAxios = (token, navigate) => {
             };
 
             dispatch(userActions.loginCheck({ user, token }));
-
         } catch (err) {
             navigate("/signin");
         }
@@ -48,12 +47,10 @@ export const signinAxios = (email, password, navigate) => {
 
 // 이메일 중복 확인
 export const checkEmailAxios = (email) => {
-
     let data = { email: email };
     return async function (dispatch) {
         try {
             await api.post("/players/dupEmail", data);
-
         } catch (err) {
             console.log(err);
         }
@@ -91,11 +88,11 @@ export const signupAxios = (
                     userActions.signup({
                         email,
                         nickname,
-                        password,
                         mbti,
                         profileImg,
                     })
                 );
+                navigate("/");
             })
             .catch((err) => {
                 console.log(err);
@@ -141,7 +138,6 @@ export const profileUpdatesAxios = (profile, token, navigate) => {
                 nickname: nickname,
                 profileImg: profileImg,
             };
-
             dispatch(userActions.updateProfile({ user }));
         } catch (err) {
             console.log(err);

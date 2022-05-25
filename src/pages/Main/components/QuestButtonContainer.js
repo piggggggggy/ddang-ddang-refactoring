@@ -1,25 +1,26 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
+import monster from "../../../assets/images/png/monster.png";
 
 export default function QuestButtonContainer({ setType }) {
     return (
         <Wrapper>
             <ButtonItem onClick={() => setType("mob")}>
-                <img />
+                <img src={monster} style={{ height: "48px", width: "48px" }} />
                 <p>몬스터대전</p>
             </ButtonItem>
 
             <Divider />
 
             <ButtonItem onClick={() => setType("time")}>
-                <img />
+                <img src={monster} style={{ height: "48px", width: "48px" }} />
                 <p>타임어택</p>
             </ButtonItem>
 
             <Divider />
 
             <ButtonItem onClick={() => setType("feed")}>
-                <img />
+                <img src={monster} style={{ height: "48px", width: "48px" }} />
                 <p>땅문서작성</p>
             </ButtonItem>
         </Wrapper>

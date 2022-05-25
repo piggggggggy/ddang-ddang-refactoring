@@ -2,6 +2,7 @@ import { Grid } from "../../../elements/index";
 import styled from "styled-components";
 import { questFragment } from "../../../modules/fragment";
 import { getUpdatedDistance } from "../../../modules/location";
+import monster from "../../../assets/images/png/monster.png";
 
 export default function QuestItemForCarousel(Props) {
     const fragment = questFragment(Props.type);
@@ -19,7 +20,7 @@ export default function QuestItemForCarousel(Props) {
         >
             <Card style={{ background: fragment.color }}>
                 <IconWrapper>
-                    <img alt={"icon"} />
+                    <img src={monster} alt={"icon"} />
                 </IconWrapper>
                 <Title>
                     땅에 대한

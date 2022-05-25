@@ -1,6 +1,7 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
 import { questFragment } from "../../../modules/fragment";
+import monster from "../../../assets/images/png/monster.png";
 
 export default function QuestItemForList(Props) {
     const fragment = questFragment(Props.type);
@@ -13,7 +14,7 @@ export default function QuestItemForList(Props) {
                 alignItems={"center"}
             >
                 <Icon>
-                    <img alt={"icon"} />
+                    <img src={monster} alt={"icon"} />
                 </Icon>
 
                 <Grid mystyles={"width: calc(100% - 83px);"}>
