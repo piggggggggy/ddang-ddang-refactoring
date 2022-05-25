@@ -152,8 +152,8 @@ export default function Mbti(props) {
                             flex
                             justifyContent="center"
                             alignItems="center"
-                            animate={{ rotate: 180 }}
-                            transition={{ repeat: Infinity, duration: 2 }}
+                            animate={{ rotate: 360 }}
+                            transition={{ repeat: Infinity }}
                             mystyles="margin: 257px auto 0px auto; width: 128px; height: 127px; padding: 11px;"
                         >
                             <Image
