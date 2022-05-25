@@ -13,7 +13,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 import { commentAxios } from "../../../store/thunk-actions/feedActions";
-import { getCookie } from "../../../shared/Cookie";
+import TokenService from "../services/token.service";
 
 export default function Item(props) {
     const { item, onClick, page, id } = props;
@@ -22,7 +22,7 @@ export default function Item(props) {
     console.log(list);
     console.log(id);
     const dispatch = useDispatch();
-    const token = getCookie("token");
+    const token = TokenService.getLocalAccessToken();
 
     // show feedDetail
     const [detailOpen, setDetailOpen] = React.useState(false);

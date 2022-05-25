@@ -18,10 +18,10 @@ import API_TEST from "../APITEST";
 export default function AppRouter() {
     return (
         <Routes>
-            <Route path="/" exact element={<Main/>} />
-            <Route path="/map" exact element={<MapPage/>} />
-            <Route path="/quest" exact element={<MapPage/>} />
-            <Route path="/quest/:type/:questId" exact element={<GamePage/>} />
+            <Route path="/" exact element={<Main />} />
+            <Route path="/map" exact element={<MapPage />} />
+            <Route path="/quest" exact element={<MapPage />} />
+            <Route path="/quest/:type/:questId" exact element={<GamePage />} />
 
             <Route path="/mypage" element={<MyPageFinal />} />
             <Route path="/signin" element={<SigninFinal />} />

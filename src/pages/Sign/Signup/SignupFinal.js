@@ -2,6 +2,8 @@ import React from "react";
 import lo from "lodash";
 
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
 
 import { Grid, Text } from "../../../elements/index";
 import { Button, Input } from "../../Sign/elements/index";
@@ -14,7 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import DoneIcon from "@mui/icons-material/Done";
 
-import AuthService from "../../../apis/auth.service";
+import AuthService from "../../../services/auth.service";
 
 export default function SignupFinal() {
     // header
@@ -154,7 +156,7 @@ export default function SignupFinal() {
 
     const checkPasswordByRegex = (password) => {
         const regPassword =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
         if (!password) {
             setPasswordCheckMessage();
             setPasswordIsValid(false);
