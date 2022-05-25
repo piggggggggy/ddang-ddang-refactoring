@@ -41,21 +41,15 @@ export default function SignupFinal() {
     const [emailIsValid, setEmailIsValid] = React.useState(false);
 
     const [emailafterCheck, setEmailAfterCheck] = React.useState("");
-    const [emailAxiosCheck, setEmailAxiosCheck] = React.useState();
+    const [emailAxiosCheck, setEmailAxiosCheck] = React.useState(false);
 
     const checkEmailByRegex = (email) => {
         const regEmail = /^((\w|[.])+)@((\w|[-.])+)\.([A-Za-z]+){2,3}$/;
         if (email && !regEmail.test(email)) {
             setEmailCheckMessage("이메일 형식을 다시 확인해주세요");
             setEmailIsValid(false);
-        } else if (email && regEmail.test(email) && emailAxiosCheck) {
-            setEmailCheckMessage("중복확인 성공");
-            setEmailIsValid(true);
-        } else if (email && regEmail.test(email) && emailAxiosCheck == null) {
+        } else if (email && regEmail.test(email)) {
             setEmailCheckMessage("올바른 이메일 형식입니다!");
-            setEmailIsValid(true);
-        } else if (email && regEmail.test(email) && emailAxiosCheck === false) {
-            setEmailCheckMessage("중복확인 실패");
             setEmailIsValid(true);
         } else if (email === "") {
             setEmailCheckMessage("");
@@ -100,9 +94,6 @@ export default function SignupFinal() {
     const [nicknameCheckMessage, setNicknameCheckMessage] = React.useState("");
     const [nicknameIsValid, setNicknameIsValid] = React.useState(false);
 
-    const [nicknameafterCheck, setNicknameAfterCheck] = React.useState("");
-    const [nicknameAxiosCheck, setNicknameAxiosCheck] = React.useState();
-
     const checkNicknameByRegex = (nickname) => {
         if (nickname.length > 10) {
             setNicknameCheckMessage("최대 10글자 까지 가능합니다");
@@ -115,6 +106,9 @@ export default function SignupFinal() {
             setNicknameIsValid(true);
         }
     };
+
+    const [nicknameafterCheck, setNicknameAfterCheck] = React.useState("");
+    const [nicknameAxiosCheck, setNicknameAxiosCheck] = React.useState(false);
 
     const checkNickname = () => {
         if (nicknameIsValid) {
@@ -452,13 +446,38 @@ export default function SignupFinal() {
                                 onChange={nicknameChange}
                                 placeholder="닉네임을 입력하세요"
                             />
-                            <Grid>
+                            <Grid mystyles="position: relative">
                                 <Button
                                     onClick={checkNickname}
                                     mystyles="width: 70px; height: 32px; margin-left: -5px; background: #DADEDB; color: #05240E; border: none;"
                                 >
                                     중복확인
                                 </Button>
+                                {nicknameAxiosCheck &&
+                                    nicknameafterCheck === nickname && (
+                                        <CheckBoxSharpIcon
+                                            style={{
+                                                color: "green",
+                                                position: "absolute",
+                                                left: 0,
+                                                marginLeft: "-30px",
+                                                marginTop: "5px",
+                                            }}
+                                        ></CheckBoxSharpIcon>
+                                    )}
+                                {nicknameIsValid &&
+                                    !nicknameAxiosCheck &&
+                                    nicknameafterCheck === nickname && (
+                                        <DangerousIcon
+                                            style={{
+                                                color: "red",
+                                                position: "absolute",
+                                                left: 0,
+                                                marginLeft: "-30px",
+                                                marginTop: "5px",
+                                            }}
+                                        ></DangerousIcon>
+                                    )}
                             </Grid>
                         </Grid>
                         <Grid flex mystyles="margin: 0 50px;">
@@ -467,23 +486,6 @@ export default function SignupFinal() {
                                     {nicknameCheckMessage}
                                 </Text>
                             </Grid>
-                            {nicknameAxiosCheck &&
-                                nicknameafterCheck === nickname && (
-                                    <CheckBoxSharpIcon
-                                        style={{
-                                            color: "green",
-                                        }}
-                                    ></CheckBoxSharpIcon>
-                                )}
-                            {nicknameIsValid &&
-                                !nicknameAxiosCheck &&
-                                nicknameafterCheck === nickname && (
-                                    <DangerousIcon
-                                        style={{
-                                            color: "red",
-                                        }}
-                                    ></DangerousIcon>
-                                )}
                         </Grid>
                     </Grid>
                     <Grid
