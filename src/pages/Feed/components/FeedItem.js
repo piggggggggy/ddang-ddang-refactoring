@@ -1,7 +1,5 @@
 import React from "react";
-import axios from "axios";
 import api from "../../../modules/api";
-import { getWithExpiry } from "../../../modules/localStorageControl";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +9,12 @@ import { IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MessageIcon from "@mui/icons-material/Message";
 import SendIcon from "@mui/icons-material/Send";
-import TokenService from "../../../services/token.service";
 
 import { writeCommentsAxios } from "../../../store/thunk-actions/feedActions";
 
 export default function FeedItem(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const token = TokenService.getLocalAccessToken();
 
     const playerEmail = "paul@gmail.com";
 
@@ -54,7 +50,6 @@ export default function FeedItem(props) {
     // 댓글
     const [commentArr, setCommentArr] = React.useState([...item?.comments]);
     // const commentArr = item?.comments;
-    console.log(commentArr);
 
     const [commentIsOpen, setCommentIsOpen] = React.useState(true);
 
@@ -82,28 +77,23 @@ export default function FeedItem(props) {
 
     const createComment = async (comment) => {
         await api
-            .post(`/api/feeds/${feedId}/comments`, {
-                comment: comment,
-            })
+            .post(`/api/feeds/${feedId}/comments`, { comment })
             .then((res) => {
                 console.log(res);
 
                 setCommentArr([...commentArr, res.data.comment]);
                 console.log(commentArr);
 
-                // commentArr.push({ comment: comment });
-                // window.location.reload();
+                commentArr.push({ comment });
+                window.location.reload();
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
-    console.log(commentArr);
-    console.log(feedId);
     const likeFeed = async () => {
-        console.log(token);
-        api.put(`/api/feeds/${feedId}/like`, {})
+        api.put(`/api/feeds/${feedId}/like`)
             .then((res) => {
                 console.log(res);
             })

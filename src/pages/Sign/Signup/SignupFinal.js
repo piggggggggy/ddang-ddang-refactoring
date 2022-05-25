@@ -148,7 +148,7 @@ export default function SignupFinal() {
 
     const checkPasswordByRegex = (password) => {
         const regPassword =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
         if (!password) {
             setPasswordCheckMessage();
             setPasswordIsValid(false);
