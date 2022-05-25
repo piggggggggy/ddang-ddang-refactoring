@@ -509,7 +509,7 @@ export default function SignupFinal() {
                                     mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; font-size: 12px;"
                                     defaultValue={passwordValue}
                                     onChange={passwordChange}
-                                    placeholder="비밀번호 (특수문자, 숫자 포함 8자 이상)"
+                                    placeholder="비밀번호"
                                     type="password"
                                 />
                                 <Grid mystyles="position: relative">

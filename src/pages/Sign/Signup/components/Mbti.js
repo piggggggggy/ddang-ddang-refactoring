@@ -3,6 +3,7 @@ import { signupAxios } from "../../../../store/thunk-actions/userActions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Grid, Text, Image, Button } from "../../elements/index";
+import logo from "../../../../assets/images/png/logo.png";
 
 export default function Mbti(props) {
     const dispatch = useDispatch();
@@ -12,22 +13,22 @@ export default function Mbti(props) {
     });
 
     const mbtiData = [
-        { name: "ENTP", src: "ENTP" },
-        { name: "INTP", src: "INTP" },
-        { name: "ENTJ", src: "ENTJ" },
-        { name: "INTJ", src: "INTJ" },
-        { name: "ISFP", src: "ISFP" },
-        { name: "ESPT", src: "ESPT" },
-        { name: "ISTP", src: "ISTP" },
-        { name: "ESFP", src: "ESFP" },
-        { name: "ISTJ", src: "ISTJ" },
-        { name: "ISFJ", src: "ISFJ" },
-        { name: "ESTJ", src: "ESTJ" },
-        { name: "ESFJ", src: "ESFJ" },
-        { name: "INFJ", src: "INFJ" },
-        { name: "INFP", src: "INFP" },
-        { name: "ENFP", src: "ENFP" },
-        { name: "ENFJ", src: "ENFJ" },
+        { name: "ENTP", src: "" },
+        { name: "INTP", src: "" },
+        { name: "ENTJ", src: "" },
+        { name: "INTJ", src: "" },
+        { name: "ISFP", src: "" },
+        { name: "ESPT", src: "" },
+        { name: "ISTP", src: "" },
+        { name: "ESFP", src: "" },
+        { name: "ISTJ", src: "" },
+        { name: "ISFJ", src: "" },
+        { name: "ESTJ", src: "" },
+        { name: "ESFJ", src: "" },
+        { name: "INFJ", src: "" },
+        { name: "INFP", src: "" },
+        { name: "ENFP", src: "" },
+        { name: "ENFJ", src: "" },
     ];
 
     const [cardSelected, setCardSelected] = React.useState("");
@@ -148,16 +149,24 @@ export default function Mbti(props) {
                         direction="column"
                     >
                         <Grid
+                            flex
+                            justifyContent="center"
+                            alignItems="center"
                             animate={{ rotate: 180 }}
                             transition={{ repeat: Infinity, duration: 2 }}
-                            mystyles="border: 2px solid red; margin: 257px auto 0px auto; width: 128px; height: 127px; padding: 11px;"
-                        ></Grid>
+                            mystyles="margin: 257px auto 0px auto; width: 128px; height: 127px; padding: 11px;"
+                        >
+                            <Image
+                                src={logo}
+                                mystyles="width: 128px; height: 127px;"
+                            ></Image>
+                        </Grid>
                         <Grid
                             flex
                             alignItems="center"
                             justifyContent="center"
                             direction="column"
-                            mystyles="border: 2px solid red; width: 173px; height: 80px; margin-top: 44px"
+                            mystyles="width: 173px; height: 80px; margin-top: 44px"
                         >
                             <Text mystyles="color: #05240E; font-weight: 700; font-size: 16px;">
                                 환영합니다!

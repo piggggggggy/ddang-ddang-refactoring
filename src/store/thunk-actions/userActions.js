@@ -88,7 +88,6 @@ export const signupAxios = (
                     userActions.signup({
                         email,
                         nickname,
-                        password,
                         mbti,
                         profileImg,
                     })
