@@ -20,37 +20,78 @@ import {
     feedsDistanceAxios,
 } from "../../store/thunk-actions/feedActions";
 
+import FeedsService from "../../services/feed.service";
+
 export default function Feed() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const data = {
-        regionSi: "서울시",
-        regionGu: "강남구",
-        regionDong: "삼성동",
-        lat: 33.5563,
-        lng: 127.4147562,
-    };
+    const regionsi = "서울시";
+    const regionGu = "강남구";
+    const regionDong = "삼섬동";
+    const lat = 33.5563;
+    const lng = 127.4147562;
+
+    // const data = {
+    //     regionSi: "서울시",
+    //     regionGu: "강남구",
+    //     regionDong: "삼성동",
+    //     lat: 33.5563,
+    //     lng: 127.4147562,
+    // };
 
     const [items, setItems] = React.useState([]);
 
     const feeds = useSelector((state) => state?.feed.feeds);
 
     const feedsLatest = () => {
-        dispatch(feedsLatestAxios(data));
+        // dispatch(feedsLatestAxios(data));
+        FeedsService.feedsLatestAxios(regionsi, regionGu, regionDong, lat, lng)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     const feedsPopularity = () => {
-        dispatch(feedsPopularityAxios(data));
+        // dispatch(feedsPopularityAxios(data));
+        FeedsService.feedsPopularityAxios(
+            regionsi,
+            regionGu,
+            regionDong,
+            lat,
+            lng
+        )
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     const feedsDistance = () => {
-        dispatch(feedsDistanceAxios(data));
+        // dispatch(feedsDistanceAxios(data));
+        FeedsService.feedsDistanceAxios(
+            regionsi,
+            regionGu,
+            regionDong,
+            lat,
+            lng
+        )
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     React.useEffect(() => {
         // feedsLatest();
-        feedsLatest(data);
+        feedsLatest();
     }, []);
 
     const [tabIndex, setTabIndex] = React.useState(0);
@@ -72,11 +113,11 @@ export default function Feed() {
     };
     const getPopularity = () => {
         setTabIndex(1);
-        feedsPopularity();
+        // feedsPopularity();
     };
     const getDistance = () => {
         setTabIndex(2);
-        feedsDistance();
+        // feedsDistance();
     };
 
     return (
@@ -207,7 +248,7 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {feeds.map((feed, idx) => (
+                                {/* {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
@@ -221,7 +262,7 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                     />
-                                ))}
+                                ))} */}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>
@@ -240,7 +281,7 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {feeds.map((feed, idx) => (
+                                {/* {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
@@ -254,7 +295,7 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                     />
-                                ))}
+                                ))} */}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>
@@ -273,7 +314,7 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {feeds.map((feed, idx) => (
+                                {/* {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
@@ -287,7 +328,7 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                     />
-                                ))}
+                                ))} */}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>
@@ -328,39 +369,3 @@ const Tabcard = styled(motion.div)`
 const UnorderedList = styled(motion.ul)`
     list-style-type: none;
 `;
-
-// const feedsLatest = async () => {
-//     await axios
-//         .post(`/api/feeds?type=latest`, data)
-//         .then((res) => {
-//             console.log(res);
-//             setItems([...res.data.rows]);
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };
-
-// const feedsPopularity = async () => {
-//     await axios
-//         .post(`/api/feeds?type=popularity`, data)
-//         .then((res) => {
-//             console.log(res);
-//             setItems([...res.data.rows]);
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };
-
-// const feedsDistance = async () => {
-//     await axios
-//         .post(`/api/feeds?type=distance`, data)
-//         .then((res) => {
-//             console.log(res);
-//             setItems([...res.data.rows]);
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };

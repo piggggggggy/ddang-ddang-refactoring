@@ -9,7 +9,7 @@ import SocialSignin from "./components/SocialSignin";
 
 import { signinAxios } from "../../../store/thunk-actions/userActions";
 
-import logo from "../../../assets/images/png/logo.png";
+import logo from "../../../assets/images/png/sign/logo.png";
 
 export default function SigninFinal() {
     const navigate = useNavigate();

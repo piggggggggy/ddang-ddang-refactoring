@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 // 재혁
 import SigninFinal from "../pages/Sign/Signin/SigninFinal";
 import SignupFinal from "../pages/Sign/Signup/SignupFinal";
-import MyPageFinal from "../pages/MyPage/MyPage";
+import MyPageFinal from "../pages/MyPage/MyPageFinal";
 import FeedFinal from "../pages/Feed/FeedFinal";
 import KakaoLogin from "../pages/Sign/KakaoLogin";
 import Ranking from "../pages/Ranking/Ranking";
@@ -24,7 +24,6 @@ export default function AppRouter() {
             <Route path="/map" exact element={<MapPage />} />
             <Route path="/quest" exact element={<MapPage />} />
             <Route path="/quest/:type/:questId" exact element={<GamePage />} />
-
             <Route path="/mypage" element={<MyPageFinal />} />
             <Route path="/signin" element={<SigninFinal />} />
             <Route path="/signup" element={<SignupFinal />} />
