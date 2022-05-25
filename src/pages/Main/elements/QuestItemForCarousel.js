@@ -12,22 +12,27 @@ export default function QuestItemForCarousel(Props) {
     _lng: Number(Props.lng),
   });
   return (
-    <Grid mystyles={'width: 128px; min-width: 128px; height: 106px; margin: 0px 8px;'}>
-      <Card style={{background: fragment.color}}>
+    <Grid
+      mystyles={
+        "width: 128px; min-width: 128px; height: 106px; margin: 0px 8px;"
+      }
+    >
+      <Card style={{ background: fragment.color }}>
         <IconWrapper>
-          <img alt={"icon"}/>
+          <img src={questFragment(Props.type).img} alt={"icon"} />
         </IconWrapper>
         <Title>
-          땅에 대한<br/>
+          땅에 대한
+          <br />
           이야기 만땅
         </Title>
         <Description>{Props.description}</Description>
-        <CardFooter style={{background: fragment.subColor}}>
+        <CardFooter style={{ background: fragment.subColor }}>
           <p>내 위치로부터 {Math.round(distance * 1000)}m</p>
         </CardFooter>
       </Card>
     </Grid>
-  )
+  );
 }
 
 const Card = styled.div`
@@ -37,7 +42,7 @@ const Card = styled.div`
   border-radius: 4px;
   padding: 29px 11px 0;
   box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);
-`
+`;
 const IconWrapper = styled.div`
   position: absolute;
   top: -20px;
@@ -45,7 +50,7 @@ const IconWrapper = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid #61B7FA;
+  border: 2px solid #61b7fa;
   background: #fff;
   display: flex;
   justify-content: center;
@@ -53,12 +58,12 @@ const IconWrapper = styled.div`
   & img {
     width: 24px;
     height: 24px;
-    object-fit: contain;
+    object-fit: cover;
   }
 `;
 
 const Title = styled.p`
-  padding: 0 0 5px ;
+  padding: 0 0 5px;
   font-size: 12px;
   font-weight: 700;
   line-height: 1.15;
@@ -92,4 +97,4 @@ const CardFooter = styled.div`
     line-height: 1.15;
     color: #fff;
   }
-`
+`;

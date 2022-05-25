@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { questFragment } from "../../../modules/fragment";
 
 export default function QuestItemForList(Props) {
-
   const fragment = questFragment(Props.type);
 
   return (
@@ -14,28 +13,26 @@ export default function QuestItemForList(Props) {
         alignItems={"center"}
       >
         <Icon>
-          <img alt={"icon"}/>
+          <img src={fragment.img} alt={"icon"} />
         </Icon>
 
-        <Grid
-          mystyles={'width: calc(100% - 83px);'}
-        >
-          <Title style={{color: fragment.color}}>{Props.title}</Title>
+        <Grid mystyles={"width: calc(100% - 83px);"}>
+          <Title style={{ color: fragment.color }}>{Props.title}</Title>
           <Description>{Props.description}</Description>
         </Grid>
 
-        <Grid 
+        <Grid
           flex
           direction={"column"}
           alignItems={"center"}
-          mystyles={'width: 60px;'}
+          mystyles={"width: 60px;"}
         >
-          <Point style={{color: fragment.color}}>{Props.reward},000P</Point>
+          <Point style={{ color: fragment.color }}>{Props.reward},000P</Point>
           <Description>난이도</Description>
         </Grid>
       </Grid>
     </Card>
-  )
+  );
 }
 
 const Card = styled.div`
