@@ -60,15 +60,6 @@ export default function Ranking() {
 
     const [tabIndex, setTabIndex] = React.useState(0);
 
-    const total = Mockup.ranks.total;
-    // console.log(total);
-    const mob = Mockup.ranks.mob;
-    // console.log(mob);
-    const time = Mockup.ranks.time;
-    // console.log(time);
-    const docs = Mockup.ranks.docs;
-    // console.log(docs);
-
     return (
         <Container>
             <Grid
@@ -229,11 +220,25 @@ export default function Ranking() {
                                 alignItems="center"
                                 mystyles="margin-top: 5px"
                             >
+                                <Text mystyles="font-weight: 700; font-size: 17px;">
+                                    {individual?.[0]?.nickname}
+                                </Text>
+                                <Text mystyles="margin-left: 5px; font-weight: 400; font-size: 12.8038px;">
+                                    점령률 {individual?.[0]?.ratio}%
+                                </Text>
+                            </Grid>
+                            <Grid
+                                flex
+                                direction="row"
+                                justifyContent="center"
+                                alignItems="center"
+                                mystyles="margin-top: 5px"
+                            >
                                 <Text mystyles="font-weight: 400; font-size: 15px; margin-right: 9px">
                                     Total
                                 </Text>
                                 <Text mystyles="color: #58F5AA; font-weight: 700; font-size: 17px;">
-                                    {tabIndex === 1 && `${mob[0].points}P`}
+                                    {individual?.[0]?.points}P
                                 </Text>
                             </Grid>
                         </>
@@ -407,137 +412,3 @@ const TabText = styled(motion.p)`
     font-weight: 400;
     font-size: 15px;
 `;
-
-export const Mockup = {
-    ok: true,
-    ranks: {
-        total: [
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "김재혁",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-        ],
-        mob: [
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-        ],
-        time: [
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-        ],
-        docs: [
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-            {
-                nickname: "박재철",
-                profileImg: "이미지 url",
-                ratio: "30%",
-                points: "1000",
-            },
-        ],
-    },
-};
