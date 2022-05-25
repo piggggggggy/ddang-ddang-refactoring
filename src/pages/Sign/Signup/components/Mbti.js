@@ -3,6 +3,8 @@ import { signupAxios } from "../../../../store/thunk-actions/userActions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Grid, Text, Image, Button } from "../../elements/index";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import IconButton from "@mui/material/IconButton";
 import logo from "../../../../assets/images/png/logo.png";
 
 export default function Mbti(props) {
@@ -57,6 +59,10 @@ export default function Mbti(props) {
     const [page, setPage] = React.useState(2);
     const nextPage = () => {
         setPage(3);
+    };
+
+    const goBack = () => {
+        setPage(2);
     };
 
     return (
@@ -153,7 +159,7 @@ export default function Mbti(props) {
                             justifyContent="center"
                             alignItems="center"
                             animate={{ rotate: 360 }}
-                            transition={{ repeat: Infinity }}
+                            transition={{ repeat: Infinity, duration: 2 }}
                             mystyles="margin: 257px auto 0px auto; width: 128px; height: 127px; padding: 11px;"
                         >
                             <Image

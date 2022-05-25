@@ -371,25 +371,25 @@ export default function SignupFinal() {
 
     return (
         <Grid mystyles="position: relative;">
-            <Grid mystyles="position: relative; margin-top: 41px;">
-                <Grid mystyles="position: absolute; right: 10; margin-top: -10px;">
-                    <IconButton onClick={goBack}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </Grid>
-                <Grid
-                    flex
-                    alignItems="center"
-                    justifyContent="center"
-                    mystyles="margin: auto; width: 173px;"
-                >
-                    <Text mystyles="font-weight: 700; font-size: 16px;">
-                        회원가입
-                    </Text>
-                </Grid>
-            </Grid>
             {page === 1 && (
                 <>
+                    <Grid mystyles="position: relative; margin-top: 41px;">
+                        <Grid mystyles="position: absolute; right: 10; margin-top: -10px;">
+                            <IconButton onClick={goBack}>
+                                <ChevronLeftIcon />
+                            </IconButton>
+                        </Grid>
+                        <Grid
+                            flex
+                            alignItems="center"
+                            justifyContent="center"
+                            mystyles="margin: auto; width: 173px;"
+                        >
+                            <Text mystyles="font-weight: 700; font-size: 16px;">
+                                회원가입
+                            </Text>
+                        </Grid>
+                    </Grid>
                     <Grid mystyles="margin-top: 72px;">
                         <Grid
                             flex
@@ -868,6 +868,23 @@ export default function SignupFinal() {
             )}
             {page === 2 && (
                 <>
+                    <Grid mystyles="position: relative; margin-top: 41px;">
+                        <Grid mystyles="position: absolute; right: 10; margin-top: -10px;">
+                            <IconButton onClick={goBack}>
+                                <ChevronLeftIcon />
+                            </IconButton>
+                        </Grid>
+                        <Grid
+                            flex
+                            alignItems="center"
+                            justifyContent="center"
+                            mystyles="margin: auto; width: 173px;"
+                        >
+                            <Text mystyles="font-weight: 700; font-size: 16px;">
+                                회원가입
+                            </Text>
+                        </Grid>
+                    </Grid>
                     <Mbti finalSignupValue={finalSignupValue} />
                 </>
             )}
