@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "./shared/Cookie";
 import {
     loginCheckAxios,
     getProfileDetailsAxios,
 } from "./store/thunk-actions/userActions";
 import Container from "./elements/Container";
 import AppRouter from "./shared/Router";
+import TokenService from "./services/token.service";
 
 import { Spinner } from "./elements/index";
 
@@ -17,7 +17,7 @@ function App() {
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
-        const token = getCookie("token");
+        const token = TokenService.getLocalAccessToken();
 
         dispatch(
             loginCheckAxios(token, (url) => {
@@ -34,6 +34,7 @@ function App() {
 
     return (
         <Container>
+            {" "}
             <AppRouter />
         </Container>
     );

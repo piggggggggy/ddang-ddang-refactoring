@@ -2,6 +2,7 @@ import React from "react";
 import lo from "lodash";
 
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import { Grid, Text } from "../../../elements/index";
 import { Button, Input } from "../../Sign/elements/index";
@@ -14,7 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import DoneIcon from "@mui/icons-material/Done";
 
-import AuthService from "../../../apis/auth.service";
+import AuthService from "../../../services/auth.service";
 
 export default function SignupFinal() {
     // header
@@ -41,21 +42,15 @@ export default function SignupFinal() {
     const [emailIsValid, setEmailIsValid] = React.useState(false);
 
     const [emailafterCheck, setEmailAfterCheck] = React.useState("");
-    const [emailAxiosCheck, setEmailAxiosCheck] = React.useState();
+    const [emailAxiosCheck, setEmailAxiosCheck] = React.useState(false);
 
     const checkEmailByRegex = (email) => {
         const regEmail = /^((\w|[.])+)@((\w|[-.])+)\.([A-Za-z]+){2,3}$/;
         if (email && !regEmail.test(email)) {
             setEmailCheckMessage("이메일 형식을 다시 확인해주세요");
             setEmailIsValid(false);
-        } else if (email && regEmail.test(email) && emailAxiosCheck) {
-            setEmailCheckMessage("중복확인 성공");
-            setEmailIsValid(true);
-        } else if (email && regEmail.test(email) && emailAxiosCheck == null) {
-            setEmailCheckMessage("");
-            setEmailIsValid(true);
-        } else if (email && regEmail.test(email) && emailAxiosCheck === false) {
-            setEmailCheckMessage("중복확인 실패");
+        } else if (email && regEmail.test(email)) {
+            setEmailCheckMessage("올바른 이메일 형식입니다!");
             setEmailIsValid(true);
         } else if (email === "") {
             setEmailCheckMessage("");
@@ -154,7 +149,7 @@ export default function SignupFinal() {
 
     const checkPasswordByRegex = (password) => {
         const regPassword =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
         if (!password) {
             setPasswordCheckMessage();
             setPasswordIsValid(false);
@@ -452,13 +447,38 @@ export default function SignupFinal() {
                                 onChange={nicknameChange}
                                 placeholder="닉네임을 입력하세요"
                             />
-                            <Grid>
+                            <Grid mystyles="position: relative">
                                 <Button
                                     onClick={checkNickname}
                                     mystyles="width: 70px; height: 32px; margin-left: -5px; background: #DADEDB; color: #05240E; border: none;"
                                 >
                                     중복확인
                                 </Button>
+                                {nicknameAxiosCheck &&
+                                    nicknameafterCheck === nickname && (
+                                        <CheckBoxSharpIcon
+                                            style={{
+                                                color: "green",
+                                                position: "absolute",
+                                                left: 0,
+                                                marginLeft: "-30px",
+                                                marginTop: "5px",
+                                            }}
+                                        ></CheckBoxSharpIcon>
+                                    )}
+                                {nicknameIsValid &&
+                                    !nicknameAxiosCheck &&
+                                    nicknameafterCheck === nickname && (
+                                        <DangerousIcon
+                                            style={{
+                                                color: "red",
+                                                position: "absolute",
+                                                left: 0,
+                                                marginLeft: "-30px",
+                                                marginTop: "5px",
+                                            }}
+                                        ></DangerousIcon>
+                                    )}
                             </Grid>
                         </Grid>
                         <Grid flex mystyles="margin: 0 50px;">
@@ -467,23 +487,6 @@ export default function SignupFinal() {
                                     {nicknameCheckMessage}
                                 </Text>
                             </Grid>
-                            {nicknameAxiosCheck &&
-                                nicknameafterCheck === nickname && (
-                                    <CheckBoxSharpIcon
-                                        style={{
-                                            color: "green",
-                                        }}
-                                    ></CheckBoxSharpIcon>
-                                )}
-                            {nicknameIsValid &&
-                                !nicknameAxiosCheck &&
-                                nicknameafterCheck === nickname && (
-                                    <DangerousIcon
-                                        style={{
-                                            color: "red",
-                                        }}
-                                    ></DangerousIcon>
-                                )}
                         </Grid>
                     </Grid>
                     <Grid
@@ -491,7 +494,7 @@ export default function SignupFinal() {
                         direction="column"
                         mystyles=" padding-left: 50px"
                     >
-                        <Grid>
+                        <Grid flex>
                             <Input
                                 mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
                                 defaultValue={passwordValue}
@@ -499,20 +502,12 @@ export default function SignupFinal() {
                                 placeholder="비밀번호를 입력하세요"
                                 type="password"
                             />
-                        </Grid>
-                        <Grid
-                            flex
-                            justifyContent="space-between"
-                            mystyles="width: 240px; height: 18px"
-                        >
-                            <Text mystyles="font-size: 12px;">
-                                {passwordCheckMessage}
-                            </Text>
                             {passwordIsValid &&
                                 passwordAfterRegex === password && (
                                     <CheckBoxSharpIcon
                                         style={{
                                             color: "green",
+                                            marginTop: "10px",
                                         }}
                                     ></CheckBoxSharpIcon>
                                 )}
@@ -522,9 +517,16 @@ export default function SignupFinal() {
                                     <DangerousIcon
                                         style={{
                                             color: "red",
+                                            marginTop: "10px",
+                                            marginLeft: "-10px",
                                         }}
                                     ></DangerousIcon>
                                 )}
+                        </Grid>
+                        <Grid mystyles="width: 240px; height: 18px">
+                            <Text mystyles="font-size: 12px;">
+                                {passwordCheckMessage}
+                            </Text>
                         </Grid>
                     </Grid>
                     <Grid

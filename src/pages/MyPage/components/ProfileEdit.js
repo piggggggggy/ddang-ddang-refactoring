@@ -7,21 +7,23 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import IconButton from "@mui/material/IconButton";
 
 import ProfilePreview from "../../Sign/Signup/components/ProfilePreview";
+import env from "react-dotenv";
 
 import { Input } from "../elements/index";
 
 import axios from "axios";
-import { getCookie } from "../../../shared/Cookie";
+import api from "../../../modules/api";
 import { useSelector } from "react-redux";
 
 // aws s3 bucket
 import AWS from "aws-sdk";
-const S3_BUCKET = "image-uploading-pol";
-const REGION = "ap-northeast-2";
+
+const S3_BUCKET = env.AWS_S3_BUCKET;
+const REGION = env.AWS_REGION;
 
 AWS.config.update({
-    accessKeyId: "AKIARWI6Z2AKSPUWWMXF",
-    secretAccessKey: "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",
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: env.AWS_SECRECT_ACCESS_KEY,
 });
 
 const myBucket = new AWS.S3({
@@ -29,8 +31,7 @@ const myBucket = new AWS.S3({
     region: REGION,
 });
 
-const API_ENDPOINT =
-    "https://txtyz08kc4.execute-api.ap-northeast-2.amazonaws.com/default/getPresignedImageURL";
+const AWS_API_ENDPOINT = env.AWS_API_ENDPOINT;
 
 const style = {
     position: "absolute",
@@ -54,10 +55,8 @@ export default function BasicModal() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const token = getCookie("token");
 
     const userData = useSelector((state) => state.user?.user);
-    console.log(userData);
 
     // profile image
     const [profileImage, setProfileImage] = React.useState("");
@@ -73,19 +72,17 @@ export default function BasicModal() {
         // preview 보여주기
         var reader = new FileReader();
         reader.onload = function () {
-            console.log(reader.result);
             setProfileImage(reader.result);
         };
         reader.onerror = function (error) {
             console.log("Error: ", error);
         };
         reader.readAsDataURL(f);
-        console.log(f);
+
         const response = await axios({
             method: "GET",
-            url: API_ENDPOINT,
+            url: AWS_API_ENDPOINT,
         });
-        console.log(response.data.Key);
         setMyKey(response.data.Key);
 
         const result = await fetch(response.data.uploadURL, {
@@ -118,16 +115,10 @@ export default function BasicModal() {
     console.log(finalData);
 
     const finalsignup = async () => {
-        await axios
-            .patch(
-                "/api/players/edit",
-                {
-                    body: finalData,
-                },
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
+        await api
+            .patch("/api/players/edit", {
+                body: finalData,
+            })
             .then((res) => {
                 console.log(res);
             });

@@ -1,23 +1,39 @@
 import axios from "axios";
 import { getWithExpiry } from "../modules/localStorageControl";
-import TokenService from "./token.service";
-import { useNavigate } from "react-router-dom";
+import TokenService from "../services/token.service";
+import env from "react-dotenv";
+
+const headers = {
+    Accept: "/",
+    "content-type": "application/json;charset=UTF-8",
+    "Access-Control-Allow-Origin": "*",
+};
+
+const accessToken = {
+    Authorization: getWithExpiry("accessToken"),
+};
+const refreshToken = {
+    refreshToken: TokenService.getLocalRefreshToken(),
+};
 
 const instance = axios.create({
-    baseURL: "https://thaitour.shop", // 백엔드 서버 .env 파일 만들기
+    baseURL: env.BASE_URL,
     headers: {
-        Accept: "/",
-        "content-type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-        Authorization: getWithExpiry("accessToken"),
+        ...headers,
+        ...accessToken,
     },
 });
+
 instance.interceptors.request.use(
     (config) => {
+        // 로컬에 저장되어 있는 토큰을 가져온다.
         const token = TokenService.getLocalAccessToken();
+        //만약에 토큰이 있다면
         if (token) {
+            //config의 헤더 안에 토큰을 넣어준다.
             config.headers["accesstoken"] = token; // for Node.js Express back-end
         }
+        //요청을 보낸다.
         return config;
     },
     (error) => {
@@ -26,7 +42,6 @@ instance.interceptors.request.use(
 );
 instance.interceptors.response.use(
     (res) => {
-        console.log(res);
         return res;
     },
     async (err) => {
@@ -36,21 +51,17 @@ instance.interceptors.response.use(
             if (err.response.status === 401 && !originalConfig._retry) {
                 originalConfig._retry = true;
                 try {
-                    console.log("리프레쉬 토큰 요청");
-                    console.log(getWithExpiry("refreshToken"));
                     if (!getWithExpiry("refreshToken")) {
                         return alert("로그인 해주세요");
                     }
-                    const rs = await instance.get(
-                        "/api/players/auth/getToken",
-                        {
-                            headers: {
-                                refreshToken:
-                                    TokenService.getLocalRefreshToken(),
-                            },
-                        }
-                    );
-                    console.log(rs);
+
+                    const rs = await axios.get("/api/players/auth", {
+                        headers: {
+                            ...headers,
+                            ...refreshToken,
+                        },
+                    });
+
                     const accesstoken = rs.headers["accesstoken"];
                     TokenService.updateLocalAccessToken(accesstoken);
                     return instance(originalConfig);

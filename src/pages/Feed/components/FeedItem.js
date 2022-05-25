@@ -1,7 +1,5 @@
 import React from "react";
-import axios from "axios";
 import api from "../../../modules/api";
-import { getCookie } from "../../../shared/Cookie";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +15,6 @@ import { writeCommentsAxios } from "../../../store/thunk-actions/feedActions";
 export default function FeedItem(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const token = getCookie("token");
-    console.log(token);
 
     const playerEmail = "paul@gmail.com";
 
@@ -54,7 +50,6 @@ export default function FeedItem(props) {
     // 댓글
     const [commentArr, setCommentArr] = React.useState([...item?.comments]);
     // const commentArr = item?.comments;
-    console.log(commentArr);
 
     const [commentIsOpen, setCommentIsOpen] = React.useState(true);
 
@@ -82,35 +77,23 @@ export default function FeedItem(props) {
 
     const createComment = async (comment) => {
         await api
-            .post(`/api/feeds/${feedId}/comments`, {
-                comment: comment,
-            })
+            .post(`/api/feeds/${feedId}/comments`, { comment })
             .then((res) => {
                 console.log(res);
 
                 setCommentArr([...commentArr, res.data.comment]);
                 console.log(commentArr);
 
-                // commentArr.push({ comment: comment });
-                // window.location.reload();
+                commentArr.push({ comment });
+                window.location.reload();
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
-    console.log(commentArr);
-    console.log(feedId);
     const likeFeed = async () => {
-        console.log(token);
-        axios
-            .put(
-                `/api/feeds/${feedId}/like`,
-                {},
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
+        api.put(`/api/feeds/${feedId}/like`)
             .then((res) => {
                 console.log(res);
             })
@@ -120,10 +103,7 @@ export default function FeedItem(props) {
     };
 
     const deleteComment = async (commentId) => {
-        axios
-            .delete(`/api/feeds/${feedId}/comments/${commentId}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+        api.delete(`/api/feeds/${feedId}/comments/${commentId}`)
             .then((res) => {
                 console.log(res);
                 setCommentArr(

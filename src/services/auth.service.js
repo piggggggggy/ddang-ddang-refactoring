@@ -1,5 +1,5 @@
 import api from "../modules/api";
-import TokenService from "../modules/token.service";
+import TokenService from "./token.service";
 
 const register = async (email, password, nickname, mbti, profileImg) => {
     return await api.post("/api/players/signup", {
