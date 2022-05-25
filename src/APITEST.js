@@ -60,7 +60,7 @@ export default function APITest() {
                     password: "Paul1996!",
                     mbti: "ENFP",
                     profileImg:
-                        "https://image-uploading-pol.s3.ap-northeast-2.amazonaws.com/5867344.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARWI6Z2AKSPUWWMXF%2F20220520%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20220520T143639Z&X-Amz-Expires=900&X-Amz-Signature=fdd50c1bb9edf692ec5d7a477c0284faec46295768c5634a546f4c591bbbcb8f&X-Amz-SignedHeaders=host",
+                        "https://image-uploading-pol.s3.ap-northeast-2.amazonaws.com/5867344.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARWI6Z2AKSPUWWMXF%2F2axios0220520%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20220520T143639Z&X-Amz-Expires=900&X-Amz-Signature=fdd50c1bb9edf692ec5d7a477c0284faec46295768c5634a546f4c591bbbcb8f&X-Amz-SignedHeaders=host",
                 },
                 headersList
             )
@@ -216,12 +216,9 @@ export default function APITest() {
     const commentId = 1;
     const editComment = async () => {
         axios
-            .post(
-                `/feeds/comments/${feedId}/comments/${commentId}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
+            .post(`/feeds/comments/${feedId}/comments/${commentId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
             .then((res) => {
                 console.log(res);
             })
@@ -256,12 +253,9 @@ export default function APITest() {
     };
     const deleteComment = async () => {
         axios
-            .post(
-                `/feeds/${feedId}/comments/${commentId}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
+            .post(`/feeds/${feedId}/comments/${commentId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
             .then((res) => {
                 console.log(res);
             })

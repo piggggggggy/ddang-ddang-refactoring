@@ -1,171 +1,155 @@
-import { userActions } from "../slices/userSlice"
-import axios from "axios"
-import AuthService from "../../services/auth.service"
-import { getWithExpiry } from "../../modules/localStorageControl"
-import { setCookie } from "../../shared/Cookie"
+import { userActions } from "../slices/userSlice";
+import api from "../../modules/api";
+import AuthService from "../../services/auth.service";
+import TokenService from "../../services/token.service";
 
 // 토큰 확인
 export const loginCheckAxios = (token, navigate) => {
-  return async function (dispatch) {
-    try {
-      console.log(token)
-      const response = await AuthService.auth()
+    return async function (dispatch) {
+        try {
+            const response = await AuthService.auth();
 
-      console.log(response)
-      const user = {
-        email: response.data.user.email,
-        nickname: response.data.user.nickname,
-        playerId: response.data.user.playerId,
-      }
-      console.log(user)
-      dispatch(userActions.loginCheck({ user, token }))
-      // navigate("/");
-    } catch (err) {
-      navigate("/signin")
-    }
-  }
-}
+            const user = {
+                email: response.data.user.email,
+                nickname: response.data.user.nickname,
+                playerId: response.data.user.playerId,
+            };
+
+            dispatch(userActions.loginCheck({ user, token }));
+        } catch (err) {
+            navigate("/signin");
+        }
+    };
+};
 
 // 로그인 middleware
 export const signinAxios = (email, password, navigate) => {
-  return async function (dispatch) {
-    let user = {
-      email,
-      password,
-    }
-    try {
-      const response = await AuthService.login(email, password)
+    return async function (dispatch) {
+        let user = {
+            email,
+            password,
+        };
+        try {
+            const response = await AuthService.login(email, password);
+            user = { email, nickname: response.data.row.nickname };
+            TokenService.setAccessToken(response.headers["accesstoken"]);
 
-      // const response = await axios.post(
-      //     "/api/players/signin",
-      //     user
-      // );
-      console.log(response)
-      user = { email, nickname: response.data.row.nickname }
+            const tokenFullString = response.headers.accesstoken;
+            const tokenArr = tokenFullString.split(" ");
 
-      console.log(getWithExpiry("accessToken"))
-      setCookie("token", getWithExpiry("accessToken"))
-
-      const tokenFullString = response.headers.accesstoken
-      const tokenArr = tokenFullString.split(" ")
-      console.log(tokenArr)
-      dispatch(userActions.signin({ user, token: tokenArr[1] }))
-      navigate("/")
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
+            dispatch(userActions.signin({ user, token: tokenArr[1] }));
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
 
 // 이메일 중복 확인
 export const checkEmailAxios = (email) => {
-  console.log(email)
-  let data = { email: email }
-  return async function (dispatch) {
-    try {
-      const response = await axios.post("/players/dupEmail", data)
-      console.log(response)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-}
+    let data = { email: email };
+    return async function (dispatch) {
+        try {
+            await api.post("/players/dupEmail", data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
 
 // 닉네임 중복 확인
 export const checkNickname = (nickname) => {
-  console.log(nickname)
-  let data = { nickname: nickname }
-  return async function (dispatch) {
-    try {
-      const response = await axios.post("/players/dupNickname", data)
-      console.log(response)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-}
+    console.log(nickname);
+    let data = { nickname: nickname };
+    return async function (dispatch) {
+        try {
+            const response = await api.post("/players/dupNickname", data);
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
 
 // 회원 가입 middleware
 export const signupAxios = (
-  email,
-  nickname,
-  password,
-  mbti,
-  profileImg,
-  navigate
+    email,
+    nickname,
+    password,
+    mbti,
+    profileImg,
+    navigate
 ) => {
-  return async function (dispatch) {
-    let user = {
-      email,
-      nickname,
-      password,
-      mbti,
-      profileImg,
-      provider: "local",
-      providerId: null,
-      currentHashedRefreshToken: null,
-    }
+    return async function (dispatch) {
+        let user = {
+            email,
+            nickname,
+            password,
+            mbti,
+            profileImg,
+            provider: "local",
+            providerId: null,
+            currentHashedRefreshToken: null,
+        };
 
-    try {
-      const response = await axios.post("/api/players/signup", { body: user })
+        try {
+            const response = await api.post("/api/players/signup", {
+                body: user,
+            });
 
-      user = { email, nickname, password, mbti, profileImg }
-      console.log(response)
+            user = { email, nickname, password, mbti, profileImg };
+            console.log(response);
 
-      dispatch(userActions.signup({ user }))
-      navigate("/")
-    } catch (error) {
-      console.log("회원가입 실패: ", error.response)
-    }
-  }
-}
+            dispatch(userActions.signup({ user }));
+            navigate("/");
+        } catch (error) {
+            console.log("회원가입 실패: ", error.response);
+        }
+    };
+};
 
 // 유저 프로필 상세 가져오기 (현재: 프로필 추가) + 유효성 검사
 
 export const getProfileDetailsAxios = (token, navigate) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.get("/players/mypage", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      console.log(response)
-      const user = {
-        email: response.data.profile.email,
-        nickname: response.data.profile.nickname,
-        profileImg: response.data.profile.profileImg,
-      }
-      console.log(user)
-      dispatch(userActions.getProfileDetails({ user }))
-    } catch (err) {
-      console.log(err)
-      navigate("/signin")
-    }
-  }
-}
+    return async function (dispatch) {
+        try {
+            const response = await api.get("/players/mypage");
+
+            const user = {
+                email: response.data.profile.email,
+                nickname: response.data.profile.nickname,
+                profileImg: response.data.profile.profileImg,
+            };
+
+            dispatch(userActions.getProfileDetails({ user }));
+        } catch (err) {
+            console.log(err);
+            navigate("/signin");
+        }
+    };
+};
 
 // 프로필 수정
 export const profileUpdatesAxios = (profile, token, navigate) => {
-  return async function (dispatch) {
-    let { nickname, profileImg, email } = profile
-    console.log(nickname, profileImg)
-    try {
-      const response = await axios.patch(
-        "/players/edit",
-        { nickname: nickname, profileImg: profileImg, email: email },
-        {
-          headers: { Authorization: `Bearer ${token}` },
+    return async function (dispatch) {
+        let { nickname, profileImg, email } = profile;
+        console.log(nickname, profileImg);
+        try {
+            await api.patch("/players/edit", {
+                nickname: nickname,
+                profileImg: profileImg,
+                email: email,
+            });
+
+            const user = {
+                nickname: nickname,
+                profileImg: profileImg,
+            };
+
+            dispatch(userActions.updateProfile({ user }));
+        } catch (err) {
+            console.log(err);
+            navigate("/signin");
         }
-      )
-      console.log(response)
-      const user = {
-        nickname: nickname,
-        profileImg: profileImg,
-      }
-      console.log(user)
-      dispatch(userActions.updateProfile({ user }))
-    } catch (err) {
-      console.log(err)
-      navigate("/signin")
-    }
-  }
-}
+    };
+};

@@ -5,15 +5,13 @@ import { Grid, Button, Input, Text } from "../Ranking/elements/index";
 import Container from "../../elements/Container";
 import Navigation from "../../components/Navigation";
 import StarIcon from "@mui/icons-material/Star";
-import axios from "axios";
+import api from "../../modules/api";
 
 export default function Ranking() {
     const data = {
-        currentRegion: {
-            regionSi: "서울시",
-            regionGu: "강남구",
-            regionDong: "삼성동",
-        },
+        si: "서울시",
+        gu: "강남구",
+        dong: "삼성동",
     };
 
     React.useEffect(() => {
@@ -21,8 +19,8 @@ export default function Ranking() {
     }, []);
 
     const getRanking = async () => {
-        await axios
-            .post("http://diasm.mooo.com:3000/api/ranks", { data: { data } })
+        await api
+            .get(`/api/ranks?si=${data.si}&gu=${data.gu}&dong=${data.dong}`)
             .then((res) => {
                 console.log(res);
             })
@@ -65,13 +63,13 @@ export default function Ranking() {
     const [tabIndex, setTabIndex] = React.useState(0);
 
     const total = Mockup.ranks.total;
-    console.log(total);
+    // console.log(total);
     const mob = Mockup.ranks.mob;
-    console.log(mob);
+    // console.log(mob);
     const time = Mockup.ranks.time;
-    console.log(time);
+    // console.log(time);
     const docs = Mockup.ranks.docs;
-    console.log(docs);
+    // console.log(docs);
 
     return (
         <Container>

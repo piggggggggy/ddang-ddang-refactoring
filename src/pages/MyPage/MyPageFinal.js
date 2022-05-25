@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios";
-import { getCookie } from "../../shared/Cookie";
+import api from "../../../modules/api";
 import { useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
@@ -45,7 +44,7 @@ export default function MyPage() {
 
     async function fetchData() {
         try {
-            const response = await axios.get("/api/players/mypage");
+            const response = await api.get("/api/players/mypage");
             console.log(response.data.rows[0]);
             setNickname(response?.data?.rows[1].player.nickname);
             setLevel(response?.data?.rows[1].player.level);
@@ -56,13 +55,9 @@ export default function MyPage() {
     }
 
     // 로그아웃
-    const token = getCookie("token");
     const navigate = useNavigate();
     const logout = () => {
-        axios
-            .get("/players/signout", {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+        api.get("/players/signout")
             .then((res) => {
                 console.log(res);
                 navigate("/signin");
