@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { motion, AnimateSharedLayout } from "framer-motion";
-import axios from "axios";
 
 import { Container } from "../../elements/index";
 import Navigation from "../../components/Navigation";
@@ -14,7 +13,6 @@ import FeedItem from "./components/FeedItem";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../shared/Cookie";
 
 import {
     feedsLatestAxios,
@@ -25,7 +23,6 @@ import {
 export default function Feed() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const token = getCookie("token");
 
     const data = {
         regionSi: "서울시",
