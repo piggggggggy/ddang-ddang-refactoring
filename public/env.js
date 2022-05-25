@@ -3,7 +3,7 @@ window.env = {
   "TERM_PROGRAM": "vscode",
   "NODE": "/opt/homebrew/Cellar/node/18.0.0/bin/node",
   "INIT_CWD": "/Users/steve/Dev/front-end",
-  "_P9K_TTY": "/dev/ttys014",
+  "_P9K_TTY": "/dev/ttys002",
   "SHELL": "/bin/zsh",
   "TERM": "xterm-256color",
   "npm_config_metrics_registry": "https://registry.npmjs.org/",
@@ -78,10 +78,5 @@ window.env = {
   "npm_node_execpath": "/opt/homebrew/Cellar/node/18.0.0/bin/node",
   "npm_config_prefix": "/opt/homebrew",
   "COLORTERM": "truecolor",
-  "BASE_URL": "http://localhost:8080",
-  "AWS_ACCESS_KEY_ID": "AKIARWI6Z2AKSPUWWMXF",
-  "AWS_SECRECT_ACCESS_KEY": "UuLfdhEUg2H67/Kg0rVyXZUbct87MdXB/uCLhq34",
-  "AWS_API_ENDPOINT": "https://txtyz08kc4.execute-api.ap-northeast-2.amazonaws.com/default/getPresignedImageURL",
-  "AWS_REGION": "ap-northeast-2",
-  "AWS_S3_BUKCET": "image-uploading-pol"
+  "BASE_URL": "https://thaitour.shop"
 };
