@@ -9,7 +9,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         signup(state, action) {
-            state.user = action.payload.user;
+            state.user = action.payload;
         },
         signin(state, action) {
             state.user = { ...state.user, ...action.payload.user };

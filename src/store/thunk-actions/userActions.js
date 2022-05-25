@@ -8,7 +8,6 @@ export const loginCheckAxios = (token, navigate) => {
     return async function (dispatch) {
         try {
             const response = await AuthService.auth();
-
             const user = {
                 email: response.data.user.email,
                 nickname: response.data.user.nickname,
@@ -16,6 +15,7 @@ export const loginCheckAxios = (token, navigate) => {
             };
 
             dispatch(userActions.loginCheck({ user, token }));
+
         } catch (err) {
             navigate("/signin");
         }
@@ -31,6 +31,7 @@ export const signinAxios = (email, password, navigate) => {
         };
         try {
             const response = await AuthService.login(email, password);
+
             user = { email, nickname: response.data.row.nickname };
             TokenService.setAccessToken(response.headers["accesstoken"]);
 
@@ -47,10 +48,12 @@ export const signinAxios = (email, password, navigate) => {
 
 // 이메일 중복 확인
 export const checkEmailAxios = (email) => {
+
     let data = { email: email };
     return async function (dispatch) {
         try {
             await api.post("/players/dupEmail", data);
+
         } catch (err) {
             console.log(err);
         }
@@ -81,30 +84,22 @@ export const signupAxios = (
     navigate
 ) => {
     return async function (dispatch) {
-        let user = {
-            email,
-            nickname,
-            password,
-            mbti,
-            profileImg,
-            provider: "local",
-            providerId: null,
-            currentHashedRefreshToken: null,
-        };
-
-        try {
-            const response = await api.post("/api/players/signup", {
-                body: user,
+        AuthService.register(email, password, nickname, mbti, profileImg)
+            .then((res) => {
+                console.log(res);
+                dispatch(
+                    userActions.signup({
+                        email,
+                        nickname,
+                        password,
+                        mbti,
+                        profileImg,
+                    })
+                );
+            })
+            .catch((err) => {
+                console.log(err);
             });
-
-            user = { email, nickname, password, mbti, profileImg };
-            console.log(response);
-
-            dispatch(userActions.signup({ user }));
-            navigate("/");
-        } catch (error) {
-            console.log("회원가입 실패: ", error.response);
-        }
     };
 };
 
@@ -114,12 +109,13 @@ export const getProfileDetailsAxios = (token, navigate) => {
     return async function (dispatch) {
         try {
             const response = await api.get("/players/mypage");
-
             const user = {
                 email: response.data.profile.email,
                 nickname: response.data.profile.nickname,
                 profileImg: response.data.profile.profileImg,
             };
+
+            console.log(user);
 
             dispatch(userActions.getProfileDetails({ user }));
         } catch (err) {
