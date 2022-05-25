@@ -93,6 +93,7 @@ export const signupAxios = (
                         profileImg,
                     })
                 );
+                navigate("/");
             })
             .catch((err) => {
                 console.log(err);
