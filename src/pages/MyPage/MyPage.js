@@ -1,20 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { motion } from "framer-motion";
-import { getCookie } from "../../shared/Cookie";
 import { Container } from "../../elements/index";
 import Navigation from "../../components/Navigation";
-import { Grid, Button, Text } from "../MyPage/elements/index";
+import { Grid, Text } from "../MyPage/elements/index";
 import ProfilePreview from "../MyPage/components/ProfilePreview";
 import ProfileEdit from "../MyPage/components/ProfileEdit";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
-import {
-    Map,
-    MapMarker,
-    MarkerClusterer,
-    clusterPositionsData,
-} from "react-kakao-maps-sdk";
+import api from "../../modules/api";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 export default function MyPageFinal() {
     React.useEffect(() => {
@@ -22,36 +16,17 @@ export default function MyPageFinal() {
     }, []);
 
     const [tabIndex, setTabIndex] = React.useState(false);
-
-    const token = getCookie("token");
-    const data = {
-        currentRegion: {
-            regionSi: "서울시",
-            regionGu: "강남구",
-            regionDong: "삼성동",
-        },
-    };
-
     const [allData, setAllData] = React.useState({});
-    console.log(allData);
 
     const achievedMission = allData?.achievedMission;
     const notAchievedMission = allData?.notAchievedMission;
-    console.log(notAchievedMission);
 
     const positions = allData?.profile?.[0]?.completes;
 
     const mypage = async () => {
-        axios
-            .get(
-                "/api/players/mypage",
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                },
-                data
-            )
+        await api
+            .get("/api/players/mypage")
             .then((res) => {
-                console.log(res);
                 setAllData({ ...res.data.rows });
             })
             .catch((err) => {

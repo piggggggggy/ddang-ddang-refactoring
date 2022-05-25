@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { Container } from "../../../elements/index";
-import { Grid, Text, Input, Button } from "../elements/index";
+import { Grid, Text, Input, Button, Image } from "../elements/index";
 import SocialSignin from "./components/SocialSignin";
 
 import { signinAxios } from "../../../store/thunk-actions/userActions";
+
+import logo from "../../../assets/images/png/logo.png";
 
 export default function SigninFinal() {
     const navigate = useNavigate();
@@ -55,7 +57,12 @@ export default function SigninFinal() {
                     justifyContent="center"
                     mystyles="font-weight: 700; text-align: center; margin-top: 109px"
                 >
-                    <Grid mystyles="border: 2px solid red; width: 76px; height: 75px"></Grid>
+                    <Grid mystyles="width: 76px; height: 75px">
+                        <Image
+                            src={logo}
+                            mystyles="width: 76px; height: 75px;"
+                        ></Image>
+                    </Grid>
                     <Text mystyles="font-weight: 700; font-size: 19.0939px; margin-top: 9px ">
                         니땅내땅
                     </Text>
