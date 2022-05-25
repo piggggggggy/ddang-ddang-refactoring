@@ -11,7 +11,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         signup(state, action) {
-            state.user = action.payload.user;
+            state.user = action.payload;
         },
         signin(state, action) {
             setCookie("token", action.payload.token);

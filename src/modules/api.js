@@ -4,7 +4,7 @@ import TokenService from "./token.service";
 import { useNavigate } from "react-router-dom";
 
 const instance = axios.create({
-    baseURL: "https://thaitour.shop",
+    baseURL: "https://thaitour.shop", // 백엔드 서버 .env 파일 만들기
     headers: {
         Accept: "/",
         "content-type": "application/json;charset=UTF-8",

@@ -1,29 +1,55 @@
 import React from "react";
+import { signupAxios } from "../../../../store/thunk-actions/userActions";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Grid, Text, Image, Button } from "../../elements/index";
 
-export default function Mbti() {
+export default function Mbti(props) {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [finalSignupValue, setFinalSignupValue] = React.useState({
+        ...props.finalSignupValue,
+    });
+
     const mbtiData = [
-        { name: "ENTP", src: "" },
-        { name: "INTP", src: "" },
-        { name: "ENTJ", src: "" },
-        { name: "INTJ", src: "" },
-        { name: "ISFP", src: "" },
-        { name: "ESPT", src: "" },
-        { name: "ISTP", src: "" },
-        { name: "ESFP", src: "" },
-        { name: "ISTJ", src: "" },
-        { name: "ISFJ", src: "" },
-        { name: "ESTJ", src: "" },
-        { name: "ESFJ", src: "" },
-        { name: "INFJ", src: "" },
-        { name: "INFP", src: "" },
-        { name: "ENFP", src: "" },
-        { name: "ENFJ", src: "" },
+        { name: "ENTP", src: "ENTP" },
+        { name: "INTP", src: "INTP" },
+        { name: "ENTJ", src: "ENTJ" },
+        { name: "INTJ", src: "INTJ" },
+        { name: "ISFP", src: "ISFP" },
+        { name: "ESPT", src: "ESPT" },
+        { name: "ISTP", src: "ISTP" },
+        { name: "ESFP", src: "ESFP" },
+        { name: "ISTJ", src: "ISTJ" },
+        { name: "ISFJ", src: "ISFJ" },
+        { name: "ESTJ", src: "ESTJ" },
+        { name: "ESFJ", src: "ESFJ" },
+        { name: "INFJ", src: "INFJ" },
+        { name: "INFP", src: "INFP" },
+        { name: "ENFP", src: "ENFP" },
+        { name: "ENFJ", src: "ENFJ" },
     ];
 
+    const [cardSelected, setCardSelected] = React.useState("");
+    const [profile, setProfile] = React.useState("");
+
     const MbtiClick = (idx) => {
-        console.log(idx);
-        console.log(mbtiData[idx].name);
+        setCardSelected(mbtiData[idx].name);
+        setProfile(mbtiData[idx].src);
+    };
+
+    const signupComplete = () => {
+        const email = props.finalSignupValue.email;
+        const nickname = props.finalSignupValue.nickname;
+        const password = props.finalSignupValue.password;
+        const mbti = cardSelected;
+        const profileImg = "asdf";
+
+        dispatch(
+            signupAxios(email, nickname, password, mbti, profileImg, (url) =>
+                navigate(url)
+            )
+        );
     };
 
     return (
@@ -53,15 +79,20 @@ export default function Mbti() {
                         alignItems="center"
                         justifyContent="center"
                         key={idx}
-                        mystyles="width: 50%;"
+                        mystyles={
+                            mbti.name === cardSelected
+                                ? "background: red; width: 50%; cursor: pointer"
+                                : "width: 50%; cursor: pointer"
+                        }
                         onClick={() => {
                             MbtiClick(idx);
                         }}
                     >
                         <Image
+                            whileHover={{ border: "1px solid blue" }}
                             src={mbti.src}
                             alt=""
-                            mystyles="border: 2px solid red; width: 100%;  height: 120px; margin: 10px;"
+                            mystyles="border: 2px solid rgba(180, 189, 183, 0.5); width: 100%;  height: 120px; margin: 10px; border-radius: 8px"
                         />
                     </Grid>
                 ))}
@@ -71,20 +102,32 @@ export default function Mbti() {
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                mystyles="position: fixed; bottom: 0; z-index: 1000; display: flex; max-width: 428px; width: 100%; height: 64px; background: #fff; padding: 0; border: 2px solid red;"
+                mystyles="position: fixed; bottom: 0; z-index: 1000; display: flex; max-width: 428px; width: 100%; background: #fff; padding: 0;"
             >
-                <Grid
-                    flex
-                    alignItems="center"
-                    justifyContent="center"
-                    mystyles="border: 2px solid red;"
-                >
+                <Grid flex alignItems="center" justifyContent="center">
                     <Grid mystyles="width: 8px; height: 8px;  border-radius: 8px; border: 0.5px solid #05240E;"></Grid>
                     <Grid mystyles="margin-left: 16px; width: 8px; height: 8px; border-radius: 8px; border: 0.5px solid #05240E; background: #05240E;"></Grid>
                 </Grid>
-                <Button mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px;">
-                    다음
-                </Button>
+                {cardSelected === "" && (
+                    <>
+                        <Button
+                            onClick={signupComplete}
+                            mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px; margin-bottom: 50px; margin-top: 20px;"
+                        >
+                            mbti를 선택해주세요
+                        </Button>
+                    </>
+                )}
+                {cardSelected !== "" && (
+                    <>
+                        <Button
+                            onClick={signupComplete}
+                            mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px; margin-bottom: 50px; margin-top: 20px; background: #5CEB84;"
+                        >
+                            {cardSelected} 선택
+                        </Button>
+                    </>
+                )}
             </Grid>
         </>
     );
