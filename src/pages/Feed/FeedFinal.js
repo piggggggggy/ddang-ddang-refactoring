@@ -21,8 +21,44 @@ import {
 } from "../../store/thunk-actions/feedActions";
 
 import FeedsService from "../../services/feed.service";
+import KakaoService from "../../services/kakao.service";
+
+import axios from "axios";
+import env from "react-dotenv";
 
 export default function Feed() {
+    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
+    console.log(currentMapPosition);
+    const getPosition = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position);
+            setCurrentMapPosition({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            });
+        });
+        getmyAddress();
+    };
+
+    const getmyAddress = () => {
+        axios
+            .get(
+                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=127.4147562&y=36.3298522&input_coord=WGS84`,
+                {
+                    headers: {
+                        Accept: "*/*",
+                        Authorization: `KakaoAK ${env.MAP_KAKAO_API_KEY}`,
+                    },
+                }
+            )
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -31,14 +67,6 @@ export default function Feed() {
     const regionDong = "삼섬동";
     const lat = 33.5563;
     const lng = 127.4147562;
-
-    // const data = {
-    //     regionSi: "서울시",
-    //     regionGu: "강남구",
-    //     regionDong: "삼성동",
-    //     lat: 33.5563,
-    //     lng: 127.4147562,
-    // };
 
     const [items, setItems] = React.useState([]);
 
@@ -92,6 +120,7 @@ export default function Feed() {
     React.useEffect(() => {
         // feedsLatest();
         feedsLatest();
+        getPosition();
     }, []);
 
     const [tabIndex, setTabIndex] = React.useState(0);

@@ -46,9 +46,9 @@ export default function SigninFinal() {
                     justifyContent="center"
                     mystyles="margin-top: 41px;"
                 >
-                    <Text mystyles="font-weight: 700; font-size: 16px">
+                    {/* <Text mystyles="font-weight: 700; font-size: 16px">
                         로그인
-                    </Text>
+                    </Text> */}
                 </Grid>
                 <Grid
                     flex

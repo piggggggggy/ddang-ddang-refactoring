@@ -14,23 +14,23 @@ import { Spinner } from "./elements/index";
 function App() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [isLoading, setIsLoading] = React.useState(true);
+    // const [isLoading, setIsLoading] = React.useState(true);
 
-    React.useEffect(() => {
-        const token = TokenService.getLocalAccessToken();
+    // React.useEffect(() => {
+    //     const token = TokenService.getLocalAccessToken();
 
-        dispatch(
-            loginCheckAxios(token, (url) => {
-                navigate(url);
-            })
-        );
+    //     dispatch(
+    //         loginCheckAxios(token, (url) => {
+    //             navigate(url);
+    //         })
+    //     );
 
-        setIsLoading(false);
-    }, []);
+    //     setIsLoading(false);
+    // }, []);
 
-    if (isLoading) {
-        return <Spinner>Loading...</Spinner>;
-    }
+    // if (isLoading) {
+    //     return <Spinner>Loading...</Spinner>;
+    // }
 
     return (
         <Container>
