@@ -2,7 +2,7 @@ import { Grid } from "../../../elements/index";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
-export default function UserInfoContainer() {
+export default function UserInfoContainer({ region }) {
     const userData = useSelector((state) => state.user.user);
 
     if (userData === null) return;
@@ -35,7 +35,7 @@ export default function UserInfoContainer() {
                 </Grid>
 
                 <SubInfoText>
-                    여기에 등어갈 정보는 마이페이지에서 끌어올래
+                    {region.regionDong}을 점령한 {userData.mbti}
                 </SubInfoText>
             </Grid>
         </UserInfoCardWrapper>
