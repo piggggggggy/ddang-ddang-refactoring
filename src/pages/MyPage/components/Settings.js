@@ -27,8 +27,7 @@ export default function Settings(props) {
             </Grid>
             <Grid>
                 <Grid>
-                    <Text>닉네임 변경</Text>
-                    <Grid mystyles="height: 20px; width: 20px; border: 2px solid red;"></Grid>
+                    <Text mystyles="color: red;">닉네임 변경</Text>
                 </Grid>
                 <Grid>
                     <Text>로그아웃</Text>
