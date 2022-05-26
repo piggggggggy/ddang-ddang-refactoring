@@ -62,7 +62,7 @@ export default function MapPage() {
         });
     };
     const setDdangDdang = () => {
-        // if (inCircleList.length === 0) return;
+        if (inCircleList.length === 0) return;
         setQuestActive(true);
     };
     const closeTab = () => {
@@ -89,6 +89,16 @@ export default function MapPage() {
                 lng: position.coords.longitude,
             });
         });
+    };
+
+    const activateDetail = (item) => {
+        setDetailState({
+            type: item.type,
+            id: item.id,
+            lat: item.lat,
+            lng: item.lng,
+        });
+        setDetailOpen(true);
     };
 
     useEffect(() => {
@@ -141,9 +151,9 @@ export default function MapPage() {
         if (questType === "mob") {
             setColor("#FA5A54");
         } else if (questType === "time") {
-            setColor("#61B7FA");
-        } else if (questType === "feed") {
             setColor("#EDEA50");
+        } else if (questType === "feed") {
+            setColor("#61B7FA");
         } else {
             setColor("#EBEBEB");
         }
@@ -182,6 +192,7 @@ export default function MapPage() {
                 questList={questList}
                 selectQuest={selectQuestInSideTab}
                 userData={userData}
+                activateDetail={activateDetail}
             />
 
             <UserInfo
@@ -256,9 +267,9 @@ export default function MapPage() {
             <QuestActivateLayer
                 open={questActive}
                 setClose={closeQuestActive}
-                // list={inCircleList}
+                list={inCircleList}
                 position={position}
-                list={list}
+                // list={list}
             />
         </Container>
     );

@@ -32,6 +32,7 @@ export default function GamePage() {
                 <Title>{fragment.text}</Title>
                 {type === "mob" && <MobPaper type={type} questId={questId} />}
                 {type === "time" && <TimePaper type={type} questId={questId} />}
+                {type === "feed" && <TimePaper type={type} questId={questId} />}
             </Wrapper>
         </Container>
     );

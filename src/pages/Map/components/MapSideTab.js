@@ -10,8 +10,10 @@ export default function MapSideTab({
     questList,
     selectQuest,
     userData,
+    activateDetail,
 }) {
     const navigate = useNavigate();
+
     if (userData === null) return;
     return (
         <TabWrapper
@@ -52,6 +54,8 @@ export default function MapSideTab({
                         list={questList.filter(
                             (item) => item.completed === true
                         )}
+                        selectQuest={selectQuest}
+                        activateDetail={activateDetail}
                     />
 
                     <QuestListConatiner
@@ -60,6 +64,7 @@ export default function MapSideTab({
                             (item) => item.completed === false
                         )}
                         selectQuest={selectQuest}
+                        activateDetail={activateDetail}
                     />
                 </Grid>
             </TabPaper>

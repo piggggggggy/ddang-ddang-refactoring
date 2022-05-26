@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import CloseIcon from "../../../assets/images/icon/CloseIcon";
 import { Grid } from "../../../elements";
+import PPimg from "../../../assets/images/png/pp-img.png";
+import MobMedium from "../../../assets/images/png/mob-medium.png";
+import GameImg from "../../../assets/images/png/game-img.png";
+import FeedBubble from "../../../assets/images/png/feed-bubble.png";
+import FeedMedium from "../../../assets/images/png/feed-medium.png";
+import TimeMedium from "../../../assets/images/png/time-medium.png";
 
 export default function SelectedQuestCard(Props) {
     const fragment = (() => {
@@ -81,7 +87,36 @@ export default function SelectedQuestCard(Props) {
 
             <Title>{fragment.title}</Title>
             <SubInfo>{fragment.subTitle}</SubInfo>
-            <Grid mystyles={"height: 113px;"}></Grid>
+            <Grid
+                flex
+                justifyContent={
+                    Props.type === "mob" ? "space-between" : "center"
+                }
+                alignItems={"center"}
+                mystyles={"height: 113px; width: 80%;"}
+            >
+                {Props.type === "mob" && (
+                    <>
+                        <MobImg src={MobMedium} alt={"mob"} />
+                        <MobImg src={GameImg} alt={"game"} />
+                        <MobImg src={PPimg} alt={"pp"} />
+                    </>
+                )}
+                {Props.type === "feed" && (
+                    <>
+                        <FeedImg src={FeedMedium} alt={"feed"} />
+                        <FeedBalloon>
+                            <img src={FeedBubble} alt={"balloon"} />
+                            <p>Review!</p>
+                        </FeedBalloon>
+                    </>
+                )}
+                {Props.type === "time" && (
+                    <TimeImg>
+                        <img src={TimeMedium} alt={"time"} />
+                    </TimeImg>
+                )}
+            </Grid>
             <SubInfo>{fragment.description}</SubInfo>
             <CardButton
                 style={Props.isInCircle ? {} : { background: "#CDCDCD" }}
@@ -144,4 +179,53 @@ const CloseButton = styled.div`
     position: absolute;
     top: 24px;
     right: 24px;
+`;
+
+const MobImg = styled.img`
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+`;
+const FeedImg = styled.img`
+    height: 48px;
+    object-fit: contain;
+`;
+const FeedBalloon = styled.div`
+    position: relative;
+    width: 100px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 9;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    & p {
+        position: relative;
+        z-index: 10;
+        font-size: 12px;
+        line-height: 1.15;
+        color: #fff;
+    }
+`;
+
+const TimeImg = styled.div`
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & img {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+    }
 `;

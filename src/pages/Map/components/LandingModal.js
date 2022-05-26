@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 import { Grid } from "../../../elements";
 import { localNameHandlerForSi } from "../../../modules/help";
 import Area from "../../../assets/images/png/area.png";
 import { useSelector } from "react-redux";
+import { setDataToSessionStorage } from "../../../shared/utils";
 export default function LandingModal({
     loading,
     region,
     questLength = 0,
     userData,
 }) {
-    const [landingOpen, setLandingOpen] = useState(true);
+    const [landingOpen, setLandingOpen] = useState(false);
     const regions = useSelector((state) => state.quest.region);
+
+    useEffect(() => {
+        const landingCheck = sessionStorage.getItem("landingCheck");
+        if (!landingCheck) {
+            setLandingOpen(true);
+        }
+    }, []);
     return (
         <FixedWrapper
             style={!landingOpen ? { transform: "translateX(-100%)" } : {}}
@@ -64,7 +72,7 @@ export default function LandingModal({
                 justifyContent={"center"}
                 alignItems={"center"}
                 mystyles={
-                    "position: relative; width: 80vw; height: 64vw; max-width: 340px; max-height: 275px;"
+                    "position: relative; width: 80vw; height: 64vw; max-width: 340px; max-height: 275px; min-height: 220px"
                 }
             >
                 <MapImg src={Area} />
@@ -79,6 +87,7 @@ export default function LandingModal({
                 style={{ background: loading ? "#909090" : "#5EEF87" }}
                 onClick={() => {
                     if (loading) return;
+                    setDataToSessionStorage("landingCheck", 1);
                     setLandingOpen(false);
                 }}
             >
@@ -100,8 +109,9 @@ const FixedWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    transition: all 500ms ease;
+    justify-content: space-between;
+    transition: all 300ms ease;
+    padding: 30px 0;
 `;
 
 const Title = styled.p`
@@ -133,7 +143,7 @@ const Info = styled.p`
     font-size: 14px;
     line-height: 1.3;
     color: #05240e;
-    padding: 35px 0 40px;
+    /* padding: 35px 0 40px; */
     & span {
         font-weight: 700;
     }
@@ -143,7 +153,7 @@ const SubInfo = styled.p`
     font-size: 16px;
     line-height: 1.15;
     color: #05240e;
-    padding: 43px 0 22px;
+    /* padding: 43px 0 22px; */
     & span {
         font-weight: 700;
     }

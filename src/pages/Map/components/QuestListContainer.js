@@ -2,7 +2,12 @@ import styled from "styled-components";
 import { Grid } from "../../../elements";
 import QuestItem from "../elements/QuestItem";
 
-export default function QuestListConatiner({ title, list, selectQuest }) {
+export default function QuestListConatiner({
+    title,
+    list,
+    selectQuest,
+    activateDetail,
+}) {
     return (
         <Grid mystyles={"padding: 0 0 24px;"}>
             <Label>
@@ -13,9 +18,10 @@ export default function QuestListConatiner({ title, list, selectQuest }) {
                 <QuestItem
                     key={item.id}
                     {...item}
-                    onClick={() =>
-                        selectQuest({ lat: item.lat, lng: item.lng })
-                    }
+                    onClick={() => {
+                        selectQuest({ lat: item.lat, lng: item.lng });
+                        activateDetail(item);
+                    }}
                 />
             ))}
         </Grid>
