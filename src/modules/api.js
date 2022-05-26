@@ -2,6 +2,7 @@ import axios from "axios";
 import { getWithExpiry } from "../modules/localStorageControl";
 import TokenService from "../services/token.service";
 import env from "react-dotenv";
+import tokenService from "../services/token.service";
 
 const headers = {
     Accept: "/",
@@ -10,7 +11,7 @@ const headers = {
 };
 
 const accessToken = {
-    Authorization: getWithExpiry("accessToken"),
+    Authorization: tokenService.getLocalAccessToken("accessToken"),
 };
 const refreshToken = {
     refreshToken: TokenService.getLocalRefreshToken(),

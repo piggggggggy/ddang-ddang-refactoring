@@ -34,10 +34,10 @@ export default function QuestMobThird({
     useEffect(() => {
         setTimeout(() => {
             setReady(false);
-        }, 4000);
+        }, 2500);
         setTimeout(() => {
             setProgress(3);
-        }, 9000);
+        }, 6000);
 
         if (randomIndex === RSPIndex) {
             setResult("Draw");
@@ -72,12 +72,14 @@ export default function QuestMobThird({
                         <RockScissorsPaperItem
                             text={list[randomIndex].text}
                             reverse
+                            isResult
                         />
                     </MobRAPItem>
                     <MyRAPItem>
                         <RockScissorsPaperItem
                             text={list[RSPIndex].text}
                             isSelected
+                            isResult
                         />
                     </MyRAPItem>
                     <ResultText>
@@ -123,7 +125,7 @@ const Text1 = styled.div`
     font-weight: 700;
     color: #273938;
     opacity: 0;
-    animation: ${FadeIn} 1500ms 300ms forwards ease;
+    animation: ${FadeIn} 1000ms 300ms forwards ease;
 `;
 
 const Text2 = styled.div`
@@ -134,7 +136,7 @@ const Text2 = styled.div`
     font-weight: 700;
     color: #273938;
     opacity: 0;
-    animation: ${FadeIn} 1500ms 1300ms forwards ease;
+    animation: ${FadeIn} 1000ms 800ms forwards ease;
 `;
 
 const Text3 = styled.div`
@@ -145,7 +147,7 @@ const Text3 = styled.div`
     font-weight: 700;
     color: #273938;
     opacity: 0;
-    animation: ${FadeIn} 1500ms 2300ms forwards ease;
+    animation: ${FadeIn} 1000ms 1300ms forwards ease;
 `;
 
 const LeftSideFakeBar = styled.div`
@@ -213,7 +215,7 @@ const MyRAPItem = styled.div`
     right: -400px;
     z-index: 900;
     width: calc(100% - 60px);
-    animation: ${SlideRight} 1s 1300ms forwards ease;
+    animation: ${SlideRight} 1s 300ms forwards ease;
 `;
 const ResultText = styled.div`
     position: absolute;
@@ -221,7 +223,7 @@ const ResultText = styled.div`
     left: calc(50% - 60px);
     width: 120px;
     opacity: 0;
-    animation: ${Result} 1200ms 2800ms forwards ease;
+    animation: ${Result} 1200ms 1800ms forwards ease;
     & p {
         width: 100%;
         font-size: 40px;

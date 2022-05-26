@@ -10,9 +10,12 @@ export default function QuestMobFirst({ setProgress, progress }) {
         <Grid
             flex
             container
-            justifyContent={"center"}
+            direction={"column"}
+            justifyContent={"space-between"}
             alignItems={"center"}
-            mystyles={"position: relative; height: 100%; width: 100%;"}
+            mystyles={
+                "position: relative; height: 100%; width: 100%; padding: 20px 0"
+            }
         >
             <Content>
                 <span>가위바위보</span> 라고 아니?
@@ -31,6 +34,7 @@ export default function QuestMobFirst({ setProgress, progress }) {
                 text={"시작하기"}
                 color={fragment.subColor}
                 onClick={() => setProgress(1)}
+                isOn={true}
             />
         </Grid>
     );

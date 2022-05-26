@@ -4,16 +4,19 @@ export default function CompleteModal({ open, setComfirm }) {
     return (
         <>
             {open && <Dimmed />}
-            <Paper style={open ? { transform: "translateY(-300%)" } : {}}>
+            <Paper style={open ? { bottom: "calc(50vh - 140px)" } : {}}>
                 <Title>승리를 축하합니다</Title>
                 <Reward>
                     <p>3,000 P</p>
                 </Reward>
 
-                <BottomButton onClick={setComfirm} style={{ marginBottom: 10 }}>
+                <BottomButton
+                    onClick={() => setComfirm("point")}
+                    style={{ marginBottom: 10 }}
+                >
                     <p>포인트 받기</p>
                 </BottomButton>
-                <BottomButton>
+                <BottomButton onClick={() => setComfirm("quest")}>
                     <p>다른 퀘스트 하러가기</p>
                 </BottomButton>
             </Paper>
@@ -39,7 +42,6 @@ const Paper = styled.div`
     background: #fff;
     box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
     border-radius: 4px;
-    /* top: calc(30% - 145px); */
     bottom: -100%;
     left: calc(50% - 140px);
     z-index: 2001;
@@ -68,7 +70,9 @@ const Reward = styled.div`
         font-size: 20px;
         font-weight: 700;
         line-height: 1.15;
-        color: #fff;
+        text-align: center;
+        color: #eb6042;
+        width: 100%;
     }
 `;
 

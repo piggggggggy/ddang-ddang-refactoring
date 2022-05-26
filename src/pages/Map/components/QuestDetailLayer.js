@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 import { getUpdatedDistance } from "../../../modules/location";
 
-export default function QuestActivateLayer({ open, setClose, list, position }) {
+export default function QuestDetailLayer({ open, setClose, item, position }) {
     const navigate = useNavigate();
 
     return (
@@ -22,23 +22,21 @@ export default function QuestActivateLayer({ open, setClose, list, position }) {
                         arrows={false}
                         centerPadding={"20px"}
                     >
-                        {list.map((item, index) => (
-                            <SelectedQuestCard
-                                {...item}
-                                onClick={setClose}
-                                selectQuest={() =>
-                                    navigate(`/quest/${item.type}/${item.id}`)
-                                }
-                                isInCircle={
-                                    getUpdatedDistance({
-                                        lat: position.lat,
-                                        lng: position.lng,
-                                        _lat: item.lat,
-                                        _lng: item.lng,
-                                    }) <= 0.03
-                                }
-                            />
-                        ))}
+                        <SelectedQuestCard
+                            {...item}
+                            onClick={setClose}
+                            selectQuest={() =>
+                                navigate(`/quest/${item.type}/${item.id}`)
+                            }
+                            isInCircle={
+                                getUpdatedDistance({
+                                    lat: position.lat,
+                                    lng: position.lng,
+                                    _lat: item.lat,
+                                    _lng: item.lng,
+                                }) <= 0.03
+                            }
+                        />
                     </Slider>
                 </SlidWrapper>
             )}

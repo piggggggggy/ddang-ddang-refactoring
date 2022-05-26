@@ -1,8 +1,10 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
-import TestImage from "../../../assets/images/png/screenshot.png";
+import { useSelector } from "react-redux";
 
 export default function UserInfoContainer() {
+    const userData = useSelector((state) => state.user.user);
+    console.log(userData);
     return (
         <UserInfoCardWrapper>
             <Grid
@@ -13,7 +15,7 @@ export default function UserInfoContainer() {
                     "min-width: 80px; width: 80px; height: 80px; margin-right: 15px; border-radius: 8px; overflow: hidden;"
                 }
             >
-                <Image src={TestImage} alt={"profile image"} />
+                <Image alt={"profile image"} />
             </Grid>
 
             <Grid>

@@ -23,20 +23,24 @@ export default function QuestMobFourth({
         if (result === "Win") {
             setPopupOpen(true);
         } else {
-            // navigate(-1);
-            setRSPIndex(null);
-            setProgress(1);
+            navigate(-1);
+            // setRSPIndex(null);
+            // setProgress(1);
         }
     };
 
-    const completeQuest = async () => {
+    const completeQuest = async (type) => {
         const data = await postQuest({
             request: {},
             type: "mob",
             questId: questId,
         });
         if (data.ok) {
-            navigate(-1);
+            if (type === "point") {
+                navigate("/myPage");
+            } else {
+                navigate(-1);
+            }
         }
     };
 

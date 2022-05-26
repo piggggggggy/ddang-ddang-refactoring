@@ -5,14 +5,20 @@ import { Container, Grid } from "../../elements";
 import MapComponent from "./components/MapComponent";
 import LandingModal from "./components/LandingModal";
 import QuestActivateLayer from "./components/QuestActivateLayer";
-import { QuestModal, MemoizedQuestModal } from "../Game/components/QuestModal";
 import { useWatchLocation } from "./hooks/locationHooks";
 import { getQuestList } from "../../services/main.service";
 import { useNavigate } from "react-router-dom";
+import { questFragment } from "../../modules/fragment";
+import BackArrow from "../../assets/images/png/back-arrow.png";
+import MenuIcon from "../../assets/images/icon/MenuIcon";
+import CenterButton from "./elements/CenterButton";
+import QuestDetailLayer from "./components/QuestDetailLayer";
 
 export default function MapPage() {
     const navigate = useNavigate();
     const [tabOpen, setTabOpen] = useState(false);
+    const [detailOpen, setDetailOpen] = useState(false);
+    const [detailState, setDetailState] = useState(null);
     const [questActive, setQuestActive] = useState(false);
     const [loading, setLoading] = useState(false);
     const [questList, setQuestList] = useState([]);
@@ -52,7 +58,7 @@ export default function MapPage() {
         });
     };
     const setDdangDdang = () => {
-        if (inCircleList.length === 0) return;
+        // if (inCircleList.length === 0) return;
         setQuestActive(true);
     };
     const closeTab = () => {
@@ -103,13 +109,37 @@ export default function MapPage() {
         });
     }, []);
 
+    const list = [
+        {
+            id: 11,
+            type: "time",
+            let: 0,
+            lng: 0,
+        },
+        {
+            id: 12,
+            type: "mob",
+            let: 0,
+            lng: 0,
+        },
+    ];
+    //     {
+    //         id: 11,
+    //         type: "feed",
+    //     },
+    //     {
+    //         id: 11,
+    //         type: "time",
+    //     },
+    // ];
+
     useEffect(() => {
         if (questType === "mob") {
             setColor("#FA5A54");
         } else if (questType === "time") {
-            setColor("#EDEA50");
-        } else if (questType === "feed") {
             setColor("#61B7FA");
+        } else if (questType === "feed") {
+            setColor("#EDEA50");
         } else {
             setColor("#EBEBEB");
         }
@@ -137,7 +167,8 @@ export default function MapPage() {
                 cancelWatchPosition={cancelWatchPosition}
                 isDrag={isDrag}
                 setIsDrag={setIsDrag}
-                // inCircleList={inCircleList}
+                setDetail={setDetailState}
+                openDetail={() => setDetailOpen(true)}
             />
 
             <MapSideTab
@@ -148,34 +179,43 @@ export default function MapPage() {
             />
 
             <UserInfo
-                style={questActive ? { display: "none" } : { display: "flex" }}
+                style={
+                    questActive || detailOpen
+                        ? { display: "none" }
+                        : { display: "flex" }
+                }
                 onClick={() => setTabOpen(true)}
             >
+                <MenuIcon />
                 <p>
                     <span>Lv.77</span>강윤지
                 </p>
             </UserInfo>
 
             <ButtonWrapper
-                style={questActive ? { display: "none" } : { display: "block" }}
+                style={
+                    questActive || detailOpen
+                        ? { display: "none" }
+                        : { display: "block" }
+                }
             >
                 <CenterButton onClick={moveToCenter} />
 
                 <Grid flex justifyContent={"space-between"}>
                     <BottomCategoryButton onClick={() => setQuestType("mob")}>
-                        <img />
+                        <img src={questFragment("mob").img} alt={"mob img"} />
                         <p>몬스터대전</p>
                     </BottomCategoryButton>
                     <BottomCategoryButton onClick={() => setQuestType("time")}>
-                        <img />
+                        <img src={questFragment("time").img} alt={"time img"} />
                         <p>타임어택</p>
                     </BottomCategoryButton>
                     <BottomCategoryButton onClick={() => setQuestType("feed")}>
-                        <img />
+                        <img src={questFragment("feed").img} alt={"feed img"} />
                         <p>땅문서작성</p>
                     </BottomCategoryButton>
                     <BottomCategoryButton onClick={() => setQuestType("all")}>
-                        <img />
+                        <img src={questFragment("all").img} alt={"all img"} />
                         <p>전체리스트</p>
                     </BottomCategoryButton>
                 </Grid>
@@ -185,31 +225,33 @@ export default function MapPage() {
                     justifyContent={"space-between"}
                     mystyles={"padding-top: 8px;"}
                 >
-                    <BottomFooterButton onClick={() => navigate(-1)}>
-                        <p>뒤로 가기</p>
-                        {/* <p>Lv.77</p>
-            <span>다음 레벨까지 12,000P</span>
-            <Grid
-              mystyles={
-                'position: relative; width: calc(100% - 30px); height: 8px; background: #D7D7D7;'
-              }
-            >
-              <LevelProgressBar style={{width: '70%'}}/>
-            </Grid> */}
+                    <BottomFooterButton
+                        style={{ width: "22%" }}
+                        onClick={() => navigate(-1)}
+                    >
+                        <img src={BackArrow} alt={"back arrow"} />
+                        <span>뒤로 가기</span>
                     </BottomFooterButton>
                     <BottomFooterButton
-                        style={{ background: color }}
+                        style={{ background: color, width: "74%" }}
                         onClick={setDdangDdang}
                     >
                         <p>땅땅 시작</p>
                     </BottomFooterButton>
                 </Grid>
             </ButtonWrapper>
-
+            <QuestDetailLayer
+                open={detailOpen}
+                setClose={() => setDetailOpen(false)}
+                item={detailState}
+                position={position}
+            />
             <QuestActivateLayer
                 open={questActive}
                 setClose={closeQuestActive}
-                list={inCircleList}
+                // list={inCircleList}
+                position={position}
+                list={list}
             />
         </Container>
     );
@@ -226,8 +268,9 @@ const UserInfo = styled.div`
     border-radius: 10px;
     box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 12px;
     & p {
         font-size: 16px;
         font-weight: 700;
@@ -254,6 +297,12 @@ const BottomCategoryButton = styled.div`
         font-size: 12px;
         font-weight: 700;
         line-height: 1.15;
+        padding-top: 5%;
+    }
+    & img {
+        width: 50%;
+        height: 50%;
+        object-fit: cover;
     }
 `;
 
@@ -272,13 +321,13 @@ const BottomFooterButton = styled.div`
         font-size: 16px;
         font-weight: 700;
         line-height: 1.15;
+        color: #273938;
     }
     & span {
-        font-size: 8px;
+        font-size: 12px;
+        font-weight: 700;
         line-height: 1.15;
-        color: #05240e;
-        opacity: 0.5;
-        padding-bottom: 8px;
+        color: #273938;
     }
 `;
 
@@ -298,14 +347,4 @@ const ButtonWrapper = styled.div`
     padding: 0 20px 50px;
     z-index: 500;
     width: 100%;
-`;
-
-const CenterButton = styled.div`
-    position: absolute;
-    right: 30px;
-    top: -50px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #000;
 `;

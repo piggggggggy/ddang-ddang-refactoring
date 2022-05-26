@@ -3,6 +3,8 @@ import { Circle, Map, MapMarker } from "react-kakao-maps-sdk";
 import { Grid } from "../../../elements";
 import QuestMarker from "../elements/QuestMarker";
 import { useWatchLocation } from "../hooks/locationHooks";
+import MyMarker from "../../../assets/images/png/logo-small.png";
+import { questFragment } from "../../../modules/fragment";
 
 export default function MapComponent({
     questList,
@@ -14,6 +16,8 @@ export default function MapComponent({
     cancelWatchPosition,
     isDrag,
     setIsDrag,
+    setDetail,
+    openDetail,
 }) {
     // useEffect(() => {
     //   if (!isDrag) return;
@@ -41,22 +45,29 @@ export default function MapComponent({
                 }} // 중심위치에서 이동 시켰는지?
                 style={{ width: "100%", height: "100%" }}
             >
-                <MapMarker position={position}>
-                    <Grid
-                        flex
-                        justifyContent={"center"}
-                        alignItems={"center"}
-                        style={{ color: "#000" }}
-                    >
-                        <p>{isDrag ? "Drag Mode!" : "Center Mode"}</p>
-                    </Grid>
-                </MapMarker>
+                <MapMarker
+                    position={position}
+                    image={{
+                        src: MyMarker,
+                        size: {
+                            width: 22,
+                            height: 22,
+                        },
+                        options: {
+                            offset: {
+                                x: 11,
+                                y: 11,
+                            },
+                        },
+                    }}
+                />
+
                 <Circle
                     center={position}
                     radius={30}
-                    strokeWeight={0} // 선의 두께입니다
-                    fillColor={"#5DEB85"} // 채우기 색깔입니다
-                    fillOpacity={0.3} // 채우기 불투명도 입니다
+                    strokeWeight={0}
+                    fillColor={questFragment(questType).color}
+                    fillOpacity={0.3}
                 />
 
                 {questList.map((item, index) => {
@@ -66,6 +77,8 @@ export default function MapComponent({
                                 key={item.id}
                                 {...item}
                                 currentPosition={position}
+                                setDetail={setDetail}
+                                openDetail={openDetail}
                             />
                         );
                     } else {
@@ -75,6 +88,8 @@ export default function MapComponent({
                                     key={item.id}
                                     {...item}
                                     currentPosition={position}
+                                    setDetail={setDetail}
+                                    openDetail={openDetail}
                                 />
                             );
                         }
