@@ -155,7 +155,7 @@ export default function SignupFinal() {
             setPasswordIsValid(false);
         } else if (password && !regPassword.test(password)) {
             setPasswordCheckMessage(
-                "잘못된 비밀번호 양식입니다.영문 대소문자, 숫자, 특수문자(.!@#$%)를 넣어주세요"
+                "잘못된 비밀번호 양식입니다.영문 대소문자, 숫자, 특수문자(.!@#$%)를 넣어주세요. 최소 8글자입니다"
             );
             setPasswordIsValid(false);
             setPasswordAfterRegex(password);

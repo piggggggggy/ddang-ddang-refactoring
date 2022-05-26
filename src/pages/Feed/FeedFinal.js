@@ -20,37 +20,123 @@ import {
     feedsDistanceAxios,
 } from "../../store/thunk-actions/feedActions";
 
+import FeedsService from "../../services/feed.service";
+import KakaoService from "../../services/kakao.service";
+
+import axios from "axios";
+import env from "react-dotenv";
+
 export default function Feed() {
+    const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
+    console.log(currentMapPosition);
+    const getPosition = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position);
+            setCurrentMapPosition({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            });
+        });
+        getmyAddress();
+    };
+
+    const [currentAddress, setCurrentAddress] = React.useState(null);
+    console.log(currentAddress);
+
+    const getmyAddress = () => {
+        axios
+            .get(
+                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=127.4147562&y=36.3298522&input_coord=WGS84`,
+                {
+                    headers: {
+                        Accept: "*/*",
+                        Authorization: `KakaoAK ${env.MAP_KAKAO_API_KEY}`,
+                    },
+                }
+            )
+            .then((res) => {
+                console.log(res.data.documents[0].address.region_1depth_name);
+                setCurrentAddress({
+                    si: res.data.documents[0].address.region_1depth_name,
+                    gu: res.data.documents[0].address.region_2depth_name,
+                    dong: res.data.documents[0].address.region_3depth_name,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const data = {
-        regionSi: "서울시",
-        regionGu: "강남구",
-        regionDong: "삼성동",
-        lat: 33.5563,
-        lng: 127.4147562,
-    };
+    const regionsi = "서울시";
+    const regionGu = "강남구";
+    const regionDong = "삼섬동";
+    const lat = 33.5563;
+    const lng = 127.4147562;
 
     const [items, setItems] = React.useState([]);
 
-    const feeds = useSelector((state) => state?.feed.feeds);
+    const feeds = useSelector((state) => state.feed.feeds);
 
     const feedsLatest = () => {
-        dispatch(feedsLatestAxios(data));
+        // dispatch(feedsLatestAxios(data));
+        if (currentAddress !== null && currentMapPosition !== null) {
+            FeedsService.feedsLatestAxios(
+                currentAddress.si,
+                currentAddress.gu,
+                currentAddress.dong,
+                currentMapPosition.lat,
+                currentMapPosition.lng
+            )
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     };
 
     const feedsPopularity = () => {
-        dispatch(feedsPopularityAxios(data));
+        // dispatch(feedsPopularityAxios(data));
+        FeedsService.feedsPopularityAxios(
+            regionsi,
+            regionGu,
+            regionDong,
+            lat,
+            lng
+        )
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     const feedsDistance = () => {
-        dispatch(feedsDistanceAxios(data));
+        // dispatch(feedsDistanceAxios(data));
+        FeedsService.feedsDistanceAxios(
+            regionsi,
+            regionGu,
+            regionDong,
+            lat,
+            lng
+        )
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     React.useEffect(() => {
         // feedsLatest();
-        feedsLatest(data);
+        feedsLatest();
+        getPosition();
     }, []);
 
     const [tabIndex, setTabIndex] = React.useState(0);
@@ -72,11 +158,11 @@ export default function Feed() {
     };
     const getPopularity = () => {
         setTabIndex(1);
-        feedsPopularity();
+        // feedsPopularity();
     };
     const getDistance = () => {
         setTabIndex(2);
-        feedsDistance();
+        // feedsDistance();
     };
 
     return (
@@ -207,7 +293,7 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {feeds.map((feed, idx) => (
+                                {/* {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
@@ -221,7 +307,7 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                     />
-                                ))}
+                                ))} */}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>
@@ -240,7 +326,7 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {feeds.map((feed, idx) => (
+                                {/* {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
@@ -254,7 +340,7 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                     />
-                                ))}
+                                ))} */}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>
@@ -273,7 +359,7 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {feeds.map((feed, idx) => (
+                                {/* {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
@@ -287,7 +373,7 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                     />
-                                ))}
+                                ))} */}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>
@@ -328,39 +414,3 @@ const Tabcard = styled(motion.div)`
 const UnorderedList = styled(motion.ul)`
     list-style-type: none;
 `;
-
-// const feedsLatest = async () => {
-//     await axios
-//         .post(`/api/feeds?type=latest`, data)
-//         .then((res) => {
-//             console.log(res);
-//             setItems([...res.data.rows]);
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };
-
-// const feedsPopularity = async () => {
-//     await axios
-//         .post(`/api/feeds?type=popularity`, data)
-//         .then((res) => {
-//             console.log(res);
-//             setItems([...res.data.rows]);
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };
-
-// const feedsDistance = async () => {
-//     await axios
-//         .post(`/api/feeds?type=distance`, data)
-//         .then((res) => {
-//             console.log(res);
-//             setItems([...res.data.rows]);
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };

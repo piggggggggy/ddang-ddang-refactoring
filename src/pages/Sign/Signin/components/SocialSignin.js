@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { KAKAO_OAUTH_URL } from "../../../../shared/OAuth";
-import kakaoIcon from "../../../../assets/images/png/kakao_icon.png";
+import kakaoIcon from "../../../../assets/images/png/sign/kakao_icon.png";
 
 const SocialSignin = (props) => {
     // onClick={() => window.location.replace(KAKAO_OAUTH_URL)}

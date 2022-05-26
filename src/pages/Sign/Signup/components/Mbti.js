@@ -3,9 +3,7 @@ import { signupAxios } from "../../../../store/thunk-actions/userActions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Grid, Text, Image, Button } from "../../elements/index";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import IconButton from "@mui/material/IconButton";
-import logo from "../../../../assets/images/png/logo.png";
+import logo from "../../../../assets/images/png/sign/logo.png";
 
 export default function Mbti(props) {
     const dispatch = useDispatch();
@@ -35,6 +33,7 @@ export default function Mbti(props) {
 
     const [cardSelected, setCardSelected] = React.useState("");
     const [profile, setProfile] = React.useState("");
+    console.log(cardSelected);
 
     const MbtiClick = (idx) => {
         setCardSelected(mbtiData[idx].name);

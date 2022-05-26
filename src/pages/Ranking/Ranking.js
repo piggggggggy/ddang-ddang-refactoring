@@ -6,20 +6,57 @@ import Container from "../../elements/Container";
 import Navigation from "../../components/Navigation";
 import StarIcon from "@mui/icons-material/Star";
 import api from "../../modules/api";
+import axios from "axios";
+import env from "react-dotenv";
 
 import ProgressDonut from "./components/ProgressDonut";
 
 export default function Ranking() {
-    const data = {
-        si: "서울시",
-        gu: "강남구",
-        dong: "삼성동",
+    // 좌표 찾기
+    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
+    console.log(currentMapPosition);
+    const getPosition = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position);
+            setCurrentMapPosition({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            });
+            getmyAddress(position.coords.latitude, position.coords.longitude);
+        });
     };
 
-    React.useEffect(() => {
-        getRanking();
-    }, []);
+    const [address, setAddress] = React.useState({});
+    console.log(address);
 
+    // 카카오 api 로 시, 구, 동 정보 받기
+    const getmyAddress = (lat, lng) => {
+        axios
+            .get(
+                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
+                {
+                    headers: {
+                        Accept: "*/*",
+                        Authorization: `KakaoAK ${env.MAP_KAKAO_API_KEY}`,
+                    },
+                }
+            )
+            .then((res) => {
+                const data = {
+                    si: res?.data?.documents?.[0]?.address?.region_1depth_name,
+                    gu: res?.data?.documents?.[0]?.address?.region_2depth_name,
+                    dong: res?.data?.documents?.[0]?.address
+                        ?.region_3depth_name,
+                };
+
+                setAddress(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    // 서버에 데이터 요청
     const [group, setGroup] = React.useState([]);
     console.log(group);
 
@@ -28,7 +65,9 @@ export default function Ranking() {
 
     const getRanking = async () => {
         await api
-            .get(`/api/ranks?si=${data.si}&gu=${data.gu}&dong=${data.dong}`)
+            .get(
+                `/api/ranks?si=${address?.si}&gu=${address?.gu}&dong=${address?.dong}`
+            )
             .then((res) => {
                 console.log(res);
                 setGroup([...group, ...res.data.ranks.group]);
@@ -39,6 +78,7 @@ export default function Ranking() {
             });
     };
 
+    // 메뉴 리스트
     const tabList = [
         {
             name: "개인",
@@ -59,6 +99,11 @@ export default function Ranking() {
     }
 
     const [tabIndex, setTabIndex] = React.useState(0);
+
+    React.useEffect(() => {
+        getPosition();
+        getRanking();
+    }, []);
 
     return (
         <Container>
@@ -109,6 +154,16 @@ export default function Ranking() {
                             </TabText>
                         </TabCard>
                     ))}
+                </Grid>
+                <Grid
+                    flex
+                    alignItems="center"
+                    justifyContent="center"
+                    mystyles="margin-top: 30px;"
+                >
+                    <Text mystyles="font-weight: 700; font-size: 20px;">
+                        {address.gu} {address.dong}
+                    </Text>
                 </Grid>
                 <Grid
                     flex

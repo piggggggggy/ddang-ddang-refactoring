@@ -10,7 +10,6 @@ import AppRouter from "./shared/Router";
 import TokenService from "./services/token.service";
 
 import { Spinner } from "./elements/index";
-
 function App() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
