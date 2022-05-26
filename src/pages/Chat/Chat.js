@@ -13,6 +13,8 @@ import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import env from "react-dotenv";
 
+import sendIcon from "../../assets/images/png/chat/send.png";
+
 let socket;
 const ChatPage = () => {
     const navigate = useNavigate();
@@ -252,23 +254,24 @@ const ChatPage = () => {
                         <div className="input_msg_write">
                             <input
                                 type="text"
-                                className="write_msg"
                                 placeholder="Type a message"
                                 value={message}
                                 onChange={(event) => {
                                     setMessage(event.target.value);
                                 }}
                                 onKeyPress={onEnterInput}
+                                style={{ background: "#F3F3F3" }}
                             />
                             <button
                                 onClick={sendMessage}
                                 className="msg_send_btn sendMessage"
                                 type="button"
                             >
-                                <i
-                                    className="fa fa-paper-plane-o"
-                                    aria-hidden="true"
-                                ></i>
+                                <img
+                                    src={sendIcon}
+                                    alt=""
+                                    style={{ height: "20px" }}
+                                />
                             </button>
                         </div>
                     </div>
