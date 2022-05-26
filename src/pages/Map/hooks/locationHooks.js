@@ -45,9 +45,13 @@ const useWatchLocation = (questList, type) => {
                             _lng: Number(item.lng),
                         });
                         if (type === "all") {
-                            return distance < 0.03;
+                            return distance < 0.03 && !item.completed;
                         } else {
-                            return distance < 0.03 && item.type === type;
+                            return (
+                                distance < 0.03 &&
+                                item.type === type &&
+                                !item.completed
+                            );
                         }
                     });
                     setInCircleList(filteredList);

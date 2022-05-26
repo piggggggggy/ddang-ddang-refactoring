@@ -71,6 +71,7 @@ export default function MapComponent({
                 />
 
                 {questList.map((item, index) => {
+                    if (item.completed) return;
                     if (questType === "all") {
                         return (
                             <QuestMarker

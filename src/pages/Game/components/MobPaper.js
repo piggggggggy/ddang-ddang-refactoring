@@ -10,6 +10,7 @@ export default function MobPaper({ type, questId }) {
     const [progress, setProgress] = useState(0);
     const [RSPIndex, setRSPIndex] = useState(null);
     const [result, setResult] = useState("");
+    const [tryCount, setTryCount] = useState(0);
 
     const fragment = questFragment(type);
     const randomIndex = ((min, max) => {
@@ -54,6 +55,8 @@ export default function MobPaper({ type, questId }) {
                     setRSPIndex={setRSPIndex}
                     result={result}
                     questId={questId}
+                    tryCount={tryCount}
+                    setTryCount={setTryCount}
                 />
             )}
 

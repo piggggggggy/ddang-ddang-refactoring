@@ -7,8 +7,11 @@ import GameImg from "../../../assets/images/png/game-img.png";
 import FeedBubble from "../../../assets/images/png/feed-bubble.png";
 import FeedMedium from "../../../assets/images/png/feed-medium.png";
 import TimeMedium from "../../../assets/images/png/time-medium.png";
+import { getCookie } from "../../../shared/utils";
 
 export default function SelectedQuestCard(Props) {
+    const mobIdCheck = getCookie("mobCheck");
+
     const fragment = (() => {
         switch (Props.type) {
             case "mob":
@@ -72,11 +75,12 @@ export default function SelectedQuestCard(Props) {
     })();
 
     const moveToGame = () => {
-        // if (Props.isInCircle) {
-        Props.selectQuest();
-        // } else {
-        // return;
-        // }
+        if (Number(mobIdCheck) === Number(Props.id)) return;
+        if (Props.isInCircle) {
+            Props.selectQuest();
+        } else {
+            return;
+        }
     };
 
     return (

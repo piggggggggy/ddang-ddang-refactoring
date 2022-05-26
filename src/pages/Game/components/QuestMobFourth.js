@@ -11,6 +11,7 @@ import Bubble from "../../../assets/images/png/mob-bubble-small.png";
 import MobLarge from "../../../assets/images/png/mob-large.png";
 import MobLargeDimmed from "../../../assets/images/png/mob-large-dimmed.png";
 import WinCardMob from "../../../assets/images/png/mob-win.png";
+import { setCookieDay } from "../../../shared/utils";
 
 export default function QuestMobFourth({
     setProgress,
@@ -18,6 +19,8 @@ export default function QuestMobFourth({
     setRSPIndex,
     result,
     questId,
+    tryCount,
+    setTryCount,
 }) {
     const navigate = useNavigate();
     const fragment = questFragment("mob");
@@ -26,25 +29,36 @@ export default function QuestMobFourth({
     const setConfirm = () => {
         if (result === "Win") {
             setPopupOpen(true);
+        } else if (result === "draw") {
+            if (tryCount >= 2) {
+                navigate(-1);
+            } else {
+                setTryCount((prev) => prev + 1);
+                setRSPIndex(null);
+                setProgress(1);
+            }
         } else {
+            setCookieDay("mobCheck", questId);
             navigate(-1);
-            // setRSPIndex(null);
-            // setProgress(1);
         }
     };
 
     const completeQuest = async (type) => {
-        const data = await postQuest({
-            request: {},
-            type: "mob",
-            questId: questId,
-        });
-        if (data.ok) {
-            if (type === "point") {
-                navigate("/myPage");
-            } else {
-                navigate(-1);
+        try {
+            const data = await postQuest({
+                request: {},
+                type: "mob",
+                questId: questId,
+            });
+            if (data.ok) {
+                if (type === "point") {
+                    navigate("/myPage");
+                } else {
+                    navigate(-1);
+                }
             }
+        } catch {
+            navigate(-1);
         }
     };
 
@@ -54,8 +68,14 @@ export default function QuestMobFourth({
                 return {
                     text: "다음에 다시 와!",
                     title: "You LOSE",
-                    // buttonText: <>다시 도전하기 <span>최대 2번</span></>,
-                    buttonText: "내일 다시 도전하세요!",
+                    buttonText:
+                        tryCount === 2 ? (
+                            "내일 다시 도전하세요!"
+                        ) : (
+                            <>
+                                다시 도전하기 <span>최대 2번</span>
+                            </>
+                        ),
                     img: MobLarge,
                 };
             case "Lose":
