@@ -203,7 +203,7 @@ export default function MapPage() {
                 }
                 onClick={() => setTabOpen(true)}
             >
-                <MenuIcon />
+                <MenuIcon size={"small"} />
                 <p>
                     <span>Lv.{userData === null ? 0 : userData.level}</span>
                     {userData === null ? "땅땅" : userData.nickname}

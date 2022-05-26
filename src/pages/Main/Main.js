@@ -8,6 +8,8 @@ import Navigation from "../../components/Navigation";
 import { useState } from "react";
 import { useMainData } from "./hooks/MainHooks";
 import { localNameHandlerForSi } from "../../modules/help";
+import MenuIcon from "../../assets/images/icon/MenuIcon";
+import Location from "../../assets/images/icon/Location";
 
 export default function Main() {
     const { questList, loading, questType, setQuestType, location, region } =
@@ -20,7 +22,15 @@ export default function Main() {
             <Grid
                 mystyles={"position: relative; z-index: 100; padding: 0 30px;"}
             >
+                <Grid
+                    mystyles={
+                        "position: absolute; top: 52px; left: 30px; width: 24px; height: 18px"
+                    }
+                >
+                    <MenuIcon size={"medium"} />
+                </Grid>
                 <Address>
+                    <Location />
                     {localNameHandlerForSi(region.regionSi)} {region.regionGu}{" "}
                     {region.regionDong}
                 </Address>
