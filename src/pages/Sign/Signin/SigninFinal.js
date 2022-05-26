@@ -9,7 +9,7 @@ import SocialSignin from "./components/SocialSignin";
 
 import { signinAxios } from "../../../store/thunk-actions/userActions";
 
-import logo from "../../../assets/images/png/logo.png";
+import logo from "../../../assets/images/png/sign/logo.png";
 
 export default function SigninFinal() {
     const navigate = useNavigate();
@@ -46,9 +46,9 @@ export default function SigninFinal() {
                     justifyContent="center"
                     mystyles="margin-top: 41px;"
                 >
-                    <Text mystyles="font-weight: 700; font-size: 16px">
+                    {/* <Text mystyles="font-weight: 700; font-size: 16px">
                         로그인
-                    </Text>
+                    </Text> */}
                 </Grid>
                 <Grid
                     flex

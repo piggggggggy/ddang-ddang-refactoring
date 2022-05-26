@@ -84,8 +84,8 @@ export default function FeedItem(props) {
                 setCommentArr([...commentArr, res.data.comment]);
                 console.log(commentArr);
 
-                commentArr.push({ comment });
-                window.location.reload();
+                // commentArr.push({ comment });
+                // window.location.reload();
             })
             .catch((err) => {
                 console.log(err);

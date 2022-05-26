@@ -8,6 +8,7 @@ export const loginCheckAxios = (token, navigate) => {
     return async function (dispatch) {
         try {
             const response = await AuthService.auth();
+            console.log(response);
             const user = {
                 email: response.data.user.email,
                 expPoints: response.data.user.expPoints,
@@ -102,28 +103,6 @@ export const signupAxios = (
             .catch((err) => {
                 console.log(err);
             });
-    };
-};
-
-// 유저 프로필 상세 가져오기 (현재: 프로필 추가) + 유효성 검사
-
-export const getProfileDetailsAxios = (token, navigate) => {
-    return async function (dispatch) {
-        try {
-            const response = await api.get("/players/mypage");
-            const user = {
-                email: response.data.profile.email,
-                nickname: response.data.profile.nickname,
-                profileImg: response.data.profile.profileImg,
-            };
-
-            console.log(user);
-
-            dispatch(userActions.getProfileDetails({ user }));
-        } catch (err) {
-            console.log(err);
-            navigate("/signin");
-        }
     };
 };
 
