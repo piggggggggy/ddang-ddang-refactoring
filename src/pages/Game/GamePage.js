@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Container } from "../../elements";
 import { questFragment } from "../../modules/fragment";
 import MobPaper from "./components/MobPaper";
+import TimePaper from "./components/TimePaper";
 
 export default function GamePage() {
     const navigate = useNavigate();
@@ -30,6 +31,7 @@ export default function GamePage() {
                 </CloseButton>
                 <Title>{fragment.text}</Title>
                 {type === "mob" && <MobPaper type={type} questId={questId} />}
+                {type === "time" && <TimePaper type={type} questId={questId} />}
             </Wrapper>
         </Container>
     );

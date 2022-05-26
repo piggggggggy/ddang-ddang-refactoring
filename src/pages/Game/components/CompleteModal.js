@@ -59,20 +59,21 @@ const Title = styled.p`
 `;
 
 const Reward = styled.div`
-  width: 112px;
-  height: 56px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 14px auto 24px;
-  background: #eb6042;
-  & p {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.15;
-    text-align: center;
-    color: #eb6042;
-    width: 100%;
+    width: 112px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 14px auto 24px;
+    background: #eb6042;
+    & p {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 1.15;
+        text-align: center;
+        color: #eb6042;
+        width: 100%;
+    }
 `;
 
 const BottomButton = styled.div`

@@ -72,12 +72,14 @@ export default function QuestMobThird({
                         <RockScissorsPaperItem
                             text={list[randomIndex].text}
                             reverse
+                            isResult
                         />
                     </MobRAPItem>
                     <MyRAPItem>
                         <RockScissorsPaperItem
                             text={list[RSPIndex].text}
                             isSelected
+                            isResult
                         />
                     </MyRAPItem>
                     <ResultText>

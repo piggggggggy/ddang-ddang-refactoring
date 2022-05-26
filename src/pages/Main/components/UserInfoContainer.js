@@ -1,7 +1,10 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 export default function UserInfoContainer() {
+    const userData = useSelector((state) => state.user.user);
+    console.log(userData);
     return (
         <UserInfoCardWrapper>
             <Grid

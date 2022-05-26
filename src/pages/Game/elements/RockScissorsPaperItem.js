@@ -5,7 +5,36 @@ export default function RockScissorsPaperItem({
     isSelected,
     onClick,
     reverse = false,
+    isResult = false,
 }) {
+    const Card = styled.div`
+        padding: 8px;
+        width: 80%;
+        height: ${isResult ? "120px" : "calc((100% - 100px) / 3)"};
+        border-radius: 10px;
+        /* background: #F3AC9C; */
+        background: #ebebeb;
+        box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 auto 20px;
+        & div {
+            width: 60%;
+            height: 100%;
+            background: #fff;
+            box-shadow: inherit;
+            border-radius: 10px;
+        }
+        & p {
+            width: 40%;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #273938;
+            line-height: 1.15;
+        }
+    `;
     return (
         <Card
             style={isSelected ? { background: "#F3AC9C" } : {}}
@@ -31,32 +60,3 @@ export default function RockScissorsPaperItem({
         </Card>
     );
 }
-
-const Card = styled.div`
-    padding: 8px;
-    width: 100%;
-    height: 120px;
-    border-radius: 10px;
-    /* background: #F3AC9C; */
-    background: #ebebeb;
-    box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    & div {
-        width: 60%;
-        height: 100%;
-        background: #fff;
-        box-shadow: inherit;
-        border-radius: 10px;
-    }
-    & p {
-        width: 40%;
-        text-align: center;
-        font-size: 24px;
-        font-weight: 700;
-        color: #273938;
-        line-height: 1.15;
-    }
-`;

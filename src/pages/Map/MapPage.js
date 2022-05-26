@@ -5,14 +5,12 @@ import { Container, Grid } from "../../elements";
 import MapComponent from "./components/MapComponent";
 import LandingModal from "./components/LandingModal";
 import QuestActivateLayer from "./components/QuestActivateLayer";
-import { QuestModal, MemoizedQuestModal } from "../Game/components/QuestModal";
 import { useWatchLocation } from "./hooks/locationHooks";
 import { getQuestList } from "../../services/main.service";
 import { useNavigate } from "react-router-dom";
 import { questFragment } from "../../modules/fragment";
 import BackArrow from "../../assets/images/png/back-arrow.png";
 import MenuIcon from "../../assets/images/icon/MenuIcon";
-import MyLocation from "../../assets/images/png/my-location.png";
 import CenterButton from "./elements/CenterButton";
 import QuestDetailLayer from "./components/QuestDetailLayer";
 
@@ -115,6 +113,12 @@ export default function MapPage() {
         {
             id: 11,
             type: "time",
+            let: 0,
+            lng: 0,
+        },
+        {
+            id: 12,
+            type: "mob",
             let: 0,
             lng: 0,
         },
