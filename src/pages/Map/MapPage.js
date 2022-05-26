@@ -13,6 +13,7 @@ import BackArrow from "../../assets/images/png/back-arrow.png";
 import MenuIcon from "../../assets/images/icon/MenuIcon";
 import CenterButton from "./elements/CenterButton";
 import QuestDetailLayer from "./components/QuestDetailLayer";
+import { useSelector } from "react-redux";
 
 export default function MapPage() {
     const navigate = useNavigate();
@@ -33,6 +34,9 @@ export default function MapPage() {
         regionGu: "땅땅구",
         regionSi: "땅땅",
     });
+
+    const userData = useSelector((state) => state.user.user);
+
     const {
         currentMapPosition,
         setCurrentMapPosition,
@@ -155,6 +159,7 @@ export default function MapPage() {
                 loading={loading}
                 region={region}
                 questLength={questList.length}
+                userData={userData}
             />
 
             <MapComponent
@@ -176,6 +181,7 @@ export default function MapPage() {
                 setClose={closeTab}
                 questList={questList}
                 selectQuest={selectQuestInSideTab}
+                userData={userData}
             />
 
             <UserInfo
@@ -188,7 +194,8 @@ export default function MapPage() {
             >
                 <MenuIcon />
                 <p>
-                    <span>Lv.77</span>강윤지
+                    <span>Lv.{userData === null ? 0 : userData.level}</span>
+                    {userData === null ? "땅땅" : userData.nickname}
                 </p>
             </UserInfo>
 

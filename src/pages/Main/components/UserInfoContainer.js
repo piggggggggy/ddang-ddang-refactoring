@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 
 export default function UserInfoContainer() {
     const userData = useSelector((state) => state.user.user);
-    console.log(userData);
+
+    if (userData === null) return;
     return (
         <UserInfoCardWrapper>
             <Grid
@@ -15,12 +16,12 @@ export default function UserInfoContainer() {
                     "min-width: 80px; width: 80px; height: 80px; margin-right: 15px; border-radius: 8px; overflow: hidden;"
                 }
             >
-                <Image alt={"profile image"} />
+                <Image src={userData.profileImg} alt={"profile image"} />
             </Grid>
 
             <Grid>
                 <NameAndLevel>
-                    <span>Lv. 88</span> 강윤지
+                    <span>Lv. {userData.level}</span> {userData.nickname}
                 </NameAndLevel>
 
                 <Grid
@@ -28,7 +29,9 @@ export default function UserInfoContainer() {
                         "position: relative; width: 100px; height: 8px; background: #D7D7D7;"
                     }
                 >
-                    <LevelProgressBar style={{ width: "70%" }} />
+                    <LevelProgressBar
+                        style={{ width: `${userData.expPoints}%` }}
+                    />
                 </Grid>
 
                 <SubInfoText>

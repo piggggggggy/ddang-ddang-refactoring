@@ -4,9 +4,15 @@ import { Grid } from "../../../elements";
 import SideTabButtons from "../elements/SideTabButtons";
 import QuestListConatiner from "./QuestListContainer";
 
-export default function MapSideTab({ open, setClose, questList, selectQuest }) {
+export default function MapSideTab({
+    open,
+    setClose,
+    questList,
+    selectQuest,
+    userData,
+}) {
     const navigate = useNavigate();
-
+    if (userData === null) return;
     return (
         <TabWrapper
             style={
@@ -18,17 +24,20 @@ export default function MapSideTab({ open, setClose, questList, selectQuest }) {
             <Back onClick={setClose} />
             <TabPaper>
                 <UserInfo onClick={() => navigate("/myPage")}>
-                    <img alt={"profile"} />
+                    <img src={userData.profileImg} alt={"profile"} />
                     <Grid mystyles={"width: auto; padding-left: 13px;"}>
                         <UserText>
-                            <span>Lv.77</span>강윤지
+                            <span>Lv.{userData.level}</span>
+                            {userData.nickname}
                         </UserText>
                         <Grid
                             mystyles={
                                 "position: relative; width: 100px; height: 5px; background: #D7D7D7;margin-top: 8px;"
                             }
                         >
-                            <LevelProgressBar style={{ width: "70%" }} />
+                            <LevelProgressBar
+                                style={{ width: `${userData.expPoints}%` }}
+                            />
                         </Grid>
                     </Grid>
                 </UserInfo>

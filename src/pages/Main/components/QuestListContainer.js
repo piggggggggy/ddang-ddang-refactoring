@@ -23,12 +23,12 @@ export default function QuestListContainer({
         },
         {
             name: "타임어택",
-            color: "#61B7FA",
+            color: "#EDEA50",
             type: "time",
         },
         {
             name: "땅문서",
-            color: "#EDEA50",
+            color: "#61B7FA",
             type: "feed",
         },
     ];

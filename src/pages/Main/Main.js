@@ -31,7 +31,11 @@ export default function Main() {
                 <QuestButtonContainer setType={setQuestType} />
             </Grid>
 
-            <LocalQuestSummary questList={questList} location={location} />
+            <LocalQuestSummary
+                region={region}
+                questList={questList}
+                location={location}
+            />
 
             <Navigation />
         </Container>

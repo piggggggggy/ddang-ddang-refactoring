@@ -3,40 +3,71 @@ import styled from "styled-components";
 import { keyframes } from "styled-components";
 import { Grid } from "../../../elements";
 import { localNameHandlerForSi } from "../../../modules/help";
-
-export default function LandingModal({ loading, region, questLength = 0 }) {
+import Area from "../../../assets/images/png/area.png";
+import { useSelector } from "react-redux";
+export default function LandingModal({
+    loading,
+    region,
+    questLength = 0,
+    userData,
+}) {
     const [landingOpen, setLandingOpen] = useState(true);
-
+    const regions = useSelector((state) => state.quest.region);
     return (
         <FixedWrapper
             style={!landingOpen ? { transform: "translateX(-100%)" } : {}}
         >
             <Title>
-                <span>{region.regionDong} </span>땅먹기
+                <span>
+                    {regions.regionDong === ""
+                        ? region.regionDong
+                        : regions.regionDong}{" "}
+                </span>
+                땅먹기
             </Title>
             <Address>
                 <p>
-                    {localNameHandlerForSi(region.regionSi)} {region.regionGu}{" "}
-                    {region.regionDong}
+                    {localNameHandlerForSi(
+                        regions.regionSi === ""
+                            ? region.regionSi
+                            : regions.regionSi
+                    )}{" "}
+                    {regions.regionGu === ""
+                        ? region.regionGu
+                        : regions.regionGu}{" "}
+                    {regions.regionDong === ""
+                        ? region.regionDong
+                        : regions.regionDong}
                 </p>
             </Address>
 
             <Info>
-                {localNameHandlerForSi(region.regionSi)}{" "}
+                {localNameHandlerForSi(
+                    regions.regionSi === "" ? region.regionSi : regions.regionSi
+                )}{" "}
                 <span>
-                    {region.regionGu} {region.regionDong}
+                    {regions.regionGu === ""
+                        ? region.regionGu
+                        : regions.regionGu}{" "}
+                    {regions.regionDong === ""
+                        ? region.regionDong
+                        : regions.regionDong}
                 </span>
                 에서
                 <br />
-                재미있는 미션이 윤지님을 기다려요
+                재미있는 미션이 {userData === null ? "땅땅" : userData.nickname}
+                님을 기다려요
             </Info>
 
             <Grid
                 flex
                 justifyContent={"center"}
                 alignItems={"center"}
-                mystyles={"width: 100%; height: 300px;"}
+                mystyles={
+                    "position: relative; width: 80vw; height: 64vw; max-width: 340px; max-height: 275px;"
+                }
             >
+                <MapImg src={Area} />
                 <Circle />
             </Grid>
 
@@ -136,22 +167,33 @@ const BottomButton = styled.div`
 
 const CircleMotion = keyframes`
   0% {
-    width: 293px;
-    height: 293px;
+    width: 64vw;
+    height: 64vw;
   }
   50% {
-    width: 200px;
-    height: 200px;
+    width: 48vw;
+    height: 48vw;
   }
   100% {
-    width: 293px
-    height: 293px;
+    width: 64vw;
+    height: 64vw;
   }
 `;
-
+const MapImg = styled.img`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+`;
 const Circle = styled.div`
-    width: 293px;
-    height: 293px;
+    position: relative;
+
+    width: 64vw;
+    max-width: 275px;
+    height: 64vw;
+    max-height: 275px;
     border-radius: 50%;
     background: #59e280;
     opacity: 0.1;

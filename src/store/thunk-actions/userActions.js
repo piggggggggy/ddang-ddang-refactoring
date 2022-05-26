@@ -10,8 +10,13 @@ export const loginCheckAxios = (token, navigate) => {
             const response = await AuthService.auth();
             const user = {
                 email: response.data.user.email,
+                expPoints: response.data.user.expPoints,
+                level: response.data.user.level,
+                mbti: response.data.user.mbti,
                 nickname: response.data.user.nickname,
                 playerId: response.data.user.playerId,
+                points: response.data.user.points,
+                profileImg: response.data.user.profileImg,
             };
 
             dispatch(userActions.loginCheck({ user, token }));
