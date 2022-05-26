@@ -62,7 +62,7 @@ export default function MapPage() {
         });
     };
     const setDdangDdang = () => {
-        if (inCircleList.length === 0) return;
+        // if (inCircleList.length === 0) return;
         setQuestActive(true);
     };
     const closeTab = () => {
@@ -267,9 +267,9 @@ export default function MapPage() {
             <QuestActivateLayer
                 open={questActive}
                 setClose={closeQuestActive}
-                list={inCircleList}
+                // list={inCircleList}
                 position={position}
-                // list={list}
+                list={list}
             />
         </Container>
     );
