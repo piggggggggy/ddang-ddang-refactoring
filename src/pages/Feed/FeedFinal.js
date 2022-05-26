@@ -27,7 +27,7 @@ import axios from "axios";
 import env from "react-dotenv";
 
 export default function Feed() {
-    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
+    const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
     console.log(currentMapPosition);
     const getPosition = () => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -39,6 +39,9 @@ export default function Feed() {
         });
         getmyAddress();
     };
+
+    const [currentAddress, setCurrentAddress] = React.useState(null);
+    console.log(currentAddress);
 
     const getmyAddress = () => {
         axios
@@ -52,7 +55,12 @@ export default function Feed() {
                 }
             )
             .then((res) => {
-                console.log(res);
+                console.log(res.data.documents[0].address.region_1depth_name);
+                setCurrentAddress({
+                    si: res.data.documents[0].address.region_1depth_name,
+                    gu: res.data.documents[0].address.region_2depth_name,
+                    dong: res.data.documents[0].address.region_3depth_name,
+                });
             })
             .catch((err) => {
                 console.log(err);
@@ -70,17 +78,25 @@ export default function Feed() {
 
     const [items, setItems] = React.useState([]);
 
-    const feeds = useSelector((state) => state?.feed.feeds);
+    const feeds = useSelector((state) => state.feed.feeds);
 
     const feedsLatest = () => {
         // dispatch(feedsLatestAxios(data));
-        FeedsService.feedsLatestAxios(regionsi, regionGu, regionDong, lat, lng)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        if (currentAddress !== null && currentMapPosition !== null) {
+            FeedsService.feedsLatestAxios(
+                currentAddress.si,
+                currentAddress.gu,
+                currentAddress.dong,
+                currentMapPosition.lat,
+                currentMapPosition.lng
+            )
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     };
 
     const feedsPopularity = () => {
