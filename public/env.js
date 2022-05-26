@@ -52,5 +52,6 @@ window.env = {
   "VSCODE_GIT_ASKPASS_NODE": "/Applications/Visual Studio Code.app/Contents/MacOS/Electron",
   "npm_node_execpath": "/usr/local/bin/node",
   "npm_config_prefix": "/usr/local",
-  "COLORTERM": "truecolor"
+  "COLORTERM": "truecolor",
+  "BASE_URL": "https://thaitour.shop"
 };

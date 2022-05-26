@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import CloseIcon from "../../assets/images/icon/CloseIcon";
-import QuestPaperBottomButton from "./elements/QuestPaperBottomButton";
-import QuestMobFirst from "./components/QuestMobFirst";
-import QuestMobSecond from "./components/QuestMobSecond";
-import QuestMobThird from "./components/QuestMobThird";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container } from "../../elements";
 import { questFragment } from "../../modules/fragment";
-import QuestMobFourth from "./components/QuestMobFourth";
 import MobPaper from "./components/MobPaper";
 
 export default function GamePage() {
