@@ -9,20 +9,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Container } from "../../elements";
 import { questFragment } from "../../modules/fragment";
 import QuestMobFourth from "./components/QuestMobFourth";
+import MobPaper from "./components/MobPaper";
 
 export default function GamePage() {
     const navigate = useNavigate();
     const { type, questId } = useParams();
-    const [progress, setProgress] = useState(0);
-    const [RSPIndex, setRSPIndex] = useState(null);
-    const [result, setResult] = useState("");
 
     const fragment = questFragment(type);
-    const randomIndex = ((min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
-    })(0, 3);
+
     const Wrapper = styled.div`
         width: 100%;
         height: 100vh;
@@ -32,13 +26,6 @@ export default function GamePage() {
         justify-content: center;
         align-items: center;
     `;
-    const Dot = styled.div`
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        margin: 0 8px;
-        background: ${fragment.subColor};
-    `;
 
     return (
         <Container>
@@ -47,56 +34,7 @@ export default function GamePage() {
                     <CloseIcon color={"#fff"} />
                 </CloseButton>
                 <Title>{fragment.text}</Title>
-                <Paper>
-                    {progress === 0 && (
-                        <QuestMobFirst
-                            progress={progress}
-                            setProgress={setProgress}
-                        />
-                    )}
-                    {progress === 1 && (
-                        <QuestMobSecond
-                            progress={progress}
-                            setProgress={setProgress}
-                            RSPIndex={RSPIndex}
-                            setRSPIndex={setRSPIndex}
-                        />
-                    )}
-                    {progress === 2 && (
-                        <QuestMobThird
-                            progress={progress}
-                            setProgress={setProgress}
-                            RSPIndex={RSPIndex}
-                            randomIndex={randomIndex}
-                            result={result}
-                            setResult={setResult}
-                        />
-                    )}
-                    {progress === 3 && (
-                        <QuestMobFourth
-                            progress={progress}
-                            setProgress={setProgress}
-                            setRSPIndex={setRSPIndex}
-                            result={result}
-                            questId={questId}
-                        />
-                    )}
-
-                    <DotContainer>
-                        {Array.from(
-                            { length: type === "mob" ? 4 : 2 },
-                            () => 0
-                        ).map((item, index) => (
-                            <Dot
-                                style={
-                                    progress === index
-                                        ? { background: "#fff" }
-                                        : {}
-                                }
-                            />
-                        ))}
-                    </DotContainer>
-                </Paper>
+                {type === "mob" && <MobPaper type={type} questId={questId} />}
             </Wrapper>
         </Container>
     );
@@ -113,21 +51,4 @@ const Title = styled.p`
     line-height: 1.15;
     color: #fff;
     padding-bottom: 20px;
-`;
-
-const Paper = styled.div`
-    position: relative;
-    width: 90%;
-    height: 70%;
-    border-radius: 4px;
-    background: #fff;
-    box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
-`;
-
-const DotContainer = styled.div`
-    position: absolute;
-    bottom: -5%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
 `;
