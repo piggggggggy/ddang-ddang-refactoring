@@ -33,6 +33,7 @@ export default function Mbti(props) {
 
     const [cardSelected, setCardSelected] = React.useState("");
     const [profile, setProfile] = React.useState("");
+    console.log(cardSelected);
 
     const MbtiClick = (idx) => {
         setCardSelected(mbtiData[idx].name);

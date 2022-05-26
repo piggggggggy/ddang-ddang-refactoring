@@ -10,7 +10,7 @@ const headers = {
 };
 
 const accessToken = {
-    Authorization: getWithExpiry("accessToken"),
+    Authorization: TokenService.getLocalAccessToken("accessToken"),
 };
 const refreshToken = {
     refreshToken: TokenService.getLocalRefreshToken(),

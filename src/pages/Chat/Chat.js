@@ -18,8 +18,9 @@ import sendIcon from "../../assets/images/png/chat/send.png";
 let socket;
 const ChatPage = () => {
     const navigate = useNavigate();
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState(""); // input 값을 없애준다
     const [chatHistory, setChatHistory] = useState([]);
+
     const params = useParams();
     const socketUrl = "http://diasm.mooo.com:3002";
 
@@ -36,6 +37,7 @@ const ChatPage = () => {
 
         socket.emit("enterRoom", { userId, nickname, roomName }, (response) => {
             console.log("response", response);
+            setChatHistory([...chatHistory, ...response.messages]);
         });
 
         return () => {
@@ -46,6 +48,7 @@ const ChatPage = () => {
 
     useEffect(() => {
         socket.on("getMessage", (msg) => {
+            console.log(msg);
             setChatHistory((prevMsg) => [...prevMsg, msg]);
             setTimeout(() => {
                 var div = document.getElementById("chat_body");
@@ -53,6 +56,8 @@ const ChatPage = () => {
             }, 10);
         });
     }, []);
+
+    console.log("asdf");
 
     const sendMessage = (e) => {
         // e.preventDefault();

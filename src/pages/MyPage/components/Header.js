@@ -2,7 +2,7 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../elements/ProgressBar";
 import { Grid, Text } from "../elements/index";
 
 export default function Header(props) {
