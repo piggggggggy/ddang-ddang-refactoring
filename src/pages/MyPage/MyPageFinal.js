@@ -8,51 +8,92 @@ import AchievementHeader from "../MyPage/components/AchievementHeader";
 import Graph from "../MyPage/components/Graph";
 import BackgroundPaper from "../MyPage/components/BackgroundPaper";
 import Achievement from "../MyPage/components/Achievement";
-
+import MapView from "../MyPage/components/Map";
+import { useSelector } from "react-redux";
 import api from "../../modules/api";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
+import ProfileModal from "../MyPage/components/ProfileModal";
+import Settings from "../MyPage/components/Settings";
 
 export default function MyPageFinal() {
-    React.useEffect(() => {
-        getData();
-    }, []);
-
     const [userData, setUserData] = React.useState({});
 
     const [feed, setFeed] = React.useState([]);
+    console.log(feed);
+    const authData = useSelector((state) => state.user.user);
+    console.log(authData);
 
     const getData = () => {
         api.get("/api/players/mypage")
             .then((res) => {
-                setUserData({ ...userData, ...res?.data?.rows });
-                setFeed(
-                    res?.data?.rows?.achievedMission?.filter((value) => {
-                        return value.type === "feed";
-                    })
-                );
+                console.log(res);
+                setUserData({ ...userData, ...res.data.rows });
+                if (res.data.rows.achievedMission !== null) {
+                    setFeed(
+                        res.data.rows.achievedMission.filter((value) => {
+                            return value.type === "feed";
+                        })
+                    );
+                }
             })
             .catch((res) => {
                 console.log(res);
             });
     };
 
+    React.useEffect(() => {
+        getData();
+    }, []);
+
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
+
+    const [page, setPage] = React.useState(1);
+    const goBack = () => {
+        setPage(1);
+    };
+
+    const settingsOpen = () => {
+        setPage(2);
+    };
+
     return (
         <Container>
-            <BackgroundPaper />
-            <Grid
-                flex
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                mystyles={
-                    "position: relative; z-index: 100; padding: 0 20px; margin-bottom: 200px;"
-                }
-            >
-                <Header userData={userData} />
-                <AchievementHeader userData={userData} feed={feed} />
-                <Graph />
-                <Achievement />
-            </Grid>
-            <Navigation />
+            {page === 1 && (
+                <>
+                    <BackgroundPaper />
+                    <Grid
+                        flex
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        mystyles={
+                            "position: relative; z-index: 100; padding: 0 20px; margin-bottom: 200px;"
+                        }
+                    >
+                        <Header
+                            profile={
+                                authData !== null ? authData.profileImg : ""
+                            }
+                            userData={userData}
+                            openModal={handleOpen}
+                            settingsOpen={settingsOpen}
+                        />
+                        <AchievementHeader userData={userData} feed={feed} />
+                        <Graph />
+                        <Achievement />
+                        <MapView />
+                        <ProfileModal open={open} handleClose={handleClose} />
+                    </Grid>
+                    <Navigation />
+                </>
+            )}
+            {page === 2 && (
+                <>
+                    <Settings goBack={goBack} />
+                </>
+            )}
         </Container>
     );
 }

@@ -13,6 +13,10 @@ export const loginCheckAxios = (token, navigate) => {
                 email: response.data.user.email,
                 nickname: response.data.user.nickname,
                 playerId: response.data.user.playerId,
+                expPoints: response.data.user.expPoints,
+                mbti: response.data.user.mbti,
+                points: response.data.user.points,
+                profileImg: response.data.user.profileImg,
             };
 
             dispatch(userActions.loginCheck({ user, token }));
