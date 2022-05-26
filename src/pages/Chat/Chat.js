@@ -8,6 +8,8 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Grid, Input, Text, Button } from "./elements/index";
 import Navigation from "../../components/Navigation";
+import axios from "axios";
+import env from "react-dotenv";
 
 let socket;
 const ChatPage = () => {
@@ -81,6 +83,54 @@ const ChatPage = () => {
         event.preventDefault();
         exitRoom();
     });
+
+    // 좌표 찾기
+    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
+    console.log(currentMapPosition);
+    const getPosition = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position);
+            setCurrentMapPosition({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            });
+        });
+        getmyAddress();
+    };
+
+    const [address, setAddress] = React.useState({});
+    console.log(address);
+
+    // 카카오 api 로 시, 구, 동 정보 받기
+    const getmyAddress = () => {
+        axios
+            .get(
+                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${currentMapPosition?.lng}&y=${currentMapPosition?.lat}&input_coord=WGS84`,
+                {
+                    headers: {
+                        Accept: "*/*",
+                        Authorization: `KakaoAK ${env.MAP_KAKAO_API_KEY}`,
+                    },
+                }
+            )
+            .then((res) => {
+                console.log(res);
+                const data = {
+                    si: res.data.documents?.[0]?.address.region_1depth_name,
+                    gu: res.data.documents?.[0]?.address.region_2depth_name,
+                    dong: res.data.documents?.[0]?.address.region_3depth_name,
+                };
+                console.log(data);
+                setAddress(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    React.useEffect(() => {
+        getPosition();
+    }, []);
 
     return (
         <Container

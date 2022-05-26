@@ -22,18 +22,18 @@ export default function Ranking() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
             });
+            getmyAddress(position.coords.latitude, position.coords.longitude);
         });
-        getmyAddress();
     };
 
     const [address, setAddress] = React.useState({});
     console.log(address);
 
     // 카카오 api 로 시, 구, 동 정보 받기
-    const getmyAddress = () => {
+    const getmyAddress = (lat, lng) => {
         axios
             .get(
-                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${currentMapPosition?.lng}&y=${currentMapPosition?.lat}&input_coord=WGS84`,
+                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
                 {
                     headers: {
                         Accept: "*/*",
@@ -42,13 +42,13 @@ export default function Ranking() {
                 }
             )
             .then((res) => {
-                console.log(res);
                 const data = {
-                    si: res.data.documents?.[0]?.address.region_1depth_name,
-                    gu: res.data.documents?.[0]?.address.region_2depth_name,
-                    dong: res.data.documents?.[0]?.address.region_3depth_name,
+                    si: res?.data?.documents?.[0]?.address?.region_1depth_name,
+                    gu: res?.data?.documents?.[0]?.address?.region_2depth_name,
+                    dong: res?.data?.documents?.[0]?.address
+                        ?.region_3depth_name,
                 };
-                console.log(data);
+
                 setAddress(data);
             })
             .catch((err) => {
