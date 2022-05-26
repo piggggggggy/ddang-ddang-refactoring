@@ -77,6 +77,8 @@ export default function Ranking() {
                 console.log(err);
             });
     };
+    console.log(group);
+    console.log(individual);
 
     // 메뉴 리스트
     const tabList = [
@@ -171,6 +173,7 @@ export default function Ranking() {
                     alignItems="center"
                     mystyles="border: 1px solid #61F88C; margin-top: 20px; width: 195px; height: 195px; border-radius: 168px; position: relative;"
                 >
+                    {group.length === 0 && <>Hello</>}
                     {tabIndex === 0 && (
                         <>
                             <Grid
