@@ -8,10 +8,10 @@ import ProfilePreview from "../elements/ProfilePreview";
 // aws s3 bucket
 import AWS from "aws-sdk";
 
-const S3_BUCKET = env.AWS_S3_BUCKET;
+const S3_BUCKET = env.AWS_S3_BUKCET;
 console.log(env.AWS_S3_BUCKET);
 console.log(process.env.AWS_S3_BUCKET);
-const REGION = env.AWS_REGION;
+const REGION = "ap-northeast-2";
 
 AWS.config.update({
     accessKeyId: env.AWS_ACCESS_KEY_ID,
