@@ -3,9 +3,9 @@ import axios from "axios";
 import AWS from "aws-sdk";
 import api from "../../../modules/api";
 
-const S3_BUCKET = env.AWS_S3_BUCKET;
-const REGION = env.AWS_REGION;
-const AWS_API_ENDPOINT = env.AWS_API_ENDPOINT;
+const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUCKET;
+const REGION = process.env.REACT_APP_AWS_REGION;
+const AWS_API_ENDPOINT = process.env.REACT_APP_AWS_API_ENDPOINT;
 
 export const data = {
     profileImage: "url",
@@ -20,8 +20,8 @@ const myBucket = new AWS.S3({
 });
 
 AWS.config.update({
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRECT_ACCESS_KEY,
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRECT_ACCESS_KEY,
 });
 
 const handleImgChange = async (file) => {

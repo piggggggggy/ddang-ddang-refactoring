@@ -21,11 +21,11 @@ export default function MapView() {
     const getmyAddress = () => {
         axios
             .get(
-                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=127.4147562&y=36.3298522&input_coord=WGS84`,
+                `${process.REACT_APP_KAKAO_BASE_URL}/geo/coord2address.json?x=127.4147562&y=36.3298522&input_coord=WGS84`,
                 {
                     headers: {
                         Accept: "*/*",
-                        Authorization: `KakaoAK ${env.MAP_KAKAO_API_KEY}`,
+                        Authorization: `KakaoAK ${process.REACT_APP_KAKAO_API_KEY}`,
                     },
                 }
             )

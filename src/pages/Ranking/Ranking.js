@@ -34,11 +34,11 @@ export default function Ranking() {
     const getmyAddress = (lat, lng) => {
         axios
             .get(
-                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
+                `${process.REACT_APP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
                 {
                     headers: {
                         Accept: "*/*",
-                        Authorization: `KakaoAK ${env.MAP_KAKAO_API_KEY}`,
+                        Authorization: `KakaoAK ${process.REACT_APP_KAKAO_API_KEY}`,
                     },
                 }
             )
