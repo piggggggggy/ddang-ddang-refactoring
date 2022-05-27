@@ -17,17 +17,18 @@ function App() {
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
-        const token = TokenService.getLocalAccessToken();
-        console.log(token)
-        if (!token) {
+        const refreshtoken = TokenService.getLocalRefreshToken();
+        const accesstoken = TokenService.getLocalAccessToken();
+
+
+
+        if (!refreshtoken && !accesstoken) {
             alert("로그인이 필요합니다.");
             navigate("/signin");
             setIsLoading(false);
         } else {
             dispatch(
-                loginCheckAxios(token, (url) => {
-                    navigate(url);
-                })
+                loginCheckAxios(accesstoken)
             );
             setIsLoading(false);
         }

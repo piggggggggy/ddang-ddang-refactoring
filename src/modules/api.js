@@ -13,7 +13,7 @@ const accessToken = {
     Authorization: tokenService.getLocalAccessToken(),
 };
 const refreshToken = {
-    refreshToken: TokenService.getLocalRefreshToken(),
+    refreshtoken: TokenService.getLocalRefreshToken(),
 };
 
 const instance = axios.create({
@@ -28,7 +28,8 @@ instance.interceptors.request.use(
     (config) => {
         // 로컬에 저장되어 있는 토큰을 가져온다.
         const token = TokenService.getLocalAccessToken();
-        console.log(token)
+        console.log("언제실행되는걸까");
+        console.log(token);
         //만약에 토큰이 있다면
         if (token) {
             //config의 헤더 안에 토큰을 넣어준다.
@@ -56,7 +57,9 @@ instance.interceptors.response.use(
                         return alert("로그인 해주세요");
                     }
 
-                    const rs = await axios.get("/api/players/auth", {
+                    console.log("실행되나");
+                    const rs = await axios.get("/api/players/auth/getToken", {
+                        baseURL: process.env.REACT_APP_BASE_URL,
                         headers: {
                             ...headers,
                             ...refreshToken,
@@ -64,6 +67,10 @@ instance.interceptors.response.use(
                     });
 
                     const accesstoken = rs.headers["accesstoken"];
+
+                    if (!TokenService.getLocalAccessToken()){
+                        TokenService.setAccessToken(accesstoken);
+                    }
                     TokenService.updateLocalAccessToken(accesstoken);
                     return instance(originalConfig);
                 } catch (_error) {
