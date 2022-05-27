@@ -11,6 +11,7 @@ const feedsPopularityAxios = async (si, gu, dong, lat, lng) => {
     );
 };
 const feedsDistanceAxios = async (si, gu, dong, lat, lng) => {
+    console.log(si, gu, dong, lat, lng);
     return await api.get(
         `api/feeds?type=distance&regionSi=${si}&regionGu=${gu}&regionDong=${dong}&lat=${lat}&lng=${lng}`
     );

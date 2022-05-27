@@ -2,7 +2,7 @@ import { FlashOnOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getQuestList } from "../../../services/main.service";
-import { userActions } from "../../../store/slices/questSlice";
+import env from "react-dotenv";
 
 const useMainData = () => {
     const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const useMainData = () => {
     });
 
     useEffect(() => {
+        console.log(env.BASE_URL);
         setLoading(true);
         navigator.geolocation.getCurrentPosition(async (res) => {
             setLocation({
