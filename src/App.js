@@ -31,9 +31,9 @@ function App() {
         }
     }, []);
 
-    if (isLoading) {
-        return <Spinner>Loading...</Spinner>;
-    }
+    // if (isLoading) {
+    //     return <Spinner>Loading...</Spinner>;
+    // }
 
     return (
         <Container>
