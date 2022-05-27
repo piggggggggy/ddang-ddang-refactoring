@@ -2,6 +2,7 @@ import React from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import axios from "axios";
 import env from "react-dotenv";
+import KakaoService from "../../../services/kakao.service";
 import { Grid, Button, Text } from "../elements/index";
 
 export default function MapView() {
@@ -15,27 +16,14 @@ export default function MapView() {
                 lng: position.coords.longitude,
             });
         });
-        getmyAddress();
+
+
+        const data = KakaoService.getAddress(127.4147562,36.3298522);
+        // 그냥 위도 경도로 주소를 가져온다
+
     };
 
-    const getmyAddress = () => {
-        axios
-            .get(
-                `${process.env.REACT_APP_KAKAO_BASE_URL}/geo/coord2address.json?x=127.4147562&y=36.3298522&input_coord=WGS84`,
-                {
-                    headers: {
-                        Accept: "*/*",
-                        Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}`,
-                    },
-                }
-            )
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+
     React.useEffect(() => {
         getPosition();
     }, []);

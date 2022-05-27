@@ -18,16 +18,18 @@ function App() {
 
     React.useEffect(() => {
         const token = TokenService.getLocalAccessToken();
-        if (token) {
+        console.log(token)
+        if (!token) {
+            alert("로그인이 필요합니다.");
+            navigate("/signin");
+            setIsLoading(false);
+        } else {
             dispatch(
                 loginCheckAxios(token, (url) => {
                     navigate(url);
                 })
             );
-
             setIsLoading(false);
-        } else {
-            return;
         }
     }, []);
 
