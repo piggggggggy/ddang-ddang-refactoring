@@ -16,24 +16,24 @@ function App() {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = React.useState(true);
 
-    React.useEffect(() => {
-        const token = TokenService.getLocalAccessToken();
-        if (token) {
-            dispatch(
-                loginCheckAxios(token, (url) => {
-                    navigate(url);
-                })
-            );
+    // React.useEffect(() => {
+    //     const token = TokenService.getLocalAccessToken();
+    //     if (token) {
+    //         dispatch(
+    //             loginCheckAxios(token, (url) => {
+    //                 navigate(url);
+    //             })
+    //         );
 
-            setIsLoading(false);
-        } else {
-            return;
-        }
-    }, []);
+    //         setIsLoading(false);
+    //     } else {
+    //         return;
+    //     }
+    // }, []);
 
-    if (isLoading) {
-        return <Spinner>Loading...</Spinner>;
-    }
+    // if (isLoading) {
+    //     return <Spinner>Loading...</Spinner>;
+    // }
 
     return (
         <Container>

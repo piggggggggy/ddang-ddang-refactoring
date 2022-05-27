@@ -60,6 +60,16 @@ export default function MyPageFinal() {
         setPage(2);
     };
 
+    const [tabIndex, setTabIndex] = React.useState(false);
+    const changeTab = () => {
+        setTabIndex(!tabIndex);
+    };
+
+    const [openSideMenu, setOpenSideMenu] = React.useState(false);
+    const sideOpen = () => {
+        setOpenSideMenu(!openSideMenu);
+    };
+
     return (
         <Container>
             {page === 1 && (
@@ -85,19 +95,27 @@ export default function MyPageFinal() {
                                     userData={userData}
                                     openModal={handleOpen}
                                     settingsOpen={settingsOpen}
+                                    openSideMenu={sideOpen}
                                 />
                                 <AchievementHeader
                                     userData={userData}
                                     feed={feed}
                                 />
                                 <Graph />
-                                <Achievement />
+                                <Achievement
+                                    changeTab={changeTab}
+                                    tabIndex={tabIndex}
+                                />
                                 <MapView />
                                 <ProfileModal
                                     open={open}
                                     handleClose={handleClose}
                                 />
-                                <MapSideTab userData={userData} />
+                                {/* <MapSideTab
+                                    userData={userData}
+                                    open={openSideMenu}
+                                    setClose={sideOpen}
+                                /> */}
                             </>
                         )}
                     </Grid>

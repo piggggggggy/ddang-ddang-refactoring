@@ -4,13 +4,7 @@ import { Grid, Text } from "../../../elements";
 import SideTabButtons from "../../Map/elements/SideTabButtons";
 import QuestListConatiner from "../../Map/components/QuestListContainer";
 
-export default function MapSideTab({
-    open,
-    setClose,
-    questList,
-    selectQuest,
-    userData,
-}) {
+export default function MapSideTab({ open, setClose, userData }) {
     const navigate = useNavigate();
     console.log(userData);
     return (
