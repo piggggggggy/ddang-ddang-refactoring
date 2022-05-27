@@ -7,7 +7,6 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import IconButton from "@mui/material/IconButton";
 
 import ProfilePreview from "../../Sign/Signup/components/ProfilePreview";
-import env from "react-dotenv";
 
 import { Input } from "./index";
 

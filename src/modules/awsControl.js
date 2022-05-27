@@ -1,4 +1,3 @@
-import env from "react-dotenv";
 import axios from "axios";
 import AWS from "aws-sdk";
 import api from "../../../modules/api";

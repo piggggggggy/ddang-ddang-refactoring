@@ -11,7 +11,6 @@ import Navigation from "../../components/Navigation";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
-import env from "react-dotenv";
 
 import sendIcon from "../../assets/images/png/chat/send.png";
 

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
-import env from "react-dotenv";
 
 import Container from "../../elements/Container";
 import Navigation from "../../components/Navigation";

@@ -28,6 +28,7 @@ instance.interceptors.request.use(
     (config) => {
         // 로컬에 저장되어 있는 토큰을 가져온다.
         const token = TokenService.getLocalAccessToken();
+        console.log(token)
         //만약에 토큰이 있다면
         if (token) {
             //config의 헤더 안에 토큰을 넣어준다.
@@ -54,6 +55,17 @@ instance.interceptors.response.use(
                     if (!getWithExpiry("refreshToken")) {
                         return alert("로그인 해주세요");
                     }
+                    console.log("-----------------------------")
+                    console.log(
+                       { headers: {
+                            ...headers,
+                            ...refreshToken,
+                        },
+                    }
+                    )
+
+
+
 
                     const rs = await axios.get("/api/players/auth", {
                         headers: {

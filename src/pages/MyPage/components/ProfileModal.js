@@ -48,7 +48,6 @@ export default function ModalProfile(props) {
     const [finalData, setFinalData] = React.useState({
         profileImg: "",
     });
-    console.log(env.S3_BUCKET);
 
     const handleImgChange = async (e) => {
         const f = e.target.files[0];
