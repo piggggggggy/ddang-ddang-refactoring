@@ -15,6 +15,8 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import ProfileModal from "../MyPage/components/ProfileModal";
 import Settings from "../MyPage/components/Settings";
 import MapSideTab from "../MyPage/components/MapSideTab";
+import BottomPost from "../MyPage/components/BottomPost";
+import FeedBottomPost from "../MyPage/components/FeedBottomPost";
 
 export default function MyPageFinal() {
     const [userData, setUserData] = React.useState(null);
@@ -30,6 +32,7 @@ export default function MyPageFinal() {
             .then((res) => {
                 console.log(res);
                 setUserData({ ...userData, ...res.data.rows });
+
                 if (res.data.rows.achievedMission !== null) {
                     setFeed(
                         res.data.rows.achievedMission.filter((value) => {
@@ -111,11 +114,8 @@ export default function MyPageFinal() {
                                     open={open}
                                     handleClose={handleClose}
                                 />
-                                {/* <MapSideTab
-                                    userData={userData}
-                                    open={openSideMenu}
-                                    setClose={sideOpen}
-                                /> */}
+                                <BottomPost />
+                                <FeedBottomPost />
                             </>
                         )}
                     </Grid>
