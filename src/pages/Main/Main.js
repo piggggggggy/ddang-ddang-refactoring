@@ -7,6 +7,9 @@ import MainMapContainer from "./components/MainMapContainer";
 import Navigation from "../../components/Navigation";
 import { useState } from "react";
 import { useMainData } from "./hooks/MainHooks";
+import { localNameHandlerForSi } from "../../modules/help";
+import MenuIcon from "../../assets/images/icon/MenuIcon";
+import Location from "../../assets/images/icon/Location";
 
 export default function Main() {
     const { questList, loading, questType, setQuestType, location, region } =
@@ -19,17 +22,30 @@ export default function Main() {
             <Grid
                 mystyles={"position: relative; z-index: 100; padding: 0 30px;"}
             >
+                <Grid
+                    mystyles={
+                        "position: absolute; top: 52px; left: 30px; width: 24px; height: 18px"
+                    }
+                >
+                    <MenuIcon size={"medium"} />
+                </Grid>
                 <Address>
-                    {region.regionSi}시 {region.regionGu} {region.regionDong}
+                    <Location />
+                    {localNameHandlerForSi(region.regionSi)} {region.regionGu}{" "}
+                    {region.regionDong}
                 </Address>
-                <UserInfoContainer />
+                <UserInfoContainer region={region} />
 
                 <MainMapContainer type={questType} questList={questList} />
 
                 <QuestButtonContainer setType={setQuestType} />
             </Grid>
 
-            <LocalQuestSummary questList={questList} location={location} />
+            <LocalQuestSummary
+                region={region}
+                questList={questList}
+                location={location}
+            />
 
             <Navigation />
         </Container>
@@ -43,7 +59,12 @@ const BackgroundPaper = styled.div`
     z-index: 0;
     width: 1500px;
     height: 1500px;
-    background: #5deb85;
+    background: linear-gradient(
+        169.59deg,
+        #58e07e 4.25%,
+        #61f88c 50.84%,
+        #58e07e 99.4%
+    );
     border-radius: 50%;
 `;
 const Address = styled.p`

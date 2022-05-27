@@ -1,8 +1,11 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
-import TestImage from "../../../assets/images/png/screenshot.png";
+import { useSelector } from "react-redux";
 
-export default function UserInfoContainer() {
+export default function UserInfoContainer({ region }) {
+    const userData = useSelector((state) => state.user.user);
+
+    if (userData === null) return;
     return (
         <UserInfoCardWrapper>
             <Grid
@@ -13,12 +16,12 @@ export default function UserInfoContainer() {
                     "min-width: 80px; width: 80px; height: 80px; margin-right: 15px; border-radius: 8px; overflow: hidden;"
                 }
             >
-                <Image src={TestImage} alt={"profile image"} />
+                <Image src={userData.profileImg} alt={"profile image"} />
             </Grid>
 
             <Grid>
                 <NameAndLevel>
-                    <span>Lv. 88</span> 강윤지
+                    <span>Lv. {userData.level}</span> {userData.nickname}
                 </NameAndLevel>
 
                 <Grid
@@ -26,11 +29,13 @@ export default function UserInfoContainer() {
                         "position: relative; width: 100px; height: 8px; background: #D7D7D7;"
                     }
                 >
-                    <LevelProgressBar style={{ width: "70%" }} />
+                    <LevelProgressBar
+                        style={{ width: `${userData.expPoints}%` }}
+                    />
                 </Grid>
 
                 <SubInfoText>
-                    여기에 등어갈 정보는 마이페이지에서 끌어올래
+                    {region.regionDong}을 점령한 {userData.mbti}
                 </SubInfoText>
             </Grid>
         </UserInfoCardWrapper>

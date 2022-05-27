@@ -1,40 +1,81 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 import { Grid } from "../../../elements";
+import { localNameHandlerForSi } from "../../../modules/help";
+import Area from "../../../assets/images/png/area.png";
+import { useSelector } from "react-redux";
+import { setDataToSessionStorage } from "../../../shared/utils";
+export default function LandingModal({
+    loading,
+    region,
+    questLength = 0,
+    userData,
+}) {
+    const [landingOpen, setLandingOpen] = useState(false);
+    const regions = useSelector((state) => state.quest.region);
 
-export default function LandingModal({ loading, region, questLength = 0 }) {
-    const [landingOpen, setLandingOpen] = useState(true);
-
+    useEffect(() => {
+        const landingCheck = sessionStorage.getItem("landingCheck");
+        if (!landingCheck) {
+            setLandingOpen(true);
+        }
+    }, []);
     return (
         <FixedWrapper
             style={!landingOpen ? { transform: "translateX(-100%)" } : {}}
         >
             <Title>
-                <span>{region.regionDong} </span>땅먹기
+                <span>
+                    {regions.regionDong === ""
+                        ? region.regionDong
+                        : regions.regionDong}{" "}
+                </span>
+                땅먹기
             </Title>
             <Address>
                 <p>
-                    {region.regionSi}시 {region.regionGu} {region.regionDong}
+                    {localNameHandlerForSi(
+                        regions.regionSi === ""
+                            ? region.regionSi
+                            : regions.regionSi
+                    )}{" "}
+                    {regions.regionGu === ""
+                        ? region.regionGu
+                        : regions.regionGu}{" "}
+                    {regions.regionDong === ""
+                        ? region.regionDong
+                        : regions.regionDong}
                 </p>
             </Address>
 
             <Info>
-                {region.regionSi}시{" "}
+                {localNameHandlerForSi(
+                    regions.regionSi === "" ? region.regionSi : regions.regionSi
+                )}{" "}
                 <span>
-                    {region.regionGu} {region.regionDong}
+                    {regions.regionGu === ""
+                        ? region.regionGu
+                        : regions.regionGu}{" "}
+                    {regions.regionDong === ""
+                        ? region.regionDong
+                        : regions.regionDong}
                 </span>
                 에서
                 <br />
-                재미있는 미션이 윤지님을 기다려요
+                재미있는 미션이 {userData === null ? "땅땅" : userData.nickname}
+                님을 기다려요
             </Info>
 
             <Grid
                 flex
                 justifyContent={"center"}
                 alignItems={"center"}
-                mystyles={"width: 100%; height: 300px;"}
+                mystyles={
+                    "position: relative; width: 80vw; height: 64vw; max-width: 340px; max-height: 275px; min-height: 220px"
+                }
             >
+                <MapImg src={Area} />
                 <Circle />
             </Grid>
 
@@ -46,6 +87,7 @@ export default function LandingModal({ loading, region, questLength = 0 }) {
                 style={{ background: loading ? "#909090" : "#5EEF87" }}
                 onClick={() => {
                     if (loading) return;
+                    setDataToSessionStorage("landingCheck", 1);
                     setLandingOpen(false);
                 }}
             >
@@ -67,8 +109,9 @@ const FixedWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    transition: all 500ms ease;
+    justify-content: space-between;
+    transition: all 300ms ease;
+    padding: 30px 0;
 `;
 
 const Title = styled.p`
@@ -100,7 +143,7 @@ const Info = styled.p`
     font-size: 14px;
     line-height: 1.3;
     color: #05240e;
-    padding: 35px 0 40px;
+    /* padding: 35px 0 40px; */
     & span {
         font-weight: 700;
     }
@@ -110,7 +153,7 @@ const SubInfo = styled.p`
     font-size: 16px;
     line-height: 1.15;
     color: #05240e;
-    padding: 43px 0 22px;
+    /* padding: 43px 0 22px; */
     & span {
         font-weight: 700;
     }
@@ -134,22 +177,33 @@ const BottomButton = styled.div`
 
 const CircleMotion = keyframes`
   0% {
-    width: 293px;
-    height: 293px;
+    width: 64vw;
+    height: 64vw;
   }
   50% {
-    width: 200px;
-    height: 200px;
+    width: 48vw;
+    height: 48vw;
   }
   100% {
-    width: 293px
-    height: 293px;
+    width: 64vw;
+    height: 64vw;
   }
 `;
-
+const MapImg = styled.img`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+`;
 const Circle = styled.div`
-    width: 293px;
-    height: 293px;
+    position: relative;
+
+    width: 64vw;
+    max-width: 275px;
+    height: 64vw;
+    max-height: 275px;
     border-radius: 50%;
     background: #59e280;
     opacity: 0.1;

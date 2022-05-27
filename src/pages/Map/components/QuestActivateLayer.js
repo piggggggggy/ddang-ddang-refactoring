@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid } from "../../../elements";
 import SelectedQuestCard from "../elements/SelectedQuestCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
+import { getUpdatedDistance } from "../../../modules/location";
 
-export default function QuestActivateLayer({ open, setClose, list }) {
+export default function QuestActivateLayer({ open, setClose, list, position }) {
     const navigate = useNavigate();
 
     return (
@@ -29,6 +29,14 @@ export default function QuestActivateLayer({ open, setClose, list }) {
                                 selectQuest={() =>
                                     navigate(`/quest/${item.type}/${item.id}`)
                                 }
+                                isInCircle={
+                                    getUpdatedDistance({
+                                        lat: position.lat,
+                                        lng: position.lng,
+                                        _lat: item.lat,
+                                        _lng: item.lng,
+                                    }) <= 0.03
+                                }
                             />
                         ))}
                     </Slider>
@@ -46,7 +54,7 @@ const Dimmed = styled.div`
     width: 100vw;
     max-width: 428px;
     height: 100vh;
-    background: rgba(132, 132, 132, 0.3);
+    background: rgba(39, 57, 56, 0.5);
 `;
 
 const SlidWrapper = styled.div`

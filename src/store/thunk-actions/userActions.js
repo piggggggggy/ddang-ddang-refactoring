@@ -11,10 +11,11 @@ export const loginCheckAxios = (token, navigate) => {
             console.log(response);
             const user = {
                 email: response.data.user.email,
+                expPoints: response.data.user.expPoints,
+                level: response.data.user.level,
+                mbti: response.data.user.mbti,
                 nickname: response.data.user.nickname,
                 playerId: response.data.user.playerId,
-                expPoints: response.data.user.expPoints,
-                mbti: response.data.user.mbti,
                 points: response.data.user.points,
                 profileImg: response.data.user.profileImg,
             };

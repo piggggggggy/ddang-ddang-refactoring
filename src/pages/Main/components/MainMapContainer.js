@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { MapMarker } from "react-kakao-maps-sdk";
 import KakaoMapDefault from "../../../components/KakaoMapDefault";
 import { useNavigate } from "react-router-dom";
+import { questFragment } from "../../../modules/fragment";
 
 export default function MainMapContainer({ type, questList }) {
     const navigate = useNavigate();
@@ -45,6 +46,13 @@ export default function MainMapContainer({ type, questList }) {
                               <MapMarker
                                   key={item.questId}
                                   position={{ lat: item.lat, lng: item.lng }}
+                                  image={{
+                                      src: questFragment(item.type).icon,
+                                      size: {
+                                          width: 14,
+                                          height: 14,
+                                      },
+                                  }}
                               />
                           );
                       })
@@ -57,13 +65,20 @@ export default function MainMapContainer({ type, questList }) {
                                           lat: item.lat,
                                           lng: item.lng,
                                       }}
+                                      image={{
+                                          src: questFragment(item.type).icon,
+                                          size: {
+                                              width: 14,
+                                              height: 14,
+                                          },
+                                      }}
                                   />
                               );
                           }
                       })}
             </KakaoMapDefault>
             <MapFooter
-                style={{ background: minmapFragment.color }}
+                style={{ background: questFragment(type).color }}
                 onClick={() => navigate("/quest")}
             >
                 <p>{minmapFragment.text}</p>

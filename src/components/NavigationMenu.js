@@ -47,7 +47,7 @@ export default function NavigationMenu({ index, isSelected }) {
                 moveToPageTop();
             }}
         >
-            <span style={isSelected ? { color: "#1A35D2" } : {}}>
+            <span style={isSelected ? { color: "#5DED86" } : {}}>
                 {currentMenu.title}
             </span>
         </MenuItem>

@@ -19,8 +19,10 @@ export default function QuestItemForCarousel(Props) {
             }
         >
             <Card style={{ background: fragment.color }}>
-                <IconWrapper>
-                    <img src={monster} alt={"icon"} />
+                <IconWrapper
+                    style={{ border: `2px solid ${fragment.subColor}` }}
+                >
+                    <img src={questFragment(Props.type).img} alt={"icon"} />
                 </IconWrapper>
                 <Title>
                     땅에 대한
@@ -51,7 +53,7 @@ const IconWrapper = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 2px solid #61b7fa;
+    /* border: 2px solid #61b7fa; */
     background: #fff;
     display: flex;
     justify-content: center;
@@ -59,7 +61,7 @@ const IconWrapper = styled.div`
     & img {
         width: 24px;
         height: 24px;
-        object-fit: contain;
+        object-fit: cover;
     }
 `;
 

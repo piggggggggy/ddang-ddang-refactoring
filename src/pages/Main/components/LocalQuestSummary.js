@@ -8,12 +8,12 @@ export default function LocalQuestSummary({
     questList,
     location,
     isQuestPage,
+    region,
 }) {
     const navigate = useNavigate();
     const moveToQusetPage = () => {
         navigate("/quest");
     };
-
     return (
         <Grid
             mystyles={
@@ -23,7 +23,7 @@ export default function LocalQuestSummary({
             }
         >
             <Title>
-                지금 <span>보광동</span> 퀘스트
+                지금 <span>{region.regionDong}</span> 퀘스트
             </Title>
 
             <Grid mystyles={"width: 100%; max-width: 100%;"}>
