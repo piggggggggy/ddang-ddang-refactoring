@@ -24,7 +24,6 @@ import FeedsService from "../../services/feed.service";
 import KakaoService from "../../services/kakao.service";
 
 import axios from "axios";
-import env from "react-dotenv";
 
 export default function Feed() {
     const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
