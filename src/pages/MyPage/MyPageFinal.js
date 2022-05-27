@@ -15,6 +15,8 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import ProfileModal from "../MyPage/components/ProfileModal";
 import Settings from "../MyPage/components/Settings";
 import MapSideTab from "../MyPage/components/MapSideTab";
+import BottomPost from "../MyPage/components/BottomPost";
+import FeedBottomPost from "../MyPage/components/FeedBottomPost";
 
 export default function MyPageFinal() {
     const [userData, setUserData] = React.useState(null);
@@ -27,6 +29,7 @@ export default function MyPageFinal() {
             .then((res) => {
                 console.log(res);
                 setUserData({ ...userData, ...res.data.rows });
+
                 if (res.data.rows.achievedMission !== null) {
                     setFeed(
                         res.data.rows.achievedMission.filter((value) => {
@@ -57,6 +60,16 @@ export default function MyPageFinal() {
         setPage(2);
     };
 
+    const [tabIndex, setTabIndex] = React.useState(false);
+    const changeTab = () => {
+        setTabIndex(!tabIndex);
+    };
+
+    const [openSideMenu, setOpenSideMenu] = React.useState(false);
+    const sideOpen = () => {
+        setOpenSideMenu(!openSideMenu);
+    };
+
     return (
         <Container>
             {page === 1 && (
@@ -82,19 +95,24 @@ export default function MyPageFinal() {
                                     userData={userData}
                                     openModal={handleOpen}
                                     settingsOpen={settingsOpen}
+                                    openSideMenu={sideOpen}
                                 />
                                 <AchievementHeader
                                     userData={userData}
                                     feed={feed}
                                 />
                                 <Graph />
-                                <Achievement />
+                                <Achievement
+                                    changeTab={changeTab}
+                                    tabIndex={tabIndex}
+                                />
                                 <MapView />
                                 <ProfileModal
                                     open={open}
                                     handleClose={handleClose}
                                 />
-                                <MapSideTab userData={userData} />
+                                <BottomPost />
+                                <FeedBottomPost />
                             </>
                         )}
                     </Grid>

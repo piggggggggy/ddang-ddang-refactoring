@@ -12,15 +12,11 @@ function setWithExpiry(key, value, ttl) {
 
 function getWithExpiry(key) {
     const itemStr = localStorage.getItem(key);
-    console.log("여기서 따옴표가 붙는거 같아")
-    console.log(itemStr)
     // if the item doesn't exist, return null
     if (!itemStr) {
         return null;
     }
     const item = JSON.parse(itemStr);
-    console.log("Getwithexpiry")
-    console.log(item.value)
     const now = new Date();
     // compare the expiry time of the item with the current time
     if (now.getTime() > item.expiry) {
