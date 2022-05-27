@@ -31,12 +31,15 @@ export default function MapView() {
         <>
             <Grid mystyles="margin-top: 40px;">
                 <Grid flex alignItems="center" justifyContent="center">
-                    <Button mystyles="background: #5DED86; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);  border-radius: 100px; padding: 5px; font-weight: 400; font-size: 12px; border: none;">
+                    <Button mystyles="background: #5DED86; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);  border-radius: 100px; padding: 5px; font-weight: 400; font-size: 12px; border: none; width: 82px;">
                         점령한 땅
+                    </Button>
+                    <Button mystyles="background: #5DED86; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);  border-radius: 100px; padding: 5px; font-weight: 400; font-size: 12px; border: none;  margin-left:100px; width: 82px ">
+                        작성한 피드
                     </Button>
                 </Grid>
                 <Grid
-                    mystyles="overflow: hidden; margin-top:23px; border-radius: 20px;"
+                    mystyles="overflow: hidden; margin-top:23px; border-radius: 20px; border: 2px solid red;"
                     animate={{ opacity: 1 }}
                 >
                     {currentMapPosition !== null && (

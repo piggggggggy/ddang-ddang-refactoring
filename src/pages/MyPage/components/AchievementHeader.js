@@ -37,7 +37,7 @@ export default function AchievementHeader(props) {
                         누적 포인트
                     </Text>
                     <Text mystyles="font-weight: 700; font-size: 18px; margin-top: 5px; color: #266137">
-                        {userData.profile[0].expPoints}P
+                        {userData?.profile[0].expPoints}P
                     </Text>
                 </Grid>
                 <Grid

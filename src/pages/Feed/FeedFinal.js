@@ -115,7 +115,6 @@ export default function Feed() {
     };
 
     React.useEffect(() => {
-        // feedsLatest();
         feedsLatest();
         getPosition();
     }, []);

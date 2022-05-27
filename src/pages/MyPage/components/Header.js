@@ -17,11 +17,11 @@ export default function Header(props) {
                 flex
                 direction="row"
                 alignItems="center"
-                justifyContent="space-between"
+                justifyContent="flex-end"
                 mystyles="width: 350px; margin-top: 20px;"
             >
-                <Grid>
-                    <IconButton>
+                {/* <Grid>
+                    <IconButton onClick={props.openSideMenu}>
                         <MenuIcon
                             sx={{
                                 width: "25px",
@@ -30,7 +30,7 @@ export default function Header(props) {
                             }}
                         />
                     </IconButton>
-                </Grid>
+                </Grid> */}
                 <Grid
                     flex
                     alignItems="center"
