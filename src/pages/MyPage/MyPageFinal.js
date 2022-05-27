@@ -18,12 +18,9 @@ import MapSideTab from "../MyPage/components/MapSideTab";
 
 export default function MyPageFinal() {
     const [userData, setUserData] = React.useState(null);
-    console.log(userData);
 
     const [feed, setFeed] = React.useState([]);
-    console.log(feed);
     const authData = useSelector((state) => state.user.user);
-    console.log(authData);
 
     const getData = () => {
         api.get("/api/players/mypage")

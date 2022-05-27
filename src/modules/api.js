@@ -55,17 +55,6 @@ instance.interceptors.response.use(
                     if (!TokenService.getLocalRefreshToken()) {
                         return alert("로그인 해주세요");
                     }
-                    console.log("-----------------------------")
-                    console.log(
-                       { headers: {
-                            ...headers,
-                            ...refreshToken,
-                        },
-                    }
-                    )
-
-
-
 
                     const rs = await axios.get("/api/players/auth", {
                         headers: {
