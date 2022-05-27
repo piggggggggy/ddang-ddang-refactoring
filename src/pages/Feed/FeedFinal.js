@@ -23,48 +23,30 @@ import {
 import FeedsService from "../../services/feed.service";
 import KakaoService from "../../services/kakao.service";
 
-import axios from "axios";
-
 export default function Feed() {
     const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
+
     console.log(currentMapPosition);
+
     const getPosition = () => {
-        navigator.geolocation.getCurrentPosition((position) => {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+
+
             console.log(position);
+
             setCurrentMapPosition({
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
             });
         });
-        getmyAddress();
+
+
+        // console.log(getPosition())
+        const data = KakaoService.getAddress(127.4147562, 36.3298522);
+        setCurrentAddress(data);
     };
 
     const [currentAddress, setCurrentAddress] = React.useState(null);
-    console.log(currentAddress);
-
-    const getmyAddress = () => {
-        axios
-            .get(
-                `${process.env.REACT_APP_MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=127.4147562&y=36.3298522&input_coord=WGS84`,
-                {
-                    headers: {
-                        Accept: "*/*",
-                        Authorization: `KakaoAK ${process.env.REACT_APP_MAP_KAKAO_API_KEY}`,
-                    },
-                }
-            )
-            .then((res) => {
-                console.log(res.data.documents[0].address.region_1depth_name);
-                setCurrentAddress({
-                    si: res.data.documents[0].address.region_1depth_name,
-                    gu: res.data.documents[0].address.region_2depth_name,
-                    dong: res.data.documents[0].address.region_3depth_name,
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
