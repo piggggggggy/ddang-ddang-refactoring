@@ -180,7 +180,8 @@ export default function Feed() {
                 >
                     <LocationOnIcon sx={{ color: "white" }} />
                     <Text mystyles="font-size: 16px; color: white;">
-                        서울특별시 용산구 보광동
+                        {currentAddress.si} {currentAddress.gu}{" "}
+                        {currentAddress.dong}
                     </Text>
                 </Grid>
                 <Grid

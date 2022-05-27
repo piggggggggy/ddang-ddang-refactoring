@@ -14,9 +14,11 @@ import api from "../../modules/api";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import ProfileModal from "../MyPage/components/ProfileModal";
 import Settings from "../MyPage/components/Settings";
+import MapSideTab from "../MyPage/components/MapSideTab";
 
 export default function MyPageFinal() {
-    const [userData, setUserData] = React.useState({});
+    const [userData, setUserData] = React.useState(null);
+    console.log(userData);
 
     const [feed, setFeed] = React.useState([]);
     console.log(feed);
@@ -72,19 +74,32 @@ export default function MyPageFinal() {
                             "position: relative; z-index: 100; padding: 0 20px; margin-bottom: 200px;"
                         }
                     >
-                        <Header
-                            profile={
-                                authData !== null ? authData.profileImg : ""
-                            }
-                            userData={userData}
-                            openModal={handleOpen}
-                            settingsOpen={settingsOpen}
-                        />
-                        <AchievementHeader userData={userData} feed={feed} />
-                        <Graph />
-                        <Achievement />
-                        <MapView />
-                        <ProfileModal open={open} handleClose={handleClose} />
+                        {userData !== null && (
+                            <>
+                                <Header
+                                    profile={
+                                        userData !== null
+                                            ? userData.profile[0].profileImg
+                                            : ""
+                                    }
+                                    userData={userData}
+                                    openModal={handleOpen}
+                                    settingsOpen={settingsOpen}
+                                />
+                                <AchievementHeader
+                                    userData={userData}
+                                    feed={feed}
+                                />
+                                <Graph />
+                                <Achievement />
+                                <MapView />
+                                <ProfileModal
+                                    open={open}
+                                    handleClose={handleClose}
+                                />
+                                <MapSideTab userData={userData} />
+                            </>
+                        )}
                     </Grid>
                     <Navigation />
                 </>

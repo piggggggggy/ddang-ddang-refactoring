@@ -15,9 +15,7 @@ import Main from "../pages/Main/Main";
 import MapPage from "../pages/Map/MapPage";
 import GamePage from "../pages/Game/GamePage";
 
-// tests
 import API_TEST from "../APITEST";
-import Loading from "../pages/Loading/loading";
 
 export default function AppRouter() {
     return (
@@ -38,7 +36,6 @@ export default function AppRouter() {
             <Route exact path="/landing" element={<LandingPage />} />
 
             <Route exact path="/apitest" element={<API_TEST />} />
-            <Route exact path="/loading" element={<Loading />} />
         </Routes>
     );
 }

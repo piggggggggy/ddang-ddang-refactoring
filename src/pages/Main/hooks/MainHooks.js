@@ -1,6 +1,7 @@
 import { FlashOnOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { getQuestList } from "../../../services/main.service";
+import env from "react-dotenv";
 
 const useMainData = () => {
     const [loading, setLoading] = useState(false);
@@ -17,6 +18,7 @@ const useMainData = () => {
     });
 
     useEffect(() => {
+        console.log(env.BASE_URL);
         setLoading(true);
         navigator.geolocation.getCurrentPosition(async (res) => {
             setLocation({

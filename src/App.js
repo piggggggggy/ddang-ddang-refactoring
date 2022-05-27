@@ -10,6 +10,7 @@ import AppRouter from "./shared/Router";
 import TokenService from "./services/token.service";
 
 import { Spinner } from "./elements/index";
+
 function App() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -17,14 +18,17 @@ function App() {
 
     React.useEffect(() => {
         const token = TokenService.getLocalAccessToken();
+        if (token) {
+            dispatch(
+                loginCheckAxios(token, (url) => {
+                    navigate(url);
+                })
+            );
 
-        dispatch(
-            loginCheckAxios(token, (url) => {
-                navigate(url);
-            })
-        );
-
-        setIsLoading(false);
+            setIsLoading(false);
+        } else {
+            return;
+        }
     }, []);
 
     if (isLoading) {

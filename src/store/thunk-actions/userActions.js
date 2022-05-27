@@ -21,6 +21,7 @@ export const loginCheckAxios = (token, navigate) => {
 
             dispatch(userActions.loginCheck({ user, token }));
         } catch (err) {
+            console.log(err);
             navigate("/signin");
         }
     };
