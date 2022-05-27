@@ -52,20 +52,9 @@ instance.interceptors.response.use(
             if (err.response.status === 401 && !originalConfig._retry) {
                 originalConfig._retry = true;
                 try {
-                    if (!getWithExpiry("refreshToken")) {
+                    if (!TokenService.getLocalRefreshToken()) {
                         return alert("로그인 해주세요");
                     }
-                    console.log("-----------------------------")
-                    console.log(
-                       { headers: {
-                            ...headers,
-                            ...refreshToken,
-                        },
-                    }
-                    )
-
-
-
 
                     const rs = await axios.get("/api/players/auth", {
                         headers: {

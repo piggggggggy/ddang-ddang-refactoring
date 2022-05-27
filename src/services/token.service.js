@@ -11,11 +11,13 @@ class TokenService {
         return user;
     }
     updateLocalAccessToken(newToken) {
-        let accessToken = JSON.parse(localStorage.getItem("accessToken"));
+        let accessToken = JSON.parse(localStorage.getItem("accessToken")).value;
+
 
         if (!accessToken) return this.setAccessToken(newToken);
 
         accessToken.accessToken = newToken;
+
         setWithExpiry("accessToken", JSON.stringify(accessToken), 3000000);
         // localStorage.setItem("accessToken", JSON.stringify(accessToken))
     }
