@@ -47,8 +47,8 @@ const useMainData = () => {
             ) {
                 //이상한 주소
                 const tempLocation = {
-                    lat: 37.566,
-                    lng: 126.978,
+                    lon: 37.566,
+                    lat: 126.978,
                 };
                 const data = await getQuestList(tempLocation);
 
