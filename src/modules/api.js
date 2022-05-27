@@ -11,14 +11,14 @@ const headers = {
 };
 
 const accessToken = {
-    Authorization: tokenService.getLocalAccessToken("accessToken"),
+    Authorization: tokenService.getLocalAccessToken(),
 };
 const refreshToken = {
     refreshToken: TokenService.getLocalRefreshToken(),
 };
 
 const instance = axios.create({
-    baseURL: env.BASE_URL,
+    baseURL: process.env.REACT_APP_BASE_URL,
     headers: {
         ...headers,
         ...accessToken,
