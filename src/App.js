@@ -25,44 +25,42 @@ function App() {
         const refreshtoken = TokenService.getLocalRefreshToken();
         const accesstoken = TokenService.getLocalAccessToken();
 
-
-
         if (!refreshtoken && !accesstoken) {
             alert("로그인이 필요합니다.");
             navigate("/signin");
-            setIsLoading(false);
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 3000);
         } else {
-            dispatch(
-                loginCheckAxios(accesstoken)
-            );
-            setIsLoading(false);
+            dispatch(loginCheckAxios(accesstoken));
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 3000);
+            console.log("loaded");
         }
-        // setTimeout(() => {
-        //     setIsLoading(false);
-        // }, 3000);
     }, []);
 
     if (isLoading) {
         return (
             <Container>
-                <Grid flex alignItems="center" justifyContent="center">
+                {/* <Grid flex alignItems="center" justifyContent="center">
                     <img
                         src={loadingSpinnerGif}
                         alt=""
                         style={{ width: "50%", height: "50%" }}
                     />
-                </Grid>
+                </Grid> */}
 
-                {/* <video
+                <video
                     width="100%"
                     height="100%"
                     preload="auto"
                     muted
                     autoPlay={true}
                 >
-                    <source src={loadingSpinner} type="video/mp4" />
+                    <source src={splashmp4} type="video/mp4" />
                     Your browser does not support HTML5 video.
-                </video> */}
+                </video>
             </Container>
         );
     }
