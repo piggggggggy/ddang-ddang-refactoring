@@ -5,7 +5,6 @@ import { DEFAULT_PROFILE_IMG } from "../../../shared/Link";
 
 export default function UserInfoContainer({ region }) {
     const userData = useSelector((state) => state.user.user);
-    console.log(userData);
     if (userData === null) return;
     return (
         <UserInfoCardWrapper>

@@ -10,6 +10,7 @@ import { useMainData } from "./hooks/MainHooks";
 import { localNameHandlerForSi } from "../../modules/help";
 import MenuIcon from "../../assets/images/icon/MenuIcon";
 import Location from "../../assets/images/icon/Location";
+import Spinner from "../../components/Spinner";
 
 export default function Main() {
     const { questList, loading, questType, setQuestType, location, region } =
@@ -17,6 +18,7 @@ export default function Main() {
 
     return (
         <Container>
+            {loading && <Spinner />}
             <BackgroundPaper />
 
             <Grid

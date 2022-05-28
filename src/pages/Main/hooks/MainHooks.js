@@ -30,7 +30,7 @@ const useMainData = () => {
                 lat: res.coords.latitude,
                 lng: res.coords.longitude,
             });
-
+            console.log(res);
             // 만약에 사용자의 위치에서 시구동을 못가져오면 현재 가능한지 않는 지역에 있습니다.
             const userdata = await KakaoService.getAddress({
                 location: {
