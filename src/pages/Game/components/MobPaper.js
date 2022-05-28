@@ -59,6 +59,7 @@ export default function MobPaper({ type, questId }) {
                 {Array.from({ length: type === "mob" ? 4 : 2 }, () => 0).map(
                     (item, index) => (
                         <Dot
+                            key={`key-${index}`}
                             style={
                                 progress === index ? { background: "#fff" } : {}
                             }

@@ -27,6 +27,7 @@ export default function QuestActivateLayer({ open, setClose, list, position }) {
                     >
                         {list.map((item, index) => (
                             <SelectedQuestCard
+                                key={item.id}
                                 {...item}
                                 onClick={setClose}
                                 openToast={() => setOnToast(true)}
