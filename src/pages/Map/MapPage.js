@@ -62,7 +62,7 @@ export default function MapPage() {
         });
     };
     const setDdangDdang = () => {
-        // if (inCircleList.length === 0) return;
+        if (inCircleList.length === 0) return;
         setQuestActive(true);
     };
     const closeTab = () => {
