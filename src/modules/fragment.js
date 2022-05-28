@@ -5,6 +5,8 @@ import MobLarge from "../assets/images/png/mob-large.png";
 import TimeLarge from "../assets/images/png/time-large.png";
 import FeedLarge from "../assets/images/png/feed-large.png";
 import AllLarge from "../assets/images/png/all-large.png";
+import MobWin from "../assets/images/png/mob-win.png";
+import TimeWin from "../assets/images/png/time-win.png";
 
 export const questFragment = (type) => {
     switch (type) {
@@ -17,6 +19,7 @@ export const questFragment = (type) => {
                 description: "땅깨비를 이겨라!",
                 icon: RedCircle,
                 img: MobLarge,
+                winPaper: MobWin,
             };
         case "feed":
             return {
@@ -27,6 +30,7 @@ export const questFragment = (type) => {
                 description: "이 땅을 추천합니땅",
                 icon: YellowCircle,
                 img: FeedLarge,
+                winPaper: "",
             };
         case "time":
             return {
@@ -37,6 +41,7 @@ export const questFragment = (type) => {
                 description: "땅땅! 시간이 없어요",
                 icon: BlueCircle,
                 img: TimeLarge,
+                winPaper: TimeWin,
             };
         case "all":
             return {
@@ -47,6 +52,7 @@ export const questFragment = (type) => {
                 description: "",
                 icon: BlueCircle,
                 img: AllLarge,
+                winPaper: "",
             };
         default:
             return {
@@ -57,6 +63,7 @@ export const questFragment = (type) => {
                 description: "땅깨비를 이겨라!",
                 icon: RedCircle,
                 img: MobLarge,
+                winPaper: MobWin,
             };
     }
 };

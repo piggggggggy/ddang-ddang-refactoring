@@ -7,6 +7,11 @@ export default function CompleteModal({ open, setComfirm, type }) {
         <>
             {open && <Dimmed />}
             <Paper style={open ? { bottom: "calc(50vh - 140px)" } : {}}>
+                {type !== "feed" && (
+                    <WinPaper>
+                        <img src={fragment.winPaper} alt={"win paper"} />
+                    </WinPaper>
+                )}
                 <Title style={{ color: fragment.color }}>
                     승리를 축하합니다
                 </Title>
@@ -62,6 +67,19 @@ const Title = styled.p`
     line-height: 1.15;
     text-align: center;
     width: 100%;
+`;
+
+const WinPaper = styled.div`
+    position: absolute;
+    top: -28px;
+    left: calc(50% - 100px);
+    width: 196px;
+    height: 56px;
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 `;
 
 const Reward = styled.div`

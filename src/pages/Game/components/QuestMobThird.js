@@ -9,13 +9,14 @@ export default function QuestMobThird({
     setProgress,
     progress,
     RSPIndex,
-    randomIndex,
     result,
     setResult,
 }) {
     const [ready, setReady] = useState(true);
-
-    console.log(randomIndex, RSPIndex);
+    const [randomIndex, setRandonIndex] = useState(
+        Math.floor(Math.random() * (Math.floor(3) - Math.ceil(0))) +
+            Math.ceil(0)
+    );
     const list = [
         {
             text: "가위",

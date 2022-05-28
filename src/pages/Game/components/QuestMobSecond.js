@@ -54,12 +54,3 @@ export default function QuestMobSecond({
         </Grid>
     );
 }
-
-const Content = styled.div`
-    font-size: 14px;
-    line-height: 1.15;
-    text-align: center;
-    & span {
-        font-weight: 700;
-    }
-`;
