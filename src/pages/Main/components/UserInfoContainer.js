@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { DEFAULT_PROFILE_IMG } from "../../../shared/Link";
 
-export default function UserInfoContainer({ region }) {
+export default function UserInfoContainer({ region, loading }) {
     const userData = useSelector((state) => state.user.user);
+    // console.log(userData);
     if (userData === null) return;
     return (
         <UserInfoCardWrapper>
@@ -42,7 +43,8 @@ export default function UserInfoContainer({ region }) {
                 </Grid>
 
                 <SubInfoText>
-                    {region.regionDong}을 점령한 {userData.mbti}
+                    {!loading &&
+                        `${region.regionDong}을 점령한 ${userData.mbti}`}
                 </SubInfoText>
             </Grid>
         </UserInfoCardWrapper>

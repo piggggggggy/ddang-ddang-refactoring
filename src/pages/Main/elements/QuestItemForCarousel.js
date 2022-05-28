@@ -12,6 +12,7 @@ export default function QuestItemForCarousel(Props) {
         _lat: Number(Props.lat),
         _lng: Number(Props.lng),
     });
+    console.log(distance);
     return (
         <Grid
             mystyles={
@@ -24,11 +25,7 @@ export default function QuestItemForCarousel(Props) {
                 >
                     <img src={questFragment(Props.type).img} alt={"icon"} />
                 </IconWrapper>
-                <Title>
-                    땅에 대한
-                    <br />
-                    이야기 만땅
-                </Title>
+                <Title>{Props.title}</Title>
                 <Description>{Props.description}</Description>
                 <CardFooter style={{ background: fragment.subColor }}>
                     <p>내 위치로부터 {Math.round(distance * 1000)}m</p>

@@ -36,7 +36,7 @@ export default function Main() {
                     {localNameHandlerForSi(region.regionSi)} {region.regionGu}{" "}
                     {region.regionDong}
                 </Address>
-                <UserInfoContainer region={region} />
+                <UserInfoContainer region={region} loading={loading} />
 
                 <MainMapContainer type={questType} questList={questList} />
 
