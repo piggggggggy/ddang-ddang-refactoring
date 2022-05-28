@@ -3,7 +3,6 @@ import api from "../../modules/api";
 import AuthService from "../../services/auth.service";
 import TokenService from "../../services/token.service";
 
-
 // 토큰 확인
 export const loginCheckAxios = (token, navigate) => {
     return async function (dispatch) {
@@ -89,6 +88,7 @@ export const signupAxios = (
     navigate
 ) => {
     return async function (dispatch) {
+        console.log(email, password, nickname, mbti, profileImg);
         AuthService.register(email, password, nickname, mbti, profileImg)
             .then((res) => {
                 console.log(res);

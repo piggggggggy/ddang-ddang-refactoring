@@ -13,6 +13,7 @@ export default function Button(props) {
         animate,
         transition,
         disabled,
+        initial,
     } = props;
     const styles = { mystyles };
 
@@ -26,6 +27,7 @@ export default function Button(props) {
                         onClick={onClick}
                         type={type}
                         whileHover={whileHover}
+                        initial={initial}
                         animate={animate}
                         transition={transition}
                         disabled

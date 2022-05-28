@@ -12,46 +12,65 @@ export default function Mbti(props) {
         ...props.finalSignupValue,
     });
 
-    const mbtiData = [
-        { name: "ENTP", src: "" },
-        { name: "INTP", src: "" },
-        { name: "ENTJ", src: "" },
-        { name: "INTJ", src: "" },
-        { name: "ISFP", src: "" },
-        { name: "ESPT", src: "" },
-        { name: "ISTP", src: "" },
-        { name: "ESFP", src: "" },
-        { name: "ISTJ", src: "" },
-        { name: "ISFJ", src: "" },
-        { name: "ESTJ", src: "" },
-        { name: "ESFJ", src: "" },
-        { name: "INFJ", src: "" },
-        { name: "INFP", src: "" },
-        { name: "ENFP", src: "" },
-        { name: "ENFJ", src: "" },
-    ];
+    const [mbtiSelected, setMbtiSelected] = React.useState(false);
 
-    const [cardSelected, setCardSelected] = React.useState("");
-    const [profile, setProfile] = React.useState("");
-    console.log(cardSelected);
+    const [eandI, setEandI] = React.useState("");
 
-    const MbtiClick = (idx) => {
-        setCardSelected(mbtiData[idx].name);
-        setProfile(mbtiData[idx].src);
+    const [nandS, setNandS] = React.useState("");
+
+    const [tandF, setTandF] = React.useState("");
+
+    const [jandP, setJandP] = React.useState("");
+
+    // console.log(eandI, nandS, tandF, jandP);
+    const [mbti, setMbti] = React.useState(eandI + nandS + tandF + jandP);
+    // console.log(mbti);
+
+    const EClick = () => {
+        setEandI("E");
+    };
+    const IClick = () => {
+        setEandI("I");
+    };
+    const NClick = () => {
+        setNandS("N");
+    };
+    const SClick = () => {
+        setNandS("S");
+    };
+    const TClick = () => {
+        setTandF("T");
+    };
+    const FClick = () => {
+        setTandF("F");
+    };
+    const JClick = () => {
+        setJandP("J");
+    };
+    const PClick = () => {
+        setJandP("P");
     };
 
     const signupComplete = () => {
         const email = props.finalSignupValue.email;
         const nickname = props.finalSignupValue.nickname;
         const password = props.finalSignupValue.password;
-        const mbti = cardSelected;
-        const profileImg = "asdf";
-
-        dispatch(
-            signupAxios(email, nickname, password, mbti, profileImg, (url) =>
-                navigate(url)
-            )
-        );
+        const myMbti = mbti;
+        console.log(myMbti);
+        const profileImg = "a";
+        if (mbti.length === 4) {
+            dispatch(
+                signupAxios(
+                    email,
+                    nickname,
+                    password,
+                    myMbti,
+                    profileImg,
+                    (url) => navigate(url)
+                )
+            );
+        } else if (mbti.length !== 4) {
+        }
     };
 
     // ready page
@@ -63,6 +82,13 @@ export default function Mbti(props) {
     const goBack = () => {
         setPage(2);
     };
+
+    React.useEffect(() => {
+        setMbti(eandI + nandS + tandF + jandP);
+        if (mbti.length === 4) {
+            setMbtiSelected(true);
+        }
+    }, [eandI, nandS, tandF, jandP, mbti.length]);
 
     return (
         <>
@@ -86,30 +112,233 @@ export default function Mbti(props) {
                             </Text>
                         </Grid>
                     </Grid>
-                    <Grid flex mystyles="flex-wrap: wrap; padding: 50px">
-                        {mbtiData.map((mbti, idx) => (
+
+                    <Grid mystyles="margin-top: 40px;">
+                        <Grid
+                            flex
+                            alignItems="center"
+                            justifyContent="space-between"
+                            mystyles="width: 300px; margin: auto;"
+                        >
                             <Grid
                                 flex
                                 alignItems="center"
                                 justifyContent="center"
-                                key={idx}
-                                mystyles={
-                                    mbti.name === cardSelected
-                                        ? "background: red; width: 50%; cursor: pointer"
-                                        : "width: 50%; cursor: pointer"
-                                }
-                                onClick={() => {
-                                    MbtiClick(idx);
-                                }}
+                                mystyles="width: 150px;"
                             >
-                                <Image
-                                    whileHover={{ border: "1px solid blue" }}
-                                    src={mbti.src}
-                                    alt=""
-                                    mystyles="border: 2px solid rgba(180, 189, 183, 0.5); width: 100%;  height: 120px; margin: 10px; border-radius: 8px"
-                                />
+                                {eandI === "E" ? (
+                                    <Text
+                                        mystyles="color:rgba(94, 239, 135, 1); font-weight: 700; font-size: 55.125px;"
+                                        onClick={EClick}
+                                    >
+                                        E
+                                    </Text>
+                                ) : (
+                                    <Text
+                                        mystyles="font-weight: 700; font-size: 55.125px; color: rgba(5, 36, 14, 0.1);"
+                                        onClick={EClick}
+                                    >
+                                        E
+                                    </Text>
+                                )}
                             </Grid>
-                        ))}
+                            <Grid mystyles="border: 1px solid rgba(5, 36, 14, 0.5);"></Grid>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="width: 150px;"
+                            >
+                                {eandI === "I" ? (
+                                    <Text
+                                        mystyles="color:rgba(94, 239, 135, 1); font-weight: 700; font-size: 55.125px;"
+                                        onClick={IClick}
+                                    >
+                                        I
+                                    </Text>
+                                ) : (
+                                    <Text
+                                        mystyles="font-weight: 700; font-size: 55.125px; color: rgba(5, 36, 14, 0.1);"
+                                        onClick={IClick}
+                                    >
+                                        I
+                                    </Text>
+                                )}
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            flex
+                            alignItems="center"
+                            justifyContent="space-between"
+                            mystyles="width: 300px; margin: auto;"
+                        >
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="width: 150px;"
+                            >
+                                {nandS === "N" ? (
+                                    <Text
+                                        mystyles="color:rgba(94, 239, 135, 1); font-weight: 700; font-size: 55.125px;"
+                                        onClick={NClick}
+                                    >
+                                        N
+                                    </Text>
+                                ) : (
+                                    <Text
+                                        mystyles="font-weight: 700; font-size: 55.125px; color: rgba(5, 36, 14, 0.1);"
+                                        onClick={NClick}
+                                    >
+                                        N
+                                    </Text>
+                                )}
+                            </Grid>
+                            <Grid mystyles="border: 1px solid rgba(5, 36, 14, 0.5);"></Grid>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="width: 150px;"
+                            >
+                                {nandS === "S" ? (
+                                    <Text
+                                        mystyles="color:rgba(94, 239, 135, 1); font-weight: 700; font-size: 55.125px;"
+                                        onClick={SClick}
+                                    >
+                                        S
+                                    </Text>
+                                ) : (
+                                    <Text
+                                        mystyles="font-weight: 700; font-size: 55.125px; color: rgba(5, 36, 14, 0.1);"
+                                        onClick={SClick}
+                                    >
+                                        S
+                                    </Text>
+                                )}
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            flex
+                            alignItems="center"
+                            justifyContent="space-between"
+                            mystyles="width: 300px; margin: auto;"
+                        >
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="width: 150px;"
+                            >
+                                {tandF === "T" ? (
+                                    <Text
+                                        mystyles="color:rgba(94, 239, 135, 1); font-weight: 700; font-size: 55.125px;"
+                                        onClick={TClick}
+                                    >
+                                        T
+                                    </Text>
+                                ) : (
+                                    <Text
+                                        mystyles="font-weight: 700; font-size: 55.125px; color: rgba(5, 36, 14, 0.1);"
+                                        onClick={TClick}
+                                    >
+                                        T
+                                    </Text>
+                                )}
+                            </Grid>
+                            <Grid mystyles="border: 1px solid rgba(5, 36, 14, 0.5);"></Grid>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="width: 150px;"
+                            >
+                                {tandF === "F" ? (
+                                    <Text
+                                        mystyles="color:rgba(94, 239, 135, 1); font-weight: 700; font-size: 55.125px;"
+                                        onClick={FClick}
+                                    >
+                                        F
+                                    </Text>
+                                ) : (
+                                    <Text
+                                        mystyles="font-weight: 700; font-size: 55.125px; color: rgba(5, 36, 14, 0.1);"
+                                        onClick={FClick}
+                                    >
+                                        F
+                                    </Text>
+                                )}
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            flex
+                            alignItems="center"
+                            justifyContent="space-between"
+                            mystyles="width: 300px; margin: auto;"
+                        >
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="width: 150px;"
+                            >
+                                {jandP === "J" ? (
+                                    <Text
+                                        mystyles="color:rgba(94, 239, 135, 1); font-weight: 700; font-size: 55.125px;"
+                                        onClick={JClick}
+                                    >
+                                        J
+                                    </Text>
+                                ) : (
+                                    <Text
+                                        mystyles="font-weight: 700; font-size: 55.125px; color: rgba(5, 36, 14, 0.1);"
+                                        onClick={JClick}
+                                    >
+                                        J
+                                    </Text>
+                                )}
+                            </Grid>
+                            <Grid mystyles="border: 1px solid rgba(5, 36, 14, 0.5);"></Grid>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="width: 150px;"
+                            >
+                                {jandP === "P" ? (
+                                    <Text
+                                        mystyles="color:rgba(94, 239, 135, 1); font-weight: 700; font-size: 55.125px;"
+                                        onClick={PClick}
+                                    >
+                                        P
+                                    </Text>
+                                ) : (
+                                    <Text
+                                        mystyles="font-weight: 700; font-size: 55.125px; color: rgba(5, 36, 14, 0.1);"
+                                        onClick={PClick}
+                                    >
+                                        P
+                                    </Text>
+                                )}
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid
+                        flex
+                        alignItems="center"
+                        justifyContent="center"
+                        mystyles="width: 303px; height: 41px; margin: 32px auto 0 auto; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.3); border-radius: 4px;"
+                    >
+                        {mbtiSelected === false && (
+                            <Text mystyles="color:rgba(94, 239, 135, 1); font-weight: 400; font-size: 24px;">
+                                MBTI
+                            </Text>
+                        )}
+                        {mbtiSelected === true && (
+                            <Text mystyles="color:rgba(94, 239, 135, 1); font-weight: 700; font-size: 24px;">
+                                {mbti}
+                            </Text>
+                        )}
                     </Grid>
                     <Grid
                         flex
@@ -122,23 +351,23 @@ export default function Mbti(props) {
                             <Grid mystyles="width: 8px; height: 8px;  border-radius: 8px; border: 0.5px solid #05240E;"></Grid>
                             <Grid mystyles="margin-left: 16px; width: 8px; height: 8px; border-radius: 8px; border: 0.5px solid #05240E; background: #05240E;"></Grid>
                         </Grid>
-                        {cardSelected === "" && (
+                        {mbtiSelected === false && (
                             <>
                                 <Button
                                     disabled
                                     mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px; margin-bottom: 50px; margin-top: 20px;"
                                 >
-                                    mbti를 선택해주세요
+                                    완료
                                 </Button>
                             </>
                         )}
-                        {cardSelected !== "" && (
+                        {mbtiSelected === true && (
                             <>
                                 <Button
                                     onClick={nextPage}
                                     mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px; margin-bottom: 50px; margin-top: 20px; background: #5CEB84;"
                                 >
-                                    {cardSelected} 선택
+                                    완료
                                 </Button>
                             </>
                         )}
