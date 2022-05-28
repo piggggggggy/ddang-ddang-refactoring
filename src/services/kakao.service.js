@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 //시구동을 반환 한다.
 const getAddress = async (lat, lng) => {
     try {
@@ -23,7 +22,7 @@ const getAddress = async (lat, lng) => {
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 const KakaoService = {
     getAddress,

@@ -30,14 +30,12 @@ const useMainData = () => {
                 lng: res.coords.longitude,
             });
 
-            console.log(location.lat, location.lng);
-
             // 만약에 사용자의 위치에서 시구동을 못가져오면 현재 가능한지 않는 지역에 있습니다.
             const userdata = await KakaoService.getAddress(
                 location.lat,
                 location.lng
             );
-
+            console.log(userdata);
 
             // 주소가 아무것도 없다고 나오면 강제로 주소를 정해준다.
             if (
@@ -51,7 +49,7 @@ const useMainData = () => {
                     lng: 126.978,
                 };
                 const data = await getQuestList(tempLocation);
-
+                console.log(data);
                 if (data.rows.length > 0) {
                     setQuestList(data.rows);
                     dispatch(
