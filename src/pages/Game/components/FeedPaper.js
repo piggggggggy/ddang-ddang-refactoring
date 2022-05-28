@@ -5,8 +5,12 @@ import FeedInput from "../elements/FeedInput";
 import QuestPaperBottomButton from "../elements/QuestPaperBottomButton";
 import { Grid } from "../../../elements";
 import { postFeed, postQuest } from "../../../services/quest.service";
+import CompleteModal from "./CompleteModal";
+import { useNavigate } from "react-router-dom";
 
 export default function FeedPaper({ type, questId }) {
+    const navigate = useNavigate();
+
     // const [progress, setProgress] = useState(0);
     const [modalOpen, setModalOpen] = useState(false);
     const [text, setText] = useState("");
@@ -21,12 +25,27 @@ export default function FeedPaper({ type, questId }) {
             content: text,
             img: [""],
         };
-        const data = await postQuest({
-            request,
-            questId,
-            type,
-        });
-        console.log(data);
+        try {
+            const data = await postQuest({
+                request,
+                questId,
+                type,
+            });
+            console.log(data);
+            if (data.ok) {
+                setModalOpen(true);
+            }
+        } catch {
+            navigate(-1);
+        }
+    };
+
+    const completeQuest = (type) => {
+        if (type === "point") {
+            navigate("/myPage");
+        } else {
+            navigate(-1);
+        }
     };
 
     return (
@@ -49,6 +68,11 @@ export default function FeedPaper({ type, questId }) {
                     isOn={text.length >= 20}
                 />
             </ContentWrapper>
+            <CompleteModal
+                open={modalOpen}
+                setComfirm={completeQuest}
+                type={"feed"}
+            />
         </Paper>
     );
 }

@@ -20,6 +20,7 @@ export default function QuestMarker(Props) {
             id: Props.id,
             lat: Props.lat,
             lng: Props.lng,
+            timeUntil: Props.timeUntil,
         });
         Props.openDetail();
     };

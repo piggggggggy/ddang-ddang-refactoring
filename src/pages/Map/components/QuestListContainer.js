@@ -20,6 +20,7 @@ export default function QuestListConatiner({
                     {...item}
                     onClick={() => {
                         selectQuest({ lat: item.lat, lng: item.lng });
+                        console.log(item);
                         activateDetail(item);
                     }}
                 />

@@ -25,9 +25,15 @@ export default function QuestDetailLayer({ open, setClose, item, position }) {
                         <SelectedQuestCard
                             {...item}
                             onClick={setClose}
-                            selectQuest={() =>
-                                navigate(`/quest/${item.type}/${item.id}`)
-                            }
+                            selectQuest={() => {
+                                if (item.type === "time") {
+                                    navigate(
+                                        `/quest/${item.type}/${item.id}?time=${item.timeUntil}`
+                                    );
+                                } else {
+                                    navigate(`/quest/${item.type}/${item.id}`);
+                                }
+                            }}
                             isInCircle={
                                 getUpdatedDistance({
                                     lat: position.lat,

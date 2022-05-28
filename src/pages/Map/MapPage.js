@@ -84,6 +84,7 @@ export default function MapPage() {
             id: item.id,
             lat: item.lat,
             lng: item.lng,
+            timeUntil: item.timeUntil,
         });
         setDetailOpen(true);
     };

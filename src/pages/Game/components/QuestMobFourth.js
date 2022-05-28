@@ -126,7 +126,11 @@ export default function QuestMobFourth({
                 <img src={resultHandler.img} alt={"mob"} />
             </MobImg>
 
-            <CompleteModal open={popupOpen} setComfirm={completeQuest} />
+            <CompleteModal
+                open={popupOpen}
+                setComfirm={completeQuest}
+                type={"mob"}
+            />
             <QuestPaperBottomButton
                 text={resultHandler.buttonText}
                 color={fragment.subColor}
