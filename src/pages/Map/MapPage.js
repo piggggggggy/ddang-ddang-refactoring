@@ -15,6 +15,7 @@ import CenterButton from "./elements/CenterButton";
 import QuestDetailLayer from "./components/QuestDetailLayer";
 import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
+import ToastPageMsg from "../../elements/ToastMsgPage";
 
 export default function MapPage() {
     const navigate = useNavigate();

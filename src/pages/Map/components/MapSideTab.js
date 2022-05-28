@@ -64,6 +64,7 @@ export default function MapSideTab({
                         )}
                         selectQuest={selectQuest}
                         activateDetail={activateDetail}
+                        openState={false}
                     />
 
                     <QuestListConatiner
@@ -73,6 +74,7 @@ export default function MapSideTab({
                         )}
                         selectQuest={selectQuest}
                         activateDetail={activateDetail}
+                        openState={true}
                     />
                 </Grid>
             </TabPaper>

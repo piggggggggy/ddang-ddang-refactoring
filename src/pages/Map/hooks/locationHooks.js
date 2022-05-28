@@ -3,7 +3,7 @@ import { getUpdatedDistance } from "../../../modules/location";
 
 const geolocationOptions = {
     enableHighAccuracy: true,
-    maximumAge: 0,
+    maximumAge: 1000,
     timeout: 2000,
 };
 
