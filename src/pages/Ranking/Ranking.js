@@ -9,11 +9,11 @@ import api from "../../modules/api";
 import axios from "axios";
 import noData from "../../assets/images/png/Ranking/noData.png";
 import KakaoService from "../../services/kakao.service";
+import RankingService from "../../services/ranking.service";
 
 import ProgressDonut from "./components/ProgressDonut";
 
 export default function Ranking() {
-
     const [address, setAddress] = React.useState({});
     console.log(address);
 
@@ -21,23 +21,31 @@ export default function Ranking() {
     const [currentMapPosition, setCurrentMapPosition] = React.useState({});
     console.log(currentMapPosition);
 
-
-
     const getPosition = () => {
-
-        navigator.geolocation.getCurrentPosition((position) => {
+        navigator.geolocation.getCurrentPosition(async (position) => {
             console.log(position);
             setCurrentMapPosition({
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
             });
 
+            const location = {
+                lat: 37.5172363,
+                lng: 127.0473248,
+            };
+            console.log(location.lat, location.lng);
 
-            KakaoService.getAddress(position.coords.latitude, position.coords.longitude);
+            setCurrentMapPosition({ lat: location.lat, lng: location.lng });
+
+            console.log(currentMapPosition);
+
+            const data = await KakaoService.getAddress({
+                location: currentMapPosition,
+            });
+            console.log("wekjlfklwjefk여기가 성공해야함 ");
+            console.log(data);
         });
     };
-
-
 
     // 서버에 데이터 요청
     const [group, setGroup] = React.useState([]);
@@ -47,20 +55,14 @@ export default function Ranking() {
     console.log(individual);
 
     const getRanking = async () => {
+        const result = await RankingService.getRanking({
+            si: address?.si,
+            gu: address?.gu,
+            dong: address?.dong,
+        });
 
-
-        await api
-            .get(
-                `/api/ranks?si=${address?.si}&gu=${address?.gu}&dong=${address?.dong}`
-            )
-            .then((res) => {
-                console.log(res);
-                setGroup([...group, ...res.data.ranks.group]);
-                setIndividual([...individual, ...res.data.ranks.individual]);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        setGroup([...group, ...result.data.ranks.group]);
+        setIndividual([...individual, ...result.data.ranks.individual]);
     };
     console.log(group);
     console.log(individual);

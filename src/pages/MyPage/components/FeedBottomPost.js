@@ -19,7 +19,7 @@ export default function BottomPost() {
             if (res.data.rows.profile[0].completes !== null) {
                 setFeed(
                     res.data.rows.profile[0].completes.filter((value) => {
-                        return value.type === "feed";
+                        return value.quest.type === "feed";
                     })
                 );
             }

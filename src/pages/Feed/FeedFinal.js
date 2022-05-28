@@ -30,8 +30,6 @@ export default function Feed() {
 
     const getPosition = () => {
         navigator.geolocation.getCurrentPosition(async (position) => {
-
-
             console.log(position);
 
             setCurrentMapPosition({
@@ -40,9 +38,14 @@ export default function Feed() {
             });
         });
 
+        const tempLocation = {
+            lat: 37.5172363,
+            lng: 127.0473248,
+        };
 
         // console.log(getPosition())
-        const data = KakaoService.getAddress(127.4147562, 36.3298522);
+        const data = KakaoService.getAddress({ locatoin: tempLocation });
+
         setCurrentAddress(data);
     };
 
