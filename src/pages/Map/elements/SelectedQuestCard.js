@@ -75,12 +75,12 @@ export default function SelectedQuestCard(Props) {
     })();
 
     const moveToGame = () => {
-        if (Number(mobIdCheck) === Number(Props.id)) return;
-        if (Props.isInCircle) {
-            Props.selectQuest();
-        } else {
-            return;
-        }
+        // if (Number(mobIdCheck) === Number(Props.id)) return;
+        // if (Props.isInCircle) {
+        Props.selectQuest();
+        // } else {
+        // return;
+        // }
     };
 
     return (

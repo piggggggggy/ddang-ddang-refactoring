@@ -268,12 +268,16 @@ const UserInfo = styled.div`
     align-items: center;
     padding: 0 12px;
     & p {
+        width: calc(100% - 30px);
         font-size: 16px;
         font-weight: 700;
         line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         & span {
             color: #266137;
-            padding-right: 7px;
+            padding-right: 4px;
         }
     }
 `;

@@ -6,6 +6,7 @@ import { Container } from "../../elements";
 import { questFragment } from "../../modules/fragment";
 import MobPaper from "./components/MobPaper";
 import TimePaper from "./components/TimePaper";
+import FeedPaper from "./components/FeedPaper";
 
 export default function GamePage() {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function GamePage() {
                 <Title>{fragment.text}</Title>
                 {type === "mob" && <MobPaper type={type} questId={questId} />}
                 {type === "time" && <TimePaper type={type} questId={questId} />}
-                {type === "feed" && <TimePaper type={type} questId={questId} />}
+                {type === "feed" && <FeedPaper type={type} questId={questId} />}
             </Wrapper>
         </Container>
     );
