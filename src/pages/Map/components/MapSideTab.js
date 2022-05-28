@@ -29,7 +29,7 @@ export default function MapSideTab({
                 <UserInfo onClick={() => navigate("/myPage")}>
                     <img
                         src={
-                            userData.profileImg === ""
+                            userData.profileImg === "0"
                                 ? DEFAULT_PROFILE_IMG
                                 : userData.profileImg
                         }

@@ -11,8 +11,10 @@ export default function LandingModal({
     region,
     questLength = 0,
     userData,
+    landingOpen,
+    setLandingOpen,
 }) {
-    const [landingOpen, setLandingOpen] = useState(false);
+    // const [landingOpen, setLandingOpen] = useState(false);
     const regions = useSelector((state) => state.quest.region);
 
     useEffect(() => {

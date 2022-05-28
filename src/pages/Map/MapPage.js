@@ -14,6 +14,7 @@ import MenuIcon from "../../assets/images/icon/MenuIcon";
 import CenterButton from "./elements/CenterButton";
 import QuestDetailLayer from "./components/QuestDetailLayer";
 import { useSelector } from "react-redux";
+import Spinner from "../../components/Spinner";
 
 export default function MapPage() {
     const navigate = useNavigate();
@@ -25,6 +26,8 @@ export default function MapPage() {
     const [questList, setQuestList] = useState([]);
     const [questType, setQuestType] = useState("all");
     const [color, setColor] = useState("#EBEBEB");
+    const [landingOpen, setLandingOpen] = useState(false);
+
     const [questModalState, setQuestModalState] = useState({
         open: false,
         type: "",
@@ -144,7 +147,10 @@ export default function MapPage() {
 
     return (
         <Container>
+            {loading && !landingOpen && <Spinner />}
             <LandingModal
+                landingOpen={landingOpen}
+                setLandingOpen={setLandingOpen}
                 loading={loading}
                 region={region}
                 questLength={questList.length}
