@@ -65,7 +65,7 @@ instance.interceptors.response.use(
 
                     const accesstoken = rs.headers["accesstoken"];
 
-                    if (!TokenService.getLocalAccessToken()){
+                    if (!TokenService.getLocalAccessToken()) {
                         TokenService.setAccessToken(accesstoken);
                     }
                     TokenService.updateLocalAccessToken(accesstoken);

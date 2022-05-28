@@ -14,6 +14,7 @@ import MenuIcon from "../../assets/images/icon/MenuIcon";
 import CenterButton from "./elements/CenterButton";
 import QuestDetailLayer from "./components/QuestDetailLayer";
 import { useSelector } from "react-redux";
+import Spinner from "../../components/Spinner";
 
 export default function MapPage() {
     const navigate = useNavigate();
@@ -25,6 +26,8 @@ export default function MapPage() {
     const [questList, setQuestList] = useState([]);
     const [questType, setQuestType] = useState("all");
     const [color, setColor] = useState("#EBEBEB");
+    const [landingOpen, setLandingOpen] = useState(false);
+
     const [questModalState, setQuestModalState] = useState({
         open: false,
         type: "",
@@ -48,21 +51,8 @@ export default function MapPage() {
         inCircleList,
     } = useWatchLocation(questList, questType);
 
-    const openQuestModal = (type) => {
-        closeQuestActive();
-        setQuestModalState({
-            open: true,
-            type: type,
-        });
-    };
-    const closeQuestModal = () => {
-        setQuestModalState({
-            ...questModalState,
-            open: false,
-        });
-    };
     const setDdangDdang = () => {
-        // if (inCircleList.length === 0) return;
+        if (inCircleList.length === 0) return;
         setQuestActive(true);
     };
     const closeTab = () => {
@@ -97,6 +87,7 @@ export default function MapPage() {
             id: item.id,
             lat: item.lat,
             lng: item.lng,
+            timeUntil: item.timeUntil,
         });
         setDetailOpen(true);
     };
@@ -108,10 +99,10 @@ export default function MapPage() {
                 lat: res.coords.latitude,
                 lng: res.coords.longitude,
             });
-            const data = await getQuestList(
-                res.coords.latitude,
-                res.coords.longitude
-            );
+            const data = await getQuestList({
+                lat: res.coords.latitude,
+                lng: res.coords.longitude,
+            });
             console.log(res);
             if (data.rows.length > 0) {
                 setQuestList(data.rows);
@@ -137,15 +128,6 @@ export default function MapPage() {
             lng: 0,
         },
     ];
-    //     {
-    //         id: 11,
-    //         type: "feed",
-    //     },
-    //     {
-    //         id: 11,
-    //         type: "time",
-    //     },
-    // ];
 
     useEffect(() => {
         if (questType === "mob") {
@@ -165,7 +147,10 @@ export default function MapPage() {
 
     return (
         <Container>
+            {loading && !landingOpen && <Spinner />}
             <LandingModal
+                landingOpen={landingOpen}
+                setLandingOpen={setLandingOpen}
                 loading={loading}
                 region={region}
                 questLength={questList.length}
@@ -245,7 +230,7 @@ export default function MapPage() {
                 >
                     <BottomFooterButton
                         style={{ width: "22%" }}
-                        onClick={() => navigate(-1)}
+                        onClick={() => navigate("/", { replace: true })}
                     >
                         <img src={BackArrow} alt={"back arrow"} />
                         <span>뒤로 가기</span>
@@ -290,12 +275,16 @@ const UserInfo = styled.div`
     align-items: center;
     padding: 0 12px;
     & p {
+        width: calc(100% - 30px);
         font-size: 16px;
         font-weight: 700;
         line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         & span {
             color: #266137;
-            padding-right: 7px;
+            padding-right: 4px;
         }
     }
 `;

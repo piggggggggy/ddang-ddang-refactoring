@@ -1,25 +1,78 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { questFragment } from "../../../modules/fragment";
+import FeedInput from "../elements/FeedInput";
 import QuestPaperBottomButton from "../elements/QuestPaperBottomButton";
+import { Grid } from "../../../elements";
+import { postFeed, postQuest } from "../../../services/quest.service";
+import CompleteModal from "./CompleteModal";
+import { useNavigate } from "react-router-dom";
 
 export default function FeedPaper({ type, questId }) {
-    // const [progress, setProgress] = useState(0);
+    const navigate = useNavigate();
 
+    // const [progress, setProgress] = useState(0);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [text, setText] = useState("");
+    const textHandler = (e) => {
+        setText(e.target.value);
+    };
     const fragment = questFragment(type);
+
+    const submitFeed = async () => {
+        if (text.length < 20) return;
+        const request = {
+            content: text,
+            img: [""],
+        };
+        try {
+            const data = await postQuest({
+                request,
+                questId,
+                type,
+            });
+            console.log(data);
+            if (data.ok) {
+                setModalOpen(true);
+            }
+        } catch {
+            navigate(-1);
+        }
+    };
+
+    const completeQuest = (type) => {
+        if (type === "point") {
+            navigate("/myPage");
+        } else {
+            navigate(-1);
+        }
+    };
+
     return (
         <Paper>
             <ContentWrapper>
-                <ImgBox>
-                    <img src={fragment.img} alt={"time"} />
-                </ImgBox>
+                <Grid mystyles={"padding: 30px"}>
+                    <FeedInput
+                        text={"이 곳에 대해 후기를 남긴다면?"}
+                        placeholder={
+                            "최소 20자 이상 작성해주세요 \n이 곳에 처음 오시는 분들도 알 수 있도록 설명을 붙여주시면 더욱 좋아요"
+                        }
+                        value={text}
+                        valueHandler={textHandler}
+                    />
+                </Grid>
                 <QuestPaperBottomButton
-                    text={"시작하기"}
+                    text={"작성하기"}
                     color={fragment.subColor}
-                    onClick={() => {}}
-                    isOn={true}
+                    onClick={submitFeed}
+                    isOn={text.length >= 20}
                 />
             </ContentWrapper>
+            <CompleteModal
+                open={modalOpen}
+                setComfirm={completeQuest}
+                type={"feed"}
+            />
         </Paper>
     );
 }

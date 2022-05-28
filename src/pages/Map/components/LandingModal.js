@@ -11,8 +11,10 @@ export default function LandingModal({
     region,
     questLength = 0,
     userData,
+    landingOpen,
+    setLandingOpen,
 }) {
-    const [landingOpen, setLandingOpen] = useState(false);
+    // const [landingOpen, setLandingOpen] = useState(false);
     const regions = useSelector((state) => state.quest.region);
 
     useEffect(() => {
@@ -111,7 +113,7 @@ const FixedWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     transition: all 300ms ease;
-    padding: 30px 0;
+    padding: 30px 0 100px;
 `;
 
 const Title = styled.p`

@@ -1,32 +1,19 @@
 import styled from "styled-components";
 import { questFragment } from "../../../modules/fragment";
+import TimeImg from "../../../assets/images/png/time-large.png";
 
-export default function CompleteModal({ open, setComfirm, type }) {
+export default function FailModal({ open, setComfirm, type, title }) {
     const fragment = questFragment(type);
     return (
         <>
             {open && <Dimmed />}
             <Paper style={open ? { bottom: "calc(50vh - 140px)" } : {}}>
-                {type !== "feed" && (
-                    <WinPaper>
-                        <img src={fragment.winPaper} alt={"win paper"} />
-                    </WinPaper>
-                )}
-                <Title style={{ color: fragment.color }}>
-                    승리를 축하합니다
-                </Title>
-                <Reward style={{ background: fragment.color }}>
-                    <p>3,000 P</p>
-                </Reward>
-
+                <Title style={{ color: fragment.color }}>{title}</Title>
+                <Image>
+                    <img src={TimeImg} alt={"time"} />
+                </Image>
                 <BottomButton
-                    onClick={() => setComfirm("point")}
-                    style={{ marginBottom: 10, background: fragment.subColor }}
-                >
-                    <p>포인트 받기</p>
-                </BottomButton>
-                <BottomButton
-                    onClick={() => setComfirm("quest")}
+                    onClick={setComfirm}
                     style={{ background: fragment.subColor }}
                 >
                     <p>다른 퀘스트 하러가기</p>
@@ -59,6 +46,9 @@ const Paper = styled.div`
     z-index: 2001;
     padding: 44px 16px 20px;
     transition: all 500ms ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `;
 
 const Title = styled.p`
@@ -69,32 +59,14 @@ const Title = styled.p`
     width: 100%;
 `;
 
-const WinPaper = styled.div`
-    position: absolute;
-    top: -28px;
-    left: calc(50% - 100px);
-    width: 196px;
-    height: 56px;
+const Image = styled.div`
+    width: 80px;
+    height: 80px;
+    margin: auto;
     & img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
-    }
-`;
-
-const Reward = styled.div`
-    width: 112px;
-    height: 56px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 14px auto 24px;
-    & p {
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 1.15;
-        text-align: center;
-        width: 100%;
+        object-fit: cover;
     }
 `;
 

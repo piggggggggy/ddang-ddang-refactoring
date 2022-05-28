@@ -1,10 +1,10 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { DEFAULT_PROFILE_IMG } from "../../../shared/Link";
 
 export default function UserInfoContainer({ region }) {
     const userData = useSelector((state) => state.user.user);
-
     if (userData === null) return;
     return (
         <UserInfoCardWrapper>
@@ -16,7 +16,14 @@ export default function UserInfoContainer({ region }) {
                     "min-width: 80px; width: 80px; height: 80px; margin-right: 15px; border-radius: 8px; overflow: hidden;"
                 }
             >
-                <Image src={userData.profileImg} alt={"profile image"} />
+                <Image
+                    src={
+                        userData.profileImg === "0"
+                            ? DEFAULT_PROFILE_IMG
+                            : userData.profileImg
+                    }
+                    alt={"profile image"}
+                />
             </Grid>
 
             <Grid>

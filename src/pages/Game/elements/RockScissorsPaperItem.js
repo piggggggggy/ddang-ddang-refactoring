@@ -1,10 +1,7 @@
 import styled from "styled-components";
-import Rock from "../../../assets/images/png/rock.png";
-import Scissors from "../../../assets/images/png/scissors.png";
-import Paper from "../../../assets/images/png/paper.png";
-
 export default function RockScissorsPaperItem({
     text,
+    img,
     isSelected,
     onClick,
     reverse = false,
@@ -46,30 +43,6 @@ export default function RockScissorsPaperItem({
         }
     `;
 
-    const RSPImgHandler = (() => {
-        switch (text) {
-            case "가위":
-                return {
-                    activeImg: Scissors,
-                    // unactiveImg: ,
-                };
-            case "바위":
-                return {
-                    activeImg: Rock,
-                    // unactiveImg: ,
-                };
-            case "보":
-                return {
-                    activeImg: Paper,
-                    // unactiveImg: ,
-                };
-            default:
-                return {
-                    activeImg: Scissors,
-                    // unactiveImg: ,
-                };
-        }
-    })();
     return (
         <Card
             style={isSelected ? { background: "#F3AC9C" } : {}}
@@ -79,13 +52,13 @@ export default function RockScissorsPaperItem({
                 <>
                     <p>{text}</p>
                     <div>
-                        <img src={RSPImgHandler.activeImg} alt={"rsp"} />
+                        <img src={img} alt={"rsp"} />
                     </div>
                 </>
             ) : (
                 <>
                     <div>
-                        <img src={RSPImgHandler.img} alt={"rsp"} />
+                        <img src={img} alt={"rsp"} />
                     </div>
                     <p>{text}</p>
                 </>

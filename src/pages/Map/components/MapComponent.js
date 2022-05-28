@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Circle, Map, MapMarker } from "react-kakao-maps-sdk";
 import { Grid } from "../../../elements";
@@ -70,6 +71,7 @@ export default function MapComponent({
                     fillOpacity={0.3}
                 />
 
+                {/* <div className={"CustomMap"}> */}
                 {questList.map((item, index) => {
                     if (item.completed) return;
                     if (questType === "all") {
@@ -96,6 +98,7 @@ export default function MapComponent({
                         }
                     }
                 })}
+                {/* </div> */}
             </Map>
         </Grid>
     );

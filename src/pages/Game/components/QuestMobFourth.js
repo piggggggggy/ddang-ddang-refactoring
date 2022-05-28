@@ -29,17 +29,16 @@ export default function QuestMobFourth({
     const setConfirm = () => {
         if (result === "Win") {
             setPopupOpen(true);
-        } else if (result === "draw") {
+        } else {
             if (tryCount >= 2) {
+                setCookieDay("mobCheck", questId);
+
                 navigate(-1);
             } else {
                 setTryCount((prev) => prev + 1);
                 setRSPIndex(null);
                 setProgress(1);
             }
-        } else {
-            setCookieDay("mobCheck", questId);
-            navigate(-1);
         }
     };
 
@@ -82,7 +81,14 @@ export default function QuestMobFourth({
                 return {
                     text: "다음에 다시 와!",
                     title: "You LOSE",
-                    buttonText: "내일 다시 도전하세요!",
+                    buttonText:
+                        tryCount === 2 ? (
+                            "내일 다시 도전하세요!"
+                        ) : (
+                            <>
+                                다시 도전하기 <span>최대 2번</span>
+                            </>
+                        ),
                     img: MobLarge,
                 };
             case "Win":
@@ -126,7 +132,11 @@ export default function QuestMobFourth({
                 <img src={resultHandler.img} alt={"mob"} />
             </MobImg>
 
-            <CompleteModal open={popupOpen} setComfirm={completeQuest} />
+            <CompleteModal
+                open={popupOpen}
+                setComfirm={completeQuest}
+                type={"mob"}
+            />
             <QuestPaperBottomButton
                 text={resultHandler.buttonText}
                 color={fragment.subColor}
