@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Grid } from "../../../elements";
+import { DEFAULT_PROFILE_IMG } from "../../../shared/Link";
 import SideTabButtons from "../elements/SideTabButtons";
 import QuestListConatiner from "./QuestListContainer";
 
@@ -26,7 +27,14 @@ export default function MapSideTab({
             <Back onClick={setClose} />
             <TabPaper>
                 <UserInfo onClick={() => navigate("/myPage")}>
-                    <img src={userData.profileImg} alt={"profile"} />
+                    <img
+                        src={
+                            userData.profileImg === ""
+                                ? DEFAULT_PROFILE_IMG
+                                : userData.profileImg
+                        }
+                        alt={"profile"}
+                    />
                     <Grid mystyles={"width: auto; padding-left: 13px;"}>
                         <UserText>
                             <span>Lv.{userData.level}</span>

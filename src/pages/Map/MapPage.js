@@ -48,19 +48,6 @@ export default function MapPage() {
         inCircleList,
     } = useWatchLocation(questList, questType);
 
-    const openQuestModal = (type) => {
-        closeQuestActive();
-        setQuestModalState({
-            open: true,
-            type: type,
-        });
-    };
-    const closeQuestModal = () => {
-        setQuestModalState({
-            ...questModalState,
-            open: false,
-        });
-    };
     const setDdangDdang = () => {
         if (inCircleList.length === 0) return;
         setQuestActive(true);
@@ -108,10 +95,10 @@ export default function MapPage() {
                 lat: res.coords.latitude,
                 lng: res.coords.longitude,
             });
-            const data = await getQuestList(
-                res.coords.latitude,
-                res.coords.longitude
-            );
+            const data = await getQuestList({
+                lat: res.coords.latitude,
+                lng: res.coords.longitude,
+            });
             console.log(res);
             if (data.rows.length > 0) {
                 setQuestList(data.rows);
@@ -137,15 +124,6 @@ export default function MapPage() {
             lng: 0,
         },
     ];
-    //     {
-    //         id: 11,
-    //         type: "feed",
-    //     },
-    //     {
-    //         id: 11,
-    //         type: "time",
-    //     },
-    // ];
 
     useEffect(() => {
         if (questType === "mob") {

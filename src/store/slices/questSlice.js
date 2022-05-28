@@ -20,5 +20,5 @@ const questSlice = createSlice({
     },
 });
 
-export const userActions = questSlice.actions;
+export const questActions = questSlice.actions;
 export default questSlice;

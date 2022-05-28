@@ -33,10 +33,9 @@ const useWatchLocation = (questList, type) => {
             if (!navigator.geolocation) {
                 window.alert("gps 에러");
             }
-            console.log("와치 작동");
             watchId.current = navigator.geolocation.watchPosition(
                 (_position) => {
-                    console.log("와치 인", _position, type);
+                    // console.log("와치 인", _position, type);
                     let filteredList = questList.filter((item) => {
                         let distance = getUpdatedDistance({
                             lat: _position.coords.latitude,
