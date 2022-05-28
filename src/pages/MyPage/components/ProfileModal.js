@@ -8,14 +8,12 @@ import ProfilePreview from "../elements/ProfilePreview";
 // aws s3 bucket
 import AWS from "aws-sdk";
 
-const S3_BUCKET = env.AWS_S3_BUKCET;
-console.log(env.AWS_S3_BUCKET);
-console.log(process.env.AWS_S3_BUCKET);
-const REGION = "ap-northeast-2";
+const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUKCET;
+const REGION = process.env.REACT_APP_AWS_REGION; 
 
 AWS.config.update({
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRECT_ACCESS_KEY,
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRECT_ACCESS_KEY,
 });
 
 const myBucket = new AWS.S3({
@@ -23,7 +21,7 @@ const myBucket = new AWS.S3({
     region: REGION,
 });
 
-const AWS_API_ENDPOINT = env.AWS_API_ENDPOINT;
+const AWS_API_ENDPOINT = process.env.REACT_APP_AWS_API_ENDPOINT;
 
 const style = {
     position: "absolute",

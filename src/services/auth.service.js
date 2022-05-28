@@ -32,8 +32,8 @@ const login = async (email, password) => {
     return response;
 };
 const logout = () => {
-    TokenService.removeUser("accesstoken");
-    TokenService.removeUser("resfreshtoken");
+    TokenService.removeUser("accessToken");
+    TokenService.removeUser("refreshToken");
 };
 
 const checkEmail = async (email) => {

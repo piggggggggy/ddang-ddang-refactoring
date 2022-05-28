@@ -2,6 +2,7 @@ import React from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import axios from "axios";
 import env from "react-dotenv";
+import KakaoService from "../../../services/kakao.service";
 import { Grid, Button, Text } from "../elements/index";
 
 export default function MapView() {
@@ -15,27 +16,14 @@ export default function MapView() {
                 lng: position.coords.longitude,
             });
         });
-        getmyAddress();
+
+
+        const data = KakaoService.getAddress(127.4147562,36.3298522);
+        // 그냥 위도 경도로 주소를 가져온다
+
     };
 
-    const getmyAddress = () => {
-        axios
-            .get(
-                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=127.4147562&y=36.3298522&input_coord=WGS84`,
-                {
-                    headers: {
-                        Accept: "*/*",
-                        Authorization: `KakaoAK ${env.MAP_KAKAO_API_KEY}`,
-                    },
-                }
-            )
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+
     React.useEffect(() => {
         getPosition();
     }, []);
@@ -43,12 +31,15 @@ export default function MapView() {
         <>
             <Grid mystyles="margin-top: 40px;">
                 <Grid flex alignItems="center" justifyContent="center">
-                    <Button mystyles="background: #5DED86; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);  border-radius: 100px; padding: 5px; font-weight: 400; font-size: 12px; border: none;">
+                    <Button mystyles="background: #5DED86; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);  border-radius: 100px; padding: 5px; font-weight: 400; font-size: 12px; border: none; width: 82px;">
                         점령한 땅
+                    </Button>
+                    <Button mystyles="background: #5DED86; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);  border-radius: 100px; padding: 5px; font-weight: 400; font-size: 12px; border: none;  margin-left:100px; width: 82px ">
+                        작성한 피드
                     </Button>
                 </Grid>
                 <Grid
-                    mystyles="overflow: hidden; margin-top:23px; border-radius: 20px;"
+                    mystyles="overflow: hidden; margin-top:23px; border-radius: 20px; border: 2px solid red;"
                     animate={{ opacity: 1 }}
                 >
                     {currentMapPosition !== null && (

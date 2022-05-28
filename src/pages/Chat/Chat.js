@@ -11,7 +11,6 @@ import Navigation from "../../components/Navigation";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
-import env from "react-dotenv";
 
 import sendIcon from "../../assets/images/png/chat/send.png";
 
@@ -116,11 +115,11 @@ const ChatPage = () => {
     const getmyAddress = (lat, lng) => {
         axios
             .get(
-                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
+                `${process.env.REACT_APP_MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
                 {
                     headers: {
                         Accept: "*/*",
-                        Authorization: `KakaoAK ${env.MAP_KAKAO_API_KEY}`,
+                        Authorization: `KakaoAK ${process.env.REACT_APP_MAP_KAKAO_API_KEY}`,
                     },
                 }
             )

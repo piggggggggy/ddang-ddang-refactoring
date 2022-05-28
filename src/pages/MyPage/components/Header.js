@@ -17,11 +17,11 @@ export default function Header(props) {
                 flex
                 direction="row"
                 alignItems="center"
-                justifyContent="space-between"
+                justifyContent="flex-end"
                 mystyles="width: 350px; margin-top: 20px;"
             >
-                <Grid>
-                    <IconButton>
+                {/* <Grid>
+                    <IconButton onClick={props.openSideMenu}>
                         <MenuIcon
                             sx={{
                                 width: "25px",
@@ -30,7 +30,7 @@ export default function Header(props) {
                             }}
                         />
                     </IconButton>
-                </Grid>
+                </Grid> */}
                 <Grid
                     flex
                     alignItems="center"
@@ -74,14 +74,13 @@ export default function Header(props) {
                 <Grid mystyles="width: 210px; height: 80px;">
                     <Grid flex mystyles="margin-top: 10px; margin-bottom: 5px;">
                         <Text mystyles="color: #5DEB85; width: 45px; font-weight: 700;font-size: 16px;">
-                            Lv. {userData?.profile?.[0]?.level}
+                            Lv. {userData.profile[0].level}
                         </Text>
                         <Text mystyles="color: white; width: 140px; font-weight: 700; font-size: 16px;">
-                            {userData?.profile?.[0]?.nickname}{" "}
+                            {userData.profile[0].nickname}
                             <span
                                 style={{
                                     fontWeight: 100,
-                                    marginLeft: "-5px",
                                     fontSize: "15px",
                                 }}
                             >
@@ -91,8 +90,8 @@ export default function Header(props) {
                     </Grid>
                     <Grid>
                         <Text mystyles="font-weight: 400; font-size: 12px; color: white;">
-                            {userData?.profile?.[0]?.mbti?.toUpperCase()}의
-                            자랑! 정복하러 떠나요!
+                            {userData.profile[0].mbti.toUpperCase()}의 자랑!
+                            정복하러 떠나요!
                         </Text>
                     </Grid>
                     <Grid
@@ -105,7 +104,9 @@ export default function Header(props) {
                             <ProgressBar
                                 mystyles="position: absolute; left: 0;height: 10px; border-radius: 50px; background: #5DEB85;"
                                 transition={{ delay: 0.6, duration: 1 }}
-                                animate={{ width: "100px" }}
+                                animate={{
+                                    width: userData.profile[0].expPoints,
+                                }}
                             />
                         </Grid>
                     </Grid>

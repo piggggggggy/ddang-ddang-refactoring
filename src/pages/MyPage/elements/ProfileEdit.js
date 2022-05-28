@@ -7,7 +7,6 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import IconButton from "@mui/material/IconButton";
 
 import ProfilePreview from "../../Sign/Signup/components/ProfilePreview";
-import env from "react-dotenv";
 
 import { Input } from "./index";
 
@@ -18,12 +17,12 @@ import { useSelector } from "react-redux";
 // aws s3 bucket
 import AWS from "aws-sdk";
 
-const S3_BUCKET = env.AWS_S3_BUCKET;
-const REGION = env.AWS_REGION;
+const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUCKET;
+const REGION = process.env.REACT_APP_AWS_REGION;
 
 AWS.config.update({
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRECT_ACCESS_KEY,
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRECT_ACCESS_KEY,
 });
 
 const myBucket = new AWS.S3({
@@ -31,7 +30,7 @@ const myBucket = new AWS.S3({
     region: REGION,
 });
 
-const AWS_API_ENDPOINT = env.AWS_API_ENDPOINT;
+const AWS_API_ENDPOINT = process.env.REACT_APP_AWS_API_ENDPOINT;
 
 const style = {
     position: "absolute",

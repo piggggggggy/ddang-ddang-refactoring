@@ -3,6 +3,7 @@ import api from "../../modules/api";
 import AuthService from "../../services/auth.service";
 import TokenService from "../../services/token.service";
 
+
 // 토큰 확인
 export const loginCheckAxios = (token, navigate) => {
     return async function (dispatch) {
@@ -22,6 +23,7 @@ export const loginCheckAxios = (token, navigate) => {
 
             dispatch(userActions.loginCheck({ user, token }));
         } catch (err) {
+            console.log(err);
             navigate("/signin");
         }
     };
