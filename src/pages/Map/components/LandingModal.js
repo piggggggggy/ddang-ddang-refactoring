@@ -111,7 +111,7 @@ const FixedWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     transition: all 300ms ease;
-    padding: 30px 0;
+    padding: 30px 0 100px;
 `;
 
 const Title = styled.p`

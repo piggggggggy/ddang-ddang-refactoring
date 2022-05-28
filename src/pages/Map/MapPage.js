@@ -224,7 +224,7 @@ export default function MapPage() {
                 >
                     <BottomFooterButton
                         style={{ width: "22%" }}
-                        onClick={() => navigate(-1)}
+                        onClick={() => navigate("/", { replace: true })}
                     >
                         <img src={BackArrow} alt={"back arrow"} />
                         <span>뒤로 가기</span>
