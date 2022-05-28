@@ -45,15 +45,15 @@ const useMainData = () => {
             ) {
                 //이상한 주소
 
+                //강제로 설정한다.
                 const tempLocation = {
                     lat: 37.5172363,
                     lng: 127.0473248,
                 };
 
-                const data = await getQuestList(tempLocation);
-                const { regionDong, regionGu, regionSi } = data.currentRegion;
-                console.log(data)
-                console.log(regionDong, regionGu, regionSi);
+                const data = await getQuestList({location: tempLocation});
+
+
 
                 if (data.rows.length > 0) {
                     setQuestList(data.rows);
@@ -65,16 +65,21 @@ const useMainData = () => {
                     );
                 }
 
+                // 현재 설정 저장 
                 setRegion(data.currentRegion);
 
+
+                // 경고 문구 반환
                 return alert("현재 가능한 지역이 아닙니다. 가상환경에서 시작합니다.");
             } else {
+
                 //  퀘스트를 가져온다
                 const data = await getQuestList(
                     res.coords.latitude,
                     res.coords.longitude
                 );
 
+                // 퀘스트가 있다면 퀘스트 리스트를 설정한다.
                 if (data.rows.length > 0) {
                     setQuestList(data.rows);
                     dispatch(
@@ -84,6 +89,7 @@ const useMainData = () => {
                         })
                     );
                 }
+                // 현재 지역 설정 
                 setRegion(data.currentRegion);
             }
             console.log(userdata);

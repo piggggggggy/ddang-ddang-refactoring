@@ -6,29 +6,25 @@ import KakaoService from "../../../services/kakao.service";
 import { Grid, Button, Text } from "../elements/index";
 
 export default function MapView() {
-    const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
-    console.log(currentMapPosition);
-    const getPosition = () => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position);
+    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
+    const [currentAddress, setCurrentAddress] = React.useState({});
+
+    const getPosition = async () => {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const { latitude, longitude } = position.coords;
+
             setCurrentMapPosition({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
+                lat: latitude,
+                lng: longitude,
             });
         });
+        // 카카오에서 좌표값을 가지고 주소 가져오기
+        const getAddress = await KakaoService.getAddress({
+            location: currentMapPosition,
+        });
 
-        const tempLocation = {
-            lat: 37.5172363,
-            lng: 127.0473248,
-        };
-
-        // console.log(getPosition())
-        const data = KakaoService.getAddress({ locatoin: tempLocation });
-
-
-
+        setCurrentAddress(getAddress);
     };
-
 
     React.useEffect(() => {
         getPosition();

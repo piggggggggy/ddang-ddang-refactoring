@@ -5,67 +5,45 @@ import { Grid, Text, Image } from "../Ranking/elements/index";
 import Container from "../../elements/Container";
 import Navigation from "../../components/Navigation";
 import StarIcon from "@mui/icons-material/Star";
-import api from "../../modules/api";
-import axios from "axios";
 import noData from "../../assets/images/png/Ranking/noData.png";
 import KakaoService from "../../services/kakao.service";
 import RankingService from "../../services/ranking.service";
-
 import ProgressDonut from "./components/ProgressDonut";
 
 export default function Ranking() {
     const [address, setAddress] = React.useState({});
-    console.log(address);
-
-    // 좌표 찾기
-    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
-    console.log(currentMapPosition);
-
-    const getPosition = () => {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            console.log(position);
-            setCurrentMapPosition({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-            });
-
-            const location = {
-                lat: 37.5172363,
-                lng: 127.0473248,
-            };
-            console.log(location.lat, location.lng);
-
-            setCurrentMapPosition({ lat: location.lat, lng: location.lng });
-
-            console.log(currentMapPosition);
-
-            const data = await KakaoService.getAddress({
-                location: currentMapPosition,
-            });
-            console.log("wekjlfklwjefk여기가 성공해야함 ");
-            console.log(data);
-        });
-    };
+    const [location, setLocation] = React.useState({});
 
     // 서버에 데이터 요청
     const [group, setGroup] = React.useState([]);
-    console.log(group);
-
     const [individual, setIndividual] = React.useState([]);
-    console.log(individual);
 
-    const getRanking = async () => {
+    const getPosition = async () => {
+        // navigator 에서 위치 정보 가져오기
+        navigator.geolocation.getCurrentPosition(async (res) => {
+            const { latitude, longitude } = res.coords;
+            setLocation({
+                lat: latitude,
+                lng: longitude,
+            });
+        });
+
+        // 만약에 사용자의 위치에서 시구동을 못가져오면 현재 가능한지 않는 지역에 있습니다.
+        const userdata = await KakaoService.getAddress({
+            location: location,
+        });
+
+        setAddress(userdata);
+
         const result = await RankingService.getRanking({
-            si: address?.si,
-            gu: address?.gu,
-            dong: address?.dong,
+            si: userdata?.si,
+            gu: userdata?.gu,
+            dong: userdata?.dong,
         });
 
         setGroup([...group, ...result.data.ranks.group]);
         setIndividual([...individual, ...result.data.ranks.individual]);
     };
-    console.log(group);
-    console.log(individual);
 
     // 메뉴 리스트
     const tabList = [
@@ -91,7 +69,6 @@ export default function Ranking() {
 
     React.useEffect(() => {
         getPosition();
-        getRanking();
     }, []);
 
     return (
