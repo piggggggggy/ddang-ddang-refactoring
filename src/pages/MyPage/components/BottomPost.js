@@ -9,17 +9,13 @@ export default function BottomPost() {
     const [postsPerPage] = useState(5);
     const [currentPosts, setCurrentPosts] = useState(null);
 
-    // const [indexOfLastPost, setIndexOfLastPost] = useState(
-    //     currentPage * postsPerPage
-    // );
-    // const [indexOfFirstPost, setIndexOfFirstPost] = useState(
-    //     currentPage * postsPerPage
-    // );
-    // console.log("hello");
+    const [indexOfLastPost, setIndexOfLastPost] = useState();
+    const [indexOfFirstPost, setIndexOfFirstPost] = useState();
+    console.log("hello");
 
-    const indexOfLastPost = currentPage * postsPerPage;
+    // const indexOfLastPost = currentPage * postsPerPage;
 
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    // const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
     // const fetchPosts = async () => {
     //     const res = await api.get("/api/players/mypage");
@@ -37,8 +33,10 @@ export default function BottomPost() {
                 setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
             }
         };
+        setIndexOfLastPost(currentPage * postsPerPage);
+        setIndexOfFirstPost(indexOfLastPost - postsPerPage);
         fetchPosts();
-    }, [indexOfLastPost, indexOfFirstPost, posts]);
+    }, [indexOfLastPost, indexOfFirstPost, posts, currentPage, postsPerPage]);
 
     // Get current posts
     // Change page

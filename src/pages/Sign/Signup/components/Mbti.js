@@ -57,7 +57,7 @@ export default function Mbti(props) {
         const password = props.finalSignupValue.password;
         const myMbti = mbti;
         console.log(myMbti);
-        const profileImg = "a";
+        const profileImg = "0";
         if (mbti.length === 4) {
             dispatch(
                 signupAxios(
