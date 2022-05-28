@@ -44,10 +44,10 @@ const useWatchLocation = (questList, type) => {
                             _lng: Number(item.lng),
                         });
                         if (type === "all") {
-                            return distance < 0.03 && !item.completed;
+                            return distance < 0.01 && !item.completed;
                         } else {
                             return (
-                                distance < 0.03 &&
+                                distance < 0.01 &&
                                 item.type === type &&
                                 !item.completed
                             );
@@ -67,7 +67,7 @@ const useWatchLocation = (questList, type) => {
                             _lat: newRecord.lat,
                             _lng: newRecord.lng,
                         });
-                        if (distance < 0.02) update = false;
+                        if (distance < 0.01) update = false;
                     }
                     if (update) {
                         // console.log(update, '와치 업데이트 성공!!!!', "이전 :", record, "뉴 :", newRecord);
