@@ -6,9 +6,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 import { getUpdatedDistance } from "../../../modules/location";
+import ToastPageMsg from "../../../elements/ToastMsgPage";
+import { useState } from "react";
 
 export default function QuestDetailLayer({ open, setClose, item, position }) {
     const navigate = useNavigate();
+    const [onToast, setOnToast] = useState(false);
 
     return (
         <>
@@ -25,6 +28,7 @@ export default function QuestDetailLayer({ open, setClose, item, position }) {
                         <SelectedQuestCard
                             {...item}
                             onClick={setClose}
+                            openToast={() => setOnToast(true)}
                             selectQuest={() => {
                                 if (item.type === "time") {
                                     navigate(
@@ -46,6 +50,9 @@ export default function QuestDetailLayer({ open, setClose, item, position }) {
                     </Slider>
                 </SlidWrapper>
             )}
+            <ToastPageMsg onToast={onToast} setOnToast={setOnToast}>
+                이미 실패한 퀘스트에요!
+            </ToastPageMsg>
         </>
     );
 }

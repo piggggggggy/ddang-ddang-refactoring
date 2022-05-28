@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Grid } from "../../../elements";
-import { questFragment } from "../../../modules/fragment";
+import { questFragment, RSPFragmentList } from "../../../modules/fragment";
 import QuestPaperBottomButton from "../elements/QuestPaperBottomButton";
 import RockScissorsPaperItem from "../elements/RockScissorsPaperItem";
 
@@ -12,20 +12,6 @@ export default function QuestMobSecond({
     setRSPIndex,
 }) {
     const fragment = questFragment("mob");
-    const list = [
-        {
-            text: "가위",
-            img: "",
-        },
-        {
-            text: "바위",
-            img: "",
-        },
-        {
-            text: "보",
-            img: "",
-        },
-    ];
 
     return (
         <Grid
@@ -33,10 +19,11 @@ export default function QuestMobSecond({
                 "position: relative; height: 100%; width: 100%; padding: 20px 0 20px"
             }
         >
-            {list.map((item, index) => (
+            {RSPFragmentList.map((item, index) => (
                 <RockScissorsPaperItem
                     key={item.text}
                     text={item.text}
+                    img={item.activeImg}
                     isSelected={RSPIndex === index || RSPIndex === null}
                     onClick={() => setRSPIndex(index)}
                 />

@@ -8,6 +8,8 @@ import FeedBubble from "../../../assets/images/png/feed-bubble.png";
 import FeedMedium from "../../../assets/images/png/feed-medium.png";
 import TimeMedium from "../../../assets/images/png/time-medium.png";
 import { getCookie } from "../../../shared/utils";
+import { useState } from "react";
+import ToastPageMsg from "../../../elements/ToastMsgPage";
 
 export default function SelectedQuestCard(Props) {
     const mobIdCheck = getCookie("mobCheck");
@@ -75,7 +77,11 @@ export default function SelectedQuestCard(Props) {
     })();
 
     const moveToGame = () => {
-        // if (Number(mobIdCheck) === Number(Props.id)) return;
+        if (Number(mobIdCheck) === Number(Props.id)) {
+            console.log(Number(mobIdCheck), Number(Props.id));
+            Props.openToast(true);
+            return;
+        }
         // if (Props.isInCircle) {
         Props.selectQuest();
         // } else {

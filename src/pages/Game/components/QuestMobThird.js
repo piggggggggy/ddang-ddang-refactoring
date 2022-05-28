@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Grid } from "../../../elements";
-import { questFragment } from "../../../modules/fragment";
+import { questFragment, RSPFragmentList } from "../../../modules/fragment";
 import { keyframes } from "styled-components";
 import RockScissorsPaperItem from "../elements/RockScissorsPaperItem";
 
@@ -17,20 +17,6 @@ export default function QuestMobThird({
         Math.floor(Math.random() * (Math.floor(3) - Math.ceil(0))) +
             Math.ceil(0)
     );
-    const list = [
-        {
-            text: "가위",
-            img: "",
-        },
-        {
-            text: "바위",
-            img: "",
-        },
-        {
-            text: "보",
-            img: "",
-        },
-    ];
 
     useEffect(() => {
         setTimeout(() => {
@@ -71,14 +57,16 @@ export default function QuestMobThird({
                 <>
                     <MobRAPItem>
                         <RockScissorsPaperItem
-                            text={list[randomIndex].text}
+                            text={RSPFragmentList[randomIndex].text}
+                            img={RSPFragmentList[randomIndex].activeImg}
                             reverse
                             isResult
                         />
                     </MobRAPItem>
                     <MyRAPItem>
                         <RockScissorsPaperItem
-                            text={list[RSPIndex].text}
+                            text={RSPFragmentList[RSPIndex].text}
+                            img={RSPFragmentList[RSPIndex].activeImg}
                             isSelected
                             isResult
                         />

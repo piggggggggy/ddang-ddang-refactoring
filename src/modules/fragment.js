@@ -7,7 +7,9 @@ import FeedLarge from "../assets/images/png/feed-large.png";
 import AllLarge from "../assets/images/png/all-large.png";
 import MobWin from "../assets/images/png/mob-win.png";
 import TimeWin from "../assets/images/png/time-win.png";
-
+import Rock from "../assets/images/png/rock.png";
+import Scissors from "../assets/images/png/scissors.png";
+import Paper from "../assets/images/png/paper.png";
 export const questFragment = (type) => {
     switch (type) {
         case "mob":
@@ -67,3 +69,18 @@ export const questFragment = (type) => {
             };
     }
 };
+
+export const RSPFragmentList = [
+    {
+        text: "가위",
+        activeImg: Scissors,
+    },
+    {
+        text: "바위",
+        activeImg: Rock,
+    },
+    {
+        text: "보",
+        activeImg: Paper,
+    },
+];
