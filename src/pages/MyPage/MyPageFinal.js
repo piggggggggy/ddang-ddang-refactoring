@@ -73,6 +73,8 @@ export default function MyPageFinal() {
         setOpenSideMenu(!openSideMenu);
     };
 
+    console.log("hello");
+
     return (
         <Container>
             {page === 1 && (
@@ -115,7 +117,7 @@ export default function MyPageFinal() {
                                     handleClose={handleClose}
                                 />
                                 <BottomPost />
-                                <FeedBottomPost />
+                                {/* <FeedBottomPost /> */}
                             </>
                         )}
                     </Grid>

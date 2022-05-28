@@ -179,8 +179,8 @@ export default function Feed() {
                 >
                     <LocationOnIcon sx={{ color: "white" }} />
                     <Text mystyles="font-size: 16px; color: white;">
-                        {currentAddress.si} {currentAddress.gu}{" "}
-                        {currentAddress.dong}
+                        {currentAddress?.si} {currentAddress?.gu}{" "}
+                        {currentAddress?.dong}
                     </Text>
                 </Grid>
                 <Grid

@@ -34,9 +34,9 @@ function App() {
         } else {
             return;
         }
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 3000);
+        // setTimeout(() => {
+        //     setIsLoading(false);
+        // }, 3000);
     }, []);
 
     if (isLoading) {

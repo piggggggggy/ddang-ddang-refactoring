@@ -12,6 +12,7 @@ export default function BottomPost() {
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
     const [feed, setFeed] = React.useState([]);
+
     useEffect(() => {
         const fetchPosts = async () => {
             const res = await api.get("/api/players/mypage");
@@ -19,7 +20,7 @@ export default function BottomPost() {
             if (res.data.rows.profile[0].completes !== null) {
                 setFeed(
                     res.data.rows.profile[0].completes.filter((value) => {
-                        return value.type === "feed";
+                        return value.quest.type === "feed";
                     })
                 );
             }

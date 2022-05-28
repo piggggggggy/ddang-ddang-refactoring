@@ -9,19 +9,29 @@ export default function BottomPost() {
     const [postsPerPage] = useState(5);
     const [currentPosts, setCurrentPosts] = useState(null);
 
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const [indexOfLastPost, setIndexOfLastPost] = useState(
+        currentPage * postsPerPage
+    );
+    const [indexOfFirstPost, setIndexOfFirstPost] = useState(
+        currentPage * postsPerPage
+    );
+    console.log("hello");
+
+    // const indexOfLastPost = currentPage * postsPerPage;
+
+    // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
+    const fetchPosts = async () => {
+        const res = await api.get("/api/players/mypage");
+        setPosts(res.data.rows.profile[0].completes);
+        if (posts !== null) {
+            setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
+        }
+    };
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            const res = await api.get("/api/players/mypage");
-            setPosts(res.data.rows.profile[0].completes);
-            if (posts !== null) {
-                setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
-            }
-        };
         fetchPosts();
-    }, [indexOfLastPost, indexOfFirstPost, posts]);
+    }, []);
 
     // Get current posts
     // Change page
