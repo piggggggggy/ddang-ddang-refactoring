@@ -7,55 +7,37 @@ import Navigation from "../../components/Navigation";
 import StarIcon from "@mui/icons-material/Star";
 import api from "../../modules/api";
 import axios from "axios";
-import env from "react-dotenv";
 import noData from "../../assets/images/png/Ranking/noData.png";
+import KakaoService from "../../services/kakao.service";
 
 import ProgressDonut from "./components/ProgressDonut";
 
 export default function Ranking() {
+
+    const [address, setAddress] = React.useState({});
+    console.log(address);
+
     // 좌표 찾기
     const [currentMapPosition, setCurrentMapPosition] = React.useState({});
     console.log(currentMapPosition);
+
+
+
     const getPosition = () => {
+
         navigator.geolocation.getCurrentPosition((position) => {
             console.log(position);
             setCurrentMapPosition({
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
             });
-            getmyAddress(position.coords.latitude, position.coords.longitude);
+
+
+            KakaoService.getAddress(position.coords.latitude, position.coords.longitude);
         });
     };
 
-    const [address, setAddress] = React.useState({});
-    console.log(address);
 
-    // 카카오 api 로 시, 구, 동 정보 받기
-    const getmyAddress = (lat, lng) => {
-        axios
-            .get(
-                `${env.MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
-                {
-                    headers: {
-                        Accept: "*/*",
-                        Authorization: `KakaoAK ${env.MAP_KAKAO_API_KEY}`,
-                    },
-                }
-            )
-            .then((res) => {
-                const data = {
-                    si: res?.data?.documents?.[0]?.address?.region_1depth_name,
-                    gu: res?.data?.documents?.[0]?.address?.region_2depth_name,
-                    dong: res?.data?.documents?.[0]?.address
-                        ?.region_3depth_name,
-                };
-
-                setAddress(data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
 
     // 서버에 데이터 요청
     const [group, setGroup] = React.useState([]);
@@ -65,6 +47,8 @@ export default function Ranking() {
     console.log(individual);
 
     const getRanking = async () => {
+
+
         await api
             .get(
                 `/api/ranks?si=${address?.si}&gu=${address?.gu}&dong=${address?.dong}`
