@@ -4,7 +4,7 @@ import { getUpdatedDistance } from "../../../modules/location";
 const geolocationOptions = {
     enableHighAccuracy: true,
     maximumAge: 0,
-    timeout: 1000,
+    timeout: 2000,
 };
 
 const useWatchLocation = (questList, type) => {
