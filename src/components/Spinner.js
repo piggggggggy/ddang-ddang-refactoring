@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Grid } from "../elements";
-import Area from "../assets/images/png/area-large.png";
+import Area from "../assets/images/png/area-landonly.png";
 
 export default function Spinner() {
     return (
@@ -47,10 +47,10 @@ const CircleMotion = keyframes`
 `;
 const MapImg = styled.img`
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: calc(50% - 71px);
+    left: calc(50% - 68.5px);
+    width: 142px;
+    height: 137px;
     object-fit: cover;
 `;
 const Circle = styled.div`

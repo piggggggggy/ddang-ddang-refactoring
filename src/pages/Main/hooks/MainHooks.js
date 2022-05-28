@@ -7,8 +7,8 @@ import { questActions } from "../../../store/slices/questSlice";
 import { userActions } from "../../../store/slices/userSlice";
 const geolocationOptions = {
     enableHighAccuracy: true,
-    maximumAge: 5000,
-    timeout: 5000,
+    maximumAge: 2000,
+    timeout: 2000,
 };
 const useMainData = () => {
     const dispatch = useDispatch();
@@ -30,7 +30,9 @@ const useMainData = () => {
 
         navigator.geolocation.getCurrentPosition(
             async (res) => {
-                //사용자의 위치를 가져온다.
+                const newLocation = JSON.stringify(res.coords);
+                localStorage.setItem("location", newLocation);
+
                 setLocation({
                     lat: res.coords.latitude,
                     lng: res.coords.longitude,
@@ -103,8 +105,25 @@ const useMainData = () => {
                     }, 200);
                 }
             },
-            (err) => {
+            async (err) => {
                 console.log("main geolocation 오류 : ", err);
+                const oldLocation = localStorage.getItem("location");
+                const { latitude, longitude } = JSON.parse(oldLocation);
+                const data = await getQuestList({
+                    lat: Number(latitude),
+                    lng: Number(longitude),
+                });
+                console.log(data);
+                if (data.rows.length > 0) {
+                    setQuestList(data.rows);
+                    dispatch(
+                        questActions.setQuest({
+                            list: data.rows,
+                            region: data.currentRegion,
+                        })
+                    );
+                }
+                setRegion(data.currentRegion);
                 setTimeout(() => {
                     setLoading(false);
                 }, 200);
