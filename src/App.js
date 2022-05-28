@@ -22,16 +22,20 @@ function App() {
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
+
+        //토큰확인
         const refreshtoken = TokenService.getLocalRefreshToken();
         const accesstoken = TokenService.getLocalAccessToken();
 
 
 
+        //둘다 없으면 로그인페이지로 이동
         if (!refreshtoken && !accesstoken) {
             alert("로그인이 필요합니다.");
             navigate("/signin");
             setIsLoading(false);
         } else {
+            //
             dispatch(
                 loginCheckAxios(accesstoken)
             );
