@@ -111,8 +111,8 @@ export default function MyPageFinal() {
                                     open={open}
                                     handleClose={handleClose}
                                 />
-                                {/* <BottomPost /> */}
-                                {/* <FeedBottomPost /> */}
+                                <BottomPost />
+                                <FeedBottomPost />
                             </>
                         )}
                     </Grid>
