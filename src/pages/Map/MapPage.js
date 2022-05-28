@@ -114,21 +114,6 @@ export default function MapPage() {
         });
     }, []);
 
-    const list = [
-        {
-            id: 11,
-            type: "time",
-            let: 0,
-            lng: 0,
-        },
-        {
-            id: 12,
-            type: "mob",
-            let: 0,
-            lng: 0,
-        },
-    ];
-
     useEffect(() => {
         if (questType === "mob") {
             setColor("#FA5A54");
@@ -252,9 +237,9 @@ export default function MapPage() {
             <QuestActivateLayer
                 open={questActive}
                 setClose={closeQuestActive}
-                // list={inCircleList}
+                list={inCircleList}
                 position={position}
-                list={list}
+                // list={list}
             />
         </Container>
     );
