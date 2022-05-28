@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import KakaoService from "../../../services/kakao.service";
 import { getQuestList } from "../../../services/main.service";
+import { TEMP_LOCATION } from "../../../shared/Link";
 import { questActions } from "../../../store/slices/questSlice";
 import { userActions } from "../../../store/slices/userSlice";
 const geolocationOptions = {
@@ -27,17 +28,20 @@ const useMainData = () => {
 
     useEffect(() => {
         setLoading(true);
-
         navigator.geolocation.getCurrentPosition(
             async (res) => {
-                const newLocation = JSON.stringify(res.coords);
+                // 2초안에 받아왔을 경우 localstrorage로 캐싱
+                const locationForCache = {
+                    latitude: res.coords.latitude,
+                    longitude: res.coords.longitude,
+                };
+                const newLocation = JSON.stringify(locationForCache);
                 localStorage.setItem("location", newLocation);
 
                 setLocation({
                     lat: res.coords.latitude,
                     lng: res.coords.longitude,
                 });
-                console.log(res);
                 // 만약에 사용자의 위치에서 시구동을 못가져오면 현재 가능한지 않는 지역에 있습니다.
                 const userdata = await KakaoService.getAddress({
                     location: {
@@ -53,13 +57,7 @@ const useMainData = () => {
                     typeof userdata.dong == "undefined"
                 ) {
                     //이상한 주소
-
-                    const tempLocation = {
-                        lat: 37.5172363,
-                        lng: 127.0473248,
-                    };
-
-                    const data = await getQuestList(tempLocation);
+                    const data = await getQuestList(TEMP_LOCATION);
                     const { regionDong, regionGu, regionSi } =
                         data.currentRegion;
                     console.log(data);
@@ -107,13 +105,18 @@ const useMainData = () => {
             },
             async (err) => {
                 console.log("main geolocation 오류 : ", err);
+                // 2초안에 못받아오거나 실패했을 경우 기존 캐싱된 데이터 사용
                 const oldLocation = localStorage.getItem("location");
                 const { latitude, longitude } = JSON.parse(oldLocation);
+
                 const data = await getQuestList({
-                    lat: Number(latitude),
-                    lng: Number(longitude),
+                    lat: !Number(latitude)
+                        ? TEMP_LOCATION.lat
+                        : Number(latitude),
+                    lng: !Number(longitude)
+                        ? TEMP_LOCATION.lng
+                        : Number(longitude),
                 });
-                console.log(data);
                 if (data.rows.length > 0) {
                     setQuestList(data.rows);
                     dispatch(
