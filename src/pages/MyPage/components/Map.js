@@ -1,7 +1,6 @@
 import React from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import axios from "axios";
-import env from "react-dotenv";
 import KakaoService from "../../../services/kakao.service";
 import { Grid, Button, Text } from "../elements/index";
 
@@ -24,11 +23,7 @@ export default function MapView() {
 
         // console.log(getPosition())
         const data = KakaoService.getAddress({ locatoin: tempLocation });
-
-
-
     };
-
 
     React.useEffect(() => {
         getPosition();

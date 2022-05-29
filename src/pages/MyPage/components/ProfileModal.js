@@ -1,7 +1,6 @@
 import React from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import env from "react-dotenv";
 import axios from "axios";
 import ProfilePreview from "../elements/ProfilePreview";
 
@@ -9,7 +8,7 @@ import ProfilePreview from "../elements/ProfilePreview";
 import AWS from "aws-sdk";
 
 const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUKCET;
-const REGION = process.env.REACT_APP_AWS_REGION; 
+const REGION = process.env.REACT_APP_AWS_REGION;
 
 AWS.config.update({
     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,

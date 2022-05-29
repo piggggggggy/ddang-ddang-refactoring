@@ -56,7 +56,6 @@ const useMainData = () => {
                         lng: res.coords.longitude,
                     },
                 });
-
                 // 주소가 아무것도 없다고 나오면 강제로 주소를 정해준다.
                 if (
                     typeof userdata.si == "undefined" &&
