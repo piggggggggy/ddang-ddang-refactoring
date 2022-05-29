@@ -11,13 +11,13 @@ import UserService from "../../../services/user.service";
 // aws s3 bucket
 import AWS from "aws-sdk";
 
-const S3_BUCKET = env.S3_BUKCET;
-console.log(env.S3_BUCKET);
+const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUKCET;
+console.log(process.env.REACT_APP_AWS_S3_BUKCET);
 const REGION = "ap-northeast-2";
 
 AWS.config.update({
-    accessKeyId: env.ACCESS_KEY_ID,
-    secretAccessKey: env.SECRECT_ACCESS_KEY,
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRECT_ACCESS_KEY,
 });
 
 const myBucket = new AWS.S3({
@@ -25,7 +25,7 @@ const myBucket = new AWS.S3({
     region: REGION,
 });
 
-const AWS_API_ENDPOINT = env.API_ENDPOINT;
+const AWS_API_ENDPOINT = process.env.REACT_APP_AWS_API_ENDPOINT;
 
 export default function ProfileSettings(props) {
     const navigate = useNavigate();
