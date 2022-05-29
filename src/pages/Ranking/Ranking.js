@@ -29,7 +29,7 @@ export default function Ranking() {
         });
 
         // 만약에 사용자의 위치에서 시구동을 못가져오면 현재 가능한지 않는 지역에 있습니다.
-        const userdata = await KakaoService.getAddress({
+        const userdata = await KakaoService.getAddress2({
             location: location,
         });
 

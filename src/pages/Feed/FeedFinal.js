@@ -51,7 +51,7 @@ export default function Feed() {
             });
         });
         // 카카오에서 좌표값을 가지고 주소 가져오기
-        const getAddress = await KakaoService.getAddress({
+        const getAddress = await KakaoService.getAddress2({
             location: currentMapPosition,
         });
 
