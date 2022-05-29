@@ -3,6 +3,7 @@ import styled from "styled-components";
 import QuestItemForCarousel from "../elements/QuestItemForCarousel";
 import QuestListContainer from "./QuestListContainer";
 import { useNavigate } from "react-router-dom";
+import { getUpdatedDistance } from "../../../modules/location";
 
 export default function LocalQuestSummary({
     questList,
@@ -14,6 +15,8 @@ export default function LocalQuestSummary({
     const moveToQusetPage = () => {
         navigate("/quest");
     };
+    // console.log(location);
+
     return (
         <Grid
             mystyles={
@@ -29,7 +32,7 @@ export default function LocalQuestSummary({
             <Grid mystyles={"width: 100%; max-width: 100%;"}>
                 <Carousel>
                     {questList.map((item, index) => {
-                        if (!isQuestPage && index > 9) return;
+                        // if (!isQuestPage && index > 9) return;
                         return (
                             <QuestItemForCarousel
                                 key={item.id}

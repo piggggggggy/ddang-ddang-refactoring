@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { Grid } from "../../../elements";
 import QuestItem from "../elements/QuestItem";
@@ -7,23 +8,35 @@ export default function QuestListConatiner({
     list,
     selectQuest,
     activateDetail,
+    openState,
 }) {
+    const [open, setOpen] = useState(openState);
+
+    const tabOpenHandler = () => {
+        if (open) {
+            setOpen(false);
+        } else {
+            setOpen(true);
+        }
+    };
     return (
-        <Grid mystyles={"padding: 0 0 24px;"}>
-            <Label>
+        <Grid mystyles={open ? "padding: 0 0 12px;" : "padding: 0"}>
+            <Label onClick={tabOpenHandler}>
                 {title}
                 <span>{list.length}</span>
             </Label>
-            {list.map((item) => (
-                <QuestItem
-                    key={item.id}
-                    {...item}
-                    onClick={() => {
-                        selectQuest({ lat: item.lat, lng: item.lng });
-                        activateDetail(item);
-                    }}
-                />
-            ))}
+            {open &&
+                list.map((item) => (
+                    <QuestItem
+                        key={item.id}
+                        {...item}
+                        onClick={() => {
+                            selectQuest({ lat: item.lat, lng: item.lng });
+                            console.log(item);
+                            activateDetail(item);
+                        }}
+                    />
+                ))}
         </Grid>
     );
 }

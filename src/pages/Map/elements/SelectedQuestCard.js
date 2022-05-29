@@ -75,7 +75,11 @@ export default function SelectedQuestCard(Props) {
     })();
 
     const moveToGame = () => {
-        if (Number(mobIdCheck) === Number(Props.id)) return;
+        if (Number(mobIdCheck) === Number(Props.id)) {
+            console.log(Number(mobIdCheck), Number(Props.id));
+            Props.openToast(true);
+            return;
+        }
         if (Props.isInCircle) {
             Props.selectQuest();
         } else {

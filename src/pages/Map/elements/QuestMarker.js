@@ -3,7 +3,7 @@ import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import { Grid } from "../../../elements";
 import { getUpdatedDistance } from "../../../modules/location";
-import ClickBalloon from "../../../assets/images/png/active-balloon.png";
+import ClickBalloon from "../../../assets/images/png/active-balloon-default.png";
 import { questFragment } from "../../../modules/fragment";
 
 export default function QuestMarker(Props) {
@@ -20,6 +20,7 @@ export default function QuestMarker(Props) {
             id: Props.id,
             lat: Props.lat,
             lng: Props.lng,
+            timeUntil: Props.timeUntil,
         });
         Props.openDetail();
     };
@@ -37,90 +38,46 @@ export default function QuestMarker(Props) {
                         },
                     }}
                     onClick={activateDetail}
-                >
-                    {distance <= 0.03 && (
-                        <CustomOverlayMap
-                            position={{ lat: Props.lat, lng: Props.lng }}
-                        >
-                            <ClickBubble>
-                                <img src={ClickBalloon} alt={"click"} />
-                                <p>Click!</p>
-                            </ClickBubble>
-                        </CustomOverlayMap>
-                    )}
-                </MapMarker>
+                />
+                {distance <= 0.03 && (
+                    <CustomOverlayMap
+                        position={{ lat: Props.lat, lng: Props.lng }}
+                    >
+                        <ClickBubble>
+                            <img src={ClickBalloon} alt={"click"} />
+                            {/* <p>Click!</p> */}
+                        </ClickBubble>
+                    </CustomOverlayMap>
+                )}
             </MarkerWrapper>
         </>
     );
 }
 
-const Dimmed = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 300;
-    width: 100vw;
-    max-width: 428px;
-    height: 100vh;
-    background: rgba(39, 57, 56, 0.5);
-`;
 const MarkerWrapper = styled.div`
+    width: 20px;
+    height: 20px;
+    background: none !important;
+    border: none !important;
     & div {
         background: none !important;
         border: none !important;
+        & div {
+            background: none !important;
+            border: none !important;
+            & div {
+                background: none !important;
+                border: none !important;
+            }
+        }
     }
-`;
-
-const DeatilWrapper = styled.div`
-    position: fixed;
-    top: calc(50vh - 30px);
-    left: calc(50vw - 100px);
-    z-index: 301;
-    width: 200px;
-    height: 60px;
-    border-radius: 10px;
-    border: 2px solid #5deb85;
-    box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
-    background: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
-`;
-
-const Title = styled.p`
-    width: 100%;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-`;
-
-const Description = styled.p`
-    width: 100%;
-    font-size: 8px;
-    line-height: 1.15;
-    margin-bottom: 4px;
-    color: #bababa;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-`;
-
-const Reward = styled.span`
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.15;
 `;
 
 const ClickBubble = styled.div`
     position: absolute;
-    width: 50px;
-    height: 29px;
-    top: -40px;
+    width: 40px;
+    height: 23px;
+    top: -35px;
     left: -35px;
     z-index: 302;
     & img {

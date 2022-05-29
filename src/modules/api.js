@@ -1,7 +1,5 @@
 import axios from "axios";
-import { getWithExpiry } from "../modules/localStorageControl";
 import TokenService from "../services/token.service";
-import tokenService from "../services/token.service";
 
 const headers = {
     Accept: "/",
@@ -10,7 +8,7 @@ const headers = {
 };
 
 const accessToken = {
-    Authorization: tokenService.getLocalAccessToken(),
+    Authorization: TokenService.getLocalAccessToken(),
 };
 const refreshToken = {
     refreshtoken: TokenService.getLocalRefreshToken(),
@@ -20,7 +18,7 @@ const instance = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
     headers: {
         ...headers,
-        ...accessToken,
+        // ...accessToken,
     },
 });
 
@@ -28,12 +26,12 @@ instance.interceptors.request.use(
     (config) => {
         // 로컬에 저장되어 있는 토큰을 가져온다.
         const token = TokenService.getLocalAccessToken();
-        console.log("언제실행되는걸까");
-        console.log(token);
+
         //만약에 토큰이 있다면
         if (token) {
             //config의 헤더 안에 토큰을 넣어준다.
             config.headers["accesstoken"] = token; // for Node.js Express back-end
+            config.headers.Authorization = token;
         }
         //요청을 보낸다.
         return config;
@@ -47,6 +45,10 @@ instance.interceptors.response.use(
         return res;
     },
     async (err) => {
+        if (err.response.status === 500) {
+            console.log("500ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+            // window.location.reload();
+        }
         const originalConfig = err.config;
         if (originalConfig.url !== "/api/players/signin" && err.response) {
             // Access Token was expired
@@ -57,7 +59,6 @@ instance.interceptors.response.use(
                         return alert("로그인 해주세요");
                     }
 
-                    console.log("실행되나");
                     const rs = await axios.get("/api/players/auth/getToken", {
                         baseURL: process.env.REACT_APP_BASE_URL,
                         headers: {
@@ -68,7 +69,7 @@ instance.interceptors.response.use(
 
                     const accesstoken = rs.headers["accesstoken"];
 
-                    if (!TokenService.getLocalAccessToken()){
+                    if (!TokenService.getLocalAccessToken()) {
                         TokenService.setAccessToken(accesstoken);
                     }
                     TokenService.updateLocalAccessToken(accesstoken);

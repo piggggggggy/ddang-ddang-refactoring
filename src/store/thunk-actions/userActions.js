@@ -8,7 +8,6 @@ export const loginCheckAxios = (token, navigate) => {
     return async function (dispatch) {
         try {
             const response = await AuthService.auth();
-            console.log(response);
             const user = {
                 email: response.data.user.email,
                 expPoints: response.data.user.expPoints,

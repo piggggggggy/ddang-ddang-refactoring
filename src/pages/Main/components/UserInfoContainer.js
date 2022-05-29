@@ -1,10 +1,11 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { DEFAULT_PROFILE_IMG } from "../../../shared/Link";
 
-export default function UserInfoContainer({ region }) {
+export default function UserInfoContainer({ region, loading }) {
     const userData = useSelector((state) => state.user.user);
-
+    // console.log(userData);
     if (userData === null) return;
     return (
         <UserInfoCardWrapper>
@@ -16,7 +17,14 @@ export default function UserInfoContainer({ region }) {
                     "min-width: 80px; width: 80px; height: 80px; margin-right: 15px; border-radius: 8px; overflow: hidden;"
                 }
             >
-                <Image src={userData.profileImg} alt={"profile image"} />
+                <Image
+                    src={
+                        userData.profileImg === "0" || !userData.profileImg
+                            ? DEFAULT_PROFILE_IMG
+                            : userData.profileImg
+                    }
+                    alt={"profile image"}
+                />
             </Grid>
 
             <Grid>
@@ -35,7 +43,8 @@ export default function UserInfoContainer({ region }) {
                 </Grid>
 
                 <SubInfoText>
-                    {region.regionDong}을 점령한 {userData.mbti}
+                    {!loading &&
+                        `${region.regionDong}을 점령한 ${userData.mbti}`}
                 </SubInfoText>
             </Grid>
         </UserInfoCardWrapper>

@@ -13,11 +13,7 @@ export default function MobPaper({ type, questId }) {
     const [tryCount, setTryCount] = useState(0);
 
     const fragment = questFragment(type);
-    const randomIndex = ((min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
-    })(0, 3);
+
     const Dot = styled.div`
         width: 16px;
         height: 16px;
@@ -43,7 +39,6 @@ export default function MobPaper({ type, questId }) {
                     progress={progress}
                     setProgress={setProgress}
                     RSPIndex={RSPIndex}
-                    randomIndex={randomIndex}
                     result={result}
                     setResult={setResult}
                 />
@@ -64,6 +59,7 @@ export default function MobPaper({ type, questId }) {
                 {Array.from({ length: type === "mob" ? 4 : 2 }, () => 0).map(
                     (item, index) => (
                         <Dot
+                            key={`key-${index}`}
                             style={
                                 progress === index ? { background: "#fff" } : {}
                             }

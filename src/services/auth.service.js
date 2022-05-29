@@ -25,7 +25,6 @@ const login = async (email, password) => {
     const refreshToken = response.headers["refreshtoken"];
 
     if (accessToken && refreshToken) {
-        console.log(accessToken, refreshToken);
         TokenService.setAccessToken(accessToken);
         TokenService.setRefreshToken(refreshToken);
     }

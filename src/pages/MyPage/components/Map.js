@@ -1,7 +1,6 @@
 import React from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import axios from "axios";
-import env from "react-dotenv";
 import KakaoService from "../../../services/kakao.service";
 import { Grid, Button, Text } from "../elements/index";
 
@@ -17,12 +16,14 @@ export default function MapView() {
             });
         });
 
+        const tempLocation = {
+            lat: 37.5172363,
+            lng: 127.0473248,
+        };
 
-        const data = KakaoService.getAddress(127.4147562,36.3298522);
-        // 그냥 위도 경도로 주소를 가져온다
-
+        // console.log(getPosition())
+        const data = KakaoService.getAddress({ locatoin: tempLocation });
     };
-
 
     React.useEffect(() => {
         getPosition();

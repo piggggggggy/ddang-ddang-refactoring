@@ -2,42 +2,72 @@ import { useState } from "react";
 import styled from "styled-components";
 import { questFragment } from "../../../modules/fragment";
 import QuestPaperBottomButton from "../elements/QuestPaperBottomButton";
+import QueryString from "qs";
+import Timer from "./Timer";
+import FailModal from "./FailModal";
+import { useNavigate } from "react-router-dom";
+import { postQuest } from "../../../services/quest.service";
+import CompleteModal from "./CompleteModal";
 
 export default function TimePaper({ type, questId }) {
-    // const [progress, setProgress] = useState(0);
-
+    const navigate = useNavigate();
+    const [failModalOpen, setFailModalOpen] = useState(false);
+    const [completeModalOpen, setCompleteModalOpen] = useState(false);
+    const time = QueryString.parse(window.location.search, {
+        ignoreQueryPrefix: true,
+    }).time;
     const fragment = questFragment(type);
-    const Dot = styled.div`
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        margin: 0 8px;
-        background: ${fragment.subColor};
-    `;
+    const submitFeed = async () => {
+        try {
+            const data = await postQuest({
+                request: {},
+                questId,
+                type,
+            });
+            console.log(data);
+            if (data.ok) {
+                setCompleteModalOpen(true);
+            }
+        } catch {
+            navigate(-1);
+        }
+    };
+
+    const completeQuest = (type) => {
+        if (type === "point") {
+            navigate("/myPage");
+        } else {
+            navigate(-1);
+        }
+    };
     return (
         <Paper>
             <ContentWrapper>
                 <ImgBox>
                     <img src={fragment.img} alt={"time"} />
                 </ImgBox>
+                <Timer
+                    time={time}
+                    openFailModal={() => setFailModalOpen(true)}
+                />
                 <QuestPaperBottomButton
                     text={"체크인 하기"}
                     color={fragment.subColor}
-                    onClick={() => {}}
+                    onClick={submitFeed}
                     isOn={true}
                 />
             </ContentWrapper>
-            {/* <DotContainer>
-                {Array.from({ length: type === "mob" ? 4 : 2 }, () => 0).map(
-                    (item, index) => (
-                        <Dot
-                            style={
-                                progress === index ? { background: "#fff" } : {}
-                            }
-                        />
-                    )
-                )}
-            </DotContainer> */}
+            <FailModal
+                open={failModalOpen}
+                setComfirm={() => navigate(-1)}
+                type={"time"}
+                title={"시간이 지났어요!"}
+            />
+            <CompleteModal
+                open={completeModalOpen}
+                setComfirm={completeQuest}
+                type={"time"}
+            />
         </Paper>
     );
 }
@@ -49,14 +79,6 @@ const Paper = styled.div`
     border-radius: 4px;
     background: #fff;
     box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
-`;
-
-const DotContainer = styled.div`
-    position: absolute;
-    bottom: -5%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
 `;
 
 const ContentWrapper = styled.div`
