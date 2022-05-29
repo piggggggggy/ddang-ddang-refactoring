@@ -12,17 +12,16 @@ import MapView from "../MyPage/components/Map";
 import { useSelector } from "react-redux";
 import api from "../../modules/api";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import ProfileModal from "../MyPage/components/ProfileModal";
 import Settings from "../MyPage/components/Settings";
 import MapSideTab from "../MyPage/components/MapSideTab";
 import BottomPost from "../MyPage/components/BottomPost";
 import FeedBottomPost from "../MyPage/components/FeedBottomPost";
+import ProfileSettings from "../MyPage/components/ProfileSettings";
 
 export default function MyPageFinal() {
     const [userData, setUserData] = React.useState(null);
 
     const [feed, setFeed] = React.useState([]);
-    const authData = useSelector((state) => state.user.user);
 
     const getData = () => {
         api.get("/api/players/mypage")
@@ -60,6 +59,11 @@ export default function MyPageFinal() {
         setPage(2);
     };
 
+    const profileOpen = () => {
+        setPage(3);
+        console.log(page);
+    };
+
     const [tabIndex, setTabIndex] = React.useState(false);
     const changeTab = () => {
         setTabIndex(!tabIndex);
@@ -69,6 +73,8 @@ export default function MyPageFinal() {
     const sideOpen = () => {
         setOpenSideMenu(!openSideMenu);
     };
+
+    console.log("hello");
 
     return (
         <Container>
@@ -96,6 +102,7 @@ export default function MyPageFinal() {
                                     openModal={handleOpen}
                                     settingsOpen={settingsOpen}
                                     openSideMenu={sideOpen}
+                                    profileOpen={profileOpen}
                                 />
                                 <AchievementHeader
                                     userData={userData}
@@ -107,12 +114,8 @@ export default function MyPageFinal() {
                                     tabIndex={tabIndex}
                                 />
                                 <MapView />
-                                <ProfileModal
-                                    open={open}
-                                    handleClose={handleClose}
-                                />
-                                {/* <BottomPost /> */}
-                                {/* <FeedBottomPost /> */}
+                                <BottomPost />
+                                <FeedBottomPost />
                             </>
                         )}
                     </Grid>
@@ -122,6 +125,13 @@ export default function MyPageFinal() {
             {page === 2 && (
                 <>
                     <Settings goBack={goBack} />
+                </>
+            )}
+            {page === 3 && (
+                <>
+                    {userData !== null && (
+                        <ProfileSettings userData={userData} goBack={goBack} />
+                    )}
                 </>
             )}
         </Container>

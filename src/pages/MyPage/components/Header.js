@@ -66,7 +66,10 @@ export default function Header(props) {
                         mystyles="width: 100%; height: 20px; position: absolute; background: rgba(44, 44, 44, 0.5); bottom: 0; left: 0; pointer: cursor;"
                         onClick={props.openModal}
                     >
-                        <Text mystyles="font-weight: 400; font-size: 8px; color: white;">
+                        <Text
+                            onClick={props.profileOpen}
+                            mystyles="font-weight: 400; font-size: 8px; color: white; cursor: pointer"
+                        >
                             편집
                         </Text>
                     </Grid>
@@ -76,7 +79,7 @@ export default function Header(props) {
                         <Text mystyles="color: #5DEB85; width: 45px; font-weight: 700;font-size: 16px;">
                             Lv. {userData.profile[0].level}
                         </Text>
-                        <Text mystyles="color: white; width: 140px; font-weight: 700; font-size: 16px;">
+                        <Text mystyles="color: white; width: 170px; font-weight: 700; font-size: 16px;">
                             {userData.profile[0].nickname}
                             <span
                                 style={{

@@ -87,6 +87,7 @@ export const signupAxios = (
     navigate
 ) => {
     return async function (dispatch) {
+        console.log(email, password, nickname, mbti, profileImg);
         AuthService.register(email, password, nickname, mbti, profileImg)
             .then((res) => {
                 console.log(res);

@@ -9,19 +9,38 @@ export default function BottomPost() {
     const [postsPerPage] = useState(5);
     const [currentPosts, setCurrentPosts] = useState(null);
 
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const [indexOfLastPost, setIndexOfLastPost] = useState();
+    const [indexOfFirstPost, setIndexOfFirstPost] = useState();
+    console.log("hello");
+
+    // const indexOfLastPost = currentPage * postsPerPage;
+
+    // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
+    // const fetchPosts = async () => {
+    //     const res = await api.get("/api/players/mypage");
+    //     setPosts(res.data.rows.profile[0].completes);
+    //     if (posts !== null) {
+    //         setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
+    //     }
+    // };
 
     useEffect(() => {
         const fetchPosts = async () => {
             const res = await api.get("/api/players/mypage");
             setPosts(res.data.rows.profile[0].completes);
-            if (posts !== null) {
-                setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
-            }
+
+            setCurrentPosts(
+                res.data.rows.profile[0].completes.slice(
+                    indexOfFirstPost,
+                    indexOfLastPost
+                )
+            );
         };
+        setIndexOfLastPost(currentPage * postsPerPage);
+        setIndexOfFirstPost(indexOfLastPost - postsPerPage);
         fetchPosts();
-    }, [indexOfLastPost, indexOfFirstPost, posts]);
+    }, [indexOfLastPost, indexOfFirstPost, currentPage, postsPerPage]);
 
     // Get current posts
     // Change page
@@ -31,7 +50,7 @@ export default function BottomPost() {
 
     return (
         <div>
-            {currentPosts !== null && posts !== null && (
+            {currentPosts !== null && (
                 <>
                     <Posts posts={currentPosts} />
                     <Pagination

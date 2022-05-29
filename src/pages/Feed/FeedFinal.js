@@ -44,7 +44,7 @@ export default function Feed() {
         };
 
         // console.log(getPosition())
-        const data = KakaoService.getAddress({ locatoin: tempLocation });
+        const data = KakaoService.getAddress({ location: tempLocation });
 
         setCurrentAddress(data);
     };
@@ -54,33 +54,40 @@ export default function Feed() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const regionsi = "서울시";
+    const regionsi = "서울";
     const regionGu = "강남구";
-    const regionDong = "삼섬동";
-    const lat = 33.5563;
-    const lng = 127.4147562;
+    const regionDong = "삼성동";
+    const lat = 37.5139848;
+    const lng = 127.0565207;
 
     const [items, setItems] = React.useState([]);
 
-    const feeds = useSelector((state) => state.feed.feeds);
+    // const feeds = useSelector((state) => state.feed.feeds);
+    const [feeds, setFeeds] = React.useState([]);
+    console.log(feeds);
 
     const feedsLatest = () => {
-        // dispatch(feedsLatestAxios(data));
-        if (currentAddress !== null && currentMapPosition !== null) {
-            FeedsService.feedsLatestAxios(
-                currentAddress.si,
-                currentAddress.gu,
-                currentAddress.dong,
-                currentMapPosition.lat,
-                currentMapPosition.lng
-            )
-                .then((res) => {
-                    console.log(res);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
+        // if (currentAddress !== null && currentMapPosition !== null) {
+        FeedsService.feedsLatestAxios(
+            // currentAddress.si,
+            // currentAddress.gu,
+            // currentAddress.dong,
+            // currentMapPosition.lat,
+            // currentMapPosition.lng
+            regionsi,
+            regionGu,
+            regionDong,
+            lat,
+            lng
+        )
+            .then((res) => {
+                console.log(res);
+                setFeeds(res.data.rows);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        // }
     };
 
     const feedsPopularity = () => {
@@ -162,10 +169,7 @@ export default function Feed() {
                     mystyles="margin-top: 50px"
                 >
                     <LocationOnIcon sx={{ color: "white" }} />
-                    <Text mystyles="font-size: 16px; color: white;">
-                        {currentAddress.si} {currentAddress.gu}{" "}
-                        {currentAddress.dong}
-                    </Text>
+                    <Text mystyles="font-size: 16px; color: white;"></Text>
                 </Grid>
                 <Grid
                     flex
@@ -263,7 +267,7 @@ export default function Feed() {
                         ></MapMarker>
                     </Map>
                 </Grid>
-                {tabIndex === 0 && (
+                {tabIndex === 0 && feeds !== null && (
                     <Grid
                         flex
                         direction="column"
@@ -277,7 +281,7 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {/* {feeds.map((feed, idx) => (
+                                {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
@@ -291,12 +295,12 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                     />
-                                ))} */}
+                                ))}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>
                 )}
-                {tabIndex === 1 && (
+                {tabIndex === 1 && feeds !== null && (
                     <Grid
                         flex
                         direction="column"
@@ -310,7 +314,7 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {/* {feeds.map((feed, idx) => (
+                                {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
@@ -324,12 +328,12 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                     />
-                                ))} */}
+                                ))}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>
                 )}
-                {tabIndex === 2 && (
+                {tabIndex === 2 && feeds !== null && (
                     <Grid
                         flex
                         direction="column"
@@ -343,7 +347,7 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {/* {feeds.map((feed, idx) => (
+                                {feeds.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
@@ -357,7 +361,7 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                     />
-                                ))} */}
+                                ))}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>

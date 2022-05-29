@@ -1,18 +1,14 @@
-import api from "./api";
+import api from "../modules/api";
 
 const getMypage = () => {
     return api.get("/api/players/mypage");
 };
 
 const playerEdit = async (nickname, profileImg) => {
-    try {
-        await api.patch("/api/players/edit", {
-            nickname,
-            profileImg,
-        });
-    } catch (err) {
-        console.log(err.message);
-    }
+    return await api.patch("/api/players/edit", {
+        nickname,
+        profileImg,
+    });
 };
 
 const UserService = {

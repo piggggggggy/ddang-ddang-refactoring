@@ -1,6 +1,7 @@
 import api from "../modules/api";
 
 const feedsLatestAxios = async (si, gu, dong, lat, lng) => {
+    console.log(si, gu, dong, lat, lng);
     return await api.get(
         `api/feeds?type=latest&regionSi=${si}&regionGu=${gu}&regionDong=${dong}&lat=${lat}&lng=${lng}`
     );
