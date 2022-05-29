@@ -18,18 +18,21 @@ export default function FeedItem(props) {
 
     const playerEmail = "paul@gmail.com";
 
-    const { item, onClick, page, id } = props;
+    const { item, onClick, page, id, liked } = props;
+    console.log(item);
     const feedId = item.id;
+    console.log(liked);
 
     // 좋아요
-    const [counter, setCounter] = React.useState(item?.likeCnt);
+    const [counter, setCounter] = React.useState(item.likeCnt);
 
-    const [likedByMe, setLikedByMe] = React.useState(false);
-
+    const [likedByMe, setLikedByMe] = React.useState(liked);
+    console.log(likedByMe);
     const likeHandler = () => {
         if (likedByMe === true) {
             setLikedByMe(false);
             setCounter(counter - 1);
+            likeFeed();
         } else {
             setLikedByMe(true);
             setCounter(counter + 1);
@@ -45,11 +48,11 @@ export default function FeedItem(props) {
 
     // 디테일 이미지
     const imagesArr = [];
-    imagesArr.push(item?.image1_url, item?.image2_url, item?.image3_url);
+    imagesArr.push(item.image1_url, item.image2_url, item.image3_url);
 
     // 댓글
-    const [commentArr, setCommentArr] = React.useState([...item?.comments]);
-    // const commentArr = item?.comments;
+    const [commentArr, setCommentArr] = React.useState([...item.comments]);
+    console.log(commentArr);
 
     const [commentIsOpen, setCommentIsOpen] = React.useState(true);
 
@@ -82,7 +85,7 @@ export default function FeedItem(props) {
                 console.log(res);
 
                 setCommentArr([...commentArr, res.data.comment]);
-                console.log(commentArr);
+                // console.log(commentArr);
 
                 // commentArr.push({ comment });
                 // window.location.reload();
@@ -224,15 +227,7 @@ export default function FeedItem(props) {
                                     mystyles="width: 100px;"
                                 >
                                     <Text mystyles="font-size: 12px;">
-                                        {comment?.updatedAt !== ""
-                                            ? comment?.updatedAt.substring(
-                                                  0,
-                                                  10
-                                              )
-                                            : comment?.createdAt.substring(
-                                                  0,
-                                                  10
-                                              )}
+                                        {comment?.createdAt?.substring(0, 10)}
                                     </Text>
                                     {playerEmail === comment?.player?.email && (
                                         <Button
