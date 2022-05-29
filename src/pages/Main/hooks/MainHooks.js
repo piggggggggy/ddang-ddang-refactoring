@@ -8,7 +8,7 @@ import { questActions } from "../../../store/slices/questSlice";
 const geolocationOptions = {
     enableHighAccuracy: true,
     maximumAge: 2000,
-    timeout: 2000,
+    timeout: 5000,
 };
 const useMainData = () => {
     const dispatch = useDispatch();
@@ -44,19 +44,15 @@ const useMainData = () => {
                 };
                 const newLocation = JSON.stringify(locationForCache);
                 localStorage.setItem("location", newLocation);
-
                 setLocation({
                     lat: res.coords.latitude,
                     lng: res.coords.longitude,
                 });
                 // 만약에 사용자의 위치에서 시구동을 못가져오면 현재 가능한지 않는 지역에 있습니다.
                 const userdata = await KakaoService.getAddress({
-                    location: {
-                        lat: res.coords.latitude,
-                        lng: res.coords.longitude,
-                    },
+                    lat: res.coords.latitude,
+                    lng: res.coords.longitude,
                 });
-
                 // 주소가 아무것도 없다고 나오면 강제로 주소를 정해준다.
                 if (
                     typeof userdata.si == "undefined" &&

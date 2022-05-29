@@ -1,7 +1,6 @@
 import axios from "axios";
 
-
-const getAddress = async (lat, lng) => {
+const getAddress = async ({ lat, lng }) => {
     try {
         const res = await axios.get(
             `${process.env.REACT_APP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
@@ -17,14 +16,11 @@ const getAddress = async (lat, lng) => {
             gu: res?.data?.documents?.[0]?.address?.region_2depth_name,
             dong: res?.data?.documents?.[0]?.address?.region_3depth_name,
         };
-
         return data;
     } catch (err) {
         console.log(err);
     }
 };
-
-
 
 //시구동을 반환 한다.
 const getAddress2 = async (location) => {
@@ -83,7 +79,7 @@ const getAddress2 = async (location) => {
 
 const KakaoService = {
     getAddress,
-    getAddress2
+    getAddress2,
 };
 
 export default KakaoService;
