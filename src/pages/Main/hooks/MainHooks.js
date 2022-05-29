@@ -8,7 +8,7 @@ import { questActions } from "../../../store/slices/questSlice";
 const geolocationOptions = {
     enableHighAccuracy: true,
     maximumAge: 2000,
-    timeout: 5000,
+    timeout: 3000,
 };
 const useMainData = () => {
     const dispatch = useDispatch();
