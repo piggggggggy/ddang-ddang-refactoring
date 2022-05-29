@@ -22,17 +22,11 @@ function App() {
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
-
         //토큰확인
         const refreshtoken = TokenService.getLocalRefreshToken();
         const accesstoken = TokenService.getLocalAccessToken();
 
-<<<<<<< HEAD
-=======
-
-
         //둘다 없으면 로그인페이지로 이동
->>>>>>> 47b2bdabde835fe09d60ed1beb780dc597a14d16
         if (!refreshtoken && !accesstoken) {
             alert("로그인이 필요합니다.");
             navigate("/signin");
@@ -40,19 +34,9 @@ function App() {
                 setIsLoading(false);
             }, 3000);
         } else {
-<<<<<<< HEAD
-            dispatch(loginCheckAxios(accesstoken));
-            setTimeout(() => {
-                setIsLoading(false);
-            }, 3000);
-            console.log("loaded");
-=======
             //
-            dispatch(
-                loginCheckAxios(accesstoken)
-            );
+            dispatch(loginCheckAxios(accesstoken));
             setIsLoading(false);
->>>>>>> 47b2bdabde835fe09d60ed1beb780dc597a14d16
         }
     }, []);
 

@@ -38,11 +38,6 @@ export default function Feed() {
             });
         });
 
-<<<<<<< HEAD
-        // console.log(getPosition())
-        const data = KakaoService.getAddress(36.3298522, 127.4147562);
-        console.log(data);
-=======
         const tempLocation = {
             lat: 37.5172363,
             lng: 127.0473248,
@@ -51,7 +46,6 @@ export default function Feed() {
         // console.log(getPosition())
         const data = KakaoService.getAddress({ locatoin: tempLocation });
 
->>>>>>> 47b2bdabde835fe09d60ed1beb780dc597a14d16
         setCurrentAddress(data);
     };
 

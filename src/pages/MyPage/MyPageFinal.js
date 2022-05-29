@@ -114,14 +114,6 @@ export default function MyPageFinal() {
                                     tabIndex={tabIndex}
                                 />
                                 <MapView />
-<<<<<<< HEAD
-
-=======
-                                <ProfileModal
-                                    open={open}
-                                    handleClose={handleClose}
-                                />
->>>>>>> 47b2bdabde835fe09d60ed1beb780dc597a14d16
                                 {/* <BottomPost /> */}
                                 {/* <FeedBottomPost /> */}
                             </>
