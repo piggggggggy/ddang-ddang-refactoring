@@ -5,7 +5,6 @@ import KakaoService from "../../../services/kakao.service";
 import { getQuestList } from "../../../services/main.service";
 import { TEMP_LOCATION } from "../../../shared/Link";
 import { questActions } from "../../../store/slices/questSlice";
-import { userActions } from "../../../store/slices/userSlice";
 const geolocationOptions = {
     enableHighAccuracy: true,
     maximumAge: 2000,
@@ -164,4 +163,4 @@ const useMainData = () => {
     };
 };
 
-export { useMainData };
+export { useMainData, geolocationOptions };

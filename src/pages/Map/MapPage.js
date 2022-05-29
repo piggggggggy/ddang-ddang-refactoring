@@ -5,7 +5,7 @@ import { Container, Grid } from "../../elements";
 import MapComponent from "./components/MapComponent";
 import LandingModal from "./components/LandingModal";
 import QuestActivateLayer from "./components/QuestActivateLayer";
-import { useWatchLocation } from "./hooks/locationHooks";
+import { geolocationOptions, useWatchLocation } from "./hooks/locationHooks";
 import { getQuestList } from "../../services/main.service";
 import { useNavigate } from "react-router-dom";
 import { questFragment } from "../../modules/fragment";
@@ -16,10 +16,15 @@ import QuestDetailLayer from "./components/QuestDetailLayer";
 import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
 import ToastPageMsg from "../../elements/ToastMsgPage";
+import QueryString from "qs";
+import { TEMP_LOCATION } from "../../shared/Link";
 
 export default function MapPage() {
     const navigate = useNavigate();
-    const [tabOpen, setTabOpen] = useState(false);
+    const { open } = QueryString.parse(window.location.search, {
+        ignoreQueryPrefix: true,
+    });
+    const [tabOpen, setTabOpen] = useState(open === "side" ? true : false);
     const [detailOpen, setDetailOpen] = useState(false);
     const [detailState, setDetailState] = useState(null);
     const [questActive, setQuestActive] = useState(false);
@@ -94,25 +99,50 @@ export default function MapPage() {
     };
 
     useEffect(() => {
+        const landingCheck = sessionStorage.getItem("landingCheck");
+        if (!landingCheck && open !== "side") {
+            setLandingOpen(true);
+        }
+
         setLoading(true);
-        navigator.geolocation.getCurrentPosition(async (res) => {
-            setCurrentMapPosition({
-                lat: res.coords.latitude,
-                lng: res.coords.longitude,
-            });
-            const data = await getQuestList({
-                lat: res.coords.latitude,
-                lng: res.coords.longitude,
-            });
-            console.log(res);
-            if (data.rows.length > 0) {
-                setQuestList(data.rows);
-            }
-            setRegion(data.currentRegion);
-            setTimeout(() => {
-                setLoading(false);
-            }, 200);
-        });
+        navigator.geolocation.getCurrentPosition(
+            async (res) => {
+                setCurrentMapPosition({
+                    lat: res.coords.latitude,
+                    lng: res.coords.longitude,
+                });
+                const data = await getQuestList({
+                    lat: res.coords.latitude,
+                    lng: res.coords.longitude,
+                });
+                console.log(res);
+                if (data.rows.length > 0) {
+                    setQuestList(data.rows);
+                }
+                setRegion(data.currentRegion);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 200);
+            },
+            async (err) => {
+                setCurrentMapPosition({
+                    lat: TEMP_LOCATION.lat,
+                    lng: TEMP_LOCATION.lng,
+                });
+                const data = await getQuestList({
+                    lat: TEMP_LOCATION.lat,
+                    lng: TEMP_LOCATION.lng,
+                });
+                if (data.rows.length > 0) {
+                    setQuestList(data.rows);
+                }
+                setRegion(data.currentRegion);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 200);
+            },
+            { ...geolocationOptions }
+        );
     }, []);
 
     useEffect(() => {

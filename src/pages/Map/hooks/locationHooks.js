@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { getUpdatedDistance } from "../../../modules/location";
+import { TEMP_LOCATION } from "../../../shared/Link";
 
 const geolocationOptions = {
     enableHighAccuracy: true,
@@ -77,7 +78,50 @@ const useWatchLocation = (questList, type) => {
                         // console.log('와치 업데이트 실패');
                     }
                 },
-                (err) => {},
+                (err) => {
+                    console.log("와치 실패", err);
+                    // console.log("와치 인", _position, type);
+                    let filteredList = questList.filter((item) => {
+                        let distance = getUpdatedDistance({
+                            lat: TEMP_LOCATION.lat,
+                            lng: TEMP_LOCATION.lng,
+                            _lat: Number(item.lat),
+                            _lng: Number(item.lng),
+                        });
+                        if (type === "all") {
+                            return distance < 0.03 && !item.completed;
+                        } else {
+                            return (
+                                distance < 0.03 &&
+                                item.type === type &&
+                                !item.completed
+                            );
+                        }
+                    });
+                    setInCircleList(filteredList);
+
+                    let update = true;
+                    const newRecord = {
+                        lat: TEMP_LOCATION.lat,
+                        lng: TEMP_LOCATION.lng,
+                    };
+                    if (record !== null) {
+                        const distance = getUpdatedDistance({
+                            lat: record.lat,
+                            lng: record.lng,
+                            _lat: newRecord.lat,
+                            _lng: newRecord.lng,
+                        });
+                        if (distance < 0.01) update = false;
+                    }
+                    if (update) {
+                        // console.log(update, '와치 업데이트 성공!!!!', "이전 :", record, "뉴 :", newRecord);
+                        setRecord(newRecord);
+                        setPosition(newRecord);
+                    } else {
+                        // console.log('와치 업데이트 실패');
+                    }
+                },
                 { ...geolocationOptions }
             );
         }

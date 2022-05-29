@@ -11,8 +11,10 @@ import { localNameHandlerForSi } from "../../modules/help";
 import MenuIcon from "../../assets/images/icon/MenuIcon";
 import Location from "../../assets/images/icon/Location";
 import Spinner from "../../components/Spinner";
+import { useNavigate } from "react-router-dom";
 
 export default function Main() {
+    const navigate = useNavigate();
     const { questList, loading, questType, setQuestType, location, region } =
         useMainData();
 
@@ -28,6 +30,7 @@ export default function Main() {
                     mystyles={
                         "position: absolute; top: 52px; left: 30px; width: 24px; height: 18px"
                     }
+                    // onClick={() => navigate("/quest?open=side")}
                 >
                     <MenuIcon size={"medium"} />
                 </Grid>

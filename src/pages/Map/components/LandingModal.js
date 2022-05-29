@@ -17,12 +17,6 @@ export default function LandingModal({
     // const [landingOpen, setLandingOpen] = useState(false);
     const regions = useSelector((state) => state.quest.region);
 
-    useEffect(() => {
-        const landingCheck = sessionStorage.getItem("landingCheck");
-        if (!landingCheck) {
-            setLandingOpen(true);
-        }
-    }, []);
     return (
         <FixedWrapper
             style={!landingOpen ? { transform: "translateX(-100%)" } : {}}
