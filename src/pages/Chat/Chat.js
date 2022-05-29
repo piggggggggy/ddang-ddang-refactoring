@@ -21,7 +21,7 @@ const ChatPage = () => {
     const [chatHistory, setChatHistory] = useState([]);
 
     const params = useParams();
-    const socketUrl = "http://diasm.mooo.com:3002";
+    const socketUrl ="https://chat.ddangddang.site" 
 
     const { userId, nickname, roomName } = params;
 
