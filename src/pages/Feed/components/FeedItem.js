@@ -253,13 +253,16 @@ export default function FeedItem(props) {
                             justifyContent="space-between"
                         >
                             <Input
-                                mystyles="width: 220px; height: 30px; box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05); border:none; border-radius:20px;"
+                                mystyles="width: 220px; height: 30px; box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05); border:none; background: #F4F4F4;"
                                 placeholder="댓글을 써주세요"
                                 onChange={commentChange}
                             />
-                            <IconButton onClick={writeComment}>
-                                <SendIcon />
-                            </IconButton>
+                            <Button
+                                onClick={writeComment}
+                                mystyles="border: none; margin-right: 10px; margin-left: 5px; background: #A3D4FB; font-weight: 400; font-size: 10px; width: 45px; height: 25px; border-radius: 4px;"
+                            >
+                                전송
+                            </Button>
                         </Grid>
                     </>
                 )}
