@@ -114,8 +114,8 @@ export default function MyPageFinal() {
                                     tabIndex={tabIndex}
                                 />
                                 <MapView />
-                                {/* <BottomPost /> */}
-                                {/* <FeedBottomPost /> */}
+                                <BottomPost />
+                                <FeedBottomPost />
                             </>
                         )}
                     </Grid>

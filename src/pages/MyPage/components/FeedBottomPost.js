@@ -12,6 +12,7 @@ export default function BottomPost() {
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
     const [feed, setFeed] = React.useState([]);
+    // console.log("hello");
 
     useEffect(() => {
         const fetchPosts = async () => {

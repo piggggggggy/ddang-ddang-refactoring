@@ -29,14 +29,18 @@ export default function BottomPost() {
         const fetchPosts = async () => {
             const res = await api.get("/api/players/mypage");
             setPosts(res.data.rows.profile[0].completes);
-            if (posts !== null) {
-                setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
-            }
+
+            setCurrentPosts(
+                res.data.rows.profile[0].completes.slice(
+                    indexOfFirstPost,
+                    indexOfLastPost
+                )
+            );
         };
         setIndexOfLastPost(currentPage * postsPerPage);
         setIndexOfFirstPost(indexOfLastPost - postsPerPage);
         fetchPosts();
-    }, [indexOfLastPost, indexOfFirstPost, posts, currentPage, postsPerPage]);
+    }, [indexOfLastPost, indexOfFirstPost, currentPage, postsPerPage]);
 
     // Get current posts
     // Change page
@@ -46,7 +50,7 @@ export default function BottomPost() {
 
     return (
         <div>
-            {currentPosts !== null && posts !== null && (
+            {currentPosts !== null && (
                 <>
                     <Posts posts={currentPosts} />
                     <Pagination
