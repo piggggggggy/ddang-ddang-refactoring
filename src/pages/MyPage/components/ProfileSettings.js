@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import env from "react-dotenv";
 import axios from "axios";
 import api from "../../../modules/api";
 import { Grid, Text, Input, Button } from "../elements/index";
@@ -38,7 +37,6 @@ export default function ProfileSettings(props) {
     const [url, setUrl] = React.useState("");
     const [finalData, setFinalData] = React.useState(null);
     const [nickname, setNickname] = React.useState("");
-    console.log(env.S3_BUCKET);
     console.log(profileImage);
 
     const hiddenFileInput = React.useRef(null);
