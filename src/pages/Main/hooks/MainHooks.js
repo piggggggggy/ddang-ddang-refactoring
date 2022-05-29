@@ -13,12 +13,20 @@ const geolocationOptions = {
 };
 const useMainData = () => {
     const dispatch = useDispatch();
+    const cachedLocation = localStorage.getItem("location");
+
     const [loading, setLoading] = useState(false);
     const [questList, setQuestList] = useState([]);
     const [questType, setQuestType] = useState("all");
     const [location, setLocation] = useState({
-        lat: 0,
-        lng: 0,
+        lat:
+            cachedLocation === null
+                ? TEMP_LOCATION.lat
+                : JSON.parse(cachedLocation).latitude,
+        lng:
+            cachedLocation === null
+                ? TEMP_LOCATION.lat
+                : JSON.parse(cachedLocation).longitude,
     });
     const [region, setRegion] = useState({
         regionDong: "",

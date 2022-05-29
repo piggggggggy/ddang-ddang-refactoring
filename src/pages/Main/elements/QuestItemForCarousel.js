@@ -12,7 +12,6 @@ export default function QuestItemForCarousel(Props) {
         _lat: Number(Props.lat),
         _lng: Number(Props.lng),
     });
-    console.log(distance);
     return (
         <Grid
             mystyles={

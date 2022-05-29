@@ -15,22 +15,7 @@ export default function LocalQuestSummary({
     const moveToQusetPage = () => {
         navigate("/quest");
     };
-    // const closeSortedList = questList.sort(function (a, b) {
-    //     const distanceA = getUpdatedDistance({
-    //         lat: location.lat,
-    //         lng: location.lng,
-    //         _lat: Number(a.lat),
-    //         _lng: Number(a.lng),
-    //     });
-
-    //     const distanceB = getUpdatedDistance({
-    //         lat: location.lat,
-    //         lng: location.lng,
-    //         _lat: Number(b.lat),
-    //         _lng: Number(b.lng),
-    //     });
-    //     return distanceA - distanceB;
-    // });
+    // console.log(location);
 
     return (
         <Grid
