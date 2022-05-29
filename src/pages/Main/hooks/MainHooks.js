@@ -112,17 +112,21 @@ const useMainData = () => {
                 }
             },
             async (err) => {
-                // console.log("main geolocation 오류 : ", err);
+                console.log("main geolocation 오류 : ", err);
                 // 2초안에 못받아오거나 실패했을 경우 기존 캐싱된 데이터 사용
                 const oldLocation = localStorage.getItem("location");
+                if (oldLocation === null)
+                    localStorage.setItem(
+                        "location",
+                        JSON.stringify(TEMP_LOCATION)
+                    );
                 const { latitude, longitude } =
                     oldLocation === null
                         ? TEMP_LOCATION
                         : JSON.parse(oldLocation);
-
                 setLocation({
-                    lat: latitude,
-                    lng: longitude,
+                    lat: latitude ? latitude : TEMP_LOCATION.lat,
+                    lng: longitude ? longitude : TEMP_LOCATION.lng,
                 });
                 const data = await getQuestList({
                     lat: !Number(latitude)
@@ -132,7 +136,7 @@ const useMainData = () => {
                         ? TEMP_LOCATION.lng
                         : Number(longitude),
                 });
-                if (data.rows.length > 0) {
+                if (data.rows && data.rows.length > 0) {
                     setQuestList(data.rows);
                     dispatch(
                         questActions.setQuest({

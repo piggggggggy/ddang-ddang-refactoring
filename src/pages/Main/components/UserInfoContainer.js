@@ -19,7 +19,7 @@ export default function UserInfoContainer({ region, loading }) {
             >
                 <Image
                     src={
-                        userData.profileImg === "0"
+                        userData.profileImg === "0" || !userData.profileImg
                             ? DEFAULT_PROFILE_IMG
                             : userData.profileImg
                     }
