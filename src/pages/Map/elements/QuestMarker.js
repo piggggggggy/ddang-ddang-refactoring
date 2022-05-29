@@ -3,7 +3,7 @@ import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import { Grid } from "../../../elements";
 import { getUpdatedDistance } from "../../../modules/location";
-import ClickBalloon from "../../../assets/images/png/active-balloon.png";
+import ClickBalloon from "../../../assets/images/png/active-balloon-default.png";
 import { questFragment } from "../../../modules/fragment";
 
 export default function QuestMarker(Props) {
@@ -45,7 +45,7 @@ export default function QuestMarker(Props) {
                     >
                         <ClickBubble>
                             <img src={ClickBalloon} alt={"click"} />
-                            <p>Click!</p>
+                            {/* <p>Click!</p> */}
                         </ClickBubble>
                     </CustomOverlayMap>
                 )}
@@ -75,9 +75,9 @@ const MarkerWrapper = styled.div`
 
 const ClickBubble = styled.div`
     position: absolute;
-    width: 50px;
-    height: 29px;
-    top: -40px;
+    width: 40px;
+    height: 23px;
+    top: -35px;
     left: -35px;
     z-index: 302;
     & img {

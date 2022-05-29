@@ -13,10 +13,21 @@ const geolocationOptions = {
 };
 const useMainData = () => {
     const dispatch = useDispatch();
+    const cachedLocation = localStorage.getItem("location");
+
     const [loading, setLoading] = useState(false);
     const [questList, setQuestList] = useState([]);
     const [questType, setQuestType] = useState("all");
-    const [location, setLocation] = useState({});
+    const [location, setLocation] = useState({
+        lat:
+            cachedLocation === null
+                ? TEMP_LOCATION.lat
+                : JSON.parse(cachedLocation).latitude,
+        lng:
+            cachedLocation === null
+                ? TEMP_LOCATION.lat
+                : JSON.parse(cachedLocation).longitude,
+    });
     const [region, setRegion] = useState({
         regionDong: "",
         regionGu: "",
@@ -104,8 +115,19 @@ const useMainData = () => {
                 console.log("main geolocation 오류 : ", err);
                 // 2초안에 못받아오거나 실패했을 경우 기존 캐싱된 데이터 사용
                 const oldLocation = localStorage.getItem("location");
-                const { latitude, longitude } = JSON.parse(oldLocation);
-
+                if (oldLocation === null)
+                    localStorage.setItem(
+                        "location",
+                        JSON.stringify(TEMP_LOCATION)
+                    );
+                const { latitude, longitude } =
+                    oldLocation === null
+                        ? TEMP_LOCATION
+                        : JSON.parse(oldLocation);
+                setLocation({
+                    lat: latitude ? latitude : TEMP_LOCATION.lat,
+                    lng: longitude ? longitude : TEMP_LOCATION.lng,
+                });
                 const data = await getQuestList({
                     lat: !Number(latitude)
                         ? TEMP_LOCATION.lat
@@ -114,7 +136,7 @@ const useMainData = () => {
                         ? TEMP_LOCATION.lng
                         : Number(longitude),
                 });
-                if (data.rows.length > 0) {
+                if (data.rows && data.rows.length > 0) {
                     setQuestList(data.rows);
                     dispatch(
                         questActions.setQuest({

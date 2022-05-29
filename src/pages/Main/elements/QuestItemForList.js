@@ -27,7 +27,7 @@ export default function QuestItemForList(Props) {
                     mystyles={"width: 60px;"}
                 >
                     <Point style={{ color: fragment.color }}>
-                        {Props.reward},000P
+                        {Props.reward}P
                     </Point>
                     <Description>난이도</Description>
                 </Grid>

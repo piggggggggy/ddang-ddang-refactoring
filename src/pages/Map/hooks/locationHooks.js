@@ -3,8 +3,8 @@ import { getUpdatedDistance } from "../../../modules/location";
 
 const geolocationOptions = {
     enableHighAccuracy: true,
-    maximumAge: 0,
-    timeout: 1000,
+    maximumAge: 1000,
+    timeout: 2000,
 };
 
 const useWatchLocation = (questList, type) => {
@@ -44,10 +44,10 @@ const useWatchLocation = (questList, type) => {
                             _lng: Number(item.lng),
                         });
                         if (type === "all") {
-                            return distance < 0.01 && !item.completed;
+                            return distance < 0.03 && !item.completed;
                         } else {
                             return (
-                                distance < 0.01 &&
+                                distance < 0.03 &&
                                 item.type === type &&
                                 !item.completed
                             );

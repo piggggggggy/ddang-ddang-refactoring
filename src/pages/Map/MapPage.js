@@ -15,6 +15,7 @@ import CenterButton from "./elements/CenterButton";
 import QuestDetailLayer from "./components/QuestDetailLayer";
 import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
+import ToastPageMsg from "../../elements/ToastMsgPage";
 
 export default function MapPage() {
     const navigate = useNavigate();
@@ -113,21 +114,6 @@ export default function MapPage() {
             }, 200);
         });
     }, []);
-
-    const list = [
-        {
-            id: 11,
-            type: "time",
-            let: 0,
-            lng: 0,
-        },
-        {
-            id: 12,
-            type: "mob",
-            let: 0,
-            lng: 0,
-        },
-    ];
 
     useEffect(() => {
         if (questType === "mob") {
@@ -252,9 +238,9 @@ export default function MapPage() {
             <QuestActivateLayer
                 open={questActive}
                 setClose={closeQuestActive}
-                // list={inCircleList}
+                list={inCircleList}
                 position={position}
-                list={list}
+                // list={list}
             />
         </Container>
     );

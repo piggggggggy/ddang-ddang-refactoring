@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 
 import { useEffect, useState } from "react";
 
-export default function ToastPageMsg({ children, onToast, setOnToast }) {
+export default function ToastPageMsg({ children, onToast, setOnToast, top }) {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function ToastPageMsg({ children, onToast, setOnToast }) {
     return (
         <>
             {open && (
-                <ToastMsg>
+                <ToastMsg style={top ? { top: top } : {}}>
                     <p>{children}</p>
                 </ToastMsg>
             )}
