@@ -1,15 +1,9 @@
 import api from "../modules/api";
 
-const getRanking = async (places) => {
+const getRanking = async (address) => {
     try {
-        const { si, gu, dong } = places;
-
-        const result = await api.get(
-            `/api/ranks?si=${si}&gu=${gu}&dong=${dong}`
-        );
-        // setGroup([...group, ...res.data.ranks.group]);
-        // setIndividual([...individual, ...res.data.ranks.individual]);
-        return result;
+        const { si, gu, dong } = address;
+        return await api.get(`/api/ranks?si=${si}&gu=${gu}&dong=${dong}`);
     } catch (err) {
         console.log(err);
     }
