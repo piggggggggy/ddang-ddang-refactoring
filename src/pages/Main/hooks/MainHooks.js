@@ -74,7 +74,7 @@ const useMainData = () => {
                     if (data.rows.length > 0) {
                         setQuestList(data.rows);
                         dispatch(
-                            userActions.setQuest({
+                            questActions.setQuest({
                                 list: data.rows,
                                 region: data.currentRegion,
                             })
