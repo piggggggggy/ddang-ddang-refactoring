@@ -22,48 +22,43 @@ import {
 
 import FeedsService from "../../services/feed.service";
 import KakaoService from "../../services/kakao.service";
+import { reject } from "lodash";
 
 export default function Feed() {
-    const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
+    // 현재 맵에서 나위 위도 경도
+    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
+    // 현재 주소
+    const [currentAddress, setCurrentAddress] = React.useState({});
+    // 탭의 위치 정보
+    const [tabIndex, setTabIndex] = React.useState(0);
+    // 카테고리
+    const [category, setCategory] = React.useState("1");
 
-    console.log(currentMapPosition);
+    // 피드 로케이션
+    const [feedLocation, setFeedLocation] = React.useState([
+        "33.5563",
+        "126.79581",
+        "현재 내 위치",
+    ]);
 
-    const getPosition = () => {
+    // 현재 위치 및 주소 가져오기
+    const getPosition = async () => {
         navigator.geolocation.getCurrentPosition(async (position) => {
-            console.log(position);
-
+            const { latitude, longitude } = position.coords;
             setCurrentMapPosition({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
+                lat: latitude,
+                lng: longitude,
             });
         });
+        // 카카오에서 좌표값을 가지고 주소 가져오기
+        const getAddress = await KakaoService.getAddress2({
+            location: currentMapPosition,
+        });
 
-        const tempLocation = {
-            lat: 37.5172363,
-            lng: 127.0473248,
-        };
-
-        // console.log(getPosition())
-        const data = KakaoService.getAddress({ locatoin: tempLocation });
-
-        setCurrentAddress(data);
+        setCurrentAddress(getAddress);
     };
 
-    const [currentAddress, setCurrentAddress] = React.useState(null);
-
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const regionsi = "서울시";
-    const regionGu = "강남구";
-    const regionDong = "삼섬동";
-    const lat = 33.5563;
-    const lng = 127.4147562;
-
-    const [items, setItems] = React.useState([]);
-
-    const feeds = useSelector((state) => state.feed.feeds);
-
+    // 최신 피드 가져오기
     const feedsLatest = () => {
         // dispatch(feedsLatestAxios(data));
         if (currentAddress !== null && currentMapPosition !== null) {
@@ -86,11 +81,11 @@ export default function Feed() {
     const feedsPopularity = () => {
         // dispatch(feedsPopularityAxios(data));
         FeedsService.feedsPopularityAxios(
-            regionsi,
-            regionGu,
-            regionDong,
-            lat,
-            lng
+            currentAddress.si,
+            currentAddress.gu,
+            currentAddress.dong,
+            currentMapPosition.lat,
+            currentMapPosition.lng
         )
             .then((res) => {
                 console.log(res);
@@ -103,11 +98,11 @@ export default function Feed() {
     const feedsDistance = () => {
         // dispatch(feedsDistanceAxios(data));
         FeedsService.feedsDistanceAxios(
-            regionsi,
-            regionGu,
-            regionDong,
-            lat,
-            lng
+            currentAddress.si,
+            currentAddress.gu,
+            currentAddress.dong,
+            currentMapPosition.lat,
+            currentMapPosition.lng
         )
             .then((res) => {
                 console.log(res);
@@ -118,20 +113,11 @@ export default function Feed() {
     };
 
     React.useEffect(() => {
-        feedsLatest();
         getPosition();
+        feedsLatest();
+        feedsPopularity();
+        feedsDistance();
     }, []);
-
-    const [tabIndex, setTabIndex] = React.useState(0);
-
-    const [feedLocation, setFeedLocation] = React.useState([
-        "33.5563",
-        "126.79581",
-        "현재 내 위치",
-    ]);
-
-    // 카테고리
-    const [category, setCategory] = React.useState("1");
 
     // 함수 호출
 
