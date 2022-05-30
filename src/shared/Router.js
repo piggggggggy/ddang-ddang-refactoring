@@ -5,12 +5,9 @@ import SigninFinal from "../pages/Sign/Signin/SigninFinal";
 import SignupFinal from "../pages/Sign/Signup/SignupFinal";
 import MyPageFinal from "../pages/MyPage/MyPageFinal";
 import FeedFinal from "../pages/Feed/FeedFinal";
-<<<<<<< HEAD
-=======
 import FeedFinalPopular from "../pages/Feed/FeedFinalPopular";
 import FeedFinalDistance from "../pages/Feed/FeedFinalDistance";
 import KakaoLogin from "../pages/Sign/KakaoLogin";
->>>>>>> d15fb7b4aa6452711231a12a16b9f80dc0a03707
 import Ranking from "../pages/Ranking/Ranking";
 import Chat from "../pages/Chat/Chat";
 import LandingPage from "../pages/Chat/LandingPage";
@@ -37,7 +34,7 @@ export default function AppRouter() {
             <Route path="/feed/distance" element={<FeedFinalDistance />} />
             <Route path="/ranking" element={<Ranking />} />
             <Route
-                path="/chat/:userId/:nickname/:roomName"
+                path="/chat/:userId/:nickname/:si/:gu/:dong"
                 element={<Chat />}
             />
             <Route exact path="/landing" element={<LandingPage />} />

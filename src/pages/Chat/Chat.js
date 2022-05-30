@@ -22,13 +22,17 @@ const ChatPage = () => {
     const [memberCnt, setMemberCnt] = useState(0);
 
     const params = useParams();
-    const socketUrl = process.env.REACT_APP_CHAT_BASE_URL;
+    // const socketUrl = process.env.REACT_APP_CHAT_BASE_URL;
+    const socketUrl = 'http://localhost:8080';
 
-    const { userId, nickname, roomName } = params;
+    // const { userId, nickname, roomName } = params;
+    const { userId, nickname, si, gu, dong } = params;
 
     const [address, setAddress] = React.useState({});
 
+    let roomName = null;
     useEffect(() => {
+        const roomName = si + gu + dong
         const search = window.location.search;
         socket = io(socketUrl, {
             cors: {
@@ -138,7 +142,7 @@ const ChatPage = () => {
                     {address.si} {address.gu} {address.dong}
                 </Text>
                 <div>
-                    {roomName}
+                    {si} {gu} {dong}
                     <p>
                         현재참여 인원: {memberCnt ? memberCnt : 0}
                     </p>

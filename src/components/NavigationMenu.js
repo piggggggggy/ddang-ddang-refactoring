@@ -7,7 +7,10 @@ import axios from 'axios';
 export default function NavigationMenu({ index, isSelected }) {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.user.user);
-    const [roomName, setRoomName] = useState(null);
+    // const [roomName, setRoomName] = useState(null);
+    const [si, setSi] = useState(null);
+    const [gu, setGu] = useState(null);
+    const [dong, setDong] = useState(null);
 
     useEffect(() => {
         getPosition()
@@ -47,7 +50,10 @@ export default function NavigationMenu({ index, isSelected }) {
     
             // console.log(`성공했음 ${data.si} ${data.gu} ${data.dong}`);
             const { si, gu, dong } = data;
-            setRoomName(si + gu + dong);
+            // setRoomName(si + gu + dong);
+            setSi(si)
+            setGu(gu)
+            setDong(dong)
             return data;
         } catch (err) {
             console.log(err);
@@ -81,7 +87,7 @@ export default function NavigationMenu({ index, isSelected }) {
                 navigate("/feed");
                 return;
             case 3:
-                navigate(`/chat/${userData.playerId}/${userData.nickname}/${roomName}`);
+                navigate(`/chat/${userData.playerId}/${userData.nickname}/${si}/${gu}/${dong}`);
                 return;
             case 4:
                 navigate("/myPage");
