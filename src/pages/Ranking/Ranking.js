@@ -5,92 +5,54 @@ import { Grid, Text, Image } from "../Ranking/elements/index";
 import Container from "../../elements/Container";
 import Navigation from "../../components/Navigation";
 import StarIcon from "@mui/icons-material/Star";
-import api from "../../modules/api";
-import axios from "axios";
 import noData from "../../assets/images/png/Ranking/noData.png";
 import KakaoService from "../../services/kakao.service";
 import RankingService from "../../services/ranking.service";
-
 import ProgressDonut from "./components/ProgressDonut";
 
 export default function Ranking() {
     const [address, setAddress] = React.useState({});
-    console.log(address);
-
-    // 좌표 찾기
-    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
-    console.log(currentMapPosition);
-
-    const getPosition = () => {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            console.log(position);
-            setCurrentMapPosition({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-            });
-
-            const location = {
-                lat: 37.5172363,
-                lng: 127.0473248,
-            };
-            console.log(location.lat, location.lng);
-
-            setCurrentMapPosition({ lat: location.lat, lng: location.lng });
-
-            console.log(currentMapPosition);
-
-            const data = await KakaoService.getAddress({
-                location: currentMapPosition,
-            });
-            console.log("wekjlfklwjefk여기가 성공해야함 ");
-            console.log(data);
-        });
-    };
-
-    // 서버에 데이터 요청
     const [group, setGroup] = React.useState([]);
-    console.log(group);
-
     const [individual, setIndividual] = React.useState([]);
-    console.log(individual);
+    const [tabIndex, setTabIndex] = React.useState(0);
 
-    const getRanking = async () => {
-        const result = await RankingService.getRanking({
-            si: address?.si,
-            gu: address?.gu,
-            dong: address?.dong,
+    // 랭킹 조회 (개인별, 그룹별)
+    function getRanking() {
+        return navigator.geolocation.getCurrentPosition(async (res) => {
+            const region = await KakaoService.getAddress({
+                location: {
+                    lat: res.coords.latitude,
+                    lng: res.coords.longitude,
+                },
+            });
+
+            setAddress(region);
+
+            const result = await RankingService.getRanking(region);
+            setGroup(result.data.ranks.group);
+            setIndividual(result.data.ranks.individual);
         });
-
-        setGroup([...group, ...result.data.ranks.group]);
-        setIndividual([...individual, ...result.data.ranks.individual]);
-    };
-    console.log(group);
-    console.log(individual);
+    }
 
     // 메뉴 리스트
     const tabList = [
         {
             name: "개인",
-            color: "2px solid rgba(97, 248, 140, 1)",
+            color: "3px solid rgba(97, 248, 140, 1)",
             opacity: "0.2",
-            type: "total",
         },
         {
             name: "그룹",
-            color: "2px solid rgba(97, 248, 140, 1)",
+            color: "3px solid rgba(97, 248, 140, 1)",
             opacity: "0.2",
-            type: "mob",
         },
     ];
 
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    function numberWithCommas(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    const [tabIndex, setTabIndex] = React.useState(0);
-
     React.useEffect(() => {
-        getPosition();
         getRanking();
     }, []);
 
@@ -113,10 +75,13 @@ export default function Ranking() {
                         RANK
                     </Text>
                 </Grid>
+                <Text mystyles="margin-top:10px; font-size: 16px; font-weight: 500;">
+                    {address.si} {address.gu} {address.dong}
+                </Text>
                 <Grid
                     flex
                     alignItems="center"
-                    mystyles="margin-top:50px; width: 300px; margin-left: -70px;"
+                    mystyles="margin-top:30px; width: 36%;"
                 >
                     {tabList.map((item, idx) => (
                         <TabCard
@@ -125,16 +90,27 @@ export default function Ranking() {
                                 tabIndex === idx
                                     ? {
                                           borderBottom: item.color,
-                                          marginLeft: "50px",
+                                          margin: "auto",
+                                          paddingBottom: "3px",
                                       }
-                                    : { marginLeft: "50px" }
+                                    : {
+                                          borderBottom:
+                                              "3px solid rgba(0, 0, 0, 0)",
+                                          margin: "auto",
+                                          paddingBottom: "3px",
+                                      }
                             }
                         >
                             <TabText
                                 style={
                                     tabIndex === idx
-                                        ? {}
+                                        ? {
+                                              paddingRight: "5px",
+                                              paddingLeft: "5px",
+                                          }
                                         : {
+                                              paddingRight: "5px",
+                                              paddingLeft: "5px",
                                               opacity: item.opacity,
                                           }
                                 }
@@ -149,11 +125,7 @@ export default function Ranking() {
                     alignItems="center"
                     justifyContent="center"
                     mystyles="margin-top: 30px;"
-                >
-                    <Text mystyles="font-weight: 700; font-size: 20px;">
-                        {address.gu} {address.dong}
-                    </Text>
-                </Grid>
+                />
                 {group.length === 0 && (
                     <Grid
                         flex
@@ -245,7 +217,7 @@ export default function Ranking() {
                                         <Image
                                             mystyles="width: 168px; height: 168px; border-radius: 168px;"
                                             src=""
-                                        ></Image>
+                                        />
                                     </Grid>
                                 </>
                             )}
@@ -266,12 +238,12 @@ export default function Ranking() {
                                         />
                                     </Grid>
                                     <ProgressDonut
-                                        progress={100 - group?.[0]?.ratio}
+                                        progress={100 - group[0].ratio}
                                         size={180}
                                         strokeWidth={90}
                                         circleOneStroke="#5DED86"
                                         circleTwoStroke="#B3FCC8"
-                                    ></ProgressDonut>
+                                    />
                                 </>
                             )}
                         </Grid>
@@ -292,10 +264,10 @@ export default function Ranking() {
                                         mystyles="margin-top: 5px"
                                     >
                                         <Text mystyles="font-weight: 700; font-size: 17px;">
-                                            {individual?.[0]?.nickname}
+                                            {individual[0].nickname}
                                         </Text>
                                         <Text mystyles="margin-left: 5px; font-weight: 400; font-size: 12.8038px;">
-                                            점령률 {individual?.[0]?.ratio}%
+                                            점령률 {individual[0].ratio}%
                                         </Text>
                                     </Grid>
                                     <Grid
@@ -309,7 +281,10 @@ export default function Ranking() {
                                             Total
                                         </Text>
                                         <Text mystyles="color: #58F5AA; font-weight: 700; font-size: 17px;">
-                                            {individual?.[0]?.points}P
+                                            {numberWithCommas(
+                                                individual[0].points
+                                            )}
+                                            P
                                         </Text>
                                     </Grid>
                                 </>
@@ -368,7 +343,7 @@ export default function Ranking() {
                                                     {idx + 2}
                                                 </Text>
                                             </Grid>
-                                            <Grid mystyles="background: #C4C4C4; width: 50px; height: 50px; border-radius:50px; margin-right: 20px"></Grid>
+                                            <Grid mystyles="background: #C4C4C4; width: 50px; height: 50px; border-radius:50px; margin-right: 20px" />
                                             <Grid
                                                 flex
                                                 direction="column"
@@ -442,7 +417,7 @@ export default function Ranking() {
                                                     {idx + 2}
                                                 </Text>
                                             </Grid>
-                                            <Grid mystyles="background: #C4C4C4; width: 50px; height: 50px; border-radius:50px; margin-right: 20px"></Grid>
+                                            <Grid mystyles="background: #C4C4C4; width: 50px; height: 50px; border-radius:50px; margin-right: 20px" />
                                             <Grid
                                                 flex
                                                 direction="column"

@@ -22,8 +22,6 @@ const ChatPage = () => {
     const [memberCnt, setMemberCnt] = useState(0);
 
     const params = useParams();
-    // const socketUrl = "http://diasm.mooo.com:3002";
-    // const socketUrl = "http://localhost:8080";
     const socketUrl = process.env.REACT_APP_CHAT_BASE_URL;
 
     const { userId, nickname, roomName } = params;
