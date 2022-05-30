@@ -305,7 +305,7 @@ export default function Ranking() {
                                     transition={{ delay: 0.2 }}
                                 >
                                     <Text mystyles="font-size: 17px; font-weight: 500; margin-right: 5px;">
-                                        이땅은 {group[0].mbti}가 점령했습니다
+                                        이 지역은 {group[0].mbti}가 점령했습니다
                                     </Text>
                                     <Grid
                                         flex
