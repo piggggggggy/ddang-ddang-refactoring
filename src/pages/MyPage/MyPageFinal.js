@@ -15,6 +15,7 @@ import FeedBottomPost from "../MyPage/components/FeedBottomPost";
 import ProfileSettings from "../MyPage/components/ProfileSettings";
 import KakaoService from "../../services/kakao.service";
 import RankingService from "../../services/ranking.service";
+import FooterContent from "./components/FooterContent";
 
 export default function MyPageFinal() {
     const [userData, setUserData] = React.useState(null);
@@ -120,9 +121,10 @@ export default function MyPageFinal() {
                                     changeTab={changeTab}
                                     tabIndex={tabIndex}
                                 />
-                                <MapView />
-                                <BottomPost />
-                                <FeedBottomPost />
+                                <FooterContent />
+                                {/* <MapView />
+                                <BottomPost /> */}
+                                {/* <FeedBottomPost /> */}
                             </>
                         )}
                     </Grid>

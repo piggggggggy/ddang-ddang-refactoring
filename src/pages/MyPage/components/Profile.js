@@ -7,7 +7,6 @@ import ProfilePreview from "../elements/ProfilePreview";
 
 export default function Profile(props) {
     const userData = props.userData;
-    console.log(props.profile);
 
     return (
         <>
