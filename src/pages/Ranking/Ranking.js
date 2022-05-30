@@ -132,21 +132,19 @@ export default function Ranking() {
                         direction="column"
                         alignItems="center"
                         justifyContent="center"
-                        mystyles="margin-bottom: 362px;"
+                        mystyles="margin-top: 80px;"
                     >
                         <img
                             src={noData}
                             alt=""
                             style={{
-                                width: "250px",
-                                height: "210px",
-                                marginTop: "161px",
+                                width: "60vw",
                             }}
                         />
-                        <Text mystyles="font-weight: 400; font-size: 16px; margin-top: 45px">
+                        <Text mystyles="font-weight: 400; font-size: 14px; margin-top: 45px">
                             아직 아무도 점령을 시작하지 않았네요.
                         </Text>
-                        <Text mystyles="font-weight: 700; font-size: 24px;">
+                        <Text mystyles="font-weight: 700; font-size: 21px;">
                             첫번째 점령자가 되어보세요!
                         </Text>
                     </Grid>
@@ -300,10 +298,10 @@ export default function Ranking() {
                                     transition={{ delay: 0.2 }}
                                 >
                                     <Text mystyles="font-size: 17px; font-weight: 800; margin-right: 5px;">
-                                        이땅은 {group?.[0]?.mbti}가 점령했습니다
+                                        이땅은 {group[0].mbti}가 점령했습니다
                                     </Text>
                                     <Text mystyles="font-weight: 400; font-size: 27.3147px;color: #266137; margin-top: 3px; ">
-                                        {`점령률 ${group?.[0]?.ratio}%`}
+                                        {`점령률 ${group[0].ratio}%`}
                                     </Text>
                                 </Grid>
                             )}
@@ -375,7 +373,10 @@ export default function Ranking() {
                                                                     "10px",
                                                             }}
                                                         >
-                                                            {item.points}P
+                                                            {numberWithCommas(
+                                                                item.points
+                                                            )}
+                                                            P
                                                         </span>
                                                     </Text>
                                                 </Grid>
