@@ -34,7 +34,7 @@ export default function UserInfoContainer({ region, loading }) {
 
                 <Grid
                     mystyles={
-                        "position: relative; width: 100px; height: 8px; background: #D7D7D7;"
+                        "position: relative; width: 160px; height: 8px; background: #D7D7D7;"
                     }
                 >
                     <LevelProgressBar
@@ -72,6 +72,7 @@ const NameAndLevel = styled.p`
     line-height: 1;
     letter-spacing: -5%;
     padding: 11px 0 4px;
+    color: #05240e;
     & span {
         font-weight: 700;
         color: #266137;
@@ -92,6 +93,6 @@ const SubInfoText = styled.p`
     font-size: 10px;
     line-height: 1.15;
     letter-spacing: -5%;
-    color: #909090;
+    color: #05240e;
     padding-top: 13px;
 `;

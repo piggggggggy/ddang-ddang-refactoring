@@ -107,7 +107,7 @@ const FixedWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     transition: all 300ms ease;
-    padding: 30px 0 100px;
+    padding: 60px 0 80px;
 `;
 
 const Title = styled.p`
@@ -116,6 +116,7 @@ const Title = styled.p`
     line-height: 1.15;
     padding-bottom: 13px;
     & span {
+        font-weight: 700;
         color: #5eef87;
     }
 `;
@@ -139,8 +140,10 @@ const Info = styled.p`
     font-size: 14px;
     line-height: 1.3;
     color: #05240e;
+    text-align: center;
     /* padding: 35px 0 40px; */
     & span {
+        text-align: center;
         font-weight: 700;
     }
 `;
