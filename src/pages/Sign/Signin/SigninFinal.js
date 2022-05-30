@@ -40,7 +40,7 @@ export default function SigninFinal() {
                 mbti: response.data.row.mbti,
                 points: response.data.row.points,
                 profileImg: response.data.row.profileImg,
-                playerId: response.data.row.userId,
+                playerId: response.data.row.playerId,
             };
             TokenService.setAccessToken(response.headers["accesstoken"]);
             const tokenFullString = response.headers.accesstoken;

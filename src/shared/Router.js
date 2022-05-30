@@ -33,7 +33,7 @@ export default function AppRouter() {
             <Route path="/feed/distance" element={<FeedFinalDistance />} />
             <Route path="/ranking" element={<Ranking />} />
             <Route
-                path="/chat/:userId/:nickname/:roomName"
+                path="/chat/:userId/:nickname/:si/:gu/:dong"
                 element={<Chat />}
             />
             <Route exact path="/landing" element={<LandingPage />} />
