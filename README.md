@@ -73,11 +73,15 @@
 
 -   좀 더 즉각적인 소통을 위해서 채팅방을 이용하세요. 닉네임이 공개되지 않는 익명채팅입니다.
 
+좀 더 즉각적인 소통을 위해서 채동네 팅방을 이용하세요.
+
 #### 🐨 랭킹시스템
 
 -   자신이 쌓은 포인트로 랭킹페이지에서 top 10 랭킹을 확인할 수 있습니다.
 
+#### 🐶
 
+-
 
 <br/>
 <br/>
@@ -160,69 +164,59 @@
 <br>
 <br>
 
-
 ## 🔥 Trouble Shooting
-
 
 ### Issue1
 
-> 외부 API 사용에 따른 지연 시간 발생
+첫 페이지 부터 500에러가 발행하고 페이지가 무한 로딩이 걸리는 문제발생
 
 #### 원인
 
-- 퀘스트를 생성하기 위해 Kakao API, 공공 주소 API 2가지 API 요청을 보내고 응답을 받게 됩니다.
-- 지역당 퀘스트 개수만큼의 API 요청을 각각 보내게 됩니다.
-  - ex. 퀘스트 개수가 50개인 경우 Kakao API 요청 50회, 공공 주소 API 요청 50회 필요 
-- API 요청을 순서대로 하게 될 경우 API 요청당 1초 정도의 시간이 발생합니다.
-  - ex. 10개의 요청을 순차적으로 보낼경우 9초 내외의 시간 소요
-     
-#### 해결 과정
+현재 위치 좌표값을 Geolocation 메소드를 통해 받아오고, 그 이후 카카오 지도 API를 통해 위치 정보를 주소값으로 받아오는데, 처음부터 Gelocation 값이 오류또는 해외에 있을경우에는 처음 초기화면서 부터 서비스를 불가하는 현상이 발생하였습니다.
 
-1. API 요청 병렬화
-   - API 요청을 순차적으로 보내지 않고 Promise.all을 활용하여 병렬적으로 보냅니다.
-    ```javascript
-    // src/quests/quests.service.ts
-    const roadAddrs = await Promise.all([
-      ..addrIndex.map(({ curPage, idx }) =>
-          this.getRoadAddress(curPage, address, idx)
-      ),
-    ]);
-    ```
-2. 카카오 429 에러 발생에 따른 요청 횟수 제한
-   - 카카오 API는 한번에 다수의 요청을 보낼 경우 429 Too Many Request 에러를 보냅니다.
-   - 우선, 제한이 없는 공공 주소 API를 병렬적으로 처리했습니다. 
-   - 카카오 API의 경우에는 요청 횟수에 제한을 두었습니다.
-   ```javascript
-   // src/quests/quests.service.ts
-   const limits = 20; // kakaoAPI 429 에러(Too Many Requests) 방지를 위해 요청당 호출수 제한
+#### 해결 순서
 
-   for (let begin = 0; begin < pageCount; begin += limits) {
-     // 카카오 API 요청 로직
-   }
-   ```
-4. 퀘스트를 사전에 생성 (스케줄링)
-   - 위와 같은 방법으로도 50여개의 퀘스트를 생성하는데 여전히 4~5초의 시간이 소요되었습니다.
-   - 퀘스트 최초 생성시에는 부득이하게 발생하는 시간이라고 생각했습니다. 
-   - 다만, 이후의 요청에서는 API 요청을 사용자가 직접하지 않도록 사전에 퀘스트를 생성하였습니다.
-   - 사용자의 활동이 적은 새벽 1시를 기준으로 스케쥴링하였습니다.
-   ```javascript
-   // src/quests/quests.service.ts
-   @Cron('0 0 1 * * *', { timeZone: 'Asia/Seoul' })
-   async preCreateQuests() { ... }
-   ```
+예외 처리를 통해 카카오API의 리턴값이 받을 수 없다면, 로컬스토리지에 미리 저장해둔 최초의 정상적인 좌표값을 불러와 서비스를 이용후 다시 좌표값을 받아 제대로된 서비스를 이용하는 방식으로 해결하였습니다.
 
-
-<br/>
 
 ### Issue2
 
-채팅을 구현하는 중 접속할 때마다 바뀌는 socket의 id를 어떻게 기존 사용자로 인식할 수 있을지를 고민하였습니다.
+React useState에서 값이 null 일때의 예외처리
 
 #### 원인
 
-socket 통신의 경우 클라이언트 측 socket의 id값이 접속할 때마다 바뀌게 됩니다. 이 때 기존의 사용자를 구분해야합니다.
+컴포넌트 안에서 api호출을 하여 데이터를 가져오고 그 값을 useState로 저장할 경우 렌더링이 두번 일어나기 때문에 첫번째 렌더링시에 useState값이 null일 경우 예외처리를 해야합니다. 
 
-#### 해결
 
-1. userId를 고정값으로 하기 위해서 users라는 테이블을 만들어 userId와 socketId를 저장해 놓습니다.
-2. socket id가 바뀌어 들어갈 때 users테이블의 userId를 확인하고 socketId를 update하여 기존의 사용자임을 확인합니다.
+#### 해결 순서
+
+처음에는 optional chaining으로 해결을 하려고 하였으나, 가독성 문제와 optional chaining을 사용하는 상황이 따로 있기때문에 이럴경우 단순 예외처리로 useState값이 null 이 아닐경우 컴포넌트를 렌더링 시켜서 문제를 해결할 수 있습니다. 
+
+### Issue3
+
+실시간 좌표값을 geolocation함수로 호출할때에 setTimeOut 으로 일정 시간이 지난후에 api 를 호출하는 방법이 있었습니다. 
+하지만 이럴 경우 불필요한 api 를 호출하여 performance에 지장이 있습니다. 
+
+#### 원인
+
+setTimeOut 함수를 사용시 임이의 시간범위내 계속하여 불필요한 api 호출을 하게됩니다.  
+
+
+#### 해결 순서
+
+setTimeOut 대신 일정범위 이동시 api 를 호출하도록 해결을 하였습니다. 
+
+### Issue4
+
+로그인 유지시 매번 새로고침시 서버에 로그인 유지 관련 api 를 호출하였고 이렬경우 불필요한 경우까지 api 를 호출하여 성능을 떨어뜨립니다. 
+
+#### 원인
+
+로그인 유지 api를 매번 새로고침 할때마다 호출하도록 설계를 했었습니다. 또한 accessToken 과 refreshToken의 사용하지 않았습니다. 
+
+
+#### 해결 순서
+
+AccessToken 과 refreshToken을 사용 또한 Interceptor를 사용하여 token의 시간을 계산하여 사용기한이 지나지 않을경우 accessToken를 새로 호출하지 않습니다. 또한 일정시간이 지나면 refrehToken (더 긴 기한)으로 로그인 상태를 판단하여 accessToken을 재발급받습니다. 
+
+```
