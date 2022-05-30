@@ -36,17 +36,22 @@ const ChatPage = () => {
                 credentials: true,
             },
         });
-        if (roomName !== '') {
-            socket.emit("enterRoom", { userId, nickname, roomName }, (response) => {
-                console.log("response", response);
-                setMemberCnt(response.memberCnt)
-                // setChatHistory([...chatHistory, ...response.messages]);
-                setChatHistory([ ...response.messages ]) // 기존 전체 메세지를 가져옴
-                setTimeout(() => {
-                    var div = document.getElementById("chat_body");
-                    div.scrollTop = div.scrollHeight ;
-                }, 100)
-            });
+        if (roomName !== "") {
+            console.log(userId, nickname, roomName);
+            socket.emit(
+                "enterRoom",
+                { userId, nickname, roomName },
+                (response) => {
+                    console.log("response", response);
+                    setMemberCnt(response.memberCnt);
+                    // setChatHistory([...chatHistory, ...response.messages]);
+                    setChatHistory([...response.messages]); // 기존 전체 메세지를 가져옴
+                    setTimeout(() => {
+                        var div = document.getElementById("chat_body");
+                        div.scrollTop = div.scrollHeight;
+                    }, 100);
+                }
+            );
         }
 
         return () => {
@@ -56,10 +61,10 @@ const ChatPage = () => {
     }, [socketUrl, window.location.search]);
 
     useEffect(() => {
-        socket.on("getMessage", msg => {
-            setMemberCnt(msg.memberCnt)
+        socket.on("getMessage", (msg) => {
+            setMemberCnt(msg.memberCnt);
             if (msg.id !== socket.id) {
-                setChatHistory(prevMsg => [...prevMsg, msg]);
+                setChatHistory((prevMsg) => [...prevMsg, msg]);
             }
             setTimeout(() => {
                 var div = document.getElementById("chat_body");
@@ -88,7 +93,7 @@ const ChatPage = () => {
 
     const exitRoom = () => {
         socket.emit("exitRoom", { userId, nickname, roomName }, (response) => {
-            setMemberCnt(response.memberCnt)
+            setMemberCnt(response.memberCnt);
         });
         navigate("/");
     };
@@ -103,7 +108,6 @@ const ChatPage = () => {
         event.preventDefault();
         exitRoom();
     });
-
 
     return (
         <Container
@@ -139,9 +143,7 @@ const ChatPage = () => {
                 </Text>
                 <div>
                     {roomName}
-                    <p>
-                        현재참여 인원: {memberCnt ? memberCnt : 0}
-                    </p>
+                    <p>현재참여 인원: {memberCnt ? memberCnt : 0}</p>
                 </div>
             </Grid>
             <Grid mystyles="position: relative; margin-top: 5px">
