@@ -23,8 +23,9 @@ const ChatPage = () => {
 
     const params = useParams();
     // const socketUrl = "http://diasm.mooo.com:3002";
-    const socketUrl = "http://localhost:8080";
-    console.log('파람파람', params)
+    // const socketUrl = "http://localhost:8080";
+    const socketUrl = process.env.REACT_APP_CHAT_BASE_URL;
+
     const { userId, nickname, roomName } = params;
 
     const [address, setAddress] = React.useState({});
