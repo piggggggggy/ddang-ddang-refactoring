@@ -134,7 +134,7 @@
   <br>
   <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" >
   <img src="https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white" >
-        <img alt="Python" src ="https://img.shields.io/badge/framer-motion-brightgreen.svg?&style=for-the-badge&logo=framer-motion&logoColor=green"/>
+        <img src="https://img.shields.io/badge/Framer Motion-1572B6?style=for-the-badge&logo=Framer Motion&logoColor=white">
   <br>
 </p>
 
