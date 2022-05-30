@@ -16,8 +16,11 @@ import ProfileSettings from "../MyPage/components/ProfileSettings";
 import KakaoService from "../../services/kakao.service";
 import RankingService from "../../services/ranking.service";
 import FooterContent from "./components/FooterContent";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/slices/userSlice";
 
 export default function MyPageFinal() {
+    const dispatch = useDispatch();
     const [userData, setUserData] = React.useState(null);
     const [feed, setFeed] = React.useState([]);
     const [address, setAddress] = React.useState({});
@@ -38,6 +41,18 @@ export default function MyPageFinal() {
             .then((res) => {
                 console.log(res);
                 setUserData({ ...userData, ...res.data.rows });
+                const user = {
+                    email: res.data.rows.profile[0].email,
+                    expPoints: res.data.rows.profile[0].expPoints,
+                    level: res.data.rows.profile[0].level,
+                    mbti: res.data.rows.profile[0].mbti,
+                    nickname: res.data.rows.profile[0].nickname,
+                    playerId: res.data.rows.profile[0].playerId,
+                    points: res.data.rows.profile[0].points,
+                    profileImg: res.data.rows.profile[0].profileImg,
+                };
+
+                dispatch(userActions.loginCheck({ user }));
 
                 if (res.data.rows.achievedMission !== null) {
                     setFeed(
