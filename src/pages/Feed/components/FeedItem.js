@@ -55,7 +55,7 @@ export default function FeedItem(props) {
     const [commentArr, setCommentArr] = React.useState([...item.comments]);
     console.log(commentArr);
 
-    const [commentIsOpen, setCommentIsOpen] = React.useState(true);
+    const [commentIsOpen, setCommentIsOpen] = React.useState(false);
 
     const commentHandler = () => {
         setCommentIsOpen(!commentIsOpen);
