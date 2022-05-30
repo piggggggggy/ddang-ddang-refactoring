@@ -1,8 +1,6 @@
-  <img src="https://user-images.githubusercontent.com/88864019/170627059-f7b49422-9d78-491e-8602-a1b603bab5bc.png"/>
-  
 # [니땅내땅](https://dev.ddangddang.site/)
 
-<b>개발자로 취업하고싶은 사람들을 위한 화상면접 연습 커뮤니티</b>
+<b>야외에서 적극적인 활동을 유발하는 mbti 커뮤니티/ 게임 플랫폼</b>
 
 <br />
 
@@ -30,23 +28,23 @@
    <tr>
     <td align="center"><b><a href="https://github.com/diasm3">박세명</a></b></td>
     <td align="center"><b><a href="https://github.com/moto4321">기우석</a></b></td>
+     <td align="center"><b><a href="https://github.com/reload1bronze">박재철</a></b></td>
     <td align="center"><b><a href="https://github.com/piggggggggy">박용태</a></b></td>
-    <td align="center"><b><a href="https://github.com/reload1bronze">박재철</a></b></td>
     <td align="center"><b><a href="https://github.com/pol-dev-shinroo">김재혁</a></b></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/llama-ste"><img src="https://user-images.githubusercontent.com/90495580/169259372-a923afea-a898-4bca-9504-7d073d6ffab8.jpeg" width="100px" /></a></td>
-    <td align="center"><a href="https://github.com/AlgoRoots"><img src="https://avatars.githubusercontent.com/u/55050662?v=4" width="100px" /></a></td>
-    <td align="center"><a href="https://github.com/limjae"><img src="https://user-images.githubusercontent.com/90495580/169259387-0e3b59ad-5882-458a-9a2b-2ccac2d696ae.png" width="100px" /></a></td>
-    <td align="center"><a href="https://github.com/catalinakim"><img src="https://user-images.githubusercontent.com/90495580/170095150-bcdacb00-ac2a-42eb-98b5-c67e05352832.jpeg" width="100px" /></a></td>
-    <td align="center"><a href="https://github.com/Juri-Lee"><img src="https://user-images.githubusercontent.com/90495580/169259405-ba67e49d-8b01-405f-b0c8-12c6054b7577.png" width="100px" /></a></td>
+    <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
+    <td align="center"><a href="https://github.com/AlgoRoots"><img src="https://avatars.githubusercontent.com/u/67586085?v=4" width="100px" /></a></td>
+    <td align="center"><a href="https://github.com/catalinakim"><img src="https://github.com/reload1bronze" width="100px" /></a></td>
+    <td align="center"><a href="https://github.com/limjae"><img src="https://avatars.githubusercontent.com/u/83635051?v=4" width="100px" /></a></td>
+    <td align="center"><a href="https://github.com/Juri-Lee"><img src="https://avatars.githubusercontent.com/u/102004753?v=4" width="100px" /></a></td>
   </tr>
   <tr>
+    <td align="center"><b>Backend</b></td>
+    <td align="center"><b>Backend</b></td>
+    <td align="center"><b>Backend</b></td>
+     <td align="center"><b>Frontend</b></td>
     <td align="center"><b>Frontend</b></td>
-    <td align="center"><b>Frontend</b></td>
-    <td align="center"><b>Backend</b></td>
-    <td align="center"><b>Backend</b></td>
-    <td align="center"><b>Backend</b></td>
   </tr>
 </table>
 
