@@ -12,6 +12,7 @@ const Wrapper = styled.div`
     margin: auto;
     box-sizing: border-box;
     background: #fdfdfd;
+    border: 4px solid black;
     overflow: hidden;
     /* border-radius: 25px; */
 `;

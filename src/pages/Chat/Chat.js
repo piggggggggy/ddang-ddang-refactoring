@@ -125,7 +125,7 @@ const ChatPage = () => {
                 flex
                 alignItems="center"
                 justifyContent="center"
-                mystyles="margin-top: 68px; position: relative"
+                mystyles="margin-top: 20px; position: relative"
             >
                 <Grid mystyles="position: absolute; margin-top:-15px;">
                     <IconButton onClick={exitRoom}>
@@ -137,14 +137,14 @@ const ChatPage = () => {
                 <Text mystyles="font-weight: 700; font-size: 20px; letter-spacing: -0.05em;">
                     {address.si} {address.gu} {address.dong}
                 </Text>
-                <p>
+                <div>
                     {roomName}
-                </p>
-                <p>
-                    현재참여 인원: {memberCnt ? memberCnt : 0}
-                </p>
+                    <p>
+                        현재참여 인원: {memberCnt ? memberCnt : 0}
+                    </p>
+                </div>
             </Grid>
-            <Grid mystyles="position: relative; margin-top: 40px;">
+            <Grid mystyles="position: relative; margin-top: 5px">
                 <Grid
                     flex
                     alignItems="center"
@@ -178,7 +178,7 @@ const ChatPage = () => {
                                                         "30px",
                                                     width: "230px",
                                                     marginLeft: "auto",
-                                                    height: "91px",
+                                                    height: "40px",
                                                     display: "flex",
                                                     alignItems: "center",
                                                     padding: "20px",
@@ -206,7 +206,7 @@ const ChatPage = () => {
                                                     borderBottomRightRadius:
                                                         "30px",
                                                     width: "230px",
-                                                    height: "91px",
+                                                    height: "40px",
                                                     marginTop: "20px",
                                                     display: "flex",
                                                     alignItems: "center",
