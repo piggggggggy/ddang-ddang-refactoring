@@ -39,7 +39,7 @@ export default function AppRouter() {
             <Route exact path="/landing" element={<LandingPage />} />
 
             <Route exact path="/apitest" element={<API_TEST />} />
-            <Route path="/kakaoauth" element={<KakaoLogin />} />
+            {/* <Route path="/kakaoauth" element={<KakaoLogin />} /> */}
         </Routes>
     );
 }

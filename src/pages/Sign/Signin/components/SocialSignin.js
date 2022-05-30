@@ -53,7 +53,7 @@ const SocialSignin = (props) => {
     };
 
     return (
-        <a href="/api/players/kakaoauth" style={{ textDecoration: "none" }}>
+        <a href="/kakakoauth" style={{ textDecoration: "none" }}>
             <KakaoBtn>
                 <KakaoImg alt="kakao login" src={kakaoIcon} />
                 <KakaoText>카카오로 시작하기</KakaoText>
