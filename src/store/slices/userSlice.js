@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { setCookie, deleteCookie } from "../../shared/Cookie";
-
 const initialState = {
     user: null,
 };
@@ -11,19 +9,15 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         signup(state, action) {
-            state.user = action.payload.user;
+            state.user = action.payload;
         },
         signin(state, action) {
-            setCookie("token", action.payload.token);
             state.user = { ...state.user, ...action.payload.user };
         },
         loginCheck(state, action) {
-            console.log(action.payload);
-            setCookie("token", action.payload.token);
             state.user = { ...state.user, ...action.payload.user };
         },
         signout(state) {
-            deleteCookie("token");
             state.user = null;
         },
         getProfileDetails(state, action) {

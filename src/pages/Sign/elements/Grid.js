@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export default function Grid(props) {
     const {
@@ -11,6 +12,10 @@ export default function Grid(props) {
         key,
         mystyles,
         onClick,
+        whileHover,
+        animate,
+        transition,
+        initial,
     } = props;
 
     const styles = {
@@ -22,7 +27,15 @@ export default function Grid(props) {
     };
 
     return (
-        <Wrapper key={key} {...styles} onClick={onClick}>
+        <Wrapper
+            key={key}
+            {...styles}
+            onClick={onClick}
+            whileHover={whileHover}
+            animate={animate}
+            transition={transition}
+            initial={initial}
+        >
             {children}
         </Wrapper>
     );
@@ -38,7 +51,7 @@ Grid.defaultProps = {
     key: "",
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
     width: 100%;
     ${(props) => (props.flex ? "display: flex" : "")};
     ${(props) =>

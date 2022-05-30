@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { motion, AnimateSharedLayout } from "framer-motion";
-import axios from "axios";
 
 import { Container } from "../../elements/index";
 import Navigation from "../../components/Navigation";
@@ -14,7 +13,6 @@ import FeedItem from "./components/FeedItem";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../shared/Cookie";
 
 import {
     feedsLatestAxios,
@@ -22,44 +20,114 @@ import {
     feedsDistanceAxios,
 } from "../../store/thunk-actions/feedActions";
 
-export default function Feed() {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const token = getCookie("token");
+import FeedsService from "../../services/feed.service";
+import KakaoService from "../../services/kakao.service";
 
-    const data = {
-        regionSi: "서울시",
-        regionGu: "강남구",
-        regionDong: "삼성동",
-        lat: 33.5563,
-        lng: 127.4147562,
+export default function Feed() {
+    const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
+
+    console.log(currentMapPosition);
+
+    const getPosition = () => {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            console.log(position);
+
+            setCurrentMapPosition({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            });
+        });
+
+        const tempLocation = {
+            lat: 37.5172363,
+            lng: 127.0473248,
+        };
+
+        // console.log(getPosition())
+        const data = KakaoService.getAddress({ location: tempLocation });
+
+        setCurrentAddress(data);
     };
 
-    const [items, setItems] = React.useState([]);
-    console.log(items);
+    const [currentAddress, setCurrentAddress] = React.useState(null);
 
-    const feeds = useSelector((state) => state?.feed.feeds);
-    console.log(feeds);
+    const navigate = useNavigate();
+
+    const regionsi = "서울";
+    const regionGu = "강남구";
+    const regionDong = "삼성동";
+    const lat = 37.5139848;
+    const lng = 127.0565207;
+
+    const [items, setItems] = React.useState([]);
+
+    // const feeds = useSelector((state) => state.feed.feeds);
+    const [feedsLatestArr, setFeedsLatest] = React.useState([]);
+    const [feedsPopularityArr, setFeedsPopularity] = React.useState([]);
+    const [feedsDistanceArr, setFeedsDistance] = React.useState([]);
+    console.log(feedsLatestArr, feedsPopularityArr, feedsDistanceArr);
 
     const feedsLatest = () => {
-        dispatch(feedsLatestAxios(data));
+        // if (currentAddress !== null && currentMapPosition !== null) {
+        FeedsService.feedsLatestAxios(
+            // currentAddress.si,
+            // currentAddress.gu,
+            // currentAddress.dong,
+            // currentMapPosition.lat,
+            // currentMapPosition.lng
+            regionsi,
+            regionGu,
+            regionDong,
+            lat,
+            lng
+        )
+            .then((res) => {
+                console.log(res);
+                setFeedsLatest(res.data.rows);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        // }
     };
 
     const feedsPopularity = () => {
-        dispatch(feedsPopularityAxios(data));
+        // dispatch(feedsPopularityAxios(data));
+        FeedsService.feedsPopularityAxios(
+            regionsi,
+            regionGu,
+            regionDong,
+            lat,
+            lng
+        )
+            .then((res) => {
+                console.log(res);
+                setFeedsPopularity(res.data.rows);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     const feedsDistance = () => {
-        dispatch(feedsDistanceAxios(data));
+        // dispatch(feedsDistanceAxios(data));
+        FeedsService.feedsDistanceAxios(
+            regionsi,
+            regionGu,
+            regionDong,
+            lat,
+            lng
+        )
+            .then((res) => {
+                console.log(res);
+                setFeedsDistance(res.data.rows);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
-    React.useEffect(() => {
-        // feedsLatest();
-        feedsLatest(data);
-    }, []);
-
     const [tabIndex, setTabIndex] = React.useState(0);
-    console.log(tabIndex);
 
     const [feedLocation, setFeedLocation] = React.useState([
         "33.5563",
@@ -67,23 +135,25 @@ export default function Feed() {
         "현재 내 위치",
     ]);
 
-    // 카테고리
-    const [category, setCategory] = React.useState("1");
-
     // 함수 호출
-
-    const getLatest = () => {
-        setTabIndex(0);
+    const getLatest = React.useCallback(() => {
         feedsLatest();
-    };
-    const getPopularity = () => {
-        setTabIndex(1);
+    }, []);
+
+    const getPopularity = React.useCallback(() => {
+        navigate("/feed/popular");
+    }, []);
+
+    const getDistance = React.useCallback(() => {
+        navigate("/feed/distance");
+    }, []);
+
+    React.useEffect(() => {
+        feedsLatest();
         feedsPopularity();
-    };
-    const getDistance = () => {
-        setTabIndex(2);
         feedsDistance();
-    };
+        getPosition();
+    }, [getLatest, getPopularity, getDistance, tabIndex]);
 
     return (
         <Container>
@@ -99,9 +169,7 @@ export default function Feed() {
                     mystyles="margin-top: 50px"
                 >
                     <LocationOnIcon sx={{ color: "white" }} />
-                    <Text mystyles="font-size: 16px; color: white;">
-                        서울특별시 용산구 보광동
-                    </Text>
+                    <Text mystyles="font-size: 16px; color: white;"></Text>
                 </Grid>
                 <Grid
                     flex
@@ -111,9 +179,6 @@ export default function Feed() {
                     mystyles="margin-top: 47px"
                 >
                     <Tabcard
-                        initial={{ y: -250, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.5 }}
                         onClick={getLatest}
                         style={
                             tabIndex === 0
@@ -130,9 +195,6 @@ export default function Feed() {
                         최신순
                     </Tabcard>
                     <Tabcard
-                        initial={{ y: -250, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.5 }}
                         onClick={getPopularity}
                         style={
                             tabIndex === 1
@@ -149,9 +211,6 @@ export default function Feed() {
                         인기순
                     </Tabcard>
                     <Tabcard
-                        initial={{ y: -250, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.5 }}
                         onClick={getDistance}
                         style={
                             tabIndex === 2
@@ -199,7 +258,7 @@ export default function Feed() {
                         ></MapMarker>
                     </Map>
                 </Grid>
-                {tabIndex === 0 && (
+                {tabIndex === 0 && feedsLatestArr !== null && (
                     <Grid
                         flex
                         direction="column"
@@ -213,26 +272,68 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {feeds.map((feed, idx) => (
+                                {feedsLatestArr.map((feed, idx) => (
+                                    <Grid
+                                        onClick={() => {
+                                            setFeedLocation([
+                                                feedsLatestArr?.[idx]?.quest
+                                                    ?.lat,
+                                                feedsLatestArr?.[idx]?.quest
+                                                    ?.lng,
+                                                feedsLatestArr?.[idx]?.id,
+                                            ]);
+                                        }}
+                                    >
+                                        <FeedItem
+                                            page={tabIndex}
+                                            key={idx}
+                                            item={feed}
+                                            id={feed[idx]?.id}
+                                            liked={feed.liked}
+                                        />
+                                    </Grid>
+                                ))}
+                            </UnorderedList>
+                        </AnimateSharedLayout>
+                    </Grid>
+                )}
+                {tabIndex === 1 && feedsPopularityArr !== null && (
+                    <Grid
+                        flex
+                        direction="column"
+                        initial={{ x: -250, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        mystyles="margin-bottom: 200px;"
+                    >
+                        <AnimateSharedLayout>
+                            <UnorderedList
+                                layout
+                                initial={{ borderRadius: 25 }}
+                            >
+                                {feedsPopularityArr.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
                                             setFeedLocation([
-                                                feeds?.[idx]?.quest?.lat,
-                                                feeds?.[idx]?.quest?.lng,
-                                                feeds?.[idx]?.id,
+                                                feedsPopularityArr?.[idx]?.quest
+                                                    ?.lat,
+                                                feedsPopularityArr?.[idx]?.quest
+                                                    ?.lng,
+                                                feedsPopularityArr?.[idx]?.id,
                                             ]);
                                         }}
                                         key={idx}
                                         item={feed}
                                         id={feed[idx]?.id}
+                                        liked={feed.liked}
                                     />
                                 ))}
                             </UnorderedList>
                         </AnimateSharedLayout>
                     </Grid>
                 )}
-                {tabIndex === 1 && (
+                {tabIndex === 2 && feedsDistanceArr !== null && (
                     <Grid
                         flex
                         direction="column"
@@ -246,52 +347,22 @@ export default function Feed() {
                                 layout
                                 initial={{ borderRadius: 25 }}
                             >
-                                {feeds.map((feed, idx) => (
+                                {feedsDistanceArr.map((feed, idx) => (
                                     <FeedItem
                                         page={tabIndex}
                                         onClick={() => {
                                             setFeedLocation([
-                                                feeds?.[idx]?.quest?.lat,
-                                                feeds?.[idx]?.quest?.lng,
-                                                feeds?.[idx]?.id,
+                                                feedsDistanceArr?.[idx]?.quest
+                                                    ?.lat,
+                                                feedsDistanceArr?.[idx]?.quest
+                                                    ?.lng,
+                                                feedsDistanceArr?.[idx]?.id,
                                             ]);
                                         }}
                                         key={idx}
                                         item={feed}
                                         id={feed[idx]?.id}
-                                    />
-                                ))}
-                            </UnorderedList>
-                        </AnimateSharedLayout>
-                    </Grid>
-                )}
-                {tabIndex === 2 && (
-                    <Grid
-                        flex
-                        direction="column"
-                        initial={{ x: -250, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        mystyles="margin-bottom: 200px;"
-                    >
-                        <AnimateSharedLayout>
-                            <UnorderedList
-                                layout
-                                initial={{ borderRadius: 25 }}
-                            >
-                                {feeds.map((feed, idx) => (
-                                    <FeedItem
-                                        page={tabIndex}
-                                        onClick={() => {
-                                            setFeedLocation([
-                                                feeds?.[idx]?.quest?.lat,
-                                                feeds?.[idx]?.quest?.lng,
-                                                feeds?.[idx]?.id,
-                                            ]);
-                                        }}
-                                        key={idx}
-                                        item={feed}
-                                        id={feed[idx]?.id}
+                                        liked={feed.liked}
                                     />
                                 ))}
                             </UnorderedList>
@@ -334,39 +405,3 @@ const Tabcard = styled(motion.div)`
 const UnorderedList = styled(motion.ul)`
     list-style-type: none;
 `;
-
-// const feedsLatest = async () => {
-//     await axios
-//         .post(`/api/feeds?type=latest`, data)
-//         .then((res) => {
-//             console.log(res);
-//             setItems([...res.data.rows]);
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };
-
-// const feedsPopularity = async () => {
-//     await axios
-//         .post(`/api/feeds?type=popularity`, data)
-//         .then((res) => {
-//             console.log(res);
-//             setItems([...res.data.rows]);
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };
-
-// const feedsDistance = async () => {
-//     await axios
-//         .post(`/api/feeds?type=distance`, data)
-//         .then((res) => {
-//             console.log(res);
-//             setItems([...res.data.rows]);
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };

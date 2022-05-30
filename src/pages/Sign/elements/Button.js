@@ -12,22 +12,44 @@ export default function Button(props) {
         whileHover,
         animate,
         transition,
+        disabled,
+        initial,
     } = props;
     const styles = { mystyles };
 
     return (
         <>
-            <Btn
-                {...styles}
-                key={key}
-                onClick={onClick}
-                type={type}
-                whileHover={whileHover}
-                animate={animate}
-                transition={transition}
-            >
-                {children}
-            </Btn>
+            {props.disabled ? (
+                <>
+                    <Btn
+                        {...styles}
+                        key={key}
+                        onClick={onClick}
+                        type={type}
+                        whileHover={whileHover}
+                        initial={initial}
+                        animate={animate}
+                        transition={transition}
+                        disabled
+                    >
+                        {children}
+                    </Btn>
+                </>
+            ) : (
+                <>
+                    <Btn
+                        {...styles}
+                        key={key}
+                        onClick={onClick}
+                        type={type}
+                        whileHover={whileHover}
+                        animate={animate}
+                        transition={transition}
+                    >
+                        {children}
+                    </Btn>
+                </>
+            )}
         </>
     );
 }

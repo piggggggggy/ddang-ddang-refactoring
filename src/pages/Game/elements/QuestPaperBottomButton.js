@@ -1,21 +1,19 @@
 import styled from "styled-components";
 
 export default function QuestPaperBottomButton({ text, color, onClick, isOn }) {
-
-  return (
-    <ButtonWrapper 
-      onClick={onClick}
-      style={isOn ? {background: '#EBEBEB'} : {background: color}}
-    >
-      <p>{text}</p>
-    </ButtonWrapper>
-  )
+    return (
+        <ButtonWrapper
+            onClick={onClick}
+            style={isOn ? { background: color } : { background: "#EBEBEB" }}
+        >
+            <p>{text}</p>
+        </ButtonWrapper>
+    );
 }
 
 const ButtonWrapper = styled.div`
-  position: absolute;
-  bottom: 30px;
-  left: 10%;
+  position: relative;
+  margin: 0 auto;
   height: 40px;
   width: 80%;
   border-radius: 4px;
@@ -28,4 +26,3 @@ const ButtonWrapper = styled.div`
     font-weight: 700;
   }
 `;
-
