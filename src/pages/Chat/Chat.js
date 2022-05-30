@@ -19,11 +19,14 @@ const ChatPage = () => {
     const navigate = useNavigate();
     const [message, setMessage] = useState(""); // input 값을 없애준다
     const [chatHistory, setChatHistory] = useState([]);
+    const [memberCnt, setMemberCnt] = useState(0);
 
     const params = useParams();
-    const socketUrl ="https://chat.ddangddang.site" 
+    const socketUrl = process.env.REACT_APP_CHAT_BASE_URL;
 
     const { userId, nickname, roomName } = params;
+
+    const [address, setAddress] = React.useState({});
 
     useEffect(() => {
         const search = window.location.search;
@@ -33,11 +36,18 @@ const ChatPage = () => {
                 credentials: true,
             },
         });
-
-        socket.emit("enterRoom", { userId, nickname, roomName }, (response) => {
-            console.log("response", response);
-            setChatHistory([...chatHistory, ...response.messages]);
-        });
+        if (roomName !== '') {
+            socket.emit("enterRoom", { userId, nickname, roomName }, (response) => {
+                console.log("response", response);
+                setMemberCnt(response.memberCnt)
+                // setChatHistory([...chatHistory, ...response.messages]);
+                setChatHistory([ ...response.messages ]) // 기존 전체 메세지를 가져옴
+                setTimeout(() => {
+                    var div = document.getElementById("chat_body");
+                    div.scrollTop = div.scrollHeight ;
+                }, 100)
+            });
+        }
 
         return () => {
             socket.disconnect();
@@ -46,17 +56,17 @@ const ChatPage = () => {
     }, [socketUrl, window.location.search]);
 
     useEffect(() => {
-        socket.on("getMessage", (msg) => {
-            console.log(msg);
-            setChatHistory((prevMsg) => [...prevMsg, msg]);
+        socket.on("getMessage", msg => {
+            setMemberCnt(msg.memberCnt)
+            if (msg.id !== socket.id) {
+                setChatHistory(prevMsg => [...prevMsg, msg]);
+            }
             setTimeout(() => {
                 var div = document.getElementById("chat_body");
                 div.scrollTop = div.scrollHeight - div.clientWidth;
             }, 10);
         });
     }, []);
-
-    console.log("asdf");
 
     const sendMessage = (e) => {
         // e.preventDefault();
@@ -77,8 +87,8 @@ const ChatPage = () => {
     };
 
     const exitRoom = () => {
-        socket.emit("exitRoom", { roomName }, () => {
-            console.log("됐나??");
+        socket.emit("exitRoom", { userId, nickname, roomName }, (response) => {
+            setMemberCnt(response.memberCnt)
         });
         navigate("/");
     };
@@ -94,53 +104,6 @@ const ChatPage = () => {
         exitRoom();
     });
 
-    // 좌표 찾기
-    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
-    console.log(currentMapPosition);
-    const getPosition = () => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position);
-            setCurrentMapPosition({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-            });
-            getmyAddress(position.coords.latitude, position.coords.longitude);
-        });
-    };
-
-    const [address, setAddress] = React.useState({});
-    console.log(address);
-
-    // 카카오 api 로 시, 구, 동 정보 받기
-    const getmyAddress = (lat, lng) => {
-        axios
-            .get(
-                `${process.env.REACT_APP_MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
-                {
-                    headers: {
-                        Accept: "*/*",
-                        Authorization: `KakaoAK ${process.env.REACT_APP_MAP_KAKAO_API_KEY}`,
-                    },
-                }
-            )
-            .then((res) => {
-                const data = {
-                    si: res?.data?.documents?.[0]?.address?.region_1depth_name,
-                    gu: res?.data?.documents?.[0]?.address?.region_2depth_name,
-                    dong: res?.data?.documents?.[0]?.address
-                        ?.region_3depth_name,
-                };
-
-                setAddress(data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
-    React.useEffect(() => {
-        getPosition();
-    }, []);
 
     return (
         <Container
@@ -174,6 +137,12 @@ const ChatPage = () => {
                 <Text mystyles="font-weight: 700; font-size: 20px; letter-spacing: -0.05em;">
                     {address.si} {address.gu} {address.dong}
                 </Text>
+                <p>
+                    {roomName}
+                </p>
+                <p>
+                    현재참여 인원: {memberCnt ? memberCnt : 0}
+                </p>
             </Grid>
             <Grid mystyles="position: relative; margin-top: 40px;">
                 <Grid
