@@ -34,10 +34,10 @@
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
-     <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
-     <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
-     <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
-     <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
+     <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/67586085?v=4" width="100px" /></a></td>
+     <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/55050662?v=4" width="100px" /></a></td>
+     <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/83635051?v=4" width="100px" /></a></td>
+     <td align="center"><a href="https://github.com/llama-ste"><img src="https://github.com/pol-dev-shinroo" width="100px" /></a></td>
     
   </tr>
   <tr>
