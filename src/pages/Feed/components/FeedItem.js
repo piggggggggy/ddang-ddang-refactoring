@@ -171,13 +171,17 @@ export default function FeedItem(props) {
                     >
                         {imagesArr.map((image, idx) => (
                             <img
-                                src={image}
+                                src={image !== null ? image : ""}
                                 alt=""
-                                style={{
-                                    width: "70px",
-                                    height: "70px",
-                                    marginLeft: "10px",
-                                }}
+                                style={
+                                    image !== null
+                                        ? {
+                                              width: "70px",
+                                              height: "70px",
+                                              marginLeft: "10px",
+                                          }
+                                        : {}
+                                }
                             />
                         ))}
                     </Grid>
@@ -249,13 +253,13 @@ export default function FeedItem(props) {
                             justifyContent="space-between"
                         >
                             <Input
-                                mystyles="width: 220px; height: 30px; box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05); border:none; background: #F4F4F4;"
+                                mystyles="width: 200px; height: 30px; box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05); border:none; background: #F4F4F4;"
                                 placeholder="댓글을 써주세요"
                                 onChange={commentChange}
                             />
                             <Button
                                 onClick={writeComment}
-                                mystyles="border: none; margin-right: 10px; margin-left: 5px; background: #A3D4FB; font-weight: 400; font-size: 10px; width: 45px; height: 25px; border-radius: 4px;"
+                                mystyles="border: none; margin-right: 10px; margin-left: 5px; background: #A3D4FB; font-weight: 400; font-size: 10px; width: 80px; height: 25px; border-radius: 4px;"
                             >
                                 전송
                             </Button>

@@ -1,126 +1,74 @@
 import React from "react";
 import styled from "styled-components";
 import { motion, AnimateSharedLayout } from "framer-motion";
-
 import { Container } from "../../elements/index";
 import Navigation from "../../components/Navigation";
-import { Grid, Button, Text } from "../Feed/elements/index";
-// import CardItem from "../Feed/components/CardItem";
+import { Grid, Text } from "../Feed/elements/index";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import FeedItem from "./components/FeedItem";
-
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import {
-    feedsLatestAxios,
-    feedsPopularityAxios,
-    feedsDistanceAxios,
-} from "../../store/thunk-actions/feedActions";
-
+import axios from "axios";
 import FeedsService from "../../services/feed.service";
-import KakaoService from "../../services/kakao.service";
 
 export default function Feed() {
     const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
-
-    console.log(currentMapPosition);
+    const [siGuDong, setSiGuDong] = React.useState(null);
 
     const getPosition = () => {
         navigator.geolocation.getCurrentPosition(async (position) => {
             console.log(position);
-
             setCurrentMapPosition({
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
             });
+            setFeedLocation([
+                position.coords.latitude,
+                position.coords.longitude,
+            ]);
+            await getmyAddress(
+                position.coords.latitude,
+                position.coords.longitude
+            );
         });
-
-        const tempLocation = {
-            lat: 37.5172363,
-            lng: 127.0473248,
-        };
-
-        // console.log(getPosition())
-        const data = KakaoService.getAddress({ location: tempLocation });
-
-        setCurrentAddress(data);
     };
 
-    const [currentAddress, setCurrentAddress] = React.useState(null);
+    // 카카오 api 로 시, 구, 동 정보 받기
+    const getmyAddress = async (lat, lng) => {
+        try {
+            const res = await axios.get(
+                `${process.env.REACT_APP_MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
+                {
+                    headers: {
+                        Accept: "*/*",
+                        Authorization: `KakaoAK ${process.env.REACT_APP_MAP_KAKAO_REST_API_KEY}`,
+                    },
+                }
+            );
+
+            const data = {
+                si: res.data.documents[0].address.region_1depth_name,
+                gu: res.data.documents[0].address.region_2depth_name,
+                dong: res.data.documents[0].address.region_3depth_name,
+            };
+            setSiGuDong(data);
+            feedsLatest(lat, lng, data.si, data.gu, data.dong);
+
+            return data;
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const navigate = useNavigate();
+    const [feedsLatestArr, setFeedsLatest] = React.useState(null);
 
-    const regionsi = "서울";
-    const regionGu = "강남구";
-    const regionDong = "삼성동";
-    const lat = 37.5139848;
-    const lng = 127.0565207;
-
-    const [items, setItems] = React.useState([]);
-
-    // const feeds = useSelector((state) => state.feed.feeds);
-    const [feedsLatestArr, setFeedsLatest] = React.useState([]);
-    const [feedsPopularityArr, setFeedsPopularity] = React.useState([]);
-    const [feedsDistanceArr, setFeedsDistance] = React.useState([]);
-    console.log(feedsLatestArr, feedsPopularityArr, feedsDistanceArr);
-
-    const feedsLatest = () => {
-        // if (currentAddress !== null && currentMapPosition !== null) {
-        FeedsService.feedsLatestAxios(
-            // currentAddress.si,
-            // currentAddress.gu,
-            // currentAddress.dong,
-            // currentMapPosition.lat,
-            // currentMapPosition.lng
-            regionsi,
-            regionGu,
-            regionDong,
-            lat,
-            lng
-        )
+    const feedsLatest = (lat, lng, si, gu, dong) => {
+        console.log(lat, lng, si, gu, dong);
+        FeedsService.feedsLatestAxios(si, gu, dong, lat, lng)
             .then((res) => {
                 console.log(res);
                 setFeedsLatest(res.data.rows);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        // }
-    };
-
-    const feedsPopularity = () => {
-        // dispatch(feedsPopularityAxios(data));
-        FeedsService.feedsPopularityAxios(
-            regionsi,
-            regionGu,
-            regionDong,
-            lat,
-            lng
-        )
-            .then((res) => {
-                console.log(res);
-                setFeedsPopularity(res.data.rows);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
-    const feedsDistance = () => {
-        // dispatch(feedsDistanceAxios(data));
-        FeedsService.feedsDistanceAxios(
-            regionsi,
-            regionGu,
-            regionDong,
-            lat,
-            lng
-        )
-            .then((res) => {
-                console.log(res);
-                setFeedsDistance(res.data.rows);
             })
             .catch((err) => {
                 console.log(err);
@@ -129,11 +77,7 @@ export default function Feed() {
 
     const [tabIndex, setTabIndex] = React.useState(0);
 
-    const [feedLocation, setFeedLocation] = React.useState([
-        "33.5563",
-        "126.79581",
-        "현재 내 위치",
-    ]);
+    const [feedLocation, setFeedLocation] = React.useState(null);
 
     // 함수 호출
     const getLatest = React.useCallback(() => {
@@ -149,11 +93,8 @@ export default function Feed() {
     }, []);
 
     React.useEffect(() => {
-        feedsLatest();
-        feedsPopularity();
-        feedsDistance();
         getPosition();
-    }, [getLatest, getPopularity, getDistance, tabIndex]);
+    }, []);
 
     return (
         <Container>
@@ -169,7 +110,11 @@ export default function Feed() {
                     mystyles="margin-top: 50px"
                 >
                     <LocationOnIcon sx={{ color: "white" }} />
-                    <Text mystyles="font-size: 16px; color: white;"></Text>
+                    {siGuDong !== null && (
+                        <Text mystyles="font-size: 16px; color: white;">
+                            {siGuDong.si} {siGuDong.gu} {siGuDong.dong}
+                        </Text>
+                    )}
                 </Grid>
                 <Grid
                     flex
@@ -231,34 +176,37 @@ export default function Feed() {
                     mystyles="overflow: hidden; margin-top:23px; border-radius: 20px;"
                     animate={{ opacity: 1 }}
                 >
-                    <Map
-                        center={{
-                            lat: parseFloat(feedLocation[0]).toFixed(4),
-                            lng: parseFloat(feedLocation[1]).toFixed(4),
-                        }}
-                        level={2}
-                        style={{
-                            width: "368px",
-                            height: "240px",
-                            position: "relative",
-                        }}
-                    >
-                        <MapMarker
-                            position={{
+                    {feedLocation !== null && (
+                        <Map
+                            center={{
                                 lat: parseFloat(feedLocation[0]).toFixed(4),
                                 lng: parseFloat(feedLocation[1]).toFixed(4),
                             }}
-                            image={{
-                                src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", //
-                                size: {
-                                    widht: 24,
-                                    height: 35,
-                                },
+                            level={2}
+                            style={{
+                                width: "368px",
+                                height: "240px",
+                                position: "relative",
                             }}
-                        ></MapMarker>
-                    </Map>
+                        >
+                            <MapMarker
+                                position={{
+                                    lat: parseFloat(feedLocation[0]).toFixed(4),
+                                    lng: parseFloat(feedLocation[1]).toFixed(4),
+                                }}
+                                image={{
+                                    src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", //
+                                    size: {
+                                        widht: 24,
+                                        height: 35,
+                                    },
+                                }}
+                            ></MapMarker>
+                        </Map>
+                    )}
                 </Grid>
-                {tabIndex === 0 && feedsLatestArr !== null && (
+
+                {feedsLatestArr !== null && (
                     <Grid
                         flex
                         direction="column"
@@ -273,7 +221,8 @@ export default function Feed() {
                                 initial={{ borderRadius: 25 }}
                             >
                                 {feedsLatestArr.map((feed, idx) => (
-                                    <Grid
+                                    <FeedItem
+                                        page={tabIndex}
                                         onClick={() => {
                                             setFeedLocation([
                                                 feedsLatestArr?.[idx]?.quest
@@ -281,82 +230,6 @@ export default function Feed() {
                                                 feedsLatestArr?.[idx]?.quest
                                                     ?.lng,
                                                 feedsLatestArr?.[idx]?.id,
-                                            ]);
-                                        }}
-                                    >
-                                        <FeedItem
-                                            page={tabIndex}
-                                            key={idx}
-                                            item={feed}
-                                            id={feed[idx]?.id}
-                                            liked={feed.liked}
-                                        />
-                                    </Grid>
-                                ))}
-                            </UnorderedList>
-                        </AnimateSharedLayout>
-                    </Grid>
-                )}
-                {tabIndex === 1 && feedsPopularityArr !== null && (
-                    <Grid
-                        flex
-                        direction="column"
-                        initial={{ x: -250, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        mystyles="margin-bottom: 200px;"
-                    >
-                        <AnimateSharedLayout>
-                            <UnorderedList
-                                layout
-                                initial={{ borderRadius: 25 }}
-                            >
-                                {feedsPopularityArr.map((feed, idx) => (
-                                    <FeedItem
-                                        page={tabIndex}
-                                        onClick={() => {
-                                            setFeedLocation([
-                                                feedsPopularityArr?.[idx]?.quest
-                                                    ?.lat,
-                                                feedsPopularityArr?.[idx]?.quest
-                                                    ?.lng,
-                                                feedsPopularityArr?.[idx]?.id,
-                                            ]);
-                                        }}
-                                        key={idx}
-                                        item={feed}
-                                        id={feed[idx]?.id}
-                                        liked={feed.liked}
-                                    />
-                                ))}
-                            </UnorderedList>
-                        </AnimateSharedLayout>
-                    </Grid>
-                )}
-                {tabIndex === 2 && feedsDistanceArr !== null && (
-                    <Grid
-                        flex
-                        direction="column"
-                        initial={{ x: -250, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        mystyles="margin-bottom: 200px;"
-                    >
-                        <AnimateSharedLayout>
-                            <UnorderedList
-                                layout
-                                initial={{ borderRadius: 25 }}
-                            >
-                                {feedsDistanceArr.map((feed, idx) => (
-                                    <FeedItem
-                                        page={tabIndex}
-                                        onClick={() => {
-                                            setFeedLocation([
-                                                feedsDistanceArr?.[idx]?.quest
-                                                    ?.lat,
-                                                feedsDistanceArr?.[idx]?.quest
-                                                    ?.lng,
-                                                feedsDistanceArr?.[idx]?.id,
                                             ]);
                                         }}
                                         key={idx}
