@@ -73,6 +73,7 @@ const NameAndLevel = styled.p`
     letter-spacing: -5%;
     padding: 11px 0 4px;
     & span {
+        font-weight: 700;
         color: #266137;
     }
 `;

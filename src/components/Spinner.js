@@ -1,11 +1,11 @@
 import styled, { keyframes } from "styled-components";
 import { Grid } from "../elements";
 import Area from "../assets/images/png/area-landonly.png";
-
+import SpinnerImg from "../assets/images/png/sign/circle.gif";
 export default function Spinner() {
     return (
         <Wrapper>
-            <Grid
+            {/* <Grid
                 flex
                 justifyContent={"center"}
                 alignItems={"center"}
@@ -15,7 +15,8 @@ export default function Spinner() {
             >
                 <MapImg src={Area} />
                 <Circle />
-            </Grid>
+            </Grid> */}
+            <SpinnerGif src={SpinnerImg} />
         </Wrapper>
     );
 }
@@ -31,6 +32,11 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+const SpinnerGif = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 `;
 const CircleMotion = keyframes`
   0% {
