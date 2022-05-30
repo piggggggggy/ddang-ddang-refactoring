@@ -48,8 +48,11 @@ export default function FeedItem(props) {
     };
 
     // 디테일 이미지
-    const imagesArr = [];
-    imagesArr.push(item.image1_url, item.image2_url, item.image3_url);
+    const [imagesArr, setImagesArr] = React.useState(
+        item.image1_url,
+        item.image2_url,
+        item.image3_url
+    );
 
     // 댓글
     const [commentArr, setCommentArr] = React.useState([...item.comments]);
@@ -135,56 +138,68 @@ export default function FeedItem(props) {
             </Text>
             <Grid
                 flex
+                alignItems="center"
+                justifyContent="center"
                 direction="row"
-                mystyles="min-height: 78px; padding: 15px 15px 0 15px; overflow-wrap: break-word;"
+                mystyles="min-height: 78px; padding-left: 14px; overflow-wrap: break-word;"
             >
                 <Grid mystyles="width: 1000px; overflow-wrap: break-word;">
-                    <Text mystyles="font-weight: 700; font-size: 16px; color: #A3D4FB;letter-spacing: -0.05em;">
-                        Title
-                    </Text>
                     <Text mystyles="font-weight: 400; font-size: 12px; letter-spacing: -0.05em;">
                         {item.content}
                     </Text>
                 </Grid>
             </Grid>
-            <Grid
-                flex
-                justifyContent="center"
-                alignItems="center"
-                mystyles="height: 15px; width: 50px; margin: auto; padding-right: 20px"
-                onClick={detailHandler}
-            >
-                <Text pointer mystyles="font-weight: 800">
-                    ...
-                </Text>
-            </Grid>
-            <AnimatePresence>
-                {detailOpen && (
+            {imagesArr !== null &&
+                imagesArr[0] !== null &&
+                imagesArr[1] !== null &&
+                imagesArr[2] !== null && (
                     <Grid
                         flex
                         justifyContent="center"
                         alignItems="center"
-                        initial={{ y: -250, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.1 }}
-                        mystyles="height: 100px"
+                        mystyles="height: 15px; width: 50px; margin: auto; padding-right: 20px"
+                        onClick={detailHandler}
                     >
-                        {imagesArr.map((image, idx) => (
-                            <img
-                                src={image !== null ? image : ""}
-                                alt=""
-                                style={
-                                    image !== null
-                                        ? {
-                                              width: "70px",
-                                              height: "70px",
-                                              marginLeft: "10px",
-                                          }
-                                        : {}
-                                }
-                            />
-                        ))}
+                        <Text
+                            pointer
+                            mystyles="font-weight: 800; font-size: 30px;"
+                        >
+                            ...
+                        </Text>
                     </Grid>
+                )}
+
+            <AnimatePresence>
+                {detailOpen && (
+                    <>
+                        {imagesArr.map((image, idx) => (
+                            <>
+                                <Grid
+                                    flex
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    initial={{ y: -250, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.1 }}
+                                    mystyles="height: 100px"
+                                >
+                                    <img
+                                        src={image !== null ? image : ""}
+                                        alt=""
+                                        style={
+                                            image !== null
+                                                ? {
+                                                      width: "70px",
+                                                      height: "70px",
+                                                      marginLeft: "10px",
+                                                  }
+                                                : {}
+                                        }
+                                    />
+                                </Grid>
+                            </>
+                        ))}
+                    </>
                 )}
             </AnimatePresence>
             <Grid mystyles="height: 26px;">
@@ -192,7 +207,7 @@ export default function FeedItem(props) {
                     flex
                     justifyContent="center"
                     alignItems="center"
-                    mystyles="width: 100px; height: 100%; margin-left: 14px;"
+                    mystyles="width: 70px; height: 100%;"
                 >
                     <IconButton
                         color={likedByMe === true ? "error" : "primary"}
@@ -219,6 +234,7 @@ export default function FeedItem(props) {
                             <Grid
                                 key={idx}
                                 flex
+                                direction="row"
                                 justifyContent="space-between"
                                 alignItems="center"
                                 mystyles="box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.05);padding: 10px;"
@@ -228,15 +244,16 @@ export default function FeedItem(props) {
                                 </Text>
                                 <Grid
                                     flex
+                                    alignItems="center"
                                     justifyContent="space-between"
                                     mystyles="width: 100px;"
                                 >
-                                    <Text mystyles="font-size: 12px;">
+                                    <Text mystyles="font-weight: 400; font-size: 8px;">
                                         {comment?.createdAt?.substring(0, 10)}
                                     </Text>
                                     {playerEmail !== comment?.player?.email && (
                                         <Button
-                                            mystyles="border: none; background-color: white;"
+                                            mystyles="border: none;background-color: white;"
                                             onClick={() => {
                                                 deleteComment(comment?.id);
                                             }}
@@ -278,7 +295,7 @@ const Feed = styled(motion.li)`
     min-height: 106px;
     margin-top: 18px;
     border-radius: 10px;
-    box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);
     margin-left: -40px;
     position: relative;
 `;

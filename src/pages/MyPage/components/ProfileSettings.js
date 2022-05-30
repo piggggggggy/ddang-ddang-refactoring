@@ -10,23 +10,23 @@ import UserService from "../../../services/user.service";
 // aws s3 bucket
 import AWS from "aws-sdk";
 
-const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUKCET;
-console.log(process.env.REACT_APP_AWS_S3_BUKCET);
-const REGION = "ap-northeast-2";
-
-AWS.config.update({
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRECT_ACCESS_KEY,
-});
-
-const myBucket = new AWS.S3({
-    params: { Bucket: S3_BUCKET },
-    region: REGION,
-});
-
 const AWS_API_ENDPOINT = process.env.REACT_APP_AWS_API_ENDPOINT;
 
 export default function ProfileSettings(props) {
+    const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUKCET;
+    console.log(process.env.REACT_APP_AWS_S3_BUKCET);
+    const REGION = "ap-northeast-2";
+
+    AWS.config.update({
+        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_AWS_SECRECT_ACCESS_KEY,
+    });
+
+    const myBucket = new AWS.S3({
+        params: { Bucket: S3_BUCKET },
+        region: REGION,
+    });
+
     const navigate = useNavigate();
     console.log(props.userData);
 
@@ -62,36 +62,36 @@ export default function ProfileSettings(props) {
         };
         reader.readAsDataURL(f);
 
-        // const response = await axios({
-        //     method: "GET",
-        //     url: AWS_API_ENDPOINT,
-        // });
-        // setMyKey(response.data.Key);
+        const response = await axios({
+            method: "GET",
+            url: AWS_API_ENDPOINT,
+        });
+        setMyKey(response.data.Key);
 
-        // const result = await fetch(response.data.uploadURL, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "image/jpeg",
-        //     },
-        //     body: f,
-        // });
-        // console.log(result.url);
+        const result = await fetch(response.data.uploadURL, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "image/jpeg",
+            },
+            body: f,
+        });
+        console.log(result.url);
     };
 
     const getUrl = () => {
-        // console.log(typeof myKey);
-        // console.log(myKey);
-        // const url = myBucket.getSignedUrl("getObject", {
-        //     Bucket: S3_BUCKET,
-        //     Key: myKey,
-        // });
+        console.log(typeof myKey);
+        console.log(myKey);
+        const url = myBucket.getSignedUrl("getObject", {
+            Bucket: S3_BUCKET,
+            Key: myKey,
+        });
         // setFinalData({ profileImg: url, nickname: nickname });
-        // console.log(url);
+        console.log(url);
         // setUrl(url);
         // let finalImage = { profileImg: url };
         // console.log(finalImage);
         // finalsignup();
-        setFinalData({ profileImg: "", nickname: nickname });
+        // setFinalData({ profileImg: "", nickname: nickname });
     };
 
     const finalsignup = () => {
