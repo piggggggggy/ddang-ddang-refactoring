@@ -7,7 +7,6 @@ import MyPageFinal from "../pages/MyPage/MyPageFinal";
 import FeedFinal from "../pages/Feed/FeedFinal";
 import FeedFinalPopular from "../pages/Feed/FeedFinalPopular";
 import FeedFinalDistance from "../pages/Feed/FeedFinalDistance";
-import KakaoLogin from "../pages/Sign/KakaoLogin";
 import Ranking from "../pages/Ranking/Ranking";
 import Chat from "../pages/Chat/Chat";
 import LandingPage from "../pages/Chat/LandingPage";
