@@ -100,7 +100,8 @@
 <br/>
 
 ## Architecture
-<img src="https://www.figma.com/file/NvbR4HmvQQiIyl09vCEyGj/Untitled?node-id=0%3A1" width="1000px" />
+<img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/2a4b78b8-59d4-451f-8aca-dcfb8fcce020" width="1000px" />
+
 
 
 <br/>
