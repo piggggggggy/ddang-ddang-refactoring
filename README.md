@@ -134,10 +134,8 @@
   <br>
   <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" >
   <img src="https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white" >
+        <img src="https://img.shields.io/badge/framer-motion-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white" >
   <br>
-  <img src="https://img.shields.io/badge/WebRTC-232F3E?style=for-the-badge&logo=WebRTC&logoColor=white">
-  <img src="https://img.shields.io/badge/Record RTC-31A8FF?style=for-the-badge&logo=Record RTC&logoColor=white">
-  <img src="https://img.shields.io/badge/React Player-33EE33?style=for-the-badge&logo=React Player&logoColor=white">
 </p>
 
 #### Infrastructure
