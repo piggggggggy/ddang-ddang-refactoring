@@ -10,6 +10,10 @@ import SocialSignin from "./components/SocialSignin";
 import { signinAxios } from "../../../store/thunk-actions/userActions";
 
 import logo from "../../../assets/images/png/sign/logo.png";
+import AuthService from "../../../services/auth.service";
+import tokenService from "../../../services/token.service";
+import { userActions } from "../../../store/slices/userSlice";
+import ToastPageMsg from "../../../elements/ToastMsgPage";
 
 export default function SigninFinal() {
     const navigate = useNavigate();
@@ -25,12 +29,30 @@ export default function SigninFinal() {
         setPassword(e.target.value);
     };
 
-    const siginin = () => {
+    const siginin = async () => {
         if (email !== "" && password !== "") {
             dispatch(signinAxios(email, password, (url) => navigate(url)));
         } else if (email === "" && password === "") {
             alert("이메일 || 비밀번호를 입력해주세요");
         }
+        // let user = {
+        //     email,
+        //     password,
+        // };
+        // try {
+        //     const response = await AuthService.login(email, password);
+
+        //     user = { email, nickname: response.data.row.nickname };
+        //     tokenService.setAccessToken(response.headers["accesstoken"]);
+
+        //     const tokenFullString = response.headers.accesstoken;
+        //     const tokenArr = tokenFullString.split(" ");
+
+        //     dispatch(userActions.signin({ user, token: tokenArr[1] }));
+        //     navigate("/");
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
 
     const signup = () => {
@@ -39,6 +61,9 @@ export default function SigninFinal() {
 
     return (
         <Container>
+            {/* <ToastPageMsg>
+                <>이메일이나 비밀번호가 잘못되었어요</>
+            </ToastPageMsg> */}
             <Grid mystyles="padding-left: 31px; padding-right: 31px">
                 <Grid
                     flex

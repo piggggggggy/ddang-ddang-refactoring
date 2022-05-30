@@ -30,14 +30,19 @@ export const loginCheckAxios = (token, navigate) => {
 // 로그인 middleware
 export const signinAxios = (email, password, navigate) => {
     return async function (dispatch) {
-        let user = {
-            email,
-            password,
-        };
         try {
             const response = await AuthService.login(email, password);
-
-            user = { email, nickname: response.data.row.nickname };
+            console.log(response);
+            const user = {
+                email,
+                nickname: response.data.row.nickname,
+                expPoints: response.data.row.expPoints,
+                level: response.data.row.level,
+                mbti: response.data.row.mbti,
+                points: response.data.row.points,
+                profileImg: response.data.row.profileImg,
+                playerId: response.data.row.userId,
+            };
             TokenService.setAccessToken(response.headers["accesstoken"]);
 
             const tokenFullString = response.headers.accesstoken;
