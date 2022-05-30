@@ -154,9 +154,9 @@ const ChatPage = () => {
                     justifyContent="center"
                     mystyles="height: 42px; text-align: center; border-radius: 25px; z-index: 10; top: -5px; position: absolute;"
                 >
-                    <Text mystyles="font-weight: 400; font-size: 15px; border-radius: 25px; background: white; height: 42px; width: 70px;">
+                    {/* <Text mystyles="font-weight: 400; font-size: 15px; border-radius: 25px; background: white; height: 42px; width: 70px;">
                         Today
-                    </Text>
+                    </Text> */}
                 </Grid>
                 <div className="inbox_msg">
                     <div className="mesgs">
