@@ -100,8 +100,8 @@
 <br/>
 
 ## Architecture
+<img src="https://www.figma.com/file/NvbR4HmvQQiIyl09vCEyGj/Untitled?node-id=0%3A1" width="1000px" />
 
-![WillBe-service_architecture](https://www.figma.com/file/NvbR4HmvQQiIyl09vCEyGj/Untitled?node-id=0%3A1)
 
 <br/>
 <br/>
