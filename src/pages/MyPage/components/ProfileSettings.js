@@ -10,44 +10,50 @@ import UserService from "../../../services/user.service";
 // aws s3 bucket
 import AWS from "aws-sdk";
 
-const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUKCET;
-console.log(process.env.REACT_APP_AWS_S3_BUKCET);
-const REGION = "ap-northeast-2";
-
-AWS.config.update({
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRECT_ACCESS_KEY,
-});
-
-const myBucket = new AWS.S3({
-    params: { Bucket: S3_BUCKET },
-    region: REGION,
-});
-
 const AWS_API_ENDPOINT = process.env.REACT_APP_AWS_API_ENDPOINT;
 
 export default function ProfileSettings(props) {
+    const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUKCET;
+    console.log(process.env.REACT_APP_AWS_S3_BUKCET);
+    const REGION = "ap-northeast-2";
+
+    AWS.config.update({
+        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_AWS_SECRECT_ACCESS_KEY,
+    });
+
+    const myBucket = new AWS.S3({
+        params: { Bucket: S3_BUCKET },
+        region: REGION,
+    });
+
     const navigate = useNavigate();
-    console.log(props.userData);
 
     const [profileImage, setProfileImage] = React.useState(
         props.userData.profile[0].profileImg
     );
     const [myKey, setMyKey] = React.useState("");
     const [url, setUrl] = React.useState("");
-    const [finalData, setFinalData] = React.useState(null);
-    const [nickname, setNickname] = React.useState("");
-    console.log(profileImage);
 
+    // userDetails
+    const [userProfileImg, setUserProfileImg] = React.useState(
+        props.userData.profile[0].profileImg
+    );
+    console.log(userProfileImg);
+    const [nickname, setNickname] = React.useState(
+        props.userData.profile[0].nickname
+    );
     const hiddenFileInput = React.useRef(null);
     const handleClick = (event) => {
         hiddenFileInput.current.click();
     };
 
     const nicknameChange = (e) => {
-        console.log(e.target.value);
         setNickname(e.target.value);
+        console.log(nickname);
     };
+
+    const [profileChange, setProfileChange] = React.useState(false);
 
     const handleImgChange = async (e) => {
         const f = e.target.files[0];
@@ -62,48 +68,39 @@ export default function ProfileSettings(props) {
         };
         reader.readAsDataURL(f);
 
-        // const response = await axios({
-        //     method: "GET",
-        //     url: AWS_API_ENDPOINT,
-        // });
-        // setMyKey(response.data.Key);
+        const response = await axios({
+            method: "GET",
+            url: AWS_API_ENDPOINT,
+        });
+        setMyKey(response.data.Key);
 
-        // const result = await fetch(response.data.uploadURL, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "image/jpeg",
-        //     },
-        //     body: f,
-        // });
-        // console.log(result.url);
+        const result = await fetch(response.data.uploadURL, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "image/jpeg",
+            },
+            body: f,
+        });
+        setProfileChange(true);
     };
 
     const getUrl = () => {
-        // console.log(typeof myKey);
-        // console.log(myKey);
-        // const url = myBucket.getSignedUrl("getObject", {
-        //     Bucket: S3_BUCKET,
-        //     Key: myKey,
-        // });
-        // setFinalData({ profileImg: url, nickname: nickname });
-        // console.log(url);
-        // setUrl(url);
-        // let finalImage = { profileImg: url };
-        // console.log(finalImage);
-        // finalsignup();
-        setFinalData({ profileImg: "", nickname: nickname });
+        const url = myBucket.getSignedUrl("getObject", {
+            Bucket: S3_BUCKET,
+            Key: myKey,
+        });
+        setUserProfileImg(url);
     };
 
     const finalsignup = () => {
-        console.log(finalData);
-        UserService.playerEdit(nickname, "")
+        console.log(nickname, userProfileImg);
+        UserService.playerEdit(nickname, userProfileImg)
             .then((res) => {
                 console.log(res);
                 window.location.reload();
             })
             .catch((err) => {
                 console.log(err);
-                navigate("/mypage");
             });
     };
 
@@ -128,10 +125,10 @@ export default function ProfileSettings(props) {
                     저장
                 </Text>
             </Grid>
-            <Grid mystyles="position: relative; width: 75px; height: 75px; border-radius: 50%; overflow: hidden; margin: 56px auto 40px auto;">
+            <Grid mystyles="position: relative; width: 75px; height: 75px; border-radius: 50%; overflow: hidden; margin: 56px auto 10px auto;">
                 <ProfilePreview
                     mystyles="position: absolute; width: 100%; height: 100%; border-radius: 75px;"
-                    src={profileImage}
+                    src={userProfileImg}
                 />
                 <Grid
                     flex
@@ -156,6 +153,16 @@ export default function ProfileSettings(props) {
                     />
                 </Grid>
             </Grid>
+            {profileChange === true && (
+                <Grid flex alignItems="center" justifyContent="center">
+                    <Button
+                        onClick={getUrl}
+                        mystyles="background: #F3AC9C; border: none; border-radius: 4px; height: 27px; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);"
+                    >
+                        사진 변경하기
+                    </Button>
+                </Grid>
+            )}
             <Grid
                 flex
                 alignItems="center"
@@ -169,10 +176,9 @@ export default function ProfileSettings(props) {
             <Grid flex alignItems="center" justifyContent="center">
                 <Input
                     onChange={nicknameChange}
-                    defaultValue={props.userData.profile[0].nickname}
+                    defaultValue={nickname}
                     mystyles="width: 312px; height: 40px; font-weight: 400; font-size: 16px; border: none; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.3);border-radius: 4px; padding-left: 10px;"
                 ></Input>
-                <Button onClick={getUrl}>확인</Button>
             </Grid>
         </Grid>
     );

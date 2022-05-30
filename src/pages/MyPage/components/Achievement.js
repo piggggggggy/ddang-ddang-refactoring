@@ -3,16 +3,20 @@ import { Grid, Text } from "../elements/index";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+import Iron from "../../../assets/images/png/mypage/iron.png";
+import Silver from "../../../assets/images/png/mypage/silver.png";
+import Gold from "../../../assets/images/png/mypage/gold.png";
+import Platinum from "../../../assets/images/png/mypage/platinum.png";
+import Diamond from "../../../assets/images/png/mypage/diamond.png";
+import Feed from "../../../assets/images/png/feed-medium.png";
+import Monster from "../../../assets/images/png/mob-medium.png";
+import Time from "../../../assets/images/png/time-medium.png";
 
 export default function Achievement(props) {
     return (
         <>
             <Grid>
-                <Grid
-                    flex
-                    direction="row"
-                    mystyles="margin-top: 30px; margin-left: 10px;"
-                >
+                <Grid flex direction="row" mystyles="margin-top: 30px;">
                     <TabCard
                         style={
                             props.tabIndex === false
@@ -21,9 +25,13 @@ export default function Achievement(props) {
                                       color: "white",
                                       zIndex: 2,
                                       boxShadow:
-                                          "1px 1px 1px 3px rgba(0, 0, 0, 0.05)",
+                                          "1px 1px 0 3px rgba(0, 0, 0, 0.05)",
                                   }
-                                : { background: "white" }
+                                : {
+                                      background: "white",
+                                      boxShadow:
+                                          "1px 1px 0 3px rgba(0, 0, 0, 0.05)",
+                                  }
                         }
                         onClick={props.changeTab}
                     >
@@ -39,11 +47,13 @@ export default function Achievement(props) {
                                       marginLeft: "-10px",
                                       zIndex: 2,
                                       boxShadow:
-                                          "-3px 1px 1px 3px rgba(0, 0, 0, 0.05)",
+                                          "-3px 1px 0 3px rgba(0, 0, 0, 0.05)",
                                   }
                                 : {
                                       background: "white",
                                       marginLeft: "-10px",
+                                      boxShadow:
+                                          "1px 1px 1px 0 rgba(0, 0, 0, 0.05)",
                                   }
                         }
                     >
@@ -54,98 +64,93 @@ export default function Achievement(props) {
                     flex
                     alignItems="center"
                     direction="column"
-                    mystyles="box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.05); width: 340px; height: 440px; border-radius: 10px; margin-top:-5px; margin-left: 15px; padding: 10px;"
+                    mystyles="box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.05); width: 100%; height: 440px; border-radius: 10px; margin-top:-5px; padding: 10px; overflow: scroll"
                 >
-                    {/* {props.tabIndex === false && (
+                    {props.tabIndex === false && (
                         <>
-                            {achievedMission?.map((items, idx) => (
-                                <Grid
-                                    flex
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                    direction="row"
-                                    mystyles="height: 100px; margin-top: 20px; box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.05); border-radius: 10px;"
-                                    initial={{ x: -250, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    transition={{ delay: 0.2 }}
-                                >
-                                    <Grid
-                                        flex
-                                        alignItems="center"
-                                        justifyContent="center"
-                                        direction="column"
-                                        mystyles="background-color: white; width: 120px; height: 77px; border-radius: 10px; "
-                                    >
-                                        <MilitaryTechIcon
-                                            sx={{
-                                                fontSize: "40px",
-                                                color: "silver",
-                                            }}
-                                        />
-                                        <Text mystyles="font-size: 12px; font-size: 800; color: #F3AC9C; ">
-                                            {items.title}
-                                        </Text>
-                                    </Grid>
-                                    <Grid mystyles="width: 185px;">
-                                        <Text mystyles="font-size: 14px; color:#A3D4FB;">
-                                            미션:
-                                        </Text>
-                                        <Text mystyles="font-size: 14px; color:#A3D4FB ">
-                                            {items.description}
-                                        </Text>
-                                        <Text mystyles="font-size: 14px; color: #EDEA50;">
-                                            퀘스트: {items.type}
-                                        </Text>
-                                    </Grid>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="border: 2px solid red; padding: 30px;"
+                            >
+                                <Badge src={Iron} alt="" />
+                                <Grid mystyles="margin-left: 9px;">
+                                    <Text mystyles="font-weight: 700; font-size: 12px;">
+                                        몬스터랑 한번 싸워봄
+                                    </Text>
+                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
+                                        몬스터 1마리 처치
+                                    </Text>
                                 </Grid>
-                            ))}
+                            </Grid>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="border: 2px solid red; padding: 30px;"
+                            >
+                                <Badge src={Silver} alt="" />
+                                <Grid mystyles="margin-left: 9px;">
+                                    <Text mystyles="font-weight: 700; font-size: 12px;">
+                                        몬스터랑 한번 싸워봄
+                                    </Text>
+                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
+                                        몬스터 1마리 처치
+                                    </Text>
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="border: 2px solid red; padding: 30px;"
+                            >
+                                <Badge src={Gold} alt="" />
+                                <Grid mystyles="margin-left: 9px;">
+                                    <Text mystyles="font-weight: 700; font-size: 12px;">
+                                        몬스터랑 한번 싸워봄
+                                    </Text>
+                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
+                                        몬스터 1마리 처치
+                                    </Text>
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="border: 2px solid red; padding: 30px;"
+                            >
+                                <Badge src={Platinum} alt="" />
+                                <Grid mystyles="margin-left: 9px;">
+                                    <Text mystyles="font-weight: 700; font-size: 12px;">
+                                        몬스터랑 한번 싸워봄
+                                    </Text>
+                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
+                                        몬스터 1마리 처치
+                                    </Text>
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="border: 2px solid red; padding: 30px;"
+                            >
+                                <Badge src={Diamond} alt="" />
+                                <Grid mystyles="margin-left: 9px;">
+                                    <Text mystyles="font-weight: 700; font-size: 12px;">
+                                        몬스터랑 한번 싸워봄
+                                    </Text>
+                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
+                                        몬스터 1마리 처치
+                                    </Text>
+                                </Grid>
+                            </Grid>
                         </>
                     )}
-                    {props.tabIndex === true && (
-                        <>
-                            {notAchievedMission?.map((items, idx) => (
-                                <Grid
-                                    flex
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                    direction="row"
-                                    mystyles="height: 100px; margin-top: 20px; box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.05); border-radius: 10px;"
-                                    initial={{ x: -250, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    transition={{ delay: 0.2 }}
-                                >
-                                    <Grid
-                                        flex
-                                        alignItems="center"
-                                        justifyContent="center"
-                                        direction="column"
-                                        mystyles="background-color: white; width: 125px; height: 77px; border-radius: 10px; "
-                                    >
-                                        <MilitaryTechIcon
-                                            sx={{
-                                                fontSize: "40px",
-                                                color: "silver",
-                                            }}
-                                        />
-                                        <Text mystyles="font-size: 12px; font-size: 800; color: #F3AC9C; ">
-                                            {items.title}
-                                        </Text>
-                                    </Grid>
-                                    <Grid mystyles="width: 180px; margin-left: 6px;">
-                                        <Text mystyles="font-size: 14px; color:#A3D4FB;">
-                                            미션:
-                                        </Text>
-                                        <Text mystyles="font-size: 14px; color:#A3D4FB ">
-                                            {items.description}
-                                        </Text>
-                                        <Text mystyles="font-size: 14px; color: #EDEA50;">
-                                            퀘스트: {items.type}
-                                        </Text>
-                                    </Grid>
-                                </Grid>
-                            ))}
-                        </>
-                    )} */}
+                    {props.tabIndex === true && <></>}
                 </Grid>
             </Grid>
         </>
@@ -160,4 +165,9 @@ const TabCard = styled(motion.div)`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+const Badge = styled(motion.img)`
+    width: 35px;
+    height: 35px;
 `;
