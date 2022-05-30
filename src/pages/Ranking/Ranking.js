@@ -193,7 +193,7 @@ export default function Ranking() {
                                         alignItems="center"
                                         mystyles="position: absolute; left: -10px; top: 30px; width: 44px; height: 44px; background: #58F5AA; border-radius: 44px"
                                     >
-                                        <Text mystyles="font-weight: 500; font-size: 30px; margin-bottom: 2px; color: white;">
+                                        <Text mystyles="font-weight: 700; font-size: 28px; color: white; margin-top: 2px;">
                                             1
                                         </Text>
                                     </Grid>
