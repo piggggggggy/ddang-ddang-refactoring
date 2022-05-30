@@ -18,18 +18,21 @@ export default function FeedItem(props) {
 
     const playerEmail = "paul@gmail.com";
 
-    const { item, onClick, page, id } = props;
+    const { item, onClick, page, id, liked } = props;
+    console.log(item);
     const feedId = item.id;
+    console.log(liked);
 
     // 좋아요
-    const [counter, setCounter] = React.useState(item?.likeCnt);
+    const [counter, setCounter] = React.useState(item.likeCnt);
 
-    const [likedByMe, setLikedByMe] = React.useState(false);
-
+    const [likedByMe, setLikedByMe] = React.useState(liked);
+    console.log(likedByMe);
     const likeHandler = () => {
         if (likedByMe === true) {
             setLikedByMe(false);
             setCounter(counter - 1);
+            likeFeed();
         } else {
             setLikedByMe(true);
             setCounter(counter + 1);
@@ -45,11 +48,11 @@ export default function FeedItem(props) {
 
     // 디테일 이미지
     const imagesArr = [];
-    imagesArr.push(item?.image1_url, item?.image2_url, item?.image3_url);
+    imagesArr.push(item.image1_url, item.image2_url, item.image3_url);
 
     // 댓글
-    const [commentArr, setCommentArr] = React.useState([...item?.comments]);
-    // const commentArr = item?.comments;
+    const [commentArr, setCommentArr] = React.useState([...item.comments]);
+    console.log(commentArr);
 
     const [commentIsOpen, setCommentIsOpen] = React.useState(true);
 
@@ -82,7 +85,7 @@ export default function FeedItem(props) {
                 console.log(res);
 
                 setCommentArr([...commentArr, res.data.comment]);
-                console.log(commentArr);
+                // console.log(commentArr);
 
                 // commentArr.push({ comment });
                 // window.location.reload();
@@ -126,6 +129,9 @@ export default function FeedItem(props) {
 
     return (
         <Feed {...props} onClick={onClick}>
+            <Text mystyles="position: absolute; left: -50px; top: 20px;font-weight: 700; font-size: 12px;">
+                {item.createdAt.substring(5, 10).replace("-", ".")}
+            </Text>
             <Grid
                 flex
                 direction="row"
@@ -138,9 +144,6 @@ export default function FeedItem(props) {
                     <Text mystyles="font-weight: 400; font-size: 12px; letter-spacing: -0.05em;">
                         {item.content}
                     </Text>
-                </Grid>
-                <Grid flex alignItems="center" justifyContent="center">
-                    <Grid mystyles="height: 35px; width: 34px; border: 2px solid red; padding: 10px"></Grid>
                 </Grid>
             </Grid>
             <Grid
@@ -218,21 +221,25 @@ export default function FeedItem(props) {
                                 <Text mystyles="font-size: 12px;">
                                     {comment?.comment}
                                 </Text>
-                                <Text mystyles="font-size: 12px;">
-                                    {comment?.updatedAt !== ""
-                                        ? comment?.updatedAt.substring(0, 10)
-                                        : comment?.createdAt.substring(0, 10)}
-                                </Text>
-                                {playerEmail === comment?.player?.email && (
-                                    <Button
-                                        mystyles="background: #F3AC9C; border-radius: 25px; border: none; box-shadow: 1px 1px 1px 1px #0B325E"
-                                        onClick={() => {
-                                            deleteComment(comment?.id);
-                                        }}
-                                    >
-                                        x
-                                    </Button>
-                                )}
+                                <Grid
+                                    flex
+                                    justifyContent="space-between"
+                                    mystyles="width: 100px;"
+                                >
+                                    <Text mystyles="font-size: 12px;">
+                                        {comment?.createdAt?.substring(0, 10)}
+                                    </Text>
+                                    {playerEmail === comment?.player?.email && (
+                                        <Button
+                                            mystyles="border: none; background-color: white;"
+                                            onClick={() => {
+                                                deleteComment(comment?.id);
+                                            }}
+                                        >
+                                            x
+                                        </Button>
+                                    )}
+                                </Grid>
                             </Grid>
                         ))}
                         <Grid
@@ -241,13 +248,16 @@ export default function FeedItem(props) {
                             justifyContent="space-between"
                         >
                             <Input
-                                mystyles="width: 220px; height: 30px; box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05); border:none; border-radius:20px;"
+                                mystyles="width: 220px; height: 30px; box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05); border:none; background: #F4F4F4;"
                                 placeholder="댓글을 써주세요"
                                 onChange={commentChange}
                             />
-                            <IconButton onClick={writeComment}>
-                                <SendIcon />
-                            </IconButton>
+                            <Button
+                                onClick={writeComment}
+                                mystyles="border: none; margin-right: 10px; margin-left: 5px; background: #A3D4FB; font-weight: 400; font-size: 10px; width: 45px; height: 25px; border-radius: 4px;"
+                            >
+                                전송
+                            </Button>
                         </Grid>
                     </>
                 )}
@@ -257,14 +267,15 @@ export default function FeedItem(props) {
 }
 
 const Feed = styled(motion.li)`
-    ${(props) => (props.page === 0 ? "border-left: 30px solid #F3AC9C" : "")};
-    ${(props) => (props.page === 1 ? "border-left: 30px solid #A3D4FB" : "")};
-    ${(props) => (props.page === 2 ? "border-left: 30px solid #EDEA50" : "")};
+    ${(props) => (props.page === 0 ? "border-left: 70px solid #F3AC9C" : "")};
+    ${(props) => (props.page === 1 ? "border-left: 70px solid #A3D4FB" : "")};
+    ${(props) => (props.page === 2 ? "border-left: 70px solid #EDEA50" : "")};
     min-height: 106px;
     margin-top: 18px;
     border-radius: 10px;
     box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.05);
     margin-left: -40px;
+    position: relative;
 `;
 
 // const createComment = async (comment) => {
