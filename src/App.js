@@ -16,6 +16,8 @@ import loadingSpinner from "./assets/images/png/sign/circle2.mp4";
 import loadingSpinnerGif from "./assets/images/png/sign/circle.gif";
 import Grid from "./elements/Grid";
 
+import "./App.css";
+
 function App() {
     const navigate = useNavigate();
     const dispatch = useDispatch();

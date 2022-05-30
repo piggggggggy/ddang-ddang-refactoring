@@ -16,7 +16,8 @@ export default function FeedItem(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const playerEmail = "paul@gmail.com";
+    console.log(props.item.player.email);
+    const playerEmail = props.item.player.email;
 
     const { item, onClick, page, id, liked } = props;
     console.log(item);
@@ -84,7 +85,7 @@ export default function FeedItem(props) {
             .then((res) => {
                 console.log(res);
 
-                setCommentArr([...commentArr, res.data.comment]);
+                setCommentArr([...commentArr, res.data.comment.comment]);
                 // console.log(commentArr);
 
                 // commentArr.push({ comment });
@@ -169,15 +170,15 @@ export default function FeedItem(props) {
                         mystyles="height: 100px"
                     >
                         {imagesArr.map((image, idx) => (
-                            <Grid
-                                flex
-                                justifyContent="center"
-                                alignItems="center"
-                                key={idx}
-                                mystyles="height: 100%; background-color: grey; border-right: 1px solid black; margin: 2px;"
-                            >
-                                image: {image}
-                            </Grid>
+                            <img
+                                src={image}
+                                alt=""
+                                style={{
+                                    width: "70px",
+                                    height: "70px",
+                                    marginLeft: "10px",
+                                }}
+                            />
                         ))}
                     </Grid>
                 )}
@@ -219,7 +220,7 @@ export default function FeedItem(props) {
                                 mystyles="box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.05);padding: 10px;"
                             >
                                 <Text mystyles="font-size: 12px;">
-                                    {comment?.comment}
+                                    {comment.comment}
                                 </Text>
                                 <Grid
                                     flex
@@ -229,7 +230,7 @@ export default function FeedItem(props) {
                                     <Text mystyles="font-size: 12px;">
                                         {comment?.createdAt?.substring(0, 10)}
                                     </Text>
-                                    {playerEmail === comment?.player?.email && (
+                                    {playerEmail !== comment?.player?.email && (
                                         <Button
                                             mystyles="border: none; background-color: white;"
                                             onClick={() => {
