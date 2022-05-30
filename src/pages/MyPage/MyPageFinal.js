@@ -1,29 +1,38 @@
 import React from "react";
-import styled from "styled-components";
 import { Container } from "../../elements/index";
 import Navigation from "../../components/Navigation";
-import { Grid, Text, Button } from "../MyPage/elements/index";
-import Header from "../MyPage/components/Header";
-import AchievementHeader from "../MyPage/components/AchievementHeader";
-import Graph from "../MyPage/components/Graph";
+import { Grid } from "../MyPage/elements/index";
+import Profile from "./components/Profile";
+import AchievementSummary from "./components/AchievementSummary";
+import MyRecord from "./components/MyRecord";
 import BackgroundPaper from "../MyPage/components/BackgroundPaper";
-import Achievement from "../MyPage/components/Achievement";
+import Achievement from "./components/Achievement";
 import MapView from "../MyPage/components/Map";
-import { useSelector } from "react-redux";
 import api from "../../modules/api";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
 import Settings from "../MyPage/components/Settings";
-import MapSideTab from "../MyPage/components/MapSideTab";
 import BottomPost from "../MyPage/components/BottomPost";
 import FeedBottomPost from "../MyPage/components/FeedBottomPost";
 import ProfileSettings from "../MyPage/components/ProfileSettings";
+import KakaoService from "../../services/kakao.service";
+import RankingService from "../../services/ranking.service";
 
 export default function MyPageFinal() {
     const [userData, setUserData] = React.useState(null);
-
     const [feed, setFeed] = React.useState([]);
+    const [address, setAddress] = React.useState({});
 
-    const getData = () => {
+    function getData() {
+        navigator.geolocation.getCurrentPosition(async (res) => {
+            const region = await KakaoService.getAddress({
+                location: {
+                    lat: res.coords.latitude,
+                    lng: res.coords.longitude,
+                },
+            });
+
+            setAddress(region);
+        });
+
         api.get("/api/players/mypage")
             .then((res) => {
                 console.log(res);
@@ -40,7 +49,7 @@ export default function MyPageFinal() {
             .catch((res) => {
                 console.log(res);
             });
-    };
+    }
 
     React.useEffect(() => {
         getData();
@@ -74,8 +83,6 @@ export default function MyPageFinal() {
         setOpenSideMenu(!openSideMenu);
     };
 
-    console.log("hello");
-
     return (
         <Container>
             {page === 1 && (
@@ -87,12 +94,12 @@ export default function MyPageFinal() {
                         alignItems="center"
                         justifyContent="center"
                         mystyles={
-                            "position: relative; z-index: 100; padding: 0 20px; margin-bottom: 200px;"
+                            "position: relative; z-index: 100; padding: 0 36px; margin-bottom: 200px;"
                         }
                     >
                         {userData !== null && (
                             <>
-                                <Header
+                                <Profile
                                     profile={
                                         userData !== null
                                             ? userData.profile[0].profileImg
@@ -104,11 +111,11 @@ export default function MyPageFinal() {
                                     openSideMenu={sideOpen}
                                     profileOpen={profileOpen}
                                 />
-                                <AchievementHeader
+                                <AchievementSummary
                                     userData={userData}
                                     feed={feed}
                                 />
-                                <Graph />
+                                <MyRecord address={address} />
                                 <Achievement
                                     changeTab={changeTab}
                                     tabIndex={tabIndex}

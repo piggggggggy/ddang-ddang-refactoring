@@ -68,7 +68,7 @@ ProgressDonut.defaultProps = {
 
 const Svg = styled.svg`
     display: block;
-    margin: 20px auto;
+    margin: 0 auto;
     max-width: 100%;
 `;
 
