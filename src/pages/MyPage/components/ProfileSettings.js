@@ -28,26 +28,32 @@ export default function ProfileSettings(props) {
     });
 
     const navigate = useNavigate();
-    console.log(props.userData);
 
     const [profileImage, setProfileImage] = React.useState(
         props.userData.profile[0].profileImg
     );
     const [myKey, setMyKey] = React.useState("");
     const [url, setUrl] = React.useState("");
-    const [finalData, setFinalData] = React.useState(null);
-    const [nickname, setNickname] = React.useState("");
-    console.log(profileImage);
 
+    // userDetails
+    const [userProfileImg, setUserProfileImg] = React.useState(
+        props.userData.profile[0].profileImg
+    );
+    console.log(userProfileImg);
+    const [nickname, setNickname] = React.useState(
+        props.userData.profile[0].nickname
+    );
     const hiddenFileInput = React.useRef(null);
     const handleClick = (event) => {
         hiddenFileInput.current.click();
     };
 
     const nicknameChange = (e) => {
-        console.log(e.target.value);
         setNickname(e.target.value);
+        console.log(nickname);
     };
+
+    const [profileChange, setProfileChange] = React.useState(false);
 
     const handleImgChange = async (e) => {
         const f = e.target.files[0];
@@ -75,35 +81,26 @@ export default function ProfileSettings(props) {
             },
             body: f,
         });
-        console.log(result.url);
+        setProfileChange(true);
     };
 
     const getUrl = () => {
-        console.log(typeof myKey);
-        console.log(myKey);
         const url = myBucket.getSignedUrl("getObject", {
             Bucket: S3_BUCKET,
             Key: myKey,
         });
-        // setFinalData({ profileImg: url, nickname: nickname });
-        console.log(url);
-        // setUrl(url);
-        // let finalImage = { profileImg: url };
-        // console.log(finalImage);
-        // finalsignup();
-        // setFinalData({ profileImg: "", nickname: nickname });
+        setUserProfileImg(url);
     };
 
     const finalsignup = () => {
-        console.log(finalData);
-        UserService.playerEdit(nickname, "")
+        console.log(nickname, userProfileImg);
+        UserService.playerEdit(nickname, userProfileImg)
             .then((res) => {
                 console.log(res);
                 window.location.reload();
             })
             .catch((err) => {
                 console.log(err);
-                navigate("/mypage");
             });
     };
 
@@ -128,10 +125,10 @@ export default function ProfileSettings(props) {
                     저장
                 </Text>
             </Grid>
-            <Grid mystyles="position: relative; width: 75px; height: 75px; border-radius: 50%; overflow: hidden; margin: 56px auto 40px auto;">
+            <Grid mystyles="position: relative; width: 75px; height: 75px; border-radius: 50%; overflow: hidden; margin: 56px auto 10px auto;">
                 <ProfilePreview
                     mystyles="position: absolute; width: 100%; height: 100%; border-radius: 75px;"
-                    src={profileImage}
+                    src={userProfileImg}
                 />
                 <Grid
                     flex
@@ -156,6 +153,16 @@ export default function ProfileSettings(props) {
                     />
                 </Grid>
             </Grid>
+            {profileChange === true && (
+                <Grid flex alignItems="center" justifyContent="center">
+                    <Button
+                        onClick={getUrl}
+                        mystyles="background: #F3AC9C; border: none; border-radius: 4px; height: 27px; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);"
+                    >
+                        사진 변경하기
+                    </Button>
+                </Grid>
+            )}
             <Grid
                 flex
                 alignItems="center"
@@ -169,10 +176,9 @@ export default function ProfileSettings(props) {
             <Grid flex alignItems="center" justifyContent="center">
                 <Input
                     onChange={nicknameChange}
-                    defaultValue={props.userData.profile[0].nickname}
+                    defaultValue={nickname}
                     mystyles="width: 312px; height: 40px; font-weight: 400; font-size: 16px; border: none; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.3);border-radius: 4px; padding-left: 10px;"
                 ></Input>
-                <Button onClick={getUrl}>확인</Button>
             </Grid>
         </Grid>
     );
