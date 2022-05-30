@@ -1,9 +1,61 @@
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import axios from 'axios';
 
 export default function NavigationMenu({ index, isSelected }) {
     const navigate = useNavigate();
+    const userData = useSelector((state) => state.user.user);
+    const [roomName, setRoomName] = useState(null);
 
+    useEffect(() => {
+        getPosition()
+    }, []);
+
+    // 좌표 찾기
+    const [currentMapPosition, setCurrentMapPosition] = React.useState({});
+    console.log('currentMapPosition', currentMapPosition);
+    const getPosition = () => {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            console.log(position);
+            setCurrentMapPosition({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            });
+            await getmyAddress(position.coords.latitude, position.coords.longitude);
+        });
+    };
+
+    // 카카오 api 로 시, 구, 동 정보 받기
+    const getmyAddress = async (lat, lng) => {
+        try {
+            const res = await axios.get(
+                `${process.env.REACT_APP_MAP_KAKAO_BASE_URL}/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
+                {
+                    headers: {
+                        Accept: "*/*",
+                        Authorization: `KakaoAK ${process.env.REACT_APP_MAP_KAKAO_REST_API_KEY}`,
+                    },
+                }
+            );
+            const data = {
+                si: res?.data?.documents?.[0]?.address?.region_1depth_name,
+                gu: res?.data?.documents?.[0]?.address?.region_2depth_name,
+                dong: res?.data?.documents?.[0]?.address?.region_3depth_name,
+            };
+    
+            // console.log(`성공했음 ${data.si} ${data.gu} ${data.dong}`);
+            const { si, gu, dong } = data;
+            setRoomName(si + gu + dong);
+            return data;
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    /* */
+    
     const menuList = [
         { title: "홈" },
         { title: "랭킹" },
@@ -29,7 +81,7 @@ export default function NavigationMenu({ index, isSelected }) {
                 navigate("/feed");
                 return;
             case 3:
-                navigate("/chat/1/pol/wer");
+                navigate(`/chat/${userData.playerId}/${userData.nickname}/${roomName}`);
                 return;
             case 4:
                 navigate("/myPage");

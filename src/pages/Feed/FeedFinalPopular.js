@@ -127,7 +127,7 @@ export default function Feed() {
             });
     };
 
-    const [tabIndex, setTabIndex] = React.useState(0);
+    const [tabIndex, setTabIndex] = React.useState(1);
 
     const [feedLocation, setFeedLocation] = React.useState([
         "33.5563",
@@ -137,11 +137,11 @@ export default function Feed() {
 
     // 함수 호출
     const getLatest = React.useCallback(() => {
-        feedsLatest();
+        navigate("/feed");
     }, []);
 
     const getPopularity = React.useCallback(() => {
-        navigate("/feed/popular");
+        feedsPopularity();
     }, []);
 
     const getDistance = React.useCallback(() => {

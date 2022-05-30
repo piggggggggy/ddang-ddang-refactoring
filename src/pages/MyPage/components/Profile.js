@@ -1,13 +1,11 @@
 import React from "react";
-import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ProgressBar from "../elements/ProgressBar";
 import { Grid, Text } from "../elements/index";
-import { useSelector } from "react-redux";
 import ProfilePreview from "../elements/ProfilePreview";
 
-export default function Header(props) {
+export default function Profile(props) {
     const userData = props.userData;
     console.log(props.profile);
 
@@ -18,7 +16,7 @@ export default function Header(props) {
                 direction="row"
                 alignItems="center"
                 justifyContent="flex-end"
-                mystyles="width: 350px; margin-top: 20px;"
+                mystyles="width: 350px; margin-top: 20px; margin-right: -40px"
             >
                 {/* <Grid>
                     <IconButton onClick={props.openSideMenu}>
@@ -41,7 +39,7 @@ export default function Header(props) {
                         <SettingsIcon
                             sx={{
                                 width: "25px",
-                                height: "18px",
+                                height: "25px",
                                 color: "white",
                             }}
                         />
@@ -56,7 +54,7 @@ export default function Header(props) {
             >
                 <Grid mystyles="position: relative; width: 75px; height: 75px; border-radius: 50%; overflow: hidden;">
                     <ProfilePreview
-                        mystyles="position: absolute; width: 100%; height: 100%; border-radius: 75px;"
+                        mystyles="position: absolute; width: 75px; height: 75px; border-radius: 50%; object-fit: cover;"
                         src={props.profile}
                     />
                     <Grid
@@ -75,11 +73,11 @@ export default function Header(props) {
                     </Grid>
                 </Grid>
                 <Grid mystyles="width: 210px; height: 80px;">
-                    <Grid flex mystyles="margin-top: 10px; margin-bottom: 5px;">
-                        <Text mystyles="color: #5DEB85; width: 45px; font-weight: 700;font-size: 16px;">
+                    <Grid flex mystyles="margin-top: 10px; margin-bottom: 8px;">
+                        <Text mystyles="color: #5DEB85; width: 55px; font-weight: 700;font-size: 16px;">
                             Lv. {userData.profile[0].level}
                         </Text>
-                        <Text mystyles="color: white; width: 170px; font-weight: 700; font-size: 16px;">
+                        <Text mystyles="color: white; width: 155px; font-weight: 700; font-size: 16px;">
                             {userData.profile[0].nickname}
                             <span
                                 style={{
@@ -91,7 +89,7 @@ export default function Header(props) {
                             </span>
                         </Text>
                     </Grid>
-                    <Grid>
+                    <Grid mystyles="margin-bottom: 4px;">
                         <Text mystyles="font-weight: 400; font-size: 12px; color: white;">
                             {userData.profile[0].mbti.toUpperCase()}의 자랑!
                             정복하러 떠나요!
@@ -108,7 +106,9 @@ export default function Header(props) {
                                 mystyles="position: absolute; left: 0;height: 10px; border-radius: 50px; background: #5DEB85;"
                                 transition={{ delay: 0.6, duration: 1 }}
                                 animate={{
-                                    width: userData.profile[0].expPoints,
+                                    width: `${
+                                        userData.profile[0].expPoints * 2
+                                    }px`,
                                 }}
                             />
                         </Grid>
