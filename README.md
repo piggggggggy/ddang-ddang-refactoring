@@ -134,8 +134,8 @@
   <br>
   <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" >
   <img src="https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white" >
-        <img src="https://img.shields.io/badge/Kakao Map Api-1572B6?style=for-the-badge&logo=KaKao Map Api&logoColor=white">
-        <img src="https://img.shields.io/badge/lodash-1572B6?style=for-the-badge&logo=lodash&logoColor=white">
+        <img src="https://img.shields.io/badge/Kakao Map Api-007CE2?style=for-the-badge&logo=KaKao Map Api&logoColor=white">
+        <img src="https://img.shields.io/badge/lodash-F7DF1E?style=for-the-badge&logo=lodash&logoColor=white">
   <br>
 </p>
 
