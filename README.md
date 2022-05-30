@@ -101,7 +101,7 @@
 
 ## Architecture
 
-![WillBe-service_architecture](https://user-images.githubusercontent.com/88864019/170158157-eb5066ef-93dc-42a4-9407-4cfac15d4b76.jpg)
+![WillBe-service_architecture](https://www.figma.com/file/NvbR4HmvQQiIyl09vCEyGj/Untitled?node-id=0%3A1)
 
 <br/>
 <br/>
