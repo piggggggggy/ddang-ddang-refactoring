@@ -36,7 +36,7 @@
     <td align="center"><a href="https://github.com/llama-ste"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
     <td align="center"><a href="https://github.com/AlgoRoots"><img src="https://avatars.githubusercontent.com/u/67586085?v=4" width="100px" /></a></td>
     <td align="center"><a href="https://github.com/catalinakim"><img src="https://github.com/reload1bronze" width="100px" /></a></td>
-    <td align="center"><a href="https://github.com/limjae"><img src="https://avatars.githubusercontent.com/u/55050662?v=4" width="100px" /></a></td>
+    <td align="center"><a href="https://github.com/limjae"><img src="https://avatars.githubusercontent.com/u/83635051?v=4" width="100px" /></a></td>
     <td align="center"><a href="https://github.com/Juri-Lee"><img src="https://avatars.githubusercontent.com/u/102004753?v=4" width="100px" /></a></td>
   </tr>
   <tr>
