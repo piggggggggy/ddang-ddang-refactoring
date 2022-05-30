@@ -33,11 +33,12 @@
     <td align="center"><b><a href="https://github.com/pol-dev-shinroo">김재혁</a></b></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/llama-ste"><img src="https://github.com/diasm3" width="100px" /></a></td>
-     <td align="center"><a href="https://github.com/llama-ste"><img src="https://github.com/moto4321" width="100px" /></a></td>
-     <td align="center"><a href="https://github.com/llama-ste"><img src="https://github.com/reload1bronze" width="100px" /></a></td>
+    <td align="center"><a href="https://github.com/diasm3"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
+     <td align="center"><a href=https://github.com/moto4321"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
+     <td align="center"><a href="https://github.com/reload1bronze"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
      <td align="center"><a href="https://github.com/piggggggggy"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
      <td align="center"><a href="https://github.com/pol-dev-shinroo"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
+    
   </tr>
   <tr>
     <td align="center"><b>Backend</b></td>
