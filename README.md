@@ -35,7 +35,7 @@
   <tr>
     <td align="center"><a href="https://github.com/diasm3"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
      <td align="center"><a href=https://github.com/moto4321"><img src="https://avatars.githubusercontent.com/u/83635051?v=4" width="100px" /></a></td>
-     <td align="center"><a href="https://github.com/reload1bronze"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
+     <td align="center"><a href="https://github.com/reload1bronze"><img src="https://avatars.githubusercontent.com/u/55050662?v=4" width="100px" /></a></td>
      <td align="center"><a href="https://github.com/piggggggggy"><img src="https://avatars.githubusercontent.com/u/56494905?v=4" width="100px" /></a></td>
      <td align="center"><a href="https://github.com/pol-dev-shinroo"><img src="https://avatars.githubusercontent.com/u/102004753?v=4" width="100px" /></a></td>
     
