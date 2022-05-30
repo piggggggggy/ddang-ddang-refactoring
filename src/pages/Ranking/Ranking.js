@@ -138,7 +138,7 @@ export default function Ranking() {
                             src={noData}
                             alt=""
                             style={{
-                                width: "60vw",
+                                width: "240px",
                             }}
                         />
                         <Text mystyles="font-weight: 400; font-size: 14px; margin-top: 45px">
