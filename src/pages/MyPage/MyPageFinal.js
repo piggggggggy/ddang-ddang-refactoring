@@ -70,7 +70,6 @@ export default function MyPageFinal() {
 
     const profileOpen = () => {
         setPage(3);
-        console.log(page);
     };
 
     const [tabIndex, setTabIndex] = React.useState(false);
@@ -116,6 +115,7 @@ export default function MyPageFinal() {
                                     feed={feed}
                                 />
                                 <MyRecord address={address} />
+
                                 <Achievement
                                     changeTab={changeTab}
                                     tabIndex={tabIndex}

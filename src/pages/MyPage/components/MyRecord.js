@@ -15,7 +15,7 @@ export default function MyRecord(props) {
                     </Text>
                 </Grid>
 
-                <Grid flex mystyles="height: 170px; margin: auto;">
+                <Grid flex mystyles="height: 180px; margin: auto;">
                     <Grid mystyles="box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); border-radius: 4px;">
                         <Grid
                             flex
@@ -33,9 +33,9 @@ export default function MyRecord(props) {
                             direction="column"
                             alignItems="center"
                             justifyContent="center"
-                            mystyles="margin-top: 10px; border-radius: 0 0 4px 4px; padding: 16px"
+                            mystyles="margin-top: 10px; border-radius: 0 0 4px 4px; border: 2px solid red;"
                         >
-                            <Text mystyles="font-weight: 700; font-size: 16px; color: #266137;">
+                            <Text mystyles="font-weight: 700; font-size: 16px; color: #266137; width: 100%; border: 2px solid red;">
                                 {address.gu} {address.dong}
                             </Text>
                             <Grid
