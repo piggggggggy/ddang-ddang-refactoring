@@ -47,7 +47,7 @@ export default function MyPageFinal() {
                     level: res.data.rows.profile[0].level,
                     mbti: res.data.rows.profile[0].mbti,
                     nickname: res.data.rows.profile[0].nickname,
-                    playerId: res.data.rows.profile[0].playerId,
+                    playerId: res.data.rows.profile[0].id,
                     points: res.data.rows.profile[0].points,
                     profileImg: res.data.rows.profile[0].profileImg,
                 };

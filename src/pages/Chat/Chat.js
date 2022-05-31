@@ -11,6 +11,7 @@ import Navigation from "../../components/Navigation";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 import sendIcon from "../../assets/images/png/chat/send.png";
 
@@ -21,12 +22,14 @@ const ChatPage = () => {
     const [chatHistory, setChatHistory] = useState([]);
     const [memberCnt, setMemberCnt] = useState(0);
 
+    const userData = useSelector((state) => state.user.user);
+
     const params = useParams();
     const socketUrl = process.env.REACT_APP_CHAT_BASE_URL;
     // const socketUrl = 'http://localhost:8080';
 
-    // const { userId, nickname, roomName } = params;
-    const { userId, nickname, si, gu, dong } = params;
+    let { userId, nickname, si, gu, dong } = params;
+
     const roomName = si + gu + dong;
 
     const [address, setAddress] = React.useState({});
