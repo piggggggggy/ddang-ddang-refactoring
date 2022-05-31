@@ -17,8 +17,11 @@ const SocialSignin = (props) => {
     return (
         <>
             <div>
+                {/* //https://thaitour.shop/api/players/kakao */}
+                {/* REACT_APP_KAKAO_LOGIN_URI */}
+                {/* // href={${process.env.REACT_APP_KAKAO_LOGIN_URI}} */}
                 <a
-                    href="http://localhost:8080/api/players/kakao"
+                    href={`${process.env.REACT_APP_BASE_URL}/api/players/kakao`}
                     style={{ textDecoration: "none" }}
                 >
                     <KakaoBtn>
