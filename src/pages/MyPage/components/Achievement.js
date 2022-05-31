@@ -100,10 +100,10 @@ export default function Achievement(props) {
                                             </Grid>
                                             <Grid mystyles="margin-left: 9px;">
                                                 <Text mystyles="font-weight: 700; font-size: 12px;">
-                                                    몬스터랑 한번 싸워봄
+                                                    {item.title}
                                                 </Text>
                                                 <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
-                                                    몬스터 1마리 처치
+                                                    {item.description}
                                                 </Text>
                                             </Grid>
                                         </Grid>
@@ -135,10 +135,10 @@ export default function Achievement(props) {
                                             </Grid>
                                             <Grid mystyles="margin-left: 9px;">
                                                 <Text mystyles="font-weight: 700; font-size: 12px;">
-                                                    몬스터랑 한번 싸워봄
+                                                    {item.title}
                                                 </Text>
                                                 <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
-                                                    몬스터 1마리 처치
+                                                    {item.title}
                                                 </Text>
                                             </Grid>
                                         </Grid>
