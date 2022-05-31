@@ -39,7 +39,6 @@ export default function MyPageFinal() {
 
         api.get("/api/players/mypage")
             .then((res) => {
-                console.log(res);
                 setUserData({ ...userData, ...res.data.rows });
                 const user = {
                     email: res.data.rows.profile[0].email,
