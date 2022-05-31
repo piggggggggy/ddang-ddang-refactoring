@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { KAKAO_OAUTH_URL } from "../../../../shared/OAuth";
 import axios from "axios";
 import kakaoIcon from "../../../../assets/images/png/sign/kakao_icon.png";
+import googleIcon from "../../../../assets/images/png/sign/google_icon.png";
 import React from "react";
 import api from "../../../../modules/api";
 import TokenService from "../../../../services/token.service";
@@ -53,14 +54,69 @@ const SocialSignin = (props) => {
     };
 
     return (
-        <a href="/kakakoauth" style={{ textDecoration: "none" }}>
-            <KakaoBtn>
-                <KakaoImg alt="kakao login" src={kakaoIcon} />
-                <KakaoText>카카오로 시작하기</KakaoText>
-            </KakaoBtn>
-        </a>
+        <>
+            <div>
+                <a
+                    href="http://localhost:8080/api/players/kakao"
+                    style={{ textDecoration: "none" }}
+                >
+                    <KakaoBtn>
+                        <KakaoImg alt="kakao login" src={kakaoIcon} />
+                        <KakaoText>카카오로 시작하기</KakaoText>
+                    </KakaoBtn>
+                </a>
+            </div>
+            <br />
+            <br />
+            <br />
+            <div>
+                <a
+                    href="http://localhost:8080/api/players/google"
+                    style={{ textDecoration: "none" }}
+                >
+                    <GoogleBtn>
+                        <GoogleImg alt="google login" src={kakaoIcon} />
+                        <GoogleText>구글로 시작하기</GoogleText>
+                    </GoogleBtn>
+                </a>
+            </div>
+        </>
     );
 };
+
+const GoogleBtn = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 308px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    padding-top: 19px;
+    padding-bottom: 19px;
+    &:hover {
+        cursor: pointer;
+    }
+    img {
+        margin-right: 10px;
+    }
+    span {
+        color: #000000;
+    }
+`;
+
+const GoogleText = styled.span`
+    color: #191600;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+`;
+
+const GoogleImg = styled.img`
+    width: 24px;
+    height: 24px;
+    margin-top: 3px;
+`;
 
 const KakaoBtn = styled.div`
     display: flex;

@@ -15,6 +15,9 @@ import LandingPage from "../pages/Chat/LandingPage";
 import Main from "../pages/Main/Main";
 import MapPage from "../pages/Map/MapPage";
 import GamePage from "../pages/Game/GamePage";
+import KakaoLogin from "../pages/Sign/Signin/components/kakaologin";
+import OAuth2RedirectHandler from "../pages/Sign/Signin/components/kakaoRedirect";
+import GoogleRedirect from "../pages/Sign/Signin/components/googleRedirect";
 
 import API_TEST from "../APITEST";
 
@@ -39,7 +42,8 @@ export default function AppRouter() {
             <Route exact path="/landing" element={<LandingPage />} />
 
             <Route exact path="/apitest" element={<API_TEST />} />
-            {/* <Route path="/kakaoauth" element={<KakaoLogin />} /> */}
+            <Route path="/kakaoauth" element={<OAuth2RedirectHandler />} />
+            <Route path="/googleauth" element={<GoogleRedirect/>} />
         </Routes>
     );
 }

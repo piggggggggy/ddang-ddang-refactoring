@@ -135,3 +135,27 @@ export const profileUpdatesAxios = (profile, token, navigate) => {
         }
     };
 };
+
+export const kakaoLogin = (code, navigate) => {
+    return async function (dispatch) {
+        try {
+            // const response = await AthService.kakaoLogin(code);
+            return "token 보내줘야지";
+        } catch (err) {
+            console.log(err);
+            navigate("/signin");
+        }
+    };
+};
+
+export const googleLogin = (code, navigate) => {
+    return async function (dispatch) {
+        try {
+            // const response = await AthService.kakaoLogin(code);
+            return "token 보내줘야지";
+        } catch (err) {
+            console.log(err);
+            navigate("/signin");
+        }
+    };
+};
