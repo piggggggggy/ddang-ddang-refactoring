@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Grid, Text, Image } from "../Ranking/elements/index";
@@ -11,27 +11,49 @@ import RankingService from "../../services/ranking.service";
 import ProgressDonut from "./components/ProgressDonut";
 
 export default function Ranking() {
-    const [address, setAddress] = React.useState({});
-    const [group, setGroup] = React.useState([]);
-    const [individual, setIndividual] = React.useState([]);
-    const [tabIndex, setTabIndex] = React.useState(0);
+    const [address, setAddress] = useState({});
+    const [group, setGroup] = useState([]);
+    const [individual, setIndividual] = useState([]);
+    const [tabIndex, setTabIndex] = useState(0);
 
     // 랭킹 조회 (개인별, 그룹별)
     function getRanking() {
-        return navigator.geolocation.getCurrentPosition(async (res) => {
-            const region = await KakaoService.getAddress({
-                location: {
-                    lat: res.coords.latitude,
-                    lng: res.coords.longitude,
-                },
-            });
+        navigator.geolocation.getCurrentPosition(
+            async (res) => {
+                const region = await KakaoService.getAddress({
+                    location: {
+                        lat: res.coords.latitude,
+                        lng: res.coords.longitude,
+                    },
+                });
+                setAddress(region);
 
-            setAddress(region);
+                const result = await RankingService.getRanking(region);
+                setGroup(result.data.ranks.group);
+                setIndividual(result.data.ranks.individual);
+            },
+            async () => {
+                const region = {
+                    si: "서울",
+                    gu: "강남구",
+                    dong: "삼성동",
+                };
+                setAddress(region);
 
-            const result = await RankingService.getRanking(region);
-            setGroup(result.data.ranks.group);
-            setIndividual(result.data.ranks.individual);
-        });
+                const result = await RankingService.getRanking(region);
+                setGroup(result.data.ranks.group);
+                setIndividual(result.data.ranks.individual);
+
+                return alert(
+                    "현재 가능한 지역이 아닙니다. 가상환경에서 시작합니다."
+                );
+            },
+            {
+                enableHighAccuracy: true,
+                maximumAge: 2000,
+                timeout: 2000,
+            }
+        );
     }
 
     // 메뉴 리스트
@@ -52,7 +74,7 @@ export default function Ranking() {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         getRanking();
     }, []);
 
