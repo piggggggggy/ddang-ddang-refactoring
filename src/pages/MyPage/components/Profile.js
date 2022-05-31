@@ -7,7 +7,6 @@ import ProfilePreview from "../elements/ProfilePreview";
 
 export default function Profile(props) {
     const userData = props.userData;
-    console.log(props.profile);
 
     return (
         <>
@@ -18,17 +17,6 @@ export default function Profile(props) {
                 justifyContent="flex-end"
                 mystyles="width: 350px; margin-top: 20px; margin-right: -40px"
             >
-                {/* <Grid>
-                    <IconButton onClick={props.openSideMenu}>
-                        <MenuIcon
-                            sx={{
-                                width: "25px",
-                                height: "18px",
-                                color: "white",
-                            }}
-                        />
-                    </IconButton>
-                </Grid> */}
                 <Grid
                     flex
                     alignItems="center"

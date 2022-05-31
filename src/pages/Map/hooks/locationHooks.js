@@ -4,8 +4,8 @@ import { TEMP_LOCATION } from "../../../shared/Link";
 
 const geolocationOptions = {
     enableHighAccuracy: true,
-    maximumAge: 1000,
-    timeout: 2000,
+    maximumAge: 3000,
+    timeout: 3000,
 };
 
 const useWatchLocation = (questList, type) => {

@@ -1,54 +1,60 @@
 import React from "react";
 import styled from "styled-components";
 
-const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
-    const pageNumbers = [];
+const Pagination = ({ postLength, setPage, page }) => {
+    const pageCounts = (() => {
+        if (postLength % 5 > 0) {
+            return parseInt(postLength / 5) + 1;
+        } else {
+            return parseInt(postLength / 5);
+        }
+    })();
 
-    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-        pageNumbers.push(i);
-    }
-
+    const pageArray = Array.from(
+        { length: pageCounts },
+        (value, index) => index + 1
+    );
     return (
-        <Nav>
-            <UnorderedList>
-                {pageNumbers.map((number) => (
-                    <List key={number}>
-                        <div
-                            onClick={() => paginate(number)}
-                            className="page-link"
+        <Wrapper>
+            {pageArray.map((number) => {
+                return (
+                    <Page key={number} onClick={() => setPage(number)}>
+                        <p
+                            style={
+                                page === number
+                                    ? { color: "#000", fontWeight: 700 }
+                                    : {}
+                            }
                         >
                             {number}
-                        </div>
-                    </List>
-                ))}
-            </UnorderedList>
-        </Nav>
+                        </p>
+                    </Page>
+                );
+            })}
+        </Wrapper>
     );
 };
 
-const Nav = styled.div`
+const Wrapper = styled.div`
+    width: auto;
+    height: 52px;
+    padding: 16px 0;
+    margin: 0 auto;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-direction: row;
+    align-items: center;
 `;
-
-const UnorderedList = styled.ul`
-    list-style: none;
+const Page = styled.div`
+    width: 20px;
+    height: 20px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-direction: row;
-    padding-right: 12%;
-`;
-
-const List = styled.li`
-    margin-left: 10px;
-    &: hover {
-        color: black;
-        background-color: ;
+    align-items: center;
+    & p {
+        font-size: 12px;
+        line-height: 1;
+        color: #999fab;
     }
-    color: grey;
 `;
 
 export default Pagination;
