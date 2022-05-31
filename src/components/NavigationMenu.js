@@ -88,8 +88,9 @@ export default function NavigationMenu({ index, isSelected }) {
                 navigate("/feed");
                 return;
             case 3:
-                navigate(`/chat/${userData.playerId}/${userData.nickname}/${si}/${gu}/${dong}`);
-
+                if (userData.playerId && userData.nickname && si && gu && dong) {
+                    navigate(`/chat/${userData.playerId}/${userData.nickname}/${si}/${gu}/${dong}`);
+                }
                 return;
             case 4:
                 navigate("/myPage");
