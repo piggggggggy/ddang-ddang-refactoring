@@ -382,7 +382,7 @@ export default function SignupFinal() {
                         mystyles="padding: 0 50px;"
                     >
                         <Input
-                            mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
+                            mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); background: #fdfdfd; padding-left: 5px; "
                             defaultValue={emailValue}
                             onChange={emailChange}
                             placeholder="이메일"
@@ -423,7 +423,7 @@ export default function SignupFinal() {
                     </Grid>
                     <Grid flex mystyles="margin: 0 55px;">
                         <Grid mystyles="width: 240px; height: 12px;">
-                            <Text mystyles="font-size: 11px;">
+                            <Text mystyles="font-size: 8px;">
                                 {emailCheckMessage}
                             </Text>
                         </Grid>
@@ -436,7 +436,7 @@ export default function SignupFinal() {
                             mystyles="padding: 0 50px;"
                         >
                             <Input
-                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px;background: #fdfdfd; "
                                 defaultValue={nicknameValue}
                                 onChange={nicknameChange}
                                 placeholder="닉네임"
@@ -477,7 +477,7 @@ export default function SignupFinal() {
                         </Grid>
                         <Grid flex mystyles="margin: 0 50px;">
                             <Grid mystyles="width: 240px; height: 12px">
-                                <Text mystyles="font-size: 11px;">
+                                <Text mystyles="font-size: 8px;">
                                     {nicknameCheckMessage}
                                 </Text>
                             </Grid>
@@ -490,7 +490,7 @@ export default function SignupFinal() {
                     >
                         <Grid flex>
                             <Input
-                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; font-size: 12px;"
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; font-size: 12px; background: #fdfdfd;"
                                 defaultValue={passwordValue}
                                 onChange={passwordChange}
                                 placeholder="비밀번호"
@@ -529,7 +529,7 @@ export default function SignupFinal() {
                             </Grid>
                         </Grid>
                         <Grid mystyles="width: 240px; height: 18px">
-                            <Text mystyles="font-size: 11px;">
+                            <Text mystyles="font-size: 8px;">
                                 {passwordCheckMessage}
                             </Text>
                         </Grid>
@@ -541,7 +541,7 @@ export default function SignupFinal() {
                     >
                         <Grid flex>
                             <Input
-                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; background: #fdfdfd;"
                                 defaultValue={passwordConfirmValue}
                                 onChange={passwordConfirmChange}
                                 placeholder="비밀번호 확인"
@@ -582,7 +582,7 @@ export default function SignupFinal() {
                             </Grid>
                         </Grid>
                         <Grid mystyles="width: 240px; height: 12px">
-                            <Text mystyles="font-size: 11px;">
+                            <Text mystyles="font-size: 8px;">
                                 {passwordConfirmCheckMessage}
                             </Text>
                         </Grid>
