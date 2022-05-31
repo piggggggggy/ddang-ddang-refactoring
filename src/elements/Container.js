@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-export default function Container({ children }) {
-    return <Wrapper>{children}</Wrapper>;
+export default function Container({ children, color = "#fafafa" }) {
+    return (
+        <Wrapper style={color ? { background: color } : {}}>{children}</Wrapper>
+    );
 }
 
 const Wrapper = styled.div`

@@ -17,6 +17,7 @@ import MapPage from "../pages/Map/MapPage";
 import GamePage from "../pages/Game/GamePage";
 
 import API_TEST from "../APITEST";
+import ChatPage from "../pages/Chat/ChatPage";
 
 export default function AppRouter() {
     return (
@@ -34,7 +35,8 @@ export default function AppRouter() {
             <Route path="/ranking" element={<Ranking />} />
             <Route
                 path="/chat/:userId/:nickname/:si/:gu/:dong"
-                element={<Chat />}
+                // element={<Chat />}
+                element={<ChatPage />}
             />
             <Route exact path="/landing" element={<LandingPage />} />
 

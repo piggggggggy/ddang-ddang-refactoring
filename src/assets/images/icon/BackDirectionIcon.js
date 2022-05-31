@@ -9,7 +9,7 @@ export default function BackDirectionIcon() {
         >
             <path
                 d="M11 1L1 9.27586L11 17"
-                stroke="#919191"
+                stroke="#000"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
