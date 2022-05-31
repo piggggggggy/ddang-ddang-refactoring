@@ -109,6 +109,11 @@ const ChatPage = () => {
         exitRoom();
     });
 
+    window.addEventListener("load", (event) => {
+        event.preventDefault();
+        exitRoom();
+    })
+
     return (
         <Container
             initial={{ y: -250, opacity: 0 }}
