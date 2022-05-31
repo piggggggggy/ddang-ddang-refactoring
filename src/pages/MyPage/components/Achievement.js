@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import Iron from "../../../assets/images/png/mypage/iron.png";
+import Bronze from "../../../assets/images/png/mypage/bronze.png";
 import Silver from "../../../assets/images/png/mypage/silver.png";
 import Gold from "../../../assets/images/png/mypage/gold.png";
 import Platinum from "../../../assets/images/png/mypage/platinum.png";
@@ -13,6 +14,17 @@ import Monster from "../../../assets/images/png/mob-medium.png";
 import Time from "../../../assets/images/png/time-medium.png";
 
 export default function Achievement(props) {
+    const Badges = {
+        iron: Iron,
+        bronze: Bronze,
+        silver: Silver,
+        gold: Gold,
+        platinum: Platinum,
+        dia: Diamond,
+    };
+
+    console.log(props.userData.achievedMission);
+    console.log(props.userData.notAchievedMission);
     return (
         <>
             <Grid>
@@ -68,89 +80,73 @@ export default function Achievement(props) {
                 >
                     {props.tabIndex === false && (
                         <>
-                            <Grid
-                                flex
-                                alignItems="center"
-                                justifyContent="center"
-                                mystyles="border: 2px solid red; padding: 30px;"
-                            >
-                                <Badge src={Iron} alt="" />
-                                <Grid mystyles="margin-left: 9px;">
-                                    <Text mystyles="font-weight: 700; font-size: 12px;">
-                                        몬스터랑 한번 싸워봄
-                                    </Text>
-                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
-                                        몬스터 1마리 처치
-                                    </Text>
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                flex
-                                alignItems="center"
-                                justifyContent="center"
-                                mystyles="border: 2px solid red; padding: 30px;"
-                            >
-                                <Badge src={Silver} alt="" />
-                                <Grid mystyles="margin-left: 9px;">
-                                    <Text mystyles="font-weight: 700; font-size: 12px;">
-                                        몬스터랑 한번 싸워봄
-                                    </Text>
-                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
-                                        몬스터 1마리 처치
-                                    </Text>
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                flex
-                                alignItems="center"
-                                justifyContent="center"
-                                mystyles="border: 2px solid red; padding: 30px;"
-                            >
-                                <Badge src={Gold} alt="" />
-                                <Grid mystyles="margin-left: 9px;">
-                                    <Text mystyles="font-weight: 700; font-size: 12px;">
-                                        몬스터랑 한번 싸워봄
-                                    </Text>
-                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
-                                        몬스터 1마리 처치
-                                    </Text>
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                flex
-                                alignItems="center"
-                                justifyContent="center"
-                                mystyles="border: 2px solid red; padding: 30px;"
-                            >
-                                <Badge src={Platinum} alt="" />
-                                <Grid mystyles="margin-left: 9px;">
-                                    <Text mystyles="font-weight: 700; font-size: 12px;">
-                                        몬스터랑 한번 싸워봄
-                                    </Text>
-                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
-                                        몬스터 1마리 처치
-                                    </Text>
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                flex
-                                alignItems="center"
-                                justifyContent="center"
-                                mystyles="border: 2px solid red; padding: 30px;"
-                            >
-                                <Badge src={Diamond} alt="" />
-                                <Grid mystyles="margin-left: 9px;">
-                                    <Text mystyles="font-weight: 700; font-size: 12px;">
-                                        몬스터랑 한번 싸워봄
-                                    </Text>
-                                    <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
-                                        몬스터 1마리 처치
-                                    </Text>
-                                </Grid>
-                            </Grid>
+                            {props.userData.achievedMission.map(
+                                (item, index) => {
+                                    return (
+                                        <Grid
+                                            flex
+                                            alignItems="center"
+                                            justifyContent="center"
+                                            initial={{ x: -250, opacity: 0 }}
+                                            animate={{ x: 0, opacity: 1 }}
+                                            transition={{ delay: 0.2 }}
+                                            mystyles="padding: 30px;"
+                                        >
+                                            <Grid mystyles="position: relative; width: 30%;">
+                                                <Badge
+                                                    src={Badges[item.badge]}
+                                                    alt=""
+                                                />
+                                            </Grid>
+                                            <Grid mystyles="margin-left: 9px;">
+                                                <Text mystyles="font-weight: 700; font-size: 12px;">
+                                                    몬스터랑 한번 싸워봄
+                                                </Text>
+                                                <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
+                                                    몬스터 1마리 처치
+                                                </Text>
+                                            </Grid>
+                                        </Grid>
+                                    );
+                                }
+                            )}
                         </>
                     )}
-                    {props.tabIndex === true && <></>}
+                    {props.tabIndex === true && (
+                        <>
+                            {props.userData.notAchievedMission.map(
+                                (item, index) => {
+                                    return (
+                                        <Grid
+                                            flex
+                                            alignItems="center"
+                                            justifyContent="center"
+                                            initial={{ x: -250, opacity: 0 }}
+                                            animate={{ x: 0, opacity: 1 }}
+                                            transition={{ delay: 0.2 }}
+                                            mystyles="padding: 30px;"
+                                        >
+                                            <Grid mystyles="position: relative; width: 30%;">
+                                                <Badge
+                                                    src={Badges[item.badge]}
+                                                    alt=""
+                                                    style={{ opacity: 0.2 }}
+                                                />
+                                            </Grid>
+                                            <Grid mystyles="margin-left: 9px;">
+                                                <Text mystyles="font-weight: 700; font-size: 12px;">
+                                                    몬스터랑 한번 싸워봄
+                                                </Text>
+                                                <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px">
+                                                    몬스터 1마리 처치
+                                                </Text>
+                                            </Grid>
+                                        </Grid>
+                                    );
+                                }
+                            )}
+                        </>
+                    )}
                 </Grid>
             </Grid>
         </>
@@ -168,6 +164,6 @@ const TabCard = styled(motion.div)`
 `;
 
 const Badge = styled(motion.img)`
-    width: 35px;
-    height: 35px;
+    width: 70px;
+    height: 70px;
 `;
