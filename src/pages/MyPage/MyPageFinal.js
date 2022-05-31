@@ -139,7 +139,7 @@ export default function MyPageFinal() {
                                     tabIndex={tabIndex}
                                     userData={userData}
                                 />
-                                <FooterContent />
+                                <FooterContent userData={userData} />
                             </>
                         )}
                     </Grid>
