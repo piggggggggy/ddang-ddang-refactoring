@@ -32,6 +32,7 @@ export default function ProfileSettings(props) {
     const [profileImage, setProfileImage] = React.useState(
         props.userData.profile[0].profileImg
     );
+
     const [myKey, setMyKey] = React.useState("");
     const [url, setUrl] = React.useState("");
 
@@ -89,6 +90,7 @@ export default function ProfileSettings(props) {
             Bucket: S3_BUCKET,
             Key: myKey,
         });
+        console.log(url);
         setUserProfileImg(url);
     };
 
