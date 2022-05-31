@@ -35,7 +35,7 @@ const Toast = keyframes`
   }
   10% {
     opacity: 0;
-  },
+  }
   20% {
     opacity: 1;
   }

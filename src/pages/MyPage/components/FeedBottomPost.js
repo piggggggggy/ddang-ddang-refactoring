@@ -3,51 +3,39 @@ import Posts from "../components/Post";
 import Pagination from "../components/Pagination";
 import api from "../../../modules/api";
 
-export default function BottomPost() {
+export default function FeedBottomPost() {
+    const [feeds, setFeeds] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(5);
-    const [currentPosts, setCurrentPosts] = useState(null);
-
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-    const [feed, setFeed] = React.useState([]);
-    // console.log("hello");
-
+    const setPage = (index) => {
+        if (index === currentPage) return;
+        setCurrentPage(index);
+    };
     useEffect(() => {
         const fetchPosts = async () => {
             const res = await api.get("/api/players/mypage");
-
-            if (res.data.rows.profile[0].completes !== null) {
-                setFeed(
-                    res.data.rows.profile[0].completes.filter((value) => {
-                        return value.quest.type === "feed";
-                    })
-                );
-            }
-
-            if (feed !== null) {
-                setCurrentPosts(feed.slice(indexOfFirstPost, indexOfLastPost));
-            }
+            setFeeds(
+                res.data.rows.profile[0].completes.filter((value) => {
+                    return value.quest.type === "feed";
+                })
+            );
         };
         fetchPosts();
-    }, [indexOfLastPost, indexOfFirstPost, feed]);
-
-    // Get current posts
-    // Change page
-    const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    }, []);
 
     return (
         <div>
-            {currentPosts !== null && feed !== null && (
+            {feeds.length && (
                 <>
-                    <Posts posts={currentPosts} />
+                    <Posts
+                        posts={feeds.slice(
+                            (currentPage - 1) * 5,
+                            currentPage * 5
+                        )}
+                    />
                     <Pagination
-                        postsPerPage={postsPerPage}
-                        totalPosts={feed.length}
-                        paginate={paginate}
+                        postLength={feeds.length}
+                        setPage={setPage}
+                        page={currentPage}
                     />
                 </>
             )}

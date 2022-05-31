@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -11,14 +11,14 @@ import { signinAxios } from "../../../store/thunk-actions/userActions";
 
 import logo from "../../../assets/images/png/sign/logo.png";
 import AuthService from "../../../services/auth.service";
-import tokenService from "../../../services/token.service";
+import TokenService from "../../../services/token.service";
 import { userActions } from "../../../store/slices/userSlice";
 import ToastPageMsg from "../../../elements/ToastMsgPage";
 
 export default function SigninFinal() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const [onToast, setOnToast] = useState(false);
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
@@ -30,51 +30,43 @@ export default function SigninFinal() {
     };
 
     const siginin = async () => {
-        if (email !== "" && password !== "") {
-            dispatch(signinAxios(email, password, (url) => navigate(url)));
-        } else if (email === "" && password === "") {
-            alert("이메일 || 비밀번호를 입력해주세요");
+        try {
+            const response = await AuthService.login(email, password);
+            const user = {
+                email,
+                nickname: response.data.row.nickname,
+                expPoints: response.data.row.expPoints,
+                level: response.data.row.level,
+                mbti: response.data.row.mbti,
+                points: response.data.row.points,
+                profileImg: response.data.row.profileImg,
+                playerId: response.data.row.playerId,
+            };
+            TokenService.setAccessToken(response.headers["accesstoken"]);
+            const tokenFullString = response.headers.accesstoken;
+            const tokenArr = tokenFullString.split(" ");
+            dispatch(userActions.signin({ user, token: tokenArr[1] }));
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+            setOnToast(true);
         }
-        // let user = {
-        //     email,
-        //     password,
-        // };
-        // try {
-        //     const response = await AuthService.login(email, password);
-
-        //     user = { email, nickname: response.data.row.nickname };
-        //     tokenService.setAccessToken(response.headers["accesstoken"]);
-
-        //     const tokenFullString = response.headers.accesstoken;
-        //     const tokenArr = tokenFullString.split(" ");
-
-        //     dispatch(userActions.signin({ user, token: tokenArr[1] }));
-        //     navigate("/");
-        // } catch (error) {
-        //     console.log(error);
-        // }
     };
 
-    const signup = () => {
-        navigate("/signup");
+    const moveToSignupPage = () => {
+        navigate("/signup/1");
     };
 
     return (
         <Container>
-            {/* <ToastPageMsg>
-                <>이메일이나 비밀번호가 잘못되었어요</>
-            </ToastPageMsg> */}
-            <Grid mystyles="padding-left: 31px; padding-right: 31px">
-                <Grid
-                    flex
-                    alignItems="center"
-                    justifyContent="center"
-                    mystyles="margin-top: 41px;"
-                >
-                    {/* <Text mystyles="font-weight: 700; font-size: 16px">
-                        로그인
-                    </Text> */}
-                </Grid>
+            <ToastPageMsg onToast={onToast} setOnToast={setOnToast}>
+                <>
+                    이메일이나 비밀번호가
+                    <br />
+                    틀렸어요!
+                </>
+            </ToastPageMsg>
+            <Grid mystyles="padding: 0 31px">
                 <Grid
                     flex
                     direction="column"
@@ -147,7 +139,7 @@ export default function SigninFinal() {
                     <Text
                         pointer
                         mystyles="font-size: 12px; color: rgba(5, 36, 14, 0.3);"
-                        onClick={signup}
+                        onClick={moveToSignupPage}
                     >
                         회원가입
                     </Text>

@@ -27,13 +27,13 @@ export default function AppRouter() {
             <Route path="/quest/:type/:questId" exact element={<GamePage />} />
             <Route path="/mypage" element={<MyPageFinal />} />
             <Route path="/signin" element={<SigninFinal />} />
-            <Route path="/signup" element={<SignupFinal />} />
+            <Route path="/signup/:index" element={<SignupFinal />} />
             <Route path="/feed" element={<FeedFinal />} />
             <Route path="/feed/popular" element={<FeedFinalPopular />} />
             <Route path="/feed/distance" element={<FeedFinalDistance />} />
             <Route path="/ranking" element={<Ranking />} />
             <Route
-                path="/chat/:userId/:nickname/:roomName"
+                path="/chat/:userId/:nickname/:si/:gu/:dong"
                 element={<Chat />}
             />
             <Route exact path="/landing" element={<LandingPage />} />

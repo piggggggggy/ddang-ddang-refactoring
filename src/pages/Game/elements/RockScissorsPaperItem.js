@@ -10,7 +10,7 @@ export default function RockScissorsPaperItem({
     const Card = styled.div`
         padding: 8px;
         width: 80%;
-        height: ${isResult ? "120px" : "calc((100% - 100px) / 3)"};
+        height: ${isResult ? "120px" : "calc((100% - 150px) / 3)"};
         border-radius: 10px;
         /* background: #F3AC9C; */
         background: #ebebeb;
@@ -29,7 +29,7 @@ export default function RockScissorsPaperItem({
             justify-content: center;
             align-items: center;
             & img {
-                height: 90%;
+                height: 80%;
                 object-fit: contain;
             }
         }

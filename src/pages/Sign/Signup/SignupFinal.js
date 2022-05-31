@@ -4,7 +4,7 @@ import lo from "lodash";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { Grid, Text } from "../../../elements/index";
+import { Grid, Text, Container } from "../../../elements/index";
 import { Button, Input } from "../../Sign/elements/index";
 import Mbti from "../Signup/components/Mbti";
 
@@ -16,6 +16,7 @@ import Modal from "@mui/material/Modal";
 import DoneIcon from "@mui/icons-material/Done";
 
 import AuthService from "../../../services/auth.service";
+import SignupGnb from "./elements/SignupGnb";
 
 export default function SignupFinal() {
     // header
@@ -370,27 +371,64 @@ export default function SignupFinal() {
     ]);
 
     return (
-        <Grid mystyles="position: relative;">
+        <Container>
+            <SignupGnb text={"회원가입"} />
             {page === 1 && (
-                <>
-                    <Grid mystyles="position: relative; margin-top: 41px;">
-                        <Grid mystyles="position: absolute; right: 10; margin-top: -10px;">
-                            <IconButton onClick={goBack}>
-                                <ChevronLeftIcon />
-                            </IconButton>
+                <Grid mystyles="margin-top: 72px;">
+                    <Grid
+                        flex
+                        alignItems="center"
+                        justifyContent="center"
+                        mystyles="padding: 0 50px;"
+                    >
+                        <Input
+                            mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
+                            defaultValue={emailValue}
+                            onChange={emailChange}
+                            placeholder="이메일"
+                        />
+
+                        <Grid mystyles="position: relative">
+                            <Button
+                                onClick={checkEmail}
+                                mystyles="width: 70px; height: 32px; margin-left: -5px; background: #DADEDB; color: #05240E; border: none;"
+                            >
+                                중복확인
+                            </Button>
+                            {emailAxiosCheck && emailafterCheck === email && (
+                                <CheckBoxSharpIcon
+                                    style={{
+                                        color: "green",
+                                        position: "absolute",
+                                        left: 0,
+                                        marginLeft: "-30px",
+                                        marginTop: "5px",
+                                    }}
+                                ></CheckBoxSharpIcon>
+                            )}
+                            {emailIsValid &&
+                                !emailAxiosCheck &&
+                                emailafterCheck === email && (
+                                    <DangerousIcon
+                                        style={{
+                                            color: "red",
+                                            position: "absolute",
+                                            left: 0,
+                                            marginLeft: "-30px",
+                                            marginTop: "5px",
+                                        }}
+                                    ></DangerousIcon>
+                                )}
                         </Grid>
-                        <Grid
-                            flex
-                            alignItems="center"
-                            justifyContent="center"
-                            mystyles="margin: auto; width: 173px;"
-                        >
-                            <Text mystyles="font-weight: 700; font-size: 16px;">
-                                회원가입
+                    </Grid>
+                    <Grid flex mystyles="margin: 0 55px;">
+                        <Grid mystyles="width: 240px; height: 12px;">
+                            <Text mystyles="font-size: 11px;">
+                                {emailCheckMessage}
                             </Text>
                         </Grid>
                     </Grid>
-                    <Grid mystyles="margin-top: 72px;">
+                    <Grid mystyles="margin-top: 10px;">
                         <Grid
                             flex
                             alignItems="center"
@@ -399,32 +437,32 @@ export default function SignupFinal() {
                         >
                             <Input
                                 mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
-                                defaultValue={emailValue}
-                                onChange={emailChange}
-                                placeholder="이메일"
+                                defaultValue={nicknameValue}
+                                onChange={nicknameChange}
+                                placeholder="닉네임"
                             />
-
                             <Grid mystyles="position: relative">
                                 <Button
-                                    onClick={checkEmail}
+                                    onClick={checkNickname}
                                     mystyles="width: 70px; height: 32px; margin-left: -5px; background: #DADEDB; color: #05240E; border: none;"
                                 >
                                     중복확인
                                 </Button>
-                                {emailAxiosCheck && emailafterCheck === email && (
-                                    <CheckBoxSharpIcon
-                                        style={{
-                                            color: "green",
-                                            position: "absolute",
-                                            left: 0,
-                                            marginLeft: "-30px",
-                                            marginTop: "5px",
-                                        }}
-                                    ></CheckBoxSharpIcon>
-                                )}
-                                {emailIsValid &&
-                                    !emailAxiosCheck &&
-                                    emailafterCheck === email && (
+                                {nicknameAxiosCheck &&
+                                    nicknameafterCheck === nickname && (
+                                        <CheckBoxSharpIcon
+                                            style={{
+                                                color: "green",
+                                                position: "absolute",
+                                                left: 0,
+                                                marginLeft: "-30px",
+                                                marginTop: "5px",
+                                            }}
+                                        ></CheckBoxSharpIcon>
+                                    )}
+                                {nicknameIsValid &&
+                                    !nicknameAxiosCheck &&
+                                    nicknameafterCheck === nickname && (
                                         <DangerousIcon
                                             style={{
                                                 color: "red",
@@ -437,457 +475,381 @@ export default function SignupFinal() {
                                     )}
                             </Grid>
                         </Grid>
-                        <Grid flex mystyles="margin: 0 55px;">
-                            <Grid mystyles="width: 240px; height: 12px;">
+                        <Grid flex mystyles="margin: 0 50px;">
+                            <Grid mystyles="width: 240px; height: 12px">
                                 <Text mystyles="font-size: 11px;">
-                                    {emailCheckMessage}
+                                    {nicknameCheckMessage}
                                 </Text>
                             </Grid>
                         </Grid>
-                        <Grid mystyles="margin-top: 10px;">
+                    </Grid>
+                    <Grid
+                        flex
+                        direction="column"
+                        mystyles=" padding-left: 50px; margin-top: 10px;"
+                    >
+                        <Grid flex>
+                            <Input
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; font-size: 12px;"
+                                defaultValue={passwordValue}
+                                onChange={passwordChange}
+                                placeholder="비밀번호"
+                                type="password"
+                            />
+                            <Grid mystyles="position: relative">
+                                <Button
+                                    disabled
+                                    mystyles="width: 70px; height: 32px; margin-left: -5px; background: #fdfdfd; color: #05240E; border: none; pointer-events: none"
+                                ></Button>
+                                {passwordIsValid &&
+                                    passwordAfterRegex === password && (
+                                        <CheckBoxSharpIcon
+                                            style={{
+                                                color: "green",
+                                                position: "absolute",
+                                                left: 0,
+                                                marginLeft: "-30px",
+                                                marginTop: "5px",
+                                            }}
+                                        ></CheckBoxSharpIcon>
+                                    )}
+                                {password !== "" &&
+                                    !passwordIsValid &&
+                                    passwordAfterRegex === password && (
+                                        <DangerousIcon
+                                            style={{
+                                                color: "red",
+                                                position: "absolute",
+                                                left: 0,
+                                                marginLeft: "-30px",
+                                                marginTop: "5px",
+                                            }}
+                                        ></DangerousIcon>
+                                    )}
+                            </Grid>
+                        </Grid>
+                        <Grid mystyles="width: 240px; height: 18px">
+                            <Text mystyles="font-size: 11px;">
+                                {passwordCheckMessage}
+                            </Text>
+                        </Grid>
+                    </Grid>
+                    <Grid
+                        flex
+                        direction="column"
+                        mystyles="padding-left: 50px;margin-top: 12px;"
+                    >
+                        <Grid flex>
+                            <Input
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
+                                defaultValue={passwordConfirmValue}
+                                onChange={passwordConfirmChange}
+                                placeholder="비밀번호 확인"
+                                type="password"
+                            />
+                            <Grid mystyles="position: relative">
+                                <Button
+                                    disabled
+                                    mystyles="width: 70px; height: 32px; margin-left: -5px; background: #fdfdfd; color: #05240E; border: none; pointer-events: none"
+                                ></Button>
+                                {passwordConfirmIsValid &&
+                                    passwordConfirmAfterRegex ===
+                                        passwordConfirm && (
+                                        <CheckBoxSharpIcon
+                                            style={{
+                                                color: "green",
+                                                position: "absolute",
+                                                left: 0,
+                                                marginLeft: "-30px",
+                                                marginTop: "5px",
+                                            }}
+                                        ></CheckBoxSharpIcon>
+                                    )}
+                                {passwordConfirm !== "" &&
+                                    !passwordConfirmIsValid &&
+                                    passwordConfirmAfterRegex !==
+                                        passwordConfirm && (
+                                        <DangerousIcon
+                                            style={{
+                                                color: "red",
+                                                position: "absolute",
+                                                left: 0,
+                                                marginLeft: "-30px",
+                                                marginTop: "5px",
+                                            }}
+                                        ></DangerousIcon>
+                                    )}
+                            </Grid>
+                        </Grid>
+                        <Grid mystyles="width: 240px; height: 12px">
+                            <Text mystyles="font-size: 11px;">
+                                {passwordConfirmCheckMessage}
+                            </Text>
+                        </Grid>
+                    </Grid>
+                    <Grid
+                        flex
+                        alignItems="center"
+                        justifyContent="center"
+                        direction="column"
+                        mystyles=" padding-left: 50px; margin-top: 40px;"
+                    >
+                        <Grid>
+                            <Text
+                                mystyles="font-weight: 700; font-size: 12px; color: #05240E;
+"
+                            >
+                                약관 동의
+                            </Text>
+                        </Grid>
+                        <Grid flex mystyles=" margin-top: 20px;">
+                            {allAgree && (
+                                <Grid
+                                    onClick={cancelAll}
+                                    mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
+                                >
+                                    <Grid mystyles="position: absolute; margin-top: -4px; ">
+                                        <DoneIcon
+                                            sx={{
+                                                color: "white",
+                                                fontSize: "14px",
+                                                fontWeight: "700",
+                                            }}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )}
+                            {!allAgree && (
+                                <Grid
+                                    onClick={agreeAll}
+                                    mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E;"
+                                ></Grid>
+                            )}
+                            <Text
+                                pointer
+                                onClick={agreeAll}
+                                mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E; width: 200px; "
+                            >
+                                전체 동의
+                            </Text>
+                        </Grid>
+                        <Grid flex mystyles=" margin-top: 20px;">
+                            {firstAgree && (
+                                <Grid
+                                    onClick={cancelAgreeFirst}
+                                    mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
+                                >
+                                    <Grid mystyles="position: absolute; margin-top: -4px; ">
+                                        <DoneIcon
+                                            sx={{
+                                                color: "white",
+                                                fontSize: "14px",
+                                                fontWeight: "700",
+                                            }}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )}
+                            {!firstAgree && (
+                                <Grid
+                                    onClick={agreeFirst}
+                                    mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E;"
+                                ></Grid>
+                            )}
+                            <Text
+                                pointer
+                                onClick={openFirstModal}
+                                mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E; width: 200px; "
+                            >
+                                이용약관 동의 (필수)
+                            </Text>
+                            <Text
+                                pointer
+                                onClick={openFirstModal}
+                                mystyles="font-weight: 400; font-size: 12px; color: rgba(5, 36, 14, 0.3);"
+                            >
+                                내용 보기
+                            </Text>
+                        </Grid>
+                        <Grid flex mystyles=" margin-top: 20px;">
+                            {secondAgree && (
+                                <Grid
+                                    onClick={cancelAgreeSecond}
+                                    mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
+                                >
+                                    <Grid mystyles="position: absolute; margin-top: -4px; ">
+                                        <DoneIcon
+                                            sx={{
+                                                color: "white",
+                                                fontSize: "14px",
+                                                fontWeight: "700",
+                                            }}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )}
+                            {!secondAgree && (
+                                <Grid
+                                    onClick={agreeSecond}
+                                    mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E;"
+                                ></Grid>
+                            )}
+                            <Text
+                                pointer
+                                onClick={openSecondModal}
+                                mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E; width: 200px; "
+                            >
+                                개인정보 취급방침 동의 (필수)
+                            </Text>
+                            <Text
+                                pointer
+                                onClick={openSecondModal}
+                                mystyles="font-weight: 400; font-size: 12px; color: rgba(5, 36, 14, 0.3);"
+                            >
+                                내용 보기
+                            </Text>
+                        </Grid>
+                        <Grid flex mystyles=" margin-top: 20px;">
+                            {thirdAgree && (
+                                <Grid
+                                    onClick={cancelAgreeThird}
+                                    mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
+                                >
+                                    <Grid mystyles="position: absolute; margin-top: -4px; ">
+                                        <DoneIcon
+                                            sx={{
+                                                color: "white",
+                                                fontSize: "14px",
+                                                fontWeight: "700",
+                                            }}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )}
+                            {!thirdAgree && (
+                                <Grid
+                                    onClick={agreeThird}
+                                    mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E;"
+                                ></Grid>
+                            )}
+                            <Text
+                                pointer
+                                onClick={openThirdModal}
+                                mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E; width: 200px; "
+                            >
+                                위치정보 수집 동의 (필수)
+                            </Text>
+                            <Text
+                                pointer
+                                onClick={openThirdModal}
+                                mystyles="font-weight: 400; font-size: 12px; color: rgba(5, 36, 14, 0.3);"
+                            >
+                                내용 보기
+                            </Text>
+                        </Grid>
+                    </Grid>
+                    <Modal open={firstModal} onClose={closeFirstModal}>
+                        <Grid mystyles="width: 300px; height: 300px; margin: auto; background: white; overflow: scroll; position: absolute; top: 50%; left:50%; transform: translate(-50%, -50%)">
+                            <Text>이용약관 동의</Text>
                             <Grid
                                 flex
                                 alignItems="center"
                                 justifyContent="center"
-                                mystyles="padding: 0 50px;"
+                                mystyles="margin: 30px 0px;"
                             >
-                                <Input
-                                    mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
-                                    defaultValue={nicknameValue}
-                                    onChange={nicknameChange}
-                                    placeholder="닉네임"
-                                />
-                                <Grid mystyles="position: relative">
-                                    <Button
-                                        onClick={checkNickname}
-                                        mystyles="width: 70px; height: 32px; margin-left: -5px; background: #DADEDB; color: #05240E; border: none;"
-                                    >
-                                        중복확인
-                                    </Button>
-                                    {nicknameAxiosCheck &&
-                                        nicknameafterCheck === nickname && (
-                                            <CheckBoxSharpIcon
-                                                style={{
-                                                    color: "green",
-                                                    position: "absolute",
-                                                    left: 0,
-                                                    marginLeft: "-30px",
-                                                    marginTop: "5px",
-                                                }}
-                                            ></CheckBoxSharpIcon>
-                                        )}
-                                    {nicknameIsValid &&
-                                        !nicknameAxiosCheck &&
-                                        nicknameafterCheck === nickname && (
-                                            <DangerousIcon
-                                                style={{
-                                                    color: "red",
-                                                    position: "absolute",
-                                                    left: 0,
-                                                    marginLeft: "-30px",
-                                                    marginTop: "5px",
-                                                }}
-                                            ></DangerousIcon>
-                                        )}
-                                </Grid>
-                            </Grid>
-                            <Grid flex mystyles="margin: 0 50px;">
-                                <Grid mystyles="width: 240px; height: 12px">
-                                    <Text mystyles="font-size: 11px;">
-                                        {nicknameCheckMessage}
-                                    </Text>
-                                </Grid>
+                                <Button
+                                    onClick={agreeFirst}
+                                    mystyles="width: 200px;"
+                                >
+                                    동의하기
+                                </Button>
                             </Grid>
                         </Grid>
-                        <Grid
-                            flex
-                            direction="column"
-                            mystyles=" padding-left: 50px; margin-top: 10px;"
-                        >
-                            <Grid flex>
-                                <Input
-                                    mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; font-size: 12px;"
-                                    defaultValue={passwordValue}
-                                    onChange={passwordChange}
-                                    placeholder="비밀번호"
-                                    type="password"
-                                />
-                                <Grid mystyles="position: relative">
-                                    <Button
-                                        disabled
-                                        mystyles="width: 70px; height: 32px; margin-left: -5px; background: #fdfdfd; color: #05240E; border: none; pointer-events: none"
-                                    ></Button>
-                                    {passwordIsValid &&
-                                        passwordAfterRegex === password && (
-                                            <CheckBoxSharpIcon
-                                                style={{
-                                                    color: "green",
-                                                    position: "absolute",
-                                                    left: 0,
-                                                    marginLeft: "-30px",
-                                                    marginTop: "5px",
-                                                }}
-                                            ></CheckBoxSharpIcon>
-                                        )}
-                                    {password !== "" &&
-                                        !passwordIsValid &&
-                                        passwordAfterRegex === password && (
-                                            <DangerousIcon
-                                                style={{
-                                                    color: "red",
-                                                    position: "absolute",
-                                                    left: 0,
-                                                    marginLeft: "-30px",
-                                                    marginTop: "5px",
-                                                }}
-                                            ></DangerousIcon>
-                                        )}
-                                </Grid>
-                            </Grid>
-                            <Grid mystyles="width: 240px; height: 18px">
-                                <Text mystyles="font-size: 11px;">
-                                    {passwordCheckMessage}
-                                </Text>
+                    </Modal>
+                    <Modal open={secondModal} onClose={closeSecondModal}>
+                        <Grid mystyles="width: 300px; height: 300px; margin: auto; background: white; overflow: scroll; position: absolute; top: 50%; left:50%; transform: translate(-50%, -50%)">
+                            <Text>개인정보 취급방침 동의</Text>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="margin: 30px 0px;"
+                            >
+                                <Button
+                                    onClick={agreeSecond}
+                                    mystyles="width: 200px;"
+                                >
+                                    동의하기
+                                </Button>
                             </Grid>
                         </Grid>
-                        <Grid
-                            flex
-                            direction="column"
-                            mystyles="padding-left: 50px;margin-top: 12px;"
-                        >
-                            <Grid flex>
-                                <Input
-                                    mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; "
-                                    defaultValue={passwordConfirmValue}
-                                    onChange={passwordConfirmChange}
-                                    placeholder="비밀번호 확인"
-                                    type="password"
-                                />
-                                <Grid mystyles="position: relative">
-                                    <Button
-                                        disabled
-                                        mystyles="width: 70px; height: 32px; margin-left: -5px; background: #fdfdfd; color: #05240E; border: none; pointer-events: none"
-                                    ></Button>
-                                    {passwordConfirmIsValid &&
-                                        passwordConfirmAfterRegex ===
-                                            passwordConfirm && (
-                                            <CheckBoxSharpIcon
-                                                style={{
-                                                    color: "green",
-                                                    position: "absolute",
-                                                    left: 0,
-                                                    marginLeft: "-30px",
-                                                    marginTop: "5px",
-                                                }}
-                                            ></CheckBoxSharpIcon>
-                                        )}
-                                    {passwordConfirm !== "" &&
-                                        !passwordConfirmIsValid &&
-                                        passwordConfirmAfterRegex !==
-                                            passwordConfirm && (
-                                            <DangerousIcon
-                                                style={{
-                                                    color: "red",
-                                                    position: "absolute",
-                                                    left: 0,
-                                                    marginLeft: "-30px",
-                                                    marginTop: "5px",
-                                                }}
-                                            ></DangerousIcon>
-                                        )}
-                                </Grid>
-                            </Grid>
-                            <Grid mystyles="width: 240px; height: 12px">
-                                <Text mystyles="font-size: 11px;">
-                                    {passwordConfirmCheckMessage}
-                                </Text>
+                    </Modal>
+                    <Modal open={thirdModal} onClose={closeThirdModal}>
+                        <Grid mystyles="width: 300px; height: 300px; margin: auto; background: white; overflow: scroll; position: absolute; top: 50%; left:50%; transform: translate(-50%, -50%)">
+                            <Text>위치정보 수집 동의</Text>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="margin: 30px 0px;"
+                            >
+                                <Button
+                                    onClick={agreeThird}
+                                    mystyles="width: 200px;"
+                                >
+                                    동의하기
+                                </Button>
                             </Grid>
                         </Grid>
-                        <Grid
-                            flex
-                            alignItems="center"
-                            justifyContent="center"
-                            direction="column"
-                            mystyles=" padding-left: 50px; margin-top: 40px;"
-                        >
-                            <Grid>
-                                <Text
-                                    mystyles="font-weight: 700; font-size: 12px; color: #05240E;
-"
-                                >
-                                    약관 동의
-                                </Text>
-                            </Grid>
-                            <Grid flex mystyles=" margin-top: 20px;">
-                                {allAgree && (
-                                    <Grid
-                                        onClick={cancelAll}
-                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
-                                    >
-                                        <Grid mystyles="position: absolute; margin-top: -4px; ">
-                                            <DoneIcon
-                                                sx={{
-                                                    color: "white",
-                                                    fontSize: "14px",
-                                                    fontWeight: "700",
-                                                }}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                )}
-                                {!allAgree && (
-                                    <Grid
-                                        onClick={agreeAll}
-                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E;"
-                                    ></Grid>
-                                )}
-                                <Text
-                                    pointer
-                                    onClick={agreeAll}
-                                    mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E; width: 200px; "
-                                >
-                                    전체 동의
-                                </Text>
-                            </Grid>
-                            <Grid flex mystyles=" margin-top: 20px;">
-                                {firstAgree && (
-                                    <Grid
-                                        onClick={cancelAgreeFirst}
-                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
-                                    >
-                                        <Grid mystyles="position: absolute; margin-top: -4px; ">
-                                            <DoneIcon
-                                                sx={{
-                                                    color: "white",
-                                                    fontSize: "14px",
-                                                    fontWeight: "700",
-                                                }}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                )}
-                                {!firstAgree && (
-                                    <Grid
-                                        onClick={agreeFirst}
-                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E;"
-                                    ></Grid>
-                                )}
-                                <Text
-                                    pointer
-                                    onClick={openFirstModal}
-                                    mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E; width: 200px; "
-                                >
-                                    이용약관 동의 (필수)
-                                </Text>
-                                <Text
-                                    pointer
-                                    onClick={openFirstModal}
-                                    mystyles="font-weight: 400; font-size: 12px; color: rgba(5, 36, 14, 0.3);"
-                                >
-                                    내용 보기
-                                </Text>
-                            </Grid>
-                            <Grid flex mystyles=" margin-top: 20px;">
-                                {secondAgree && (
-                                    <Grid
-                                        onClick={cancelAgreeSecond}
-                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
-                                    >
-                                        <Grid mystyles="position: absolute; margin-top: -4px; ">
-                                            <DoneIcon
-                                                sx={{
-                                                    color: "white",
-                                                    fontSize: "14px",
-                                                    fontWeight: "700",
-                                                }}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                )}
-                                {!secondAgree && (
-                                    <Grid
-                                        onClick={agreeSecond}
-                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E;"
-                                    ></Grid>
-                                )}
-                                <Text
-                                    pointer
-                                    onClick={openSecondModal}
-                                    mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E; width: 200px; "
-                                >
-                                    개인정보 취급방침 동의 (필수)
-                                </Text>
-                                <Text
-                                    pointer
-                                    onClick={openSecondModal}
-                                    mystyles="font-weight: 400; font-size: 12px; color: rgba(5, 36, 14, 0.3);"
-                                >
-                                    내용 보기
-                                </Text>
-                            </Grid>
-                            <Grid flex mystyles=" margin-top: 20px;">
-                                {thirdAgree && (
-                                    <Grid
-                                        onClick={cancelAgreeThird}
-                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
-                                    >
-                                        <Grid mystyles="position: absolute; margin-top: -4px; ">
-                                            <DoneIcon
-                                                sx={{
-                                                    color: "white",
-                                                    fontSize: "14px",
-                                                    fontWeight: "700",
-                                                }}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                )}
-                                {!thirdAgree && (
-                                    <Grid
-                                        onClick={agreeThird}
-                                        mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E;"
-                                    ></Grid>
-                                )}
-                                <Text
-                                    pointer
-                                    onClick={openThirdModal}
-                                    mystyles="font-weight: 400; font-size: 12px; margin-left: 7px; color: #05240E; width: 200px; "
-                                >
-                                    위치정보 수집 동의 (필수)
-                                </Text>
-                                <Text
-                                    pointer
-                                    onClick={openThirdModal}
-                                    mystyles="font-weight: 400; font-size: 12px; color: rgba(5, 36, 14, 0.3);"
-                                >
-                                    내용 보기
-                                </Text>
-                            </Grid>
-                        </Grid>
-                        <Modal open={firstModal} onClose={closeFirstModal}>
-                            <Grid mystyles="width: 300px; height: 300px; margin: auto; background: white; overflow: scroll; position: absolute; top: 50%; left:50%; transform: translate(-50%, -50%)">
-                                <Text>이용약관 동의</Text>
-                                <Grid
-                                    flex
-                                    alignItems="center"
-                                    justifyContent="center"
-                                    mystyles="margin: 30px 0px;"
-                                >
-                                    <Button
-                                        onClick={agreeFirst}
-                                        mystyles="width: 200px;"
-                                    >
-                                        동의하기
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Modal>
-                        <Modal open={secondModal} onClose={closeSecondModal}>
-                            <Grid mystyles="width: 300px; height: 300px; margin: auto; background: white; overflow: scroll; position: absolute; top: 50%; left:50%; transform: translate(-50%, -50%)">
-                                <Text>개인정보 취급방침 동의</Text>
-                                <Grid
-                                    flex
-                                    alignItems="center"
-                                    justifyContent="center"
-                                    mystyles="margin: 30px 0px;"
-                                >
-                                    <Button
-                                        onClick={agreeSecond}
-                                        mystyles="width: 200px;"
-                                    >
-                                        동의하기
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Modal>
-                        <Modal open={thirdModal} onClose={closeThirdModal}>
-                            <Grid mystyles="width: 300px; height: 300px; margin: auto; background: white; overflow: scroll; position: absolute; top: 50%; left:50%; transform: translate(-50%, -50%)">
-                                <Text>위치정보 수집 동의</Text>
-                                <Grid
-                                    flex
-                                    alignItems="center"
-                                    justifyContent="center"
-                                    mystyles="margin: 30px 0px;"
-                                >
-                                    <Button
-                                        onClick={agreeThird}
-                                        mystyles="width: 200px;"
-                                    >
-                                        동의하기
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Modal>
-                        <Grid
-                            flex
-                            alignItems="center"
-                            justifyContent="center"
-                            mystyles="margin-top: 240px;"
-                        >
-                            <Grid mystyles="width: 8px; height: 8px; border-radius: 8px; border: 0.5px solid #05240E; background: #05240E"></Grid>
-                            <Grid mystyles="margin-left: 16px; width: 8px; height: 8px; border-radius: 8px; border: 0.5px solid #05240E;"></Grid>
-                        </Grid>
-                        {firstPageComplete ? (
-                            <>
-                                <Grid
-                                    flex
-                                    alignItems="center"
-                                    justifyContent="center"
-                                    mystyles="margin-top: 20px;"
-                                >
-                                    <Button
-                                        mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px;"
-                                        onClick={signup}
-                                        animate={{ background: "#5CEB84" }}
-                                        transition={{ delay: 0.2 }}
-                                    >
-                                        다음
-                                    </Button>
-                                </Grid>
-                            </>
-                        ) : (
-                            <>
-                                {" "}
-                                <Grid
-                                    flex
-                                    alignItems="center"
-                                    justifyContent="center"
-                                    mystyles="margin-top: 20px;"
-                                >
-                                    <Button
-                                        mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px;"
-                                        onClick={signup}
-                                    >
-                                        다음
-                                    </Button>
-                                </Grid>
-                            </>
-                        )}
+                    </Modal>
+                    <Grid
+                        flex
+                        alignItems="center"
+                        justifyContent="center"
+                        mystyles="margin-top: 50px;"
+                    >
+                        <Grid mystyles="width: 8px; height: 8px; border-radius: 8px; border: 0.5px solid #05240E; background: #05240E"></Grid>
+                        <Grid mystyles="margin-left: 16px; width: 8px; height: 8px; border-radius: 8px; border: 0.5px solid #05240E;"></Grid>
                     </Grid>
-                </>
+                    {firstPageComplete ? (
+                        <>
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="margin-top: 20px;"
+                            >
+                                <Button
+                                    mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px;"
+                                    onClick={signup}
+                                    animate={{ background: "#5CEB84" }}
+                                    transition={{ delay: 0.2 }}
+                                >
+                                    다음
+                                </Button>
+                            </Grid>
+                        </>
+                    ) : (
+                        <>
+                            {" "}
+                            <Grid
+                                flex
+                                alignItems="center"
+                                justifyContent="center"
+                                mystyles="margin-top: 20px;"
+                            >
+                                <Button
+                                    mystyles="height: 40px; width: 300px; border: none; border: 1.5px solid #5CEB84; box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); background: white; font-weight: 700; font-size: 14px;"
+                                    onClick={signup}
+                                >
+                                    다음
+                                </Button>
+                            </Grid>
+                        </>
+                    )}
+                </Grid>
             )}
-            {page === 2 && (
-                <>
-                    <Grid mystyles="position: relative; margin-top: 41px;">
-                        <Grid mystyles="position: absolute; right: 10; margin-top: -10px;">
-                            <IconButton onClick={goBack}>
-                                <ChevronLeftIcon />
-                            </IconButton>
-                        </Grid>
-                        <Grid
-                            flex
-                            alignItems="center"
-                            justifyContent="center"
-                            mystyles="margin: auto; width: 173px;"
-                        >
-                            <Text mystyles="font-weight: 700; font-size: 16px;">
-                                회원가입
-                            </Text>
-                        </Grid>
-                    </Grid>
-                    <Mbti finalSignupValue={finalSignupValue} />
-                </>
-            )}
-        </Grid>
+            {page === 2 && <Mbti finalSignupValue={finalSignupValue} />}
+        </Container>
     );
 }

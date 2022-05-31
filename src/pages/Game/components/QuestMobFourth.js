@@ -72,7 +72,7 @@ export default function QuestMobFourth({
                             "내일 다시 도전하세요!"
                         ) : (
                             <>
-                                다시 도전하기 <span>최대 2번</span>
+                                다시 도전하기 <span>(최대 2번)</span>
                             </>
                         ),
                     img: MobLarge,
@@ -86,7 +86,7 @@ export default function QuestMobFourth({
                             "내일 다시 도전하세요!"
                         ) : (
                             <>
-                                다시 도전하기 <span>최대 2번</span>
+                                다시 도전하기 <span>(최대 2번)</span>
                             </>
                         ),
                     img: MobLarge,
@@ -161,7 +161,7 @@ const Title = styled.div`
     font-size: 40px;
     line-height: 1.15;
     text-align: center;
-    font-weight: 500;
+    font-weight: 700;
     color: #eb6042;
     text-align: center;
 `;

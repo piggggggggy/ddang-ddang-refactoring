@@ -23,7 +23,7 @@ export default function CompleteModal({ open, setComfirm, type }) {
                     onClick={() => setComfirm("point")}
                     style={{ marginBottom: 10, background: fragment.subColor }}
                 >
-                    <p>포인트 받기</p>
+                    <p>포인트 확인하기</p>
                 </BottomButton>
                 <BottomButton
                     onClick={() => setComfirm("quest")}

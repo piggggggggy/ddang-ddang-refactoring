@@ -300,6 +300,7 @@ const UserInfo = styled.div`
         text-overflow: ellipsis;
         & span {
             color: #266137;
+            font-weight: 700;
             padding-right: 4px;
         }
     }

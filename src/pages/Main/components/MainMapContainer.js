@@ -22,12 +22,12 @@ export default function MainMapContainer({ type, questList }) {
             case "time":
                 return {
                     text: "타임어택하러 가기",
-                    color: "#61B7FA",
+                    color: "#EDEA50",
                 };
             case "feed":
                 return {
                     text: "내 땅 점령하기",
-                    color: "#266137",
+                    color: "#61B7FA",
                 };
             default:
                 return {
@@ -78,7 +78,7 @@ export default function MainMapContainer({ type, questList }) {
                       })}
             </KakaoMapDefault>
             <MapFooter
-                style={{ background: questFragment(type).color }}
+                style={{ background: minmapFragment.color }}
                 onClick={() => navigate("/quest")}
             >
                 <p>{minmapFragment.text}</p>
@@ -109,6 +109,7 @@ const MapFooter = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 0 0 20px 20px;
     & p {
         font-size: 16px;
         font-weight: 700;

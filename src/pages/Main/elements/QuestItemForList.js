@@ -48,11 +48,11 @@ const Card = styled.div`
 
 const Icon = styled.div`
     width: 16px;
-    height: 16px;
+    height: 36px;
     margin-right: 7px;
     & img {
-        width: 100%;
-        height: 100%;
+        width: 16px;
+        height: 16px;
         object-fit: contain;
     }
 `;
