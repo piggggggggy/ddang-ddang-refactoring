@@ -16,19 +16,19 @@ export default function FeedItem(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    console.log(props.item.player.email);
     const playerEmail = props.item.player.email;
+    console.log(playerEmail);
 
     const { item, onClick, page, id, liked } = props;
-    console.log(item);
+
     const feedId = item.id;
-    console.log(liked);
+    console.log(feedId);
 
     // 좋아요
     const [counter, setCounter] = React.useState(item.likeCnt);
 
     const [likedByMe, setLikedByMe] = React.useState(liked);
-    console.log(likedByMe);
+
     const likeHandler = () => {
         if (likedByMe === true) {
             setLikedByMe(false);
@@ -48,14 +48,15 @@ export default function FeedItem(props) {
     };
 
     // 디테일 이미지
-    const [imagesArr, setImagesArr] = React.useState(
+    const [imagesArr, setImagesArr] = React.useState([
         item.image1_url,
         item.image2_url,
-        item.image3_url
-    );
+        item.image3_url,
+    ]);
+    console.log(imagesArr);
 
     // 댓글
-    const [commentArr, setCommentArr] = React.useState([...item.comments]);
+    const [commentArr, setCommentArr] = React.useState(item.comments);
     console.log(commentArr);
 
     const [commentIsOpen, setCommentIsOpen] = React.useState(false);
@@ -77,18 +78,20 @@ export default function FeedItem(props) {
         setComment("");
     };
 
-    // const createComment = () => {
-    //     dispatch(writeCommentsAxios(comment, token, feedId));
-
-    // };
-
     const createComment = async (comment) => {
         await api
             .post(`/api/feeds/${feedId}/comments`, { comment })
             .then((res) => {
                 console.log(res);
 
-                setCommentArr([...commentArr, res.data.comment.comment]);
+                const dataToAdd = {
+                    comment: res.data.comment.comment.comment,
+                    createdAt: res.data.comment.comment.createdAt,
+                    feedId: feedId,
+                    id: res.data.comment.id,
+                    player: res.data.comment.player,
+                };
+                setCommentArr([...commentArr, dataToAdd]);
                 // console.log(commentArr);
 
                 // commentArr.push({ comment });
@@ -110,6 +113,8 @@ export default function FeedItem(props) {
     };
 
     const deleteComment = async (commentId) => {
+        console.log(feedId, commentId);
+
         api.delete(`/api/feeds/${feedId}/comments/${commentId}`)
             .then((res) => {
                 console.log(res);
@@ -119,7 +124,6 @@ export default function FeedItem(props) {
                     })
                 );
                 console.log(commentArr);
-                commentArr.pop();
             })
             .catch((err) => {
                 console.log(err);
@@ -149,56 +153,53 @@ export default function FeedItem(props) {
                     </Text>
                 </Grid>
             </Grid>
-            {imagesArr !== null &&
-                imagesArr[0] !== null &&
-                imagesArr[1] !== null &&
-                imagesArr[2] !== null && (
-                    <Grid
-                        flex
-                        justifyContent="center"
-                        alignItems="center"
-                        mystyles="height: 15px; width: 50px; margin: auto; padding-right: 20px"
-                        onClick={detailHandler}
-                    >
-                        <Text
-                            pointer
-                            mystyles="font-weight: 800; font-size: 30px;"
-                        >
-                            ...
-                        </Text>
-                    </Grid>
-                )}
+            {(imagesArr[0] !== null ||
+                imagesArr[1] !== null ||
+                imagesArr[2] !== null) && (
+                <Grid
+                    flex
+                    justifyContent="center"
+                    alignItems="center"
+                    mystyles="height: 15px; width: 50px; margin: auto; padding-right: 20px"
+                    onClick={detailHandler}
+                >
+                    <Text pointer mystyles="font-weight: 800; font-size: 30px;">
+                        ...
+                    </Text>
+                </Grid>
+            )}
 
             <AnimatePresence>
                 {detailOpen && (
                     <>
-                        {imagesArr.map((image, idx) => (
-                            <>
-                                <Grid
-                                    flex
-                                    justifyContent="center"
-                                    alignItems="center"
-                                    initial={{ y: -250, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.1 }}
-                                    mystyles="height: 100px"
-                                >
-                                    <img
-                                        src={image !== null ? image : ""}
-                                        alt=""
-                                        style={
-                                            image !== null
-                                                ? {
-                                                      width: "70px",
-                                                      height: "70px",
-                                                      marginLeft: "10px",
-                                                  }
-                                                : {}
-                                        }
-                                    />
-                                </Grid>
-                            </>
-                        ))}
+                        <Grid flex>
+                            {imagesArr.map((image, idx) => (
+                                <>
+                                    <Grid
+                                        flex
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        initial={{ y: 50, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ delay: 0.1 }}
+                                        mystyles="height: 100px;"
+                                    >
+                                        <img
+                                            src={image !== null ? image : 0}
+                                            alt=""
+                                            style={
+                                                image !== null
+                                                    ? {
+                                                          width: "70px",
+                                                          height: "70px",
+                                                      }
+                                                    : {}
+                                            }
+                                        />
+                                    </Grid>
+                                </>
+                            ))}
+                        </Grid>
                     </>
                 )}
             </AnimatePresence>
@@ -249,13 +250,13 @@ export default function FeedItem(props) {
                                     mystyles="width: 100px;"
                                 >
                                     <Text mystyles="font-weight: 400; font-size: 8px;">
-                                        {comment?.createdAt?.substring(0, 10)}
+                                        {comment.createdAt.substring(0, 10)}
                                     </Text>
-                                    {playerEmail !== comment?.player?.email && (
+                                    {playerEmail === comment.player.email && (
                                         <Button
                                             mystyles="border: none;background-color: white;"
                                             onClick={() => {
-                                                deleteComment(comment?.id);
+                                                deleteComment(comment.id);
                                             }}
                                         >
                                             x
@@ -299,24 +300,3 @@ const Feed = styled(motion.li)`
     margin-left: -40px;
     position: relative;
 `;
-
-// const createComment = async (comment) => {
-//     await api
-//         .post(
-//             `/api/feeds/${feedId}/comments`,
-//             {
-//                 comment: comment,
-//             },
-//             {
-//                 headers: { Authorization: `Bearer ${token}` },
-//             }
-//         )
-//         .then((res) => {
-//             console.log(res);
-//             commentArr.push(comment);
-//             window.location.reload();
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };

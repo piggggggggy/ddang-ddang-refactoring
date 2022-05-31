@@ -3,7 +3,7 @@ import BottomPost from "./BottomPost";
 import FeedBottomPost from "./FeedBottomPost";
 import MapView from "./Map";
 
-export default function FooterContent() {
+export default function FooterContent(props) {
     const [tabIndex, setTabIndex] = useState(0);
 
     const changeTab = (index) => {
@@ -13,7 +13,11 @@ export default function FooterContent() {
 
     return (
         <>
-            <MapView tabIndex={tabIndex} changeTab={changeTab} />
+            <MapView
+                tabIndex={tabIndex}
+                changeTab={changeTab}
+                userData={props.userData}
+            />
             {tabIndex === 0 ? <BottomPost /> : <FeedBottomPost />}
         </>
     );

@@ -6,6 +6,7 @@ import Profile from "./components/Profile";
 import AchievementSummary from "./components/AchievementSummary";
 import MyRecord from "./components/MyRecord";
 import BackgroundPaper from "../MyPage/components/BackgroundPaper";
+import Badge from "../MyPage/components/Badge";
 import Achievement from "./components/Achievement";
 import MapView from "../MyPage/components/Map";
 import api from "../../modules/api";
@@ -46,7 +47,7 @@ export default function MyPageFinal() {
                     level: res.data.rows.profile[0].level,
                     mbti: res.data.rows.profile[0].mbti,
                     nickname: res.data.rows.profile[0].nickname,
-                    playerId: res.data.rows.profile[0].playerId,
+                    playerId: res.data.rows.profile[0].id,
                     points: res.data.rows.profile[0].points,
                     profileImg: res.data.rows.profile[0].profileImg,
                 };
@@ -129,13 +130,15 @@ export default function MyPageFinal() {
                                     userData={userData}
                                     feed={feed}
                                 />
-                                <MyRecord address={address} />
 
+                                <MyRecord address={address} />
+                                <Badge userData={userData} />
                                 <Achievement
                                     changeTab={changeTab}
                                     tabIndex={tabIndex}
+                                    userData={userData}
                                 />
-                                <FooterContent />
+                                <FooterContent userData={userData} />
                             </>
                         )}
                     </Grid>
