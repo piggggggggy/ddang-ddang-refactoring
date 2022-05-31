@@ -28,21 +28,23 @@ export default function Achievement(props) {
     return (
         <>
             <Grid>
-                <Grid flex direction="row" mystyles="margin-top: 30px;">
+                <Grid
+                    flex
+                    direction="row"
+                    mystyles="margin-top: 30px; position: relative; z-index:1001"
+                >
                     <TabCard
                         style={
                             props.tabIndex === false
                                 ? {
-                                      background: "#266137",
-                                      color: "white",
+                                      background: "white",
+                                      color: "black",
                                       zIndex: 2,
-                                      boxShadow:
-                                          "1px 1px 0 3px rgba(0, 0, 0, 0.05)",
+                                      height: "43px",
                                   }
                                 : {
-                                      background: "white",
-                                      boxShadow:
-                                          "1px 1px 0 3px rgba(0, 0, 0, 0.05)",
+                                      color: "white",
+                                      background: "#266137",
                                   }
                         }
                         onClick={props.changeTab}
@@ -54,18 +56,16 @@ export default function Achievement(props) {
                         style={
                             props.tabIndex === true
                                 ? {
-                                      background: "#266137",
-                                      color: "white",
+                                      background: "white",
+                                      color: "black",
                                       marginLeft: "-10px",
                                       zIndex: 2,
-                                      boxShadow:
-                                          "-3px 1px 0 3px rgba(0, 0, 0, 0.05)",
+                                      height: "43px",
                                   }
                                 : {
-                                      background: "white",
+                                      color: "white",
+                                      background: "#266137",
                                       marginLeft: "-10px",
-                                      boxShadow:
-                                          "1px 1px 1px 0 rgba(0, 0, 0, 0.05)",
                                   }
                         }
                     >
@@ -76,7 +76,7 @@ export default function Achievement(props) {
                     flex
                     alignItems="center"
                     direction="column"
-                    mystyles="box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.05); width: 100%; height: 440px; border-radius: 10px; margin-top:-5px; padding: 10px; overflow: scroll"
+                    mystyles="box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); width: 100%; height: 440px; border-radius: 10px; margin-top:-5px; padding: 10px; overflow: scroll; position: relative; z-index: 1002"
                 >
                     {props.tabIndex === false && (
                         <>
@@ -157,7 +157,8 @@ const TabCard = styled(motion.div)`
     width: 116px;
     height: 40px;
     background-color: white;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;

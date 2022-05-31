@@ -179,7 +179,7 @@ export default function FeedItem(props) {
                                         flex
                                         justifyContent="center"
                                         alignItems="center"
-                                        initial={{ y: -250, opacity: 0 }}
+                                        initial={{ y: 50, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{ delay: 0.1 }}
                                         mystyles="height: 100px;"

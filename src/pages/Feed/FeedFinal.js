@@ -10,6 +10,7 @@ import FeedItem from "./components/FeedItem";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FeedsService from "../../services/feed.service";
+import Blue from "../../assets/images/png/blue-marker-circle.png";
 
 export default function Feed() {
     const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
@@ -195,10 +196,10 @@ export default function Feed() {
                                     lng: parseFloat(feedLocation[1]).toFixed(4),
                                 }}
                                 image={{
-                                    src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", //
+                                    src: Blue,
                                     size: {
-                                        widht: 24,
-                                        height: 35,
+                                        widht: 14,
+                                        height: 14,
                                     },
                                 }}
                             ></MapMarker>

@@ -14,6 +14,7 @@ import AuthService from "../../../services/auth.service";
 import TokenService from "../../../services/token.service";
 import { userActions } from "../../../store/slices/userSlice";
 import ToastPageMsg from "../../../elements/ToastMsgPage";
+import splashmp4 from "../../../assets/images/png/sign/NDND_splash.mp4";
 
 export default function SigninFinal() {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function SigninFinal() {
     const [onToast, setOnToast] = useState(false);
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const changeEmail = (e) => {
         setEmail(e.target.value);
@@ -46,7 +48,14 @@ export default function SigninFinal() {
             const tokenFullString = response.headers.accesstoken;
             const tokenArr = tokenFullString.split(" ");
             dispatch(userActions.signin({ user, token: tokenArr[1] }));
-            navigate("/");
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 3000);
+
+            setIsLoading(true);
+            setTimeout(() => {
+                navigate("/");
+            }, 3000);
         } catch (error) {
             console.log(error);
             setOnToast(true);
@@ -56,6 +65,31 @@ export default function SigninFinal() {
     const moveToSignupPage = () => {
         navigate("/signup/1");
     };
+
+    if (isLoading) {
+        return (
+            <Container>
+                {/* <Grid flex alignItems="center" justifyContent="center">
+                    <img
+                        src={loadingSpinnerGif}
+                        alt=""
+                        style={{ width: "50%", height: "50%" }}
+                    />
+                </Grid> */}
+
+                <video
+                    width="100%"
+                    height="100%"
+                    preload="auto"
+                    muted
+                    autoPlay={true}
+                >
+                    <source src={splashmp4} type="video/mp4" />
+                    Your browser does not support HTML5 video.
+                </video>
+            </Container>
+        );
+    }
 
     return (
         <Container>
