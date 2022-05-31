@@ -6,6 +6,7 @@ import Profile from "./components/Profile";
 import AchievementSummary from "./components/AchievementSummary";
 import MyRecord from "./components/MyRecord";
 import BackgroundPaper from "../MyPage/components/BackgroundPaper";
+import Badge from "../MyPage/components/Badge";
 import Achievement from "./components/Achievement";
 import MapView from "../MyPage/components/Map";
 import api from "../../modules/api";
@@ -130,11 +131,13 @@ export default function MyPageFinal() {
                                     userData={userData}
                                     feed={feed}
                                 />
-                                <MyRecord address={address} />
 
+                                <MyRecord address={address} />
+                                <Badge userData={userData} />
                                 <Achievement
                                     changeTab={changeTab}
                                     tabIndex={tabIndex}
+                                    userData={userData}
                                 />
                                 <FooterContent />
                             </>
