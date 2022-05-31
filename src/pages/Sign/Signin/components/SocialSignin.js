@@ -14,45 +14,6 @@ import { useNavigate } from "react-router-dom";
 import { userActions } from "../../../../store/slices/userSlice";
 
 const SocialSignin = (props) => {
-    // onClick={() => window.location.replace(KAKAO_OAUTH_URL)}
-
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const kakaologin = async () => {
-        try {
-            const response = await axios.get(
-                "http://localhost:8080/api/players/kakao"
-            );
-
-            console.log(response);
-
-            const user = {
-                email: response.data.user.email,
-                expPoints: response.data.user.expPoints,
-                level: response.data.user.level,
-                mbti: response.data.user.mbti,
-                nickname: response.data.user.nickname,
-                playerId: response.data.user.playerId,
-                points: response.data.user.points,
-                profileImg: response.data.user.profileImg,
-            };
-
-            TokenService.setAccessToken(response.headers["accesstoken"]);
-
-            const tokenFullString = response.headers.accesstoken;
-            const tokenArr = tokenFullString.split(" ");
-
-            console.log(tokenArr);
-
-            dispatch(userActions.signin({ user, token: tokenArr[1] }));
-
-            // navigate("/");
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
     return (
         <>
             <div>
@@ -66,7 +27,7 @@ const SocialSignin = (props) => {
                     </KakaoBtn>
                 </a>
             </div>
-            <br />
+            {/* <br />
             <br />
             <br />
             <div>
@@ -79,7 +40,7 @@ const SocialSignin = (props) => {
                         <GoogleText>구글로 시작하기</GoogleText>
                     </GoogleBtn>
                 </a>
-            </div>
+            </div> */}
         </>
     );
 };
