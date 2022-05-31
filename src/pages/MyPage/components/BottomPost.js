@@ -5,6 +5,7 @@ import api from "../../../modules/api";
 
 export default function BottomPost() {
     const [posts, setPosts] = useState([]);
+    console.log(posts);
     const [currentPage, setCurrentPage] = useState(1);
     const setPage = (index) => {
         if (index === currentPage) return;
