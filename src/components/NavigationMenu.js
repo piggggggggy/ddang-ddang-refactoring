@@ -52,9 +52,6 @@ export default function NavigationMenu({ index, isSelected }) {
             // console.log(`성공했음 ${data.si} ${data.gu} ${data.dong}`);
             const { si, gu, dong } = data;
             // setRoomName(si + gu + dong);
-            setSi(si)
-            setGu(gu)
-            setDong(dong)
             return data;
         } catch (err) {
             console.log(err);
@@ -88,6 +85,11 @@ export default function NavigationMenu({ index, isSelected }) {
                 navigate("/feed");
                 return;
             case 3:
+                console.log(userData.playerId)
+                console.log(userData.nickname)
+                console.log(si)
+                console.log(gu)
+                console.log(dong)
                 if (userData.playerId && userData.nickname && si && gu && dong) {
                     navigate(`/chat/${userData.playerId}/${userData.nickname}/${si}/${gu}/${dong}`);
                 }
