@@ -31,6 +31,7 @@ export default function SigninFinal() {
         setPassword(e.target.value);
     };
 
+    console.log("test");
     const siginin = async () => {
         try {
             const response = await AuthService.login(email, password);
