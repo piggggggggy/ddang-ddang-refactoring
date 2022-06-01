@@ -66,6 +66,7 @@ const ChatPage = () => {
 
     useEffect(() => {
         socket.on("getMessage", (msg) => {
+            console.log(msg);
             setMemberCnt(msg.memberCnt);
             if (msg.id !== socket.id) {
                 setChatHistory((prevMsg) => [...prevMsg, msg]);
@@ -259,9 +260,7 @@ const ChatPage = () => {
                                                           )
                                                         : null}
                                                 </div>
-                                                {/* <div>
-                                                    {chat.nickname}
-                                                </div> */}
+                                                <div>{chat.nickname}</div>
                                             </>
                                         ) : (
                                             <>
