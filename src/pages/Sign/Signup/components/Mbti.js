@@ -1,11 +1,16 @@
 import React from "react";
-import { signupAxios } from "../../../../store/thunk-actions/userActions";
+import {
+    signupAxios,
+    kakaoLogin,
+} from "../../../../store/thunk-actions/userActions";
+import { useLocation } from "react-router";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Grid, Text, Image, Button } from "../../elements/index";
 import logo from "../../../../assets/images/png/sign/logo.png";
 
 export default function Mbti(props) {
+    const { state } = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [finalSignupValue, setFinalSignupValue] = React.useState({
@@ -52,24 +57,38 @@ export default function Mbti(props) {
     };
 
     const signupComplete = () => {
-        const email = props.finalSignupValue.email;
-        const nickname = props.finalSignupValue.nickname;
-        const password = props.finalSignupValue.password;
-        const myMbti = mbti;
-        console.log(myMbti);
-        const profileImg = "0";
-        if (mbti.length === 4) {
-            dispatch(
-                signupAxios(
-                    email,
-                    nickname,
-                    password,
-                    myMbti,
-                    profileImg,
-                    (url) => navigate(url)
-                )
-            );
-        } else if (mbti.length !== 4) {
+        try {
+            const myMbti = mbti;
+            const profileImg = "0";
+
+
+            if (props.finalSignupValue) {
+                const { email, password, nickname } = props.finalSignupValue;
+
+                if (mbti.length === 4) {
+                    dispatch(
+                        signupAxios(
+                            email,
+                            nickname,
+                            password,
+                            myMbti,
+                            profileImg,
+                            (url) => navigate(url)
+                        )
+                    );
+                } else if (mbti.length !== 4) {
+                }
+            } else if (state.data) {
+                const { getKakaoMbti, playerId } = state.data;
+                if (getKakaoMbti === "" && playerId > 0) {
+                    dispatch(
+                        kakaoLogin(playerId, mbti, (url) => navigate(url))
+                    );
+                }
+            }
+            console.log("끝");
+        } catch (err) {
+            console.log(err);
         }
     };
 
