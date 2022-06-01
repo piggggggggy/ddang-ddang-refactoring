@@ -66,6 +66,7 @@ const ChatPage = () => {
 
     useEffect(() => {
         socket.on("getMessage", (msg) => {
+            console.log(msg);
             setMemberCnt(msg.memberCnt);
             if (msg.id !== socket.id) {
                 setChatHistory((prevMsg) => [...prevMsg, msg]);
@@ -115,7 +116,7 @@ const ChatPage = () => {
     window.addEventListener("load", (event) => {
         event.preventDefault();
         exitRoom();
-    })
+    });
 
     return (
         <Container
@@ -151,9 +152,7 @@ const ChatPage = () => {
                 </Text>
                 <div>
                     {si} {gu} {dong}
-                    <p>
-                        현재 참여 인원: {memberCnt ? memberCnt : 0}
-                    </p>
+                    <p>현재 참여 인원: {memberCnt ? memberCnt : 0}</p>
                 </div>
             </Grid>
             <Grid mystyles="position: relative; margin-top: 5px">
@@ -176,136 +175,179 @@ const ChatPage = () => {
                                         {Number(chat.userId) ===
                                         Number(userId) ? (
                                             <>
-                                                {
-                                                    chat.message.length <= 17 ?
+                                                {chat.message.length <= 17 ? (
                                                     <motion.div
-                                                        initial={{ x: 250, opacity: 0 }}
-                                                        animate={{ x: 0, opacity: 1 }}
-                                                        transition={{ delay: 0.2 }}
+                                                        initial={{
+                                                            x: 250,
+                                                            opacity: 0,
+                                                        }}
+                                                        animate={{
+                                                            x: 0,
+                                                            opacity: 1,
+                                                        }}
+                                                        transition={{
+                                                            delay: 0.2,
+                                                        }}
                                                         style={{
                                                             color: "white",
                                                             backgroundColor:
                                                                 "rgba(59, 224, 107, 1)",
                                                             borderTopRightRadius:
                                                                 "25px",
-                                                            borderTopLeftRadius: "30px",
+                                                            borderTopLeftRadius:
+                                                                "30px",
                                                             borderBottomLeftRadius:
                                                                 "30px",
                                                             width: "230px",
                                                             marginLeft: "auto",
                                                             height: "40px",
                                                             display: "flex",
-                                                            alignItems: "center",
+                                                            alignItems:
+                                                                "center",
                                                             padding: "20px",
-                                                            wordBreak: "break-all",
+                                                            wordBreak:
+                                                                "break-all",
                                                             marginTop: "20px",
                                                         }}
                                                     >
                                                         {chat.message}
                                                     </motion.div>
-                                                    :
+                                                ) : (
                                                     <motion.div
-                                                        initial={{ x: 250, opacity: 0 }}
-                                                        animate={{ x: 0, opacity: 1 }}
-                                                        transition={{ delay: 0.2 }}
+                                                        initial={{
+                                                            x: 250,
+                                                            opacity: 0,
+                                                        }}
+                                                        animate={{
+                                                            x: 0,
+                                                            opacity: 1,
+                                                        }}
+                                                        transition={{
+                                                            delay: 0.2,
+                                                        }}
                                                         style={{
                                                             color: "white",
                                                             backgroundColor:
                                                                 "rgba(59, 224, 107, 1)",
                                                             borderTopRightRadius:
                                                                 "25px",
-                                                            borderTopLeftRadius: "30px",
+                                                            borderTopLeftRadius:
+                                                                "30px",
                                                             borderBottomLeftRadius:
                                                                 "30px",
                                                             width: "230px",
                                                             marginLeft: "auto",
                                                             height: "80px",
                                                             display: "flex",
-                                                            alignItems: "center",
+                                                            alignItems:
+                                                                "center",
                                                             padding: "20px",
-                                                            wordBreak: "break-all",
+                                                            wordBreak:
+                                                                "break-all",
                                                             marginTop: "20px",
                                                         }}
                                                     >
                                                         {chat.message}
                                                     </motion.div>
-
-                                                }
-                                                <div style={{ fontSize: '8px' }}>
-                                                    {chat.createdAt ? chat.createdAt.substring(0, 10) : null}
+                                                )}
+                                                <div
+                                                    style={{ fontSize: "8px" }}
+                                                >
+                                                    {chat.createdAt
+                                                        ? chat.createdAt.substring(
+                                                              0,
+                                                              10
+                                                          )
+                                                        : null}
                                                 </div>
-                                                <div>
-                                                    {chat.nickname}
-                                                </div>
+                                                <div>{chat.nickname}</div>
                                             </>
                                         ) : (
                                             <>
-                                            {chat.message.length <= 17 ? 
-                                                <motion.div
-                                                    initial={{
-                                                        x: -250,
-                                                        opacity: 0,
-                                                    }}
-                                                    animate={{ x: 0, opacity: 1 }}
-                                                    transition={{ delay: 0.2 }}
-                                                    style={{
-                                                        color: "blue",
-                                                        backgroundColor:
-                                                            "rgba(243, 243, 243, 1)",
-                                                        borderTopRightRadius:
-                                                            "25px",
-                                                        borderTopLeftRadius: "30px",
-                                                        borderBottomRightRadius:
-                                                            "30px",
-                                                        width: "230px",
-                                                        height: "40px",
-                                                        marginTop: "20px",
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        padding: "20px",
-                                                        wordBreak: "break-all",
-                                                        marginTop: "20px",
-                                                    }}
-                                                >
-                                                    {chat.message}
-                                                </motion.div>
-                                                :
-                                                <motion.div
-                                                    initial={{
-                                                        x: -250,
-                                                        opacity: 0,
-                                                    }}
-                                                    animate={{ x: 0, opacity: 1 }}
-                                                    transition={{ delay: 0.2 }}
-                                                    style={{
-                                                        color: "blue",
-                                                        backgroundColor:
-                                                            "rgba(243, 243, 243, 1)",
-                                                        borderTopRightRadius:
-                                                            "25px",
-                                                        borderTopLeftRadius: "30px",
-                                                        borderBottomRightRadius:
-                                                            "30px",
-                                                        width: "230px",
-                                                        height: "80px",
-                                                        marginTop: "20px",
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        padding: "20px",
-                                                        wordBreak: "break-all",
-                                                        marginTop: "20px",
-                                                    }}
-                                                >
-                                                    {chat.message}
-                                                </motion.div>
-
-                                            }
+                                                {chat.message.length <= 17 ? (
+                                                    <motion.div
+                                                        initial={{
+                                                            x: -250,
+                                                            opacity: 0,
+                                                        }}
+                                                        animate={{
+                                                            x: 0,
+                                                            opacity: 1,
+                                                        }}
+                                                        transition={{
+                                                            delay: 0.2,
+                                                        }}
+                                                        style={{
+                                                            color: "blue",
+                                                            backgroundColor:
+                                                                "rgba(243, 243, 243, 1)",
+                                                            borderTopRightRadius:
+                                                                "25px",
+                                                            borderTopLeftRadius:
+                                                                "30px",
+                                                            borderBottomRightRadius:
+                                                                "30px",
+                                                            width: "230px",
+                                                            height: "40px",
+                                                            marginTop: "20px",
+                                                            display: "flex",
+                                                            alignItems:
+                                                                "center",
+                                                            padding: "20px",
+                                                            wordBreak:
+                                                                "break-all",
+                                                            marginTop: "20px",
+                                                        }}
+                                                    >
+                                                        {chat.message}
+                                                    </motion.div>
+                                                ) : (
+                                                    <motion.div
+                                                        initial={{
+                                                            x: -250,
+                                                            opacity: 0,
+                                                        }}
+                                                        animate={{
+                                                            x: 0,
+                                                            opacity: 1,
+                                                        }}
+                                                        transition={{
+                                                            delay: 0.2,
+                                                        }}
+                                                        style={{
+                                                            color: "blue",
+                                                            backgroundColor:
+                                                                "rgba(243, 243, 243, 1)",
+                                                            borderTopRightRadius:
+                                                                "25px",
+                                                            borderTopLeftRadius:
+                                                                "30px",
+                                                            borderBottomRightRadius:
+                                                                "30px",
+                                                            width: "230px",
+                                                            height: "80px",
+                                                            marginTop: "20px",
+                                                            display: "flex",
+                                                            alignItems:
+                                                                "center",
+                                                            padding: "20px",
+                                                            wordBreak:
+                                                                "break-all",
+                                                            marginTop: "20px",
+                                                        }}
+                                                    >
+                                                        {chat.message}
+                                                    </motion.div>
+                                                )}
                                                 <div>
-                                                    {chat.createdAt ? chat.createdAt.substring(0, 10) : null}
+                                                    {chat.createdAt
+                                                        ? chat.createdAt.substring(
+                                                              0,
+                                                              10
+                                                          )
+                                                        : null}
                                                 </div>
-                                                <div>
-                                                    {chat.nickname}
-                                                </div>
+                                                <div>{chat.nickname}</div>
                                             </>
                                         )}
                                     </div>

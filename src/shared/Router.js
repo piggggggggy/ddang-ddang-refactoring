@@ -20,6 +20,7 @@ import GoogleRedirect from "../pages/Sign/Signin/components/googleRedirect";
 import Mbti from "../pages/Sign/Signup/components/Mbti";
 
 import API_TEST from "../APITEST";
+import ChatPage from "../pages/Chat/ChatPage";
 
 export default function AppRouter() {
     return (
@@ -37,7 +38,8 @@ export default function AppRouter() {
             <Route path="/ranking" element={<Ranking />} />
             <Route
                 path="/chat/:userId/:nickname/:si/:gu/:dong"
-                element={<Chat />}
+                // element={<Chat />}
+                element={<ChatPage />}
             />
             <Route exact path="/landing" element={<LandingPage />} />
 

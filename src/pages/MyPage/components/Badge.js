@@ -8,6 +8,9 @@ import Silver from "../../../assets/images/png/mypage/silver.png";
 import Gold from "../../../assets/images/png/mypage/gold.png";
 import Platinum from "../../../assets/images/png/mypage/platinum.png";
 import Diamond from "../../../assets/images/png/mypage/diamond.png";
+import Feed from "../../../assets/images/png/feed-medium.png";
+import Monster from "../../../assets/images/png/mob-medium.png";
+import Time from "../../../assets/images/png/time-medium.png";
 
 export default function Badge(props) {
     console.log(props.userData);
@@ -34,31 +37,98 @@ export default function Badge(props) {
                     initial={{ x: -250, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    mystyles="box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);border-radius: 8px; width: 112px; width: 112px; height: 72px;height: 72px;"
+                    mystyles="box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);border-radius: 8px; width: 112px; width: 112px; height: 90px;"
                 >
-                    <BadgeIcon src={Badges[props.userData.badge.mob]} />
+                    <Grid
+                        flex
+                        alignItems="center"
+                        justifyContent="center"
+                        mystyles="position: relative;"
+                    >
+                        <BadgeIcon src={Badges[props.userData.badge.mob]} />
+                        <img
+                            src={Monster}
+                            alt=""
+                            style={{
+                                height: "20px",
+                                width: "20px",
+                                position: "absolute",
+                                left: 0,
+                                marginLeft: "42px",
+                                marginTop: "12px",
+                            }}
+                        />
+                    </Grid>
                 </Grid>
                 <Grid
                     flex
+                    direction="column"
                     alignItems="center"
                     justifyContent="center"
                     initial={{ x: -250, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    mystyles="box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);border-radius: 8px; width: 112px; height: 72px; margin-left:5px; margin-right:5px"
+                    mystyles="box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);border-radius: 8px; width: 112px; height: 90px; margin-left:5px; margin-right:5px"
                 >
-                    <BadgeIcon src={Badges[props.userData.badge.time]} />
+                    <Grid
+                        flex
+                        alignItems="center"
+                        justifyContent="center"
+                        mystyles="position: relative;"
+                    >
+                        <BadgeIcon src={Badges[props.userData.badge.time]} />
+                        <img
+                            src={Time}
+                            alt=""
+                            style={{
+                                height: "20px",
+                                width: "20px",
+                                position: "absolute",
+                                left: 0,
+                                marginLeft: "42px",
+                                marginTop: "15px",
+                            }}
+                        />
+                    </Grid>
                 </Grid>
                 <Grid
                     flex
+                    direction="column"
                     alignItems="center"
                     justifyContent="center"
                     initial={{ x: -250, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    mystyles="box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);border-radius: 8px; width: 112px; height: 72px;"
+                    mystyles="box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15);border-radius: 8px; width: 112px; height: 90px;"
                 >
-                    <BadgeIcon src={Badges[props.userData.badge.feed]} />
+                    <Grid
+                        flex
+                        alignItems="center"
+                        justifyContent="center"
+                        mystyles="position: relative;"
+                    >
+                        <img
+                            src={Badges[props.userData.badge.feed]}
+                            alt=""
+                            style={{
+                                width: "55px",
+                                height: "55px",
+                                marginTop: "10px",
+                            }}
+                        />
+                        <img
+                            src={Feed}
+                            alt=""
+                            style={{
+                                height: "20px",
+                                width: "20px",
+                                position: "absolute",
+                                left: 0,
+                                marginLeft: "45px",
+                                marginTop: "12px",
+                            }}
+                        />
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
@@ -66,6 +136,6 @@ export default function Badge(props) {
 }
 
 const BadgeIcon = styled(motion.img)`
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 65px;
 `;

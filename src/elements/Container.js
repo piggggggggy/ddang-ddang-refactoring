@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-export default function Container({ children }) {
-    return <Wrapper>{children}</Wrapper>;
+export default function Container({ children, color = "#fafafa" }) {
+    return (
+        <Wrapper style={color ? { background: color } : {}}>{children}</Wrapper>
+    );
 }
 
 const Wrapper = styled.div`
@@ -11,7 +13,7 @@ const Wrapper = styled.div`
     min-height: 100vh;
     margin: auto;
     box-sizing: border-box;
-    background: #fdfdfd;
+    background: #fafafa;
     overflow: hidden;
     /* border-radius: 25px; */
 `;

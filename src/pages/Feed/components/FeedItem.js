@@ -179,7 +179,7 @@ export default function FeedItem(props) {
                                         flex
                                         justifyContent="center"
                                         alignItems="center"
-                                        initial={{ y: -250, opacity: 0 }}
+                                        initial={{ y: 50, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{ delay: 0.1 }}
                                         mystyles="height: 100px;"
@@ -274,6 +274,7 @@ export default function FeedItem(props) {
                                 mystyles="width: 200px; height: 30px; box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05); border:none; background: #F4F4F4;"
                                 placeholder="댓글을 써주세요"
                                 onChange={commentChange}
+                                defaultValue={comment}
                             />
                             <Button
                                 onClick={writeComment}

@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BackDirectionIcon from "../../../../assets/images/icon/BackDirectionIcon";
 
-export default function SignupGnb({ text }) {
+export default function SignupGnb({ text, color = "#fff" }) {
     const navigate = useNavigate();
     return (
-        <Wrapper>
+        <Wrapper style={color ? { background: color } : {}}>
             <IconBox onClick={() => navigate(-1)}>
                 <BackDirectionIcon />
             </IconBox>
@@ -25,7 +25,8 @@ const Wrapper = styled.div`
     max-width: 428px;
     padding: 20px 36px;
     display: flex;
-    background: #fff;
+    background: #fafafa;
+    margin-top: 20px;
 `;
 const IconBox = styled.div`
     width: 30px;
