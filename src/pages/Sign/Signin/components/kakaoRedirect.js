@@ -21,9 +21,8 @@ export default function OAuth2RedirectHandler() {
 
     TokenService.setRefreshToken(code);
 
+    console.log(code);
     const kakaoLogin = async () => {
-        console.log(code);
-
         // 리프레쉬 토큰을 로컬스토리지에 저장
 
         try {
@@ -40,15 +39,12 @@ export default function OAuth2RedirectHandler() {
                 }
             );
 
-            // console.log(response)
-
             // 가져온 엑세스 토큰을 로컬스토리지 저장
             const accesstoken = response.headers["accesstoken"];
             TokenService.setAccessToken(accesstoken);
 
             // auth를 이용해 데이터를 가져온다.
             const infodata = await api.get("/api/players/auth");
-            console.log(infodata);
             const { mbti, playerId } = infodata.data.user;
 
             dispatch(
@@ -67,60 +63,13 @@ export default function OAuth2RedirectHandler() {
             } else {
                 navigate("/");
             }
-
-            // console.log(isMbti);
-            // setTimeout(() => {
-            //     setIsLoading(false);
-            // }, 3000);
-
-            // setIsLoading(true);
-            // setTimeout(() => {
-            //     navigate("/");
-            // }, 3000);
-
-            // setIsLoading(false);
         } catch (err) {
             console.log(err);
-        }
-
-        // // const moveToSignupPage = () => {
-        // //     navigate("/signup/1");
-        // };
-
-        if (isLoading) {
-            return (
-                <Container>
-                    {/* <Grid flex alignItems="center" justifyContent="center">
-                    <img
-                        src={loadingSpinnerGif}
-                        alt=""
-                        style={{ width: "50%", height: "50%" }}
-                    />
-                </Grid> */}
-
-                    <video
-                        width="100%"
-                        height="100%"
-                        preload="auto"
-                        muted
-                        autoPlay={true}
-                    >
-                        <source src={splashmp4} type="video/mp4" />
-                        Your browser does not support HTML5 video.
-                    </video>
-                </Container>
-            );
         }
     };
 
     React.useEffect(() => {
-        // kakaoLogin(navigate("/mbti"));
         kakaoLogin((url) => navigate(url));
-        // if (isMbti) {
-        //     console.log(isMbti);
-        //     navigate("/sign/signup");
-        // }
-        // console.log(isMbti);
     }, []);
 
     return <></>;
