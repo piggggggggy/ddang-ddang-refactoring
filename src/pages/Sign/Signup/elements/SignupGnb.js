@@ -25,7 +25,8 @@ const Wrapper = styled.div`
     max-width: 428px;
     padding: 20px 36px;
     display: flex;
-    background: #fff;
+    background: #fafafa;
+    margin-top: 20px;
 `;
 const IconBox = styled.div`
     width: 30px;

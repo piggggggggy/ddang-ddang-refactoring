@@ -7,6 +7,9 @@ export default function ChatBalloon({ text, time, name, isMe }) {
         border-radius: 46px 46px ${isMe ? "0 46px" : "46px 0"};
         padding: 20px 40px;
         background: ${isMe ? "#3BE06B" : "#F3F3F3"};
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         & p {
             width: 100%;
