@@ -30,7 +30,7 @@ export default function GamePage() {
                 <CloseButton onClick={() => navigate(-1)}>
                     <CloseIcon color={"#fff"} />
                 </CloseButton>
-                <Title>{fragment.text}</Title>
+                <Title>{fragment.description}</Title>
                 {type === "mob" && <MobPaper type={type} questId={questId} />}
                 {type === "time" && <TimePaper type={type} questId={questId} />}
                 {type === "feed" && <FeedPaper type={type} questId={questId} />}
@@ -45,7 +45,7 @@ const CloseButton = styled.div`
     left: 30px;
 `;
 const Title = styled.p`
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     line-height: 1.15;
     color: #fff;

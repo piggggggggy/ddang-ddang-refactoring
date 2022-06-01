@@ -29,7 +29,9 @@ const Posts = ({ posts }) => {
                                 </Text>
                             </Grid>
                             <Grid mystyles="width: 630px; font-weight: 700; font-size: 12px; line-height: 14px; padding: 5px; margin-left: 10px;">
-                                <Text>{post.quest.title}</Text>
+                                <Text mystyles="font-weight: 700; font-size: 12px;">
+                                    {post.quest.title}
+                                </Text>
                                 <Text mystyles="font-weight: 400; font-size: 8px; margin-top: 5px;">
                                     {post.quest.description}
                                 </Text>

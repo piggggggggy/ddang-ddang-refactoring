@@ -6,6 +6,7 @@ import Profile from "./components/Profile";
 import AchievementSummary from "./components/AchievementSummary";
 import MyRecord from "./components/MyRecord";
 import BackgroundPaper from "../MyPage/components/BackgroundPaper";
+import Badge from "../MyPage/components/Badge";
 import Achievement from "./components/Achievement";
 import MapView from "../MyPage/components/Map";
 import api from "../../modules/api";
@@ -15,8 +16,12 @@ import FeedBottomPost from "../MyPage/components/FeedBottomPost";
 import ProfileSettings from "../MyPage/components/ProfileSettings";
 import KakaoService from "../../services/kakao.service";
 import RankingService from "../../services/ranking.service";
+import FooterContent from "./components/FooterContent";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/slices/userSlice";
 
 export default function MyPageFinal() {
+    const dispatch = useDispatch();
     const [userData, setUserData] = React.useState(null);
     const [feed, setFeed] = React.useState([]);
     const [address, setAddress] = React.useState({});
@@ -35,8 +40,19 @@ export default function MyPageFinal() {
 
         api.get("/api/players/mypage")
             .then((res) => {
-                console.log(res);
                 setUserData({ ...userData, ...res.data.rows });
+                const user = {
+                    email: res.data.rows.profile[0].email,
+                    expPoints: res.data.rows.profile[0].expPoints,
+                    level: res.data.rows.profile[0].level,
+                    mbti: res.data.rows.profile[0].mbti,
+                    nickname: res.data.rows.profile[0].nickname,
+                    playerId: res.data.rows.profile[0].id,
+                    points: res.data.rows.profile[0].points,
+                    profileImg: res.data.rows.profile[0].profileImg,
+                };
+
+                dispatch(userActions.loginCheck({ user }));
 
                 if (res.data.rows.achievedMission !== null) {
                     setFeed(
@@ -70,7 +86,6 @@ export default function MyPageFinal() {
 
     const profileOpen = () => {
         setPage(3);
-        console.log(page);
     };
 
     const [tabIndex, setTabIndex] = React.useState(false);
@@ -115,14 +130,15 @@ export default function MyPageFinal() {
                                     userData={userData}
                                     feed={feed}
                                 />
+
                                 <MyRecord address={address} />
+                                <Badge userData={userData} />
                                 <Achievement
                                     changeTab={changeTab}
                                     tabIndex={tabIndex}
+                                    userData={userData}
                                 />
-                                <MapView />
-                                <BottomPost />
-                                <FeedBottomPost />
+                                <FooterContent userData={userData} />
                             </>
                         )}
                     </Grid>

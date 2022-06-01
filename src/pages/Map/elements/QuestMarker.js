@@ -26,7 +26,7 @@ export default function QuestMarker(Props) {
     };
     return (
         <>
-            <MarkerWrapper>
+            <MarkerWrapper onClick={activateDetail}>
                 <MapMarker
                     zIndex={301}
                     position={{ lat: Props.lat, lng: Props.lng }}
@@ -37,7 +37,7 @@ export default function QuestMarker(Props) {
                             height: 14,
                         },
                     }}
-                    onClick={activateDetail}
+                    // onClick={activateDetail}
                 />
                 {distance <= 0.03 && (
                     <CustomOverlayMap

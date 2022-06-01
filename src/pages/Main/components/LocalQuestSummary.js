@@ -67,6 +67,7 @@ const Title = styled.p`
     padding: 0 34px;
     margin-bottom: 22px;
     & span {
+        font-weight: 700;
         color: #266137;
     }
 `;
@@ -91,7 +92,9 @@ const MoreButton = styled.div`
     justify-content: center;
     align-items: center;
     & p {
-        font-size: 20px;
+        font-size: 12px;
+
         font-weight: 700;
+        color: #999fab;
     }
 `;

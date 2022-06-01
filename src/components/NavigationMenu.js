@@ -2,28 +2,32 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import axios from 'axios';
+import axios from "axios";
 
 export default function NavigationMenu({ index, isSelected }) {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.user.user);
-    const [roomName, setRoomName] = useState(null);
+    // const [roomName, setRoomName] = useState(null);
+    const [si, setSi] = useState(null);
+    const [gu, setGu] = useState(null);
+    const [dong, setDong] = useState(null);
 
     useEffect(() => {
-        getPosition()
+        getPosition();
     }, []);
 
     // 좌표 찾기
     const [currentMapPosition, setCurrentMapPosition] = React.useState({});
-    console.log('currentMapPosition', currentMapPosition);
     const getPosition = () => {
         navigator.geolocation.getCurrentPosition(async (position) => {
-            console.log(position);
             setCurrentMapPosition({
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
             });
-            await getmyAddress(position.coords.latitude, position.coords.longitude);
+            await getmyAddress(
+                position.coords.latitude,
+                position.coords.longitude
+            );
         });
     };
 
@@ -44,10 +48,13 @@ export default function NavigationMenu({ index, isSelected }) {
                 gu: res?.data?.documents?.[0]?.address?.region_2depth_name,
                 dong: res?.data?.documents?.[0]?.address?.region_3depth_name,
             };
-    
+
             // console.log(`성공했음 ${data.si} ${data.gu} ${data.dong}`);
             const { si, gu, dong } = data;
-            setRoomName(si + gu + dong);
+            // setRoomName(si + gu + dong);
+            setSi(si)
+            setGu(gu)
+            setDong(dong)
             return data;
         } catch (err) {
             console.log(err);
@@ -55,7 +62,7 @@ export default function NavigationMenu({ index, isSelected }) {
     };
 
     /* */
-    
+
     const menuList = [
         { title: "홈" },
         { title: "랭킹" },
@@ -81,7 +88,14 @@ export default function NavigationMenu({ index, isSelected }) {
                 navigate("/feed");
                 return;
             case 3:
-                navigate(`/chat/${userData.playerId}/${userData.nickname}/${roomName}`);
+                console.log(userData.playerId)
+                console.log(userData.nickname)
+                console.log(si)
+                console.log(gu)
+                console.log(dong)
+                if (userData.playerId && userData.nickname && si && gu && dong) {
+                    navigate(`/chat/${userData.playerId}/${userData.nickname}/${si}/${gu}/${dong}`);
+                }
                 return;
             case 4:
                 navigate("/myPage");

@@ -8,14 +8,14 @@ export default function MyRecord(props) {
 
     return (
         <>
-            <Grid mystyles="margin-top: 40px; ">
+            <Grid mystyles="margin-top: 40px;">
                 <Grid mystyles="margin-bottom: 15px;">
                     <Text mystyles="font-weight: 700; font-size: 16px; color: #05240E;">
                         나의 기록
                     </Text>
                 </Grid>
 
-                <Grid flex mystyles="height: 170px; margin: auto;">
+                <Grid flex mystyles="height: 180px; margin: auto;">
                     <Grid mystyles="box-shadow: 1px 1px 4px 1px rgba(155, 155, 155, 0.15); border-radius: 4px;">
                         <Grid
                             flex
@@ -33,9 +33,9 @@ export default function MyRecord(props) {
                             direction="column"
                             alignItems="center"
                             justifyContent="center"
-                            mystyles="margin-top: 10px; border-radius: 0 0 4px 4px; padding: 16px"
+                            mystyles="margin-top: 15px; border-radius: 0 0 4px 4px; "
                         >
-                            <Text mystyles="font-weight: 700; font-size: 16px; color: #266137;">
+                            <Text mystyles="font-weight: 700; font-size: 16px; color: #266137; width: 100%; text-align: center">
                                 {address.gu} {address.dong}
                             </Text>
                             <Grid
