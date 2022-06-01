@@ -46,30 +46,30 @@ function App() {
         }
     }, []);
 
-    // if (isLoading) {
-    //     return (
-    //         <Container>
-    //             {/* <Grid flex alignItems="center" justifyContent="center">
-    //                 <img
-    //                     src={loadingSpinnerGif}
-    //                     alt=""
-    //                     style={{ width: "50%", height: "50%" }}
-    //                 />
-    //             </Grid> */}
+    if (isLoading) {
+        return (
+            <Container>
+                {/* <Grid flex alignItems="center" justifyContent="center">
+                    <img
+                        src={loadingSpinnerGif}
+                        alt=""
+                        style={{ width: "50%", height: "50%" }}
+                    />
+                </Grid> */}
 
-    //             <video
-    //                 width="100%"
-    //                 height="100%"
-    //                 preload="auto"
-    //                 muted
-    //                 autoPlay={true}
-    //             >
-    //                 <source src={splashmp4} type="video/mp4" />
-    //                 Your browser does not support HTML5 video.
-    //             </video>
-    //         </Container>
-    //     );
-    // }
+                <video
+                    width="100%"
+                    height="100%"
+                    preload="auto"
+                    muted
+                    autoPlay={true}
+                >
+                    <source src={splashmp4} type="video/mp4" />
+                    Your browser does not support HTML5 video.
+                </video>
+            </Container>
+        );
+    }
 
     return (
         <Container>
