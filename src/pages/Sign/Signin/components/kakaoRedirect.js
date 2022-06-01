@@ -10,19 +10,21 @@ import { userActions } from "../../../../store/slices/userSlice";
 import Mbti from "../../../Sign/Signup/components/Mbti";
 import KakaoLogin from "./kakaologin";
 
-export default async function OAuth2RedirectHandler() {
+export default function OAuth2RedirectHandler() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = React.useState(true);
     const [isMbti, setIsMbti] = React.useState(false);
+    const [page, setPage] = React.useState(1);
     //파라미터에서 리프레쉬 값가져오기
+    let code = new URL(window.location.href).searchParams.get("code");
+
+    TokenService.setRefreshToken(code);
 
     const kakaoLogin = async () => {
-        let code = new URL(window.location.href).searchParams.get("code");
         console.log(code);
 
         // 리프레쉬 토큰을 로컬스토리지에 저장
-        TokenService.setRefreshToken(code);
 
         try {
             //리프레쉬 토큰을 가지고 엑세스 토큰발행(로그인 과정)
@@ -47,7 +49,7 @@ export default async function OAuth2RedirectHandler() {
             // auth를 이용해 데이터를 가져온다.
             const infodata = await api.get("/api/players/auth");
             console.log(infodata);
-            const { mbti } = infodata.data.user;
+            const { mbti, playerId } = infodata.data.user;
 
             dispatch(
                 userActions.signin({
@@ -56,23 +58,25 @@ export default async function OAuth2RedirectHandler() {
                 })
             );
 
-            navigate("/mbti");
-
             if (mbti === "") {
                 console.log(mbti);
                 setIsMbti(true);
-                navigate("/mbti");
+                navigate("/mbti", {
+                    state: { data: { getKakaoMbti: mbti, playerId } },
+                });
+            } else {
+                navigate("/");
             }
 
-            console.log(isMbti);
-            setTimeout(() => {
-                setIsLoading(false);
-            }, 3000);
+            // console.log(isMbti);
+            // setTimeout(() => {
+            //     setIsLoading(false);
+            // }, 3000);
 
-            setIsLoading(true);
-            setTimeout(() => {
-                navigate("/");
-            }, 3000);
+            // setIsLoading(true);
+            // setTimeout(() => {
+            //     navigate("/");
+            // }, 3000);
 
             // setIsLoading(false);
         } catch (err) {
@@ -110,7 +114,8 @@ export default async function OAuth2RedirectHandler() {
     };
 
     React.useEffect(() => {
-        kakaoLogin();
+        // kakaoLogin(navigate("/mbti"));
+        kakaoLogin((url) => navigate(url));
         // if (isMbti) {
         //     console.log(isMbti);
         //     navigate("/sign/signup");
@@ -118,5 +123,5 @@ export default async function OAuth2RedirectHandler() {
         // console.log(isMbti);
     }, []);
 
-    return <>hello world</>;
+    return <></>;
 }

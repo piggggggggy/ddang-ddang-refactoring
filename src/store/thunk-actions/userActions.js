@@ -1,5 +1,6 @@
 import { userActions } from "../slices/userSlice";
 import api from "../../modules/api";
+import axios from "axios";
 import AuthService from "../../services/auth.service";
 import TokenService from "../../services/token.service";
 
@@ -136,11 +137,14 @@ export const profileUpdatesAxios = (profile, token, navigate) => {
     };
 };
 
-export const kakaoLogin = (code, navigate) => {
+export const kakaoLogin = (id, mbti, navigate) => {
     return async function (dispatch) {
         try {
-            // const response = await AthService.kakaoLogin(code);
-            return "token 보내줘야지";
+            const result = await api.post("/api/players/changeMbti", {
+                id,
+                mbti,
+            });
+            navigate("/");
         } catch (err) {
             console.log(err);
             navigate("/signin");
