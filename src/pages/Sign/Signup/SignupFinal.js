@@ -375,6 +375,14 @@ export default function SignupFinal() {
             <SignupGnb text={"회원가입"} />
             {page === 1 && (
                 <Grid mystyles="margin-top: 72px;">
+                    <Grid mystyles="margin-top: 130px; margin-left: 53px; margin-bottom: 30px;">
+                        <Text mystyles="font-weight: 700; font-size: 16px;">
+                            내 땅을 찾으러
+                        </Text>
+                        <Text mystyles="font-weight: 700; font-size: 16px;">
+                            함께 떠나요!
+                        </Text>
+                    </Grid>
                     <Grid
                         flex
                         alignItems="center"
@@ -382,7 +390,7 @@ export default function SignupFinal() {
                         mystyles="padding: 0 50px;"
                     >
                         <Input
-                            mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); background: #fdfdfd; padding-left: 5px; "
+                            mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5);  background: #fafafa; padding-left: 5px; "
                             defaultValue={emailValue}
                             onChange={emailChange}
                             placeholder="이메일"
@@ -423,7 +431,7 @@ export default function SignupFinal() {
                     </Grid>
                     <Grid flex mystyles="margin: 0 55px;">
                         <Grid mystyles="width: 240px; height: 12px;">
-                            <Text mystyles="font-size: 8px;">
+                            <Text mystyles="font-size: 8px; opacity: 30%">
                                 {emailCheckMessage}
                             </Text>
                         </Grid>
@@ -436,7 +444,7 @@ export default function SignupFinal() {
                             mystyles="padding: 0 50px;"
                         >
                             <Input
-                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px;background: #fdfdfd; "
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; background: #fafafa; "
                                 defaultValue={nicknameValue}
                                 onChange={nicknameChange}
                                 placeholder="닉네임"
@@ -477,7 +485,7 @@ export default function SignupFinal() {
                         </Grid>
                         <Grid flex mystyles="margin: 0 50px;">
                             <Grid mystyles="width: 240px; height: 12px">
-                                <Text mystyles="font-size: 8px;">
+                                <Text mystyles="font-size: 8px; opacity: 30%">
                                     {nicknameCheckMessage}
                                 </Text>
                             </Grid>
@@ -490,7 +498,7 @@ export default function SignupFinal() {
                     >
                         <Grid flex>
                             <Input
-                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; font-size: 12px; background: #fdfdfd;"
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; font-size: 12px;  background: #fafafa;"
                                 defaultValue={passwordValue}
                                 onChange={passwordChange}
                                 placeholder="비밀번호"
@@ -529,7 +537,7 @@ export default function SignupFinal() {
                             </Grid>
                         </Grid>
                         <Grid mystyles="width: 240px; height: 18px">
-                            <Text mystyles="font-size: 8px;">
+                            <Text mystyles="font-size: 8px; opacity: 30%">
                                 {passwordCheckMessage}
                             </Text>
                         </Grid>
@@ -541,7 +549,7 @@ export default function SignupFinal() {
                     >
                         <Grid flex>
                             <Input
-                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px; background: #fdfdfd;"
+                                mystyles="height: 32px; width: 220px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid rgba(180, 189, 183, 0.5); padding-left: 5px;  background: #fafafa;"
                                 defaultValue={passwordConfirmValue}
                                 onChange={passwordConfirmChange}
                                 placeholder="비밀번호 확인"
@@ -582,7 +590,7 @@ export default function SignupFinal() {
                             </Grid>
                         </Grid>
                         <Grid mystyles="width: 240px; height: 12px">
-                            <Text mystyles="font-size: 8px;">
+                            <Text mystyles="font-size: 8px; opacity: 30%">
                                 {passwordConfirmCheckMessage}
                             </Text>
                         </Grid>
@@ -608,7 +616,7 @@ export default function SignupFinal() {
                                     onClick={cancelAll}
                                     mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
                                 >
-                                    <Grid mystyles="position: absolute; margin-top: -4px; ">
+                                    <Grid mystyles="position: absolute; margin-top: -2px; ">
                                         <DoneIcon
                                             sx={{
                                                 color: "white",
@@ -639,7 +647,7 @@ export default function SignupFinal() {
                                     onClick={cancelAgreeFirst}
                                     mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
                                 >
-                                    <Grid mystyles="position: absolute; margin-top: -4px; ">
+                                    <Grid mystyles="position: absolute; margin-top: -2px; ">
                                         <DoneIcon
                                             sx={{
                                                 color: "white",
@@ -677,7 +685,7 @@ export default function SignupFinal() {
                                     onClick={cancelAgreeSecond}
                                     mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
                                 >
-                                    <Grid mystyles="position: absolute; margin-top: -4px; ">
+                                    <Grid mystyles="position: absolute; margin-top: -2px; ">
                                         <DoneIcon
                                             sx={{
                                                 color: "white",
@@ -715,7 +723,7 @@ export default function SignupFinal() {
                                     onClick={cancelAgreeThird}
                                     mystyles="width: 16px; height: 16px; border-radius: 16px; border: 0.5px solid #05240E; background:black; position: relative"
                                 >
-                                    <Grid mystyles="position: absolute; margin-top: -4px; ">
+                                    <Grid mystyles="position: absolute; margin-top: -2px; ">
                                         <DoneIcon
                                             sx={{
                                                 color: "white",

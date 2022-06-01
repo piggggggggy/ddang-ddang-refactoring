@@ -12,6 +12,7 @@ export default function Input(props) {
         id,
         ref,
         whileFocus,
+        autoComplete,
     } = props;
     const styles = { mystyles };
 
@@ -26,6 +27,7 @@ export default function Input(props) {
                 id={id}
                 ref={ref}
                 whileFocus={whileFocus}
+                autoComplete={autoComplete}
             />
         </InputField>
     );
@@ -36,6 +38,7 @@ Input.defaultProps = {
     eyeIconRender: false,
     placeholder: "",
     onChange: () => {},
+    autoComplete: false,
 };
 
 const InputField = styled.div`
