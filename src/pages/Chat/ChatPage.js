@@ -117,6 +117,7 @@ export default function ChatPage() {
             }
         >
             <SignupGnb
+                exit={exitRoom}
                 text={
                     <>
                         {si} {gu} {dong}
