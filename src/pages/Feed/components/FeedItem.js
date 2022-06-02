@@ -16,7 +16,7 @@ export default function FeedItem(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const playerEmail = props.item.player.email;
+    const playerEmail = props.playerEmail;
     console.log(playerEmail);
 
     const { item, onClick, page, id, liked } = props;
