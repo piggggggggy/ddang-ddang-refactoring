@@ -162,6 +162,8 @@ export default function MapPage() {
         }
     }, [inCircleList, questType]);
 
+    // const list = [{ type: "mob", id: 12, lat: 0, lng: 0, }];
+
     return (
         <Container>
             {loading && !landingOpen && <Spinner />}
