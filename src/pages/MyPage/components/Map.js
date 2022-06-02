@@ -106,8 +106,8 @@ export default function MapView({ tabIndex, changeTab, userData }) {
                                                     image={{
                                                         src: Red,
                                                         size: {
-                                                            width: 64,
-                                                            height: 69,
+                                                            width: 14,
+                                                            height: 14,
                                                         },
                                                         options: {
                                                             offset: {
@@ -134,8 +134,8 @@ export default function MapView({ tabIndex, changeTab, userData }) {
                                                     image={{
                                                         src: Yellow,
                                                         size: {
-                                                            width: 64,
-                                                            height: 69,
+                                                            width: 14,
+                                                            height: 14,
                                                         },
                                                         options: {
                                                             offset: {
