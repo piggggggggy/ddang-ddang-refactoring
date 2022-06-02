@@ -11,10 +11,17 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FeedsService from "../../services/feed.service";
 import Blue from "../../assets/images/png/blue-marker-circle.png";
+import { useSelector } from "react-redux";
 
 export default function Feed() {
     const [currentMapPosition, setCurrentMapPosition] = React.useState(null);
     const [siGuDong, setSiGuDong] = React.useState(null);
+
+    const playerEmail = useSelector((state) => {
+        if (state.user.user !== null) {
+            return state.user.user.email;
+        }
+    });
 
     const getPosition = () => {
         navigator.geolocation.getCurrentPosition(async (position) => {
@@ -207,7 +214,7 @@ export default function Feed() {
                     )}
                 </Grid>
 
-                {feedsPopularityArr !== null && (
+                {feedsPopularityArr !== null && playerEmail !== undefined && (
                     <Grid
                         flex
                         direction="column"
@@ -237,6 +244,7 @@ export default function Feed() {
                                         item={feed}
                                         id={feed[idx]?.id}
                                         liked={feed.liked}
+                                        playerEmail={playerEmail}
                                     />
                                 ))}
                             </UnorderedList>
