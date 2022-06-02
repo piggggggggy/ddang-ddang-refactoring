@@ -79,16 +79,14 @@
 
 -   자신이 쌓은 포인트로 랭킹페이지에서 top 10 랭킹을 확인할 수 있습니다.
 
-#### 🐶
 
--
 
 <br/>
 <br/>
 
 ## Architecture
 
-<img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/2a4b78b8-59d4-451f-8aca-dcfb8fcce020" width="1000px" />
+<img src="(https://user-images.githubusercontent.com/56494905/171617309-64305fc7-d16e-45e2-b0d8-94af77eea136.png" width="1000px" />
 
 <br/>
 <br/>
