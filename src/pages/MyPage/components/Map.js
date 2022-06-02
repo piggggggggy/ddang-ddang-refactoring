@@ -194,10 +194,10 @@ export default function MapView({ tabIndex, changeTab, userData }) {
                                                         ),
                                                     }}
                                                     image={{
-                                                        src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
+                                                        src: Blue,
                                                         size: {
-                                                            width: 64,
-                                                            height: 69,
+                                                            width: 14,
+                                                            height: 14,
                                                         },
                                                         options: {
                                                             offset: {
