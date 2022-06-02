@@ -4,7 +4,12 @@ import KakaoMapDefault from "../../../components/KakaoMapDefault";
 import { useNavigate } from "react-router-dom";
 import { questFragment } from "../../../modules/fragment";
 
-export default function MainMapContainer({ type, questList }) {
+export default function MainMapContainer({
+    type,
+    questList,
+    location,
+    setLocation,
+}) {
     const navigate = useNavigate();
 
     const minmapFragment = (() => {
@@ -26,7 +31,7 @@ export default function MainMapContainer({ type, questList }) {
                 };
             case "feed":
                 return {
-                    text: "내 땅 점령하기",
+                    text: "땅문서 작성하기",
                     color: "#61B7FA",
                 };
             default:
@@ -39,7 +44,7 @@ export default function MainMapContainer({ type, questList }) {
 
     return (
         <MapWrapper>
-            <KakaoMapDefault>
+            <KakaoMapDefault location={location} setLocation={setLocation}>
                 {type === "all"
                     ? questList.map((item) => {
                           return (
@@ -91,7 +96,7 @@ const MapWrapper = styled.div`
     position: relative;
     width: 100%;
     height: 240px;
-    border-radius: 20px;
+    border-radius: 8px;
     overflow: hidden;
     margin-bottom: 35px;
     background: #fff;
@@ -109,7 +114,7 @@ const MapFooter = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 8px 8px;
     & p {
         font-size: 16px;
         font-weight: 700;

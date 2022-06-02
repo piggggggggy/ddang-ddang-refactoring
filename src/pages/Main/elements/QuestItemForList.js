@@ -2,10 +2,12 @@ import { Grid } from "../../../elements/index";
 import styled from "styled-components";
 import { questFragment } from "../../../modules/fragment";
 import monster from "../../../assets/images/png/monster.png";
+import Star from "../../../assets/images/icon/Star";
 
 export default function QuestItemForList(Props) {
     const fragment = questFragment(Props.type);
-
+    const starList = [0, 0, 0];
+    console.log(Props);
     return (
         <Card>
             <Grid flex alignItems={"center"}>
@@ -29,7 +31,17 @@ export default function QuestItemForList(Props) {
                     <Point style={{ color: fragment.color }}>
                         {Props.reward}P
                     </Point>
-                    <Description>난이도</Description>
+                    <DifficultyWrapper>
+                        <Description>난이도</Description>
+                        <StarWrapper>
+                            {starList.map((item, index) => (
+                                <Star
+                                    color={fragment.color}
+                                    active={Props.difficulty < index + 1}
+                                />
+                            ))}
+                        </StarWrapper>
+                    </DifficultyWrapper>
                 </Grid>
             </Grid>
         </Card>
@@ -72,6 +84,17 @@ const Description = styled.p`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+`;
+
+const DifficultyWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+const StarWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 41px;
 `;
 
 const Point = styled.p`

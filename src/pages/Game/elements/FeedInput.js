@@ -34,7 +34,7 @@ const Wrapper = styled.div`
 `;
 
 const Label = styled.p`
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 700;
     line-height: 1.15;
     color: #273938;
@@ -53,7 +53,7 @@ const TextBox = styled.div`
         width: 100%;
         height: 50px;
         min-height: 50px;
-        font-size: 8px;
+        font-size: 12px;
         line-height: 1.15;
         padding: 0;
         letter-spacing: -0.05;

@@ -9,7 +9,8 @@ import { geolocationOptions, useWatchLocation } from "./hooks/locationHooks";
 import { getQuestList } from "../../services/main.service";
 import { useNavigate } from "react-router-dom";
 import { questFragment } from "../../modules/fragment";
-import BackArrow from "../../assets/images/png/back-arrow.png";
+// import BackArrow from "../../assets/images/png/back-arrow.png";
+import BackArrow from "../../assets/images/icon/BackArrow";
 import MenuIcon from "../../assets/images/icon/MenuIcon";
 import CenterButton from "./elements/CenterButton";
 import QuestDetailLayer from "./components/QuestDetailLayer";
@@ -146,18 +147,18 @@ export default function MapPage() {
     }, []);
 
     useEffect(() => {
-        if (questType === "mob") {
-            setColor("#FA5A54");
-        } else if (questType === "time") {
-            setColor("#EDEA50");
-        } else if (questType === "feed") {
-            setColor("#61B7FA");
+        if (inCircleList.length > 0) {
+            if (questType === "mob") {
+                setColor("#FA5A54");
+            } else if (questType === "time") {
+                setColor("#EDEA50");
+            } else if (questType === "feed") {
+                setColor("#61B7FA");
+            } else {
+                setColor("#5DEB85");
+            }
         } else {
             setColor("#EBEBEB");
-        }
-
-        if (inCircleList.length > 0) {
-            setColor("#5DEB85");
         }
     }, [inCircleList, questType]);
 
@@ -248,14 +249,15 @@ export default function MapPage() {
                         style={{ width: "22%" }}
                         onClick={() => navigate("/", { replace: true })}
                     >
-                        <img src={BackArrow} alt={"back arrow"} />
+                        {/* <img src={BackArrow} alt={"back arrow"} /> */}
+                        <BackArrow />
                         <span>뒤로 가기</span>
                     </BottomFooterButton>
                     <BottomFooterButton
                         style={{ background: color, width: "74%" }}
                         onClick={setDdangDdang}
                     >
-                        <p>땅땅 시작</p>
+                        <p>땅땅 시작 : {inCircleList.length}개</p>
                     </BottomFooterButton>
                 </Grid>
             </ButtonWrapper>
@@ -338,7 +340,7 @@ const BottomFooterButton = styled.div`
     width: 49%;
     height: calc(22vw - 10px);
     max-height: 80px;
-    background: #fff;
+    background: #eeeeee;
     box-shadow: 1px 1px 3px rgba(137, 142, 139, 0.7);
     border-radius: 10px;
     & p {

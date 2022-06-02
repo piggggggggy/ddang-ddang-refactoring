@@ -1,6 +1,7 @@
 import { Grid } from "../../../elements/index";
 import styled from "styled-components";
 import { questFragment } from "../../../modules/fragment";
+import { useState } from "react";
 
 export default function QuestButtonContainer({ setType }) {
     return (
@@ -68,7 +69,7 @@ const ButtonItem = styled.div`
 
 const Divider = styled.div`
     width: 1px;
-    height: 80px;
+    height: 72px;
     background: #e4e4e4;
     /* margin: 0px 25px; */
 `;

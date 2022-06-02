@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import LogoMedium from "../assets/images/png/logo-medium.png";
 
 export default function NavigationMenu({ index, isSelected }) {
     const navigate = useNavigate();
@@ -52,9 +53,9 @@ export default function NavigationMenu({ index, isSelected }) {
             // console.log(`성공했음 ${data.si} ${data.gu} ${data.dong}`);
             const { si, gu, dong } = data;
             // setRoomName(si + gu + dong);
-            setSi(si)
-            setGu(gu)
-            setDong(dong)
+            setSi(si);
+            setGu(gu);
+            setDong(dong);
             return data;
         } catch (err) {
             console.log(err);
@@ -88,8 +89,16 @@ export default function NavigationMenu({ index, isSelected }) {
                 navigate("/feed");
                 return;
             case 3:
-                if (userData.playerId && userData.nickname && si && gu && dong) {
-                    navigate(`/chat/${userData.playerId}/${userData.nickname}/${si}/${gu}/${dong}`);
+                if (
+                    userData.playerId &&
+                    userData.nickname &&
+                    si &&
+                    gu &&
+                    dong
+                ) {
+                    navigate(
+                        `/chat/${userData.playerId}/${userData.nickname}/${si}/${gu}/${dong}`
+                    );
                 }
                 return;
             case 4:
@@ -108,7 +117,7 @@ export default function NavigationMenu({ index, isSelected }) {
                 moveToPageTop();
             }}
         >
-            <span style={isSelected ? { color: "#5DED86" } : {}}>
+            <span style={isSelected ? { color: "#5DED86", opacity: 1 } : {}}>
                 {currentMenu.title}
             </span>
         </MenuItem>
@@ -120,11 +129,12 @@ const MenuItem = styled.div`
     justify-content: center;
     align-items: center;
     width: 20%;
-    height: 64px;
+    height: 88px;
     & span {
         font-size: 16px;
         line-height: 1.15;
         text-align: center;
-        color: #dddddd;
+        color: #O524OE;
+        opacity: 0.5;
     }
 `;

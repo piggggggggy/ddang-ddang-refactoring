@@ -48,8 +48,7 @@ export default function SelectedQuestCard(Props) {
                     subTitle: "어떠한 땅인지 자유롭게 적어주세요!",
                     description: (
                         <>
-                            해당 장소, 이 땅이 어떤 곳인지 자유롭게 리뷰를
-                            남겨주세요.
+                            이 땅이 어떤 곳인지 자유롭게 리뷰를 남겨주세요.
                             <br />
                             작성만 하면 <span>1,000 포인트</span>를 바로 드려요
                         </>

@@ -15,9 +15,24 @@ import { useNavigate } from "react-router-dom";
 
 export default function Main() {
     const navigate = useNavigate();
-    const { questList, loading, questType, setQuestType, location, region } =
-        useMainData();
+    const {
+        questList,
+        loading,
+        questType,
+        setQuestType,
+        location,
+        setLocation,
+        region,
+    } = useMainData();
 
+    const findCurrentLocation = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            setLocation({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            });
+        });
+    };
     return (
         <Container>
             {loading && <Spinner />}
@@ -34,14 +49,19 @@ export default function Main() {
                 >
                     <MenuIcon size={"medium"} />
                 </Grid>
-                <Address>
+                <Address onClick={findCurrentLocation}>
                     <Location />
                     {localNameHandlerForSi(region.regionSi)} {region.regionGu}{" "}
                     {region.regionDong}
                 </Address>
                 <UserInfoContainer region={region} loading={loading} />
 
-                <MainMapContainer type={questType} questList={questList} />
+                <MainMapContainer
+                    type={questType}
+                    questList={questList}
+                    setLocation={setLocation}
+                    location={location}
+                />
 
                 <QuestButtonContainer setType={setQuestType} />
             </Grid>
