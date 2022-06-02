@@ -2,25 +2,53 @@ import React from "react";
 import { Grid, Text } from "../elements/index";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import Iron from "../../../assets/images/png/mypage/iron.png";
-import Bronze from "../../../assets/images/png/mypage/bronze.png";
-import Silver from "../../../assets/images/png/mypage/silver.png";
-import Gold from "../../../assets/images/png/mypage/gold.png";
-import Platinum from "../../../assets/images/png/mypage/platinum.png";
-import Diamond from "../../../assets/images/png/mypage/diamond.png";
-import Feed from "../../../assets/images/png/feed-medium.png";
-import Monster from "../../../assets/images/png/mob-medium.png";
-import Time from "../../../assets/images/png/time-medium.png";
+import monsterIron from "../../../assets/images/png/mypage/monsterIron.png";
+import monsterBronze from "../../../assets/images/png/mypage/monsterBronze.png";
+import monsterSilver from "../../../assets/images/png/mypage/monsterSilver.png";
+import monsterGold from "../../../assets/images/png/mypage/monsterGold.png";
+import monsterPlatinum from "../../../assets/images/png/mypage/monsterPlatinum.png";
+import monsterDiamond from "../../../assets/images/png/mypage/monsterDiamond.png";
+
+import feedIron from "../../../assets/images/png/mypage/feedIron.png";
+import feedBronze from "../../../assets/images/png/mypage/feedBronze.png";
+import feedSilver from "../../../assets/images/png/mypage/feedSilver.png";
+import feedGold from "../../../assets/images/png/mypage/feedGold.png";
+import feedPlatinum from "../../../assets/images/png/mypage/feedPlatinum.png";
+import feedDiamond from "../../../assets/images/png/mypage/feedDiamond.png";
+
+import timeIron from "../../../assets/images/png/mypage/timeIron.png";
+import timeBronze from "../../../assets/images/png/mypage/timeBronze.png";
+import timeSilver from "../../../assets/images/png/mypage/timeSilver.png";
+import timeGold from "../../../assets/images/png/mypage/timeGold.png";
+import timePlatinum from "../../../assets/images/png/mypage/timePlatinum.png";
+import timeDiamond from "../../../assets/images/png/mypage/timeDiamond.png";
 
 export default function Badge(props) {
     console.log(props.userData);
-    const Badges = {
-        iron: Iron,
-        bronze: Bronze,
-        silver: Silver,
-        gold: Gold,
-        platinum: Platinum,
-        dia: Diamond,
+
+    const FeedBadges = {
+        iron: feedIron,
+        bronze: feedBronze,
+        silver: feedSilver,
+        gold: feedGold,
+        platinum: feedPlatinum,
+        dia: feedDiamond,
+    };
+    const MonsterBadges = {
+        iron: monsterIron,
+        bronze: monsterBronze,
+        silver: monsterSilver,
+        gold: monsterGold,
+        platinum: monsterPlatinum,
+        dia: monsterDiamond,
+    };
+    const TimeBadges = {
+        iron: timeIron,
+        bronze: timeBronze,
+        silver: timeSilver,
+        gold: timeGold,
+        platinum: timePlatinum,
+        dia: timeDiamond,
     };
 
     return (
@@ -45,18 +73,8 @@ export default function Badge(props) {
                         justifyContent="center"
                         mystyles="position: relative;"
                     >
-                        <BadgeIcon src={Badges[props.userData.badge.mob]} />
-                        <img
-                            src={Monster}
-                            alt=""
-                            style={{
-                                height: "20px",
-                                width: "20px",
-                                position: "absolute",
-                                left: 0,
-                                marginLeft: "42px",
-                                marginTop: "12px",
-                            }}
+                        <BadgeIcon
+                            src={MonsterBadges[props.userData.badge.mob]}
                         />
                     </Grid>
                 </Grid>
@@ -76,18 +94,8 @@ export default function Badge(props) {
                         justifyContent="center"
                         mystyles="position: relative;"
                     >
-                        <BadgeIcon src={Badges[props.userData.badge.time]} />
-                        <img
-                            src={Time}
-                            alt=""
-                            style={{
-                                height: "20px",
-                                width: "20px",
-                                position: "absolute",
-                                left: 0,
-                                marginLeft: "42px",
-                                marginTop: "15px",
-                            }}
+                        <BadgeIcon
+                            src={TimeBadges[props.userData.badge.time]}
                         />
                     </Grid>
                 </Grid>
@@ -107,26 +115,8 @@ export default function Badge(props) {
                         justifyContent="center"
                         mystyles="position: relative;"
                     >
-                        <img
-                            src={Badges[props.userData.badge.feed]}
-                            alt=""
-                            style={{
-                                width: "55px",
-                                height: "55px",
-                                marginTop: "10px",
-                            }}
-                        />
-                        <img
-                            src={Feed}
-                            alt=""
-                            style={{
-                                height: "20px",
-                                width: "20px",
-                                position: "absolute",
-                                left: 0,
-                                marginLeft: "45px",
-                                marginTop: "12px",
-                            }}
+                        <BadgeIcon
+                            src={FeedBadges[props.userData.badge.time]}
                         />
                     </Grid>
                 </Grid>
