@@ -86,7 +86,7 @@
 
 ## Architecture
 
-<img src="(https://user-images.githubusercontent.com/56494905/171617309-64305fc7-d16e-45e2-b0d8-94af77eea136.png" width="1000px" />
+<img src="https://user-images.githubusercontent.com/56494905/171617309-64305fc7-d16e-45e2-b0d8-94af77eea136.png" width="1000px" />
 
 <br/>
 <br/>
