@@ -7,7 +7,6 @@ import Star from "../../../assets/images/icon/Star";
 export default function QuestItemForList(Props) {
     const fragment = questFragment(Props.type);
     const starList = [0, 0, 0];
-    console.log(Props);
     return (
         <Card>
             <Grid flex alignItems={"center"}>
