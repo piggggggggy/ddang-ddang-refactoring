@@ -88,11 +88,6 @@ export default function NavigationMenu({ index, isSelected }) {
                 navigate("/feed");
                 return;
             case 3:
-                console.log(userData.playerId)
-                console.log(userData.nickname)
-                console.log(si)
-                console.log(gu)
-                console.log(dong)
                 if (userData.playerId && userData.nickname && si && gu && dong) {
                     navigate(`/chat/${userData.playerId}/${userData.nickname}/${si}/${gu}/${dong}`);
                 }
