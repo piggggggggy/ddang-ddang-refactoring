@@ -13,6 +13,9 @@ import { Container } from "../../elements";
 import SignupGnb from "../Sign/Signup/elements/SignupGnb";
 import BottomInput from "./components/BottomInput";
 import ChatBalloon from "./components/ChatBalloon";
+import { createBrowserHistory } from "history";
+
+const history = createBrowserHistory();
 
 let socket;
 
@@ -95,6 +98,7 @@ export default function ChatPage() {
     };
 
     const exitRoom = () => {
+        console.log('aaaaaaa', userId, nickname, roomName)
         socket.emit("exitRoom", { userId, nickname, roomName }, (response) => {
             setMemberCnt(response.memberCnt);
         });
@@ -110,6 +114,25 @@ export default function ChatPage() {
         event.preventDefault();
         exitRoom();
     });
+
+
+    useEffect(() => {
+        const listenBackEvent = () => {
+            // 뒤로가기 할 때 수행할 동작을 적는다
+            exitRoom();
+        };
+
+        const unlistenHistoryEvent = history.listen(({ action }) => {
+            if (action === "POP") {
+            listenBackEvent();
+            }
+        });
+
+        return unlistenHistoryEvent;
+    }, []);
+    
+
+
     return (
         <Container
             color={

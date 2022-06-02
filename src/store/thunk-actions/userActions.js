@@ -1,5 +1,6 @@
 import { userActions } from "../slices/userSlice";
 import api from "../../modules/api";
+import axios from "axios";
 import AuthService from "../../services/auth.service";
 import TokenService from "../../services/token.service";
 
@@ -129,6 +130,33 @@ export const profileUpdatesAxios = (profile, token, navigate) => {
                 profileImg: profileImg,
             };
             dispatch(userActions.updateProfile({ user }));
+        } catch (err) {
+            console.log(err);
+            navigate("/signin");
+        }
+    };
+};
+
+export const kakaoLogin = (id, mbti, navigate) => {
+    return async function (dispatch) {
+        try {
+            const result = await api.post("/api/players/changeMbti", {
+                id,
+                mbti,
+            });
+            navigate("/");
+        } catch (err) {
+            console.log(err);
+            navigate("/signin");
+        }
+    };
+};
+
+export const googleLogin = (code, navigate) => {
+    return async function (dispatch) {
+        try {
+            // const response = await AthService.kakaoLogin(code);
+            return "token 보내줘야지";
         } catch (err) {
             console.log(err);
             navigate("/signin");

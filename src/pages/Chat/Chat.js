@@ -66,7 +66,6 @@ const ChatPage = () => {
 
     useEffect(() => {
         socket.on("getMessage", (msg) => {
-            console.log(msg);
             setMemberCnt(msg.memberCnt);
             if (msg.id !== socket.id) {
                 setChatHistory((prevMsg) => [...prevMsg, msg]);
@@ -99,7 +98,7 @@ const ChatPage = () => {
         socket.emit("exitRoom", { userId, nickname, roomName }, (response) => {
             setMemberCnt(response.memberCnt);
         });
-        navigate("/");
+        // navigate("/");
     };
 
     const onEnterInput = (e) => {
@@ -140,8 +139,8 @@ const ChatPage = () => {
                 justifyContent="center"
                 mystyles="margin-top: 20px; position: relative"
             >
-                <Grid mystyles="position: absolute; margin-top:-15px;">
-                    <IconButton onClick={exitRoom}>
+                <Grid mystyles="position: absolute; margin-top:-15px; border: 1px solid red">
+                    <IconButton>
                         <ChevronLeftIcon
                             sx={{ height: "40px", width: "30px" }}
                         />
