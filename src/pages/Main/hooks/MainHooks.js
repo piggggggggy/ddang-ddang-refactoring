@@ -158,6 +158,7 @@ const useMainData = () => {
         questType,
         setQuestType,
         location,
+        setLocation,
         region,
     };
 };

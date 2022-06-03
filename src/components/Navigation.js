@@ -55,7 +55,7 @@ const NavigationWrapper = styled.div`
     display: flex;
     max-width: 428px;
     width: 100%;
-    height: 64px;
+    height: 88px;
     background: #fff;
     padding: 0;
 `;
@@ -63,7 +63,8 @@ const NavigationWrapper = styled.div`
 const NavigationCircle = styled.div`
     position: absolute;
     left: calc(50% - 48px);
-    bottom: 42px;
+    bottom: 60px;
+    /* z-index: 1100; */
     width: 96px;
     height: 96px;
     border-radius: 50%;
