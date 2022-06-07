@@ -1,4 +1,4 @@
-# [니땅내땅_test](https://ddangddang.site/)
+# [니땅내땅](https://ddangddang.site/)
 
 <b>야외 활동, 이웃과의 소통을 유도하는 땅따먹기 게임</b>
 <br />
